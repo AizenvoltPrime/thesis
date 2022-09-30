@@ -17,6 +17,7 @@ require_once "../config.php";
 <html lang="en">
 <head>
     <title>Login</title>
+    <link rel="icon" type="image/x-icon" href="../images/logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.7"/>
     <link rel="stylesheet" type="text/css" href="../style.css">
