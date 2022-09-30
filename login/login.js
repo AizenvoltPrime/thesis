@@ -31,7 +31,7 @@ function login_validation() {
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "Oops! Something went wrong! Please try again later!";
         } else if (res.trim() === "Success") {
-          window.location = "/welcome.php";
+          window.location = "../welcome.php";
         }
       },
     });

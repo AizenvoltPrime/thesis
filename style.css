@@ -1,6 +1,6 @@
 * {
   text-decoration: none;
-  font-family: verdana, sans-serif;
+  font-family: Raleway, sans-serif;
 }
 
 a {
@@ -252,24 +252,13 @@ hr.solid {
   margin-top: 0px;
 }
 
-.small-space {
-  padding: 2%;
-}
-
-.flex-login li {
+.flex-login{
+  padding:20px;
   display: flex;
-  align-content: center;
   flex-direction: column;
-  width: 15em;
-  margin: auto;
-}
-
-#user-help,
-#pass-help,
-#email-help,
-#passc-help {
-  color: #cc0000;
-  font-family: cursive;
+  width: 10em;
+  margin-left: 23%;
+  justify-content: space-between;
 }
 
 .flex-registration li {
@@ -280,16 +269,32 @@ hr.solid {
   margin: auto;
 }
 
+.fa-solid{
+background: -webkit-linear-gradient(200deg, #cc0000, #000);
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+.input-icons {
+  position: relative;
+}
+
+.input-icons i {
+  position: absolute;
+  top: 20px;
+  left: 2px;
+}
+
 #login-form {
-  border-left: 1px solid #c00;
-  width: 35%;
+  width: 450px;
+  height: 380px;
   position: fixed;
-  top: 20%;
-  left: 30%;
-  border-radius: 5px 5px 5px 5px;
+  top: 30%;
+  left: 38%;
+  border-radius: 15px;
   background-color: #2c3134;
   color: black;
-  transform: scale(0);
   animation-name: zoom;
   animation-fill-mode: forwards;
   animation-timing-function: linear;
@@ -332,20 +337,29 @@ hr.solid {
 
 .form-control {
   height: 25px;
-  border: 1px solid #74797d;
-  margin-top: 10px;
-  background-color: #74797d;
-  border-radius: 8px;
+  padding-top: 15px;
+  border:none;
+  border-bottom: 2px solid #cc0000;
+  border-image: linear-gradient(to right,#000,#cc0000) 1;
+  background-color: #2c3134;
+  font-weight: 900;
+}
+
+input.form-control
+{
+  text-align: center;
 }
 
 #sum {
   height: 31px;
+  width: 200px;
   margin-top: 12px;
   background-image: linear-gradient(to right, #000, #c00);
   border: 0px solid #74797d;
   color: #ccc;
   border-radius: 8px;
   background-image: linear-gradient(to right, #000, #c00);
+  font-weight: 900;
 }
 
 #sum.animated {
@@ -503,62 +517,6 @@ html,
 body {
   height: 100%;
 }
-#logBody {
-  background: radial-gradient(
-    ellipse at center,
-    rgba(228, 114, 48, 0.1) 0%,
-    rgba(226, 116, 13, 0.9) 35%,
-    #f06553 100%
-  );
-  overflow: hidden;
-}
-
-.ocean {
-  height: 5%;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background: #015871;
-}
-
-.wave {
-  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg)
-    repeat-x;
-  position: absolute;
-  top: -198px;
-  width: 6400px;
-  height: 198px;
-  animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
-  transform: translate3d(0, 0, 0);
-  z-index: -10;
-}
-
-.wave:nth-of-type(2) {
-  top: -175px;
-  animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) -0.125s infinite,
-    swell 7s ease -1.25s infinite;
-  opacity: 1;
-}
-
-@keyframes wave {
-  0% {
-    margin-left: 0;
-  }
-  100% {
-    margin-left: -1600px;
-  }
-}
-
-@keyframes swell {
-  0%,
-  100% {
-    transform: translate3d(0, -25px, 0);
-  }
-  50% {
-    transform: translate3d(0, 5px, 0);
-  }
-}
 
 html {
   scrollbar-face-color: #646464;
@@ -590,4 +548,22 @@ html {
 }
 ::-webkit-resizer {
   background-color: #666;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #cccccc;
+  opacity: 1; /* Firefox */
+  text-align: center;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #cccccc;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #cccccc;
+}
+
+input:focus::placeholder {
+  color: transparent;
 }
