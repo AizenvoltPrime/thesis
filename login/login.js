@@ -23,10 +23,10 @@ function login_validation() {
       success: function (res) {
         if (res.trim() === "Wrong Password") {
           document.getElementById("user-help").innerHTML = "";
-          document.getElementById("pass-help").innerHTML = "Wrong Password!";
+          document.getElementById("pass-help").innerHTML = "Incorrect Username or Password!";
         } else if (res.trim() === "Wrong Username") {
-          document.getElementById("user-help").innerHTML = "Wrong Username!";
-          document.getElementById("pass-help").innerHTML = "";
+          document.getElementById("user-help").innerHTML = "";
+          document.getElementById("pass-help").innerHTML = "Incorrect Username or Password!"
         } else if (res.trim() === "Oops! Something went wrong! Please try again later!") {
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "Oops! Something went wrong! Please try again later!";

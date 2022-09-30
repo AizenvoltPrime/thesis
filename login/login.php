@@ -33,10 +33,12 @@ require_once "../config.php";
                     <input type="text" name="username" class="form-control" placeholder="Username">
                     <i class="fa-solid fa-user"></i>
                 </div>
+                <span id="user-help"></span>
                 <div class="input-icons">
                     <input type="password" name="password" class="form-control" placeholder="Password">
                     <i class="fa-solid fa-lock"></i>
                 </div>
+                <span id="pass-help"></span>
                 <div>
                     <input id= "sum" type="button" value="Login" onclick="login_validation()">
                 </div>
