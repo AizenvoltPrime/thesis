@@ -238,8 +238,8 @@ background-clip: text;
 
 .input-icons i {
   position: absolute;
-  top: 20px;
-  left: 2px;
+  top: 1.25em;
+  left: 0.125em;
 }
 
 #user-help,
@@ -269,7 +269,7 @@ background-clip: text;
 
 #reg-form {
   width: 30em;
-  height: 33em;
+  height: 32em;
   margin: 0 auto;
   margin-top: 14em;
   border-radius: 1em;
