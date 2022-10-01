@@ -42,7 +42,7 @@ require_once "../config.php";
                 <input type="password" class="form-control" name="password" placeholder="Password">
                 <i class="fa-solid fa-lock"></i>
             </div>
-            <span id="pass-help"></span>
+            <span style="width:20em;" id="pass-help"></span>
             <div class="input-icons">
                 <input type="password" class="form-control" name="password_confirm" placeholder="Repeat Password">
                 <i class="fa-solid fa-lock"></i>
