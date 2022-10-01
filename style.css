@@ -363,6 +363,7 @@ input.form-control
   border-radius: 8px;
   background-image: linear-gradient(to right, #000, #c00);
   font-weight: 900;
+  cursor: pointer;
 }
 
 #sum.animated {
