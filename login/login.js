@@ -36,7 +36,7 @@ function login_validation() {
           document.getElementById("pass-help").innerHTML = "Oops! Something went wrong! Please try again later!";
           document.getElementById("login-form").style.height = "25em";
         } else if (res.trim() === "Success") {
-          window.location = "../welcome.php";
+          window.location = "/";
         }
       },
     });
