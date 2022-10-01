@@ -1,0 +1,1 @@
+Media divisor source: https://css-tricks.com/turning-a-fixed-size-object-into-a-responsive-element/

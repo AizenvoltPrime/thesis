@@ -44,7 +44,7 @@ require_once "../config.php";
                     <input id= "sum" type="button" value="Login" onclick="login_validation()">
                 </div>
                 <div>
-                    <p style="width:12em; font-weight: bold;">Don't have an account? <a class="Sign-up" href="../registration/registration.php">Sign up now</a>.</p>
+                    <p style="width:12em; font-weight: bold;">Don't have an account? <a class="Sign-up" href="../registration/registration.php">Sign up now</a></p>
                 </div>
             </div>
         </form>
