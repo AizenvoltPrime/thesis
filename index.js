@@ -17,3 +17,14 @@ function handleMousePos(event) {
 }
 
 document.addEventListener("click", handleMousePos);
+
+$.ajax({
+  type: "POST",
+  url: "process_data.php",
+  success: function (res) {
+    if (res === "false")
+    {
+      document.getElementsByClassName('nav-element')[1].style.display = "none";
+    }
+  },
+});

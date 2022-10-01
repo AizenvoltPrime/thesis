@@ -271,7 +271,18 @@ hr.solid {
   margin-left: 3.125em;
 }
 
+#add-post-icon{
+  position:absolute;
+  margin-left: 50%;
+  cursor: pointer;
+  border: 2px solid #cc0000;
+  border-radius: 50%;
+  height: 56px;
+	width: 56px;
+}
+
 .clickableAwesomeFont {
+  display: inline-block;
   font-size:1.875em;
   cursor: pointer;
 }
