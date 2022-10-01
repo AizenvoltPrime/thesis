@@ -22,6 +22,11 @@ require_once "../config.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
 </head>
 <body style="overflow:hidden;">
+    <div id="sidenav-icon" class="clickableAwesomeFont" onclick="openNav()"><i class="fa-solid fa-bars fa-2x"></i></div>
+    <div id="sidenav" class="sidenav">
+        <div class="closebtn" onclick="closeNav()"><i class="fa-solid fa-times fa-2x"></i></div>
+        <a class="nav-element" href="../index.php"><i class="fa-solid fa-house"></i>Home</a>
+    </div>
     <form id="reg-form" name="registration-form" class="reg">
         <div class="flex-login">
             <div>

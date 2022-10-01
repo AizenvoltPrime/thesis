@@ -129,3 +129,13 @@ function registration_validation() {
   // listen to mouseover for the container
   c.addEventListener("mouseover", addAnim);
 })();
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "18.75em";
+  document.getElementById("sidenav-icon").style.visibility = "hidden";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "0";
+  document.getElementById("sidenav-icon").style.visibility = "visible";
+}
