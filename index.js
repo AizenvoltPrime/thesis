@@ -1,5 +1,7 @@
 "use strict";
 
+let user_choice = "none";
+
 function openNav() {
   document.getElementById("sidenav").style.width = "18.75em";
   document.getElementById("sidenav-icon").style.visibility = "hidden";
@@ -108,4 +110,69 @@ function highlight_filter(class_name)
   document.getElementsByClassName(class_name)[0].style.backgroundClip = "text";
   document.getElementsByClassName(class_name)[0].style.webkitBackgroundClip = "text";
   document.getElementsByClassName(class_name)[0].style.webkitTextFillColor = "transparent";
+}
+
+function createPoll()
+{
+  $.ajax({
+  type: "POST",
+  url: "process_data.php",
+  success: function (res) {
+    if (res === "false")
+    {
+      window.location = "login/login.php";
+    }
+    else
+    {
+      $('#add-post-icon').fadeOut(300, function () {
+      });
+      $('#all-filters').fadeOut(300, function () {
+        document.getElementById("poll-selection").style.display = "flex";
+        document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
+        document.getElementById("poll-question").style.display = "flex";
+        document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
+      });
+    }
+  },
+  });
+}
+
+function yes_no()
+{
+  choice_highlight("yes-no","rating","approval","ranking");
+}
+
+function rating()
+{
+  choice_highlight("rating","yes-no","approval","ranking");
+}
+
+function approval()
+{
+  choice_highlight("approval","yes-no","rating","ranking");
+}
+
+function ranking()
+{
+  choice_highlight("ranking","yes-no","rating","approval");
+}
+
+function choice_highlight(choice,dehigh1,dehigh2,dehigh3)
+{
+  choice_dehighlight(dehigh1);
+  choice_dehighlight(dehigh2);
+  choice_dehighlight(dehigh3);
+  document.getElementById(choice).style.border = "0.1em solid #cc0000";
+  document.getElementById(choice).style.color = "#cc0000";
+  user_choice = choice;
+}
+
+function choice_dehighlight(choice)
+{
+  document.getElementById(choice).style.border = null;
+  document.getElementById(choice).style.color = null;
+}
+
+function postPoll() {
+  let question_text = document.forms["poll-question"]["question-text"].value;
 }

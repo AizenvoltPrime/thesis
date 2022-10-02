@@ -338,7 +338,7 @@ hr.solid {
 #all-filters
 {
   display: flex;
-  margin-top: 10%;
+  margin-top: 6%;
   gap: 0.75em;
   justify-content: center;
   flex-wrap: wrap;
@@ -464,6 +464,13 @@ background-clip: text;
 }
 
 .fa-times{
+  background: -webkit-linear-gradient(200deg, #cc0000, #000);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fa-arrow-right-from-bracket{
   background: -webkit-linear-gradient(200deg, #cc0000, #000);
   background-clip: text;
   -webkit-background-clip: text;
@@ -791,4 +798,125 @@ a:focus,a:visited,a:active{
 }
 * {
     -webkit-tap-highlight-color: transparent;
+}
+
+#poll-selection{
+  display: none;
+  flex-direction: row;
+  margin-top: 6%;
+  gap: 0.75em;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#first-quetion{
+  padding: 0.4em;
+  color: #000;
+  font-size: 1.875em;
+  font-weight: bold;
+  flex-basis: 100%;
+  text-align: center;
+}
+
+#yes-no{
+  background-color: #2c3134;
+  padding: 0.3em;
+  border-radius: 1em;
+  color: #000;
+  font-size: 1.875em;
+  font-weight: bold;
+  cursor: pointer;
+  border: 0.1em solid #2c3134;
+}
+
+#rating{
+  background-color: #2c3134;
+  padding: 0.3em;
+  border-radius: 1em;
+  color: #000;
+  font-size: 1.875em;
+  font-weight: bold;
+  cursor: pointer;
+  border: 0.1em solid #2c3134;
+}
+
+#approval{
+  background-color: #2c3134;
+  padding: 0.3em;
+  border-radius: 1em;
+  color: #000;
+  font-size: 1.875em;
+  font-weight: bold;
+  cursor: pointer;
+  border: 0.1em solid #2c3134;
+}
+
+#ranking{
+  background-color: #2c3134;
+  padding: 0.3em;
+  border-radius: 1em;
+  color: #000;
+  font-size: 1.875em;
+  font-weight: bold;
+  cursor: pointer;
+  border: 0.1em solid #2c3134;
+}
+
+@keyframes fade_in_show {
+     0% {
+          opacity: 0;
+          transform: scale(0)
+     }
+
+     100% {
+          opacity: 1;
+          transform: scale(1)
+     }
+}
+
+@keyframes fade_out_show {
+     0% {
+          opacity: 1;
+          transform: scale(1)
+     }
+
+     100% {
+          opacity: 0;
+          transform: scale(0)
+     }
+}
+
+#poll-question{
+  display: none;
+  flex-direction: column;
+  margin-top: 5%;
+  gap: 0.75em;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#question-instruction{
+  padding: 0.4em;
+  color: #000;
+  font-size: 1.875em;
+  font-weight: bold;
+}
+
+#question {
+  width: 27em;
+  padding-bottom: 5em;
+  color: #000;
+  font-size: 1.3em;
+  font-weight: bold;
+  background: #2c3134;
+  border-radius: 0.7em;
+  background-color: #2c3134;
+  max-width:100%;
+  overflow: hidden;
+}
+
+#question:focus{
+  outline: none !important;
+  border: 0.0625em solid #cc0000;
 }

@@ -19,7 +19,7 @@ require_once "config.php";
   <body>
     <div class="top-row">
       <div id="sidenav-icon" onclick="openNav()"><i class="fa-solid fa-bars fa-2x"></i></div>
-      <div id="add-post-icon"><i class="fa-solid fa-plus fa-4x"></i></div>
+      <div id="add-post-icon" onclick="createPoll()"><i class="fa-solid fa-plus fa-4x"></i></div>
       <div id="profile-icon"  onclick="openUserNav()"><i class="fa-solid fa-user fa-4x"></i></div>
     </div>
     <div id="sidenav" class="sidenav">
@@ -39,6 +39,18 @@ require_once "config.php";
       <div id="filter" onclick="filter()"><i class="fa-solid fa-filter"></i>Filter</div>
       <div id="search" onclick="search()"><i class="fa-solid fa-magnifying-glass"></i>Search</div>
     </div>
+    <div id="poll-selection">
+      <div id="first-quetion">Choose one of the following poll types.</div>
+      <div id="yes-no" onclick="yes_no()">Yes/No</div>
+      <div id="rating" onclick="rating()">Rating</div>
+      <div id="approval" onclick="approval()">Approval</div>
+      <div id="ranking" onclick="ranking()">Ranking</div>
+    </div>
+    <form id="poll-question">
+        <div id="question-instruction">Type you question.</div>
+        <textarea id="question" type="text" name="question-text"></textarea>
+        <input id= "sum" type="button" value="Post Poll" onclick="postPoll()" style="width:8em; height:3em; font-size: 1.3em;">
+    </form>
     <script src="index.js"></script>
   </body>
 </html>
