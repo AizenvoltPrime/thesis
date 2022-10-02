@@ -11,7 +11,7 @@ a:visited {
 }
 
 body {
-  background-color: #0d0e0e;
+  background-color: #626262;
   color: #b5b5b5;
   overflow-x: hidden;
 }
@@ -232,7 +232,7 @@ hr.solid {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #2c3134;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 3.75em;
@@ -242,7 +242,7 @@ hr.solid {
   padding: 0.5em 0.5em 0.5em 2em;
   text-decoration: none;
   font-size: 1.5625em;
-  color: #818181;
+  color: #000;
   display: block;
   transition: 0.3s;
   margin-top: 1em;
@@ -271,20 +271,26 @@ hr.solid {
   margin-left: 3.125em;
 }
 
-#add-post-icon{
-  position:absolute;
-  margin-left: 50%;
-  cursor: pointer;
-  border: 2px solid #cc0000;
-  border-radius: 50%;
-  height: 56px;
-	width: 56px;
+.top-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .clickableAwesomeFont {
-  display: inline-block;
   font-size:1.875em;
   cursor: pointer;
+  align-self: flex-start;
+}
+
+#add-post-icon{
+  cursor: pointer;
+  align-self: center;
+}
+
+#profile-icon{
+  cursor: pointer;
+  align-self: center;
 }
 
 .fa-solid{
@@ -328,7 +334,7 @@ background-clip: text;
   animation-fill-mode: forwards;
   animation-timing-function: linear;
   animation-duration: 0.7s;
-  box-shadow: 0em 0em 0.5em 0.3125em #cc00004d;
+  box-shadow: 0em 0em 0.5em 0.3125em #cc0000;
 }
 
 #reg-form {
@@ -345,7 +351,7 @@ background-clip: text;
   animation-fill-mode: forwards;
   animation-timing-function: linear;
   animation-duration: 0.7s;
-  box-shadow: 0em 0em 0.5em 0.3125em #cc00004d;
+  box-shadow: 0em 0em 0.5em 0.3125em #cc0000;
 }
 
 .form-control {
