@@ -338,10 +338,10 @@ hr.solid {
 #all-filters
 {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
   margin-top: 10%;
   gap: 0.75em;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 #hot{
