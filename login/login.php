@@ -54,7 +54,7 @@ require_once "../config.php";
                 </div>
                 <span id="pass-help"></span>
                 <div>
-                    <input id= "sum" type="button" value="Login" onclick="login_validation()">
+                    <input id="sum" type="button" value="Login" onclick="login_validation()">
                 </div>
                 <div>
                     <p style="width:12em; font-weight: bold;">Don't have an account? <a class="Sign-up" href="../registration/registration.php">Sign up now</a></p>
