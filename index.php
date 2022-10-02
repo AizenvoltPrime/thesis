@@ -47,7 +47,7 @@ require_once "config.php";
       <div id="ranking" onclick="ranking()">Ranking</div>
     </div>
     <form id="poll-question">
-        <div id="question-instruction">Type you question.</div>
+        <div id="question-instruction">Type your question.</div>
         <textarea id="question" type="text" name="question-text"></textarea>
         <input id= "sum" type="button" value="Post Poll" onclick="postPoll()" style="width:8em; height:3em; font-size: 1.3em;">
     </form>
