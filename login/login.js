@@ -36,7 +36,7 @@ function login_validation() {
           document.getElementById("pass-help").innerHTML = "Oops! Something went wrong! Please try again later!";
           document.getElementById("login-form").style.height = "25em";
         } else if (res.trim() === "Success") {
-          window.location = "/";
+          window.location = "../index.php";
         }
       },
     });
@@ -71,6 +71,20 @@ function handleMousePos(event) {
         document.getElementById("sidenav").style.width = "0";
         document.getElementById("sidenav-icon").style.visibility = "visible";
       }
+      if(mouseClickWidth<=window.innerWidth-300){
+        document.getElementById("user-nav").style.width = "0";
+        document.getElementById("profile-icon").style.visibility = "visible";
+      }
 }
 
 document.addEventListener("click", handleMousePos);
+
+function openUserNav() {
+  document.getElementById("user-nav").style.width = "18.75em";
+  document.getElementById("profile-icon").style.visibility = "hidden";
+}
+
+function closeUserNav() {
+  document.getElementById("user-nav").style.width = "0";
+  document.getElementById("profile-icon").style.visibility = "visible";
+}

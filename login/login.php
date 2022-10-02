@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: https://crowdsource.infinityfreeapp.com/");
+    header("location: ../index.php");
     exit;
 }
 
@@ -25,10 +25,18 @@ require_once "../config.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
 </head>
 <body style="overflow:hidden;">
-        <div id="sidenav-icon" class="clickableAwesomeFont" onclick="openNav()"><i class="fa-solid fa-bars fa-2x"></i></div>
+        <div class="top-row">
+            <div id="sidenav-icon" onclick="openNav()"><i class="fa-solid fa-bars fa-2x"></i></div>
+            <div id="add-post-icon" style="visibility:hidden;"><i class="fa-solid fa-plus fa-4x"></i></div>
+            <div id="profile-icon"  onclick="openUserNav()"><i class="fa-solid fa-user fa-4x"></i></div>
+        </div>
         <div id="sidenav" class="sidenav">
             <div class="closebtn" onclick="closeNav()"><i class="fa-solid fa-times fa-2x"></i></div>
             <a class="nav-element" href="../index.php"><i class="fa-solid fa-house"></i>Home</a>
+            </div>
+        <div id="user-nav" class="user-nav">
+            <div class="closeuserbtn" onclick="closeUserNav()"><i class="fa-solid fa-times fa-2x"></i></div>
+            <a class="nav-element" href="../registration/registration.php"><i class="fa-solid fa-user"></i>Registration</a>
         </div>
         <form id="login-form" name="login-form">
             <div class="flex-login">

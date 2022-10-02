@@ -139,3 +139,27 @@ function closeNav() {
   document.getElementById("sidenav").style.width = "0";
   document.getElementById("sidenav-icon").style.visibility = "visible";
 }
+
+function handleMousePos(event) {
+      var mouseClickWidth = event.clientX;
+      if(mouseClickWidth>=300){
+        document.getElementById("sidenav").style.width = "0";
+        document.getElementById("sidenav-icon").style.visibility = "visible";
+      }
+      if(mouseClickWidth<=window.innerWidth-300){
+        document.getElementById("user-nav").style.width = "0";
+        document.getElementById("profile-icon").style.visibility = "visible";
+      }
+}
+
+document.addEventListener("click", handleMousePos);
+
+function openUserNav() {
+  document.getElementById("user-nav").style.width = "18.75em";
+  document.getElementById("profile-icon").style.visibility = "hidden";
+}
+
+function closeUserNav() {
+  document.getElementById("user-nav").style.width = "0";
+  document.getElementById("profile-icon").style.visibility = "visible";
+}

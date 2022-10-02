@@ -18,13 +18,18 @@ require_once "config.php";
   </head>
   <body>
     <div class="top-row">
-      <div id="sidenav-icon" class="clickableAwesomeFont" onclick="openNav()"><i class="fa-solid fa-bars fa-2x"></i></div>
+      <div id="sidenav-icon" onclick="openNav()"><i class="fa-solid fa-bars fa-2x"></i></div>
       <div id="add-post-icon"><i class="fa-solid fa-plus fa-4x"></i></div>
-      <div id="profile-icon"><i class="fa-solid fa-user fa-4x"></i></div>
+      <div id="profile-icon"  onclick="openUserNav()"><i class="fa-solid fa-user fa-4x"></i></div>
     </div>
     <div id="sidenav" class="sidenav">
       <div class="closebtn" onclick="closeNav()"><i class="fa-solid fa-times fa-2x"></i></div>
       <a class="nav-element" href="index.php"><i class="fa-solid fa-house"></i>Home</a>
+    </div>
+    <div id="user-nav" class="user-nav">
+      <div class="closeuserbtn" onclick="closeUserNav()"><i class="fa-solid fa-times fa-2x"></i></div>
+      <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user"></i>Login</a>
+      <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user"></i>Registration</a>
       <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
     </div>
     <script src="index.js"></script>
