@@ -11,7 +11,7 @@ require_once "config.php";
     <title>Crowdsource</title>
     <link rel="icon" type="image/x-icon" href="images/logo.png">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.7"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
@@ -31,6 +31,13 @@ require_once "config.php";
       <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user"></i>Login</a>
       <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user"></i>Registration</a>
       <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+    </div>
+    <div id="all-filters">
+      <div id="hot" onclick="hot()"><i class="fa-solid fa-fire-flame-curved"></i>Hot</div>
+      <div id="recent" onclick="recent()"><i class="fa-solid fa-sun"></i>Recent</div>
+      <div id="preffered-categories" onclick="preffered_categories()"><i class="fa-solid fa-table-list"></i>Preffered Categories</div>
+      <div id="filter" onclick="filter()"><i class="fa-solid fa-filter"></i>Filter</div>
+      <div id="search" onclick="search()"><i class="fa-solid fa-magnifying-glass"></i>Search</div>
     </div>
     <script src="index.js"></script>
   </body>

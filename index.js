@@ -48,3 +48,64 @@ function closeUserNav() {
   document.getElementById("user-nav").style.width = "0";
   document.getElementById("profile-icon").style.visibility = "visible";
 }
+
+function hot()
+{
+  highlight_filter("fa-fire-flame-curved");
+  null_style("fa-sun");
+  null_style("fa-table-list");
+  null_style("fa-filter");
+  null_style("fa-magnifying-glass");
+}
+
+function recent()
+{
+  highlight_filter("fa-sun");
+  null_style("fa-fire-flame-curved");
+  null_style("fa-table-list");
+  null_style("fa-filter");
+  null_style("fa-magnifying-glass");
+}
+
+function preffered_categories()
+{
+  highlight_filter("fa-table-list");
+  null_style("fa-fire-flame-curved");
+  null_style("fa-sun");
+  null_style("fa-filter");
+  null_style("fa-magnifying-glass");
+}
+
+function filter()
+{
+  highlight_filter("fa-filter");
+  null_style("fa-fire-flame-curved");
+  null_style("fa-sun");
+  null_style("fa-table-list");
+  null_style("fa-magnifying-glass");
+}
+
+function search()
+{
+  highlight_filter("fa-magnifying-glass");
+  null_style("fa-fire-flame-curved");
+  null_style("fa-sun");
+  null_style("fa-filter");
+  null_style("fa-table-list");
+}
+
+function null_style(class_name)
+{
+  document.getElementsByClassName(class_name)[0].style.background = null;
+  document.getElementsByClassName(class_name)[0].style.backgroundClip = null;
+  document.getElementsByClassName(class_name)[0].style.webkitBackgroundClip = null;
+  document.getElementsByClassName(class_name)[0].style.webkitTextFillColor = null;
+}
+
+function highlight_filter(class_name)
+{
+  document.getElementsByClassName(class_name)[0].style.background = "-webkit-linear-gradient(200deg, #cc0000, #000)";
+  document.getElementsByClassName(class_name)[0].style.backgroundClip = "text";
+  document.getElementsByClassName(class_name)[0].style.webkitBackgroundClip = "text";
+  document.getElementsByClassName(class_name)[0].style.webkitTextFillColor = "transparent";
+}
