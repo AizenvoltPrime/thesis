@@ -44,19 +44,19 @@ require_once "../config.php";
             </div>
             <div class="input-icons">
                 <input type="text" name="username" class="form-control" placeholder="Username">
-                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-user fa-2x"></i>
             </div>
             <span id="user-help"></span>
             <div class="input-icons">
                 <input type="password" name="password" class="form-control" placeholder="Password">
-                <i class="fa-solid fa-lock"></i>
+                <i class="fa-solid fa-lock fa-2x"></i>
             </div>
             <span id="pass-help"></span>
             <div>
                 <input id="sum" type="button" value="Login" onclick="login_validation()">
             </div>
             <div>
-                <p style="width:12em; font-weight: bold;">Don't have an account? <a class="Sign-up" href="../registration/registration.php">Sign up now</a></p>
+                <p style="font-weight: bold; font-size:1.2em">Don't have an account? <a class="Sign-up" href="../registration/registration.php">Sign up now</a></p>
             </div>
         </form>
         <script src="login.js"></script>

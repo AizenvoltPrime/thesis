@@ -37,34 +37,34 @@ require_once "../config.php";
     </div>
     <form id="reg-form" name="registration-form" class="reg">
         <div>
-            <i style="margin-left:0.13em;" class="fa-solid fa-circle-user fa-10x"></i>
+            <i class="fa-solid fa-circle-user fa-10x"></i>
         </div>
         <div class="input-icons">
             <input type="text" class="form-control" name="username" placeholder="Username">
-            <i class="fa-solid fa-user"></i>
+            <i class="fa-solid fa-user fa-2x"></i>
         </div>
-        <small style="">Min: 6 and max 16 characters</small>
+        <small style="font-size:1.2em">Min: 6 and max 16 characters</small>
         <span id="user-help"></span>
         <div class="input-icons">
             <input type="email" class="form-control" name="email" placeholder="Email">
-            <i class="fa-solid fa-envelope"></i>
+            <i class="fa-solid fa-envelope fa-2x"></i>
         </div>
         <span id="email-help" style=""></span>
         <div class="input-icons">
             <input type="password" class="form-control" name="password" placeholder="Password">
-            <i class="fa-solid fa-lock"></i>
+            <i class="fa-solid fa-lock fa-2x"></i>
         </div>
         <span id="pass-help"></span>
         <span id="pass-help"></span>
         <div class="input-icons">
             <input type="password" class="form-control" name="password_confirm" placeholder="Repeat Password">
-            <i class="fa-solid fa-lock"></i>
+            <i class="fa-solid fa-lock fa-2x"></i>
         </div>
         <span id="passc-help"></span>
         <div>
             <input type="button" class="btn btn-primary" id="sum" value="Submit" onclick="registration_validation()">
         </div>
-        <p style="width:13em; font-weight: bold;">Already have an account? <a class="Sign-up" href="../login/login.php">Login now</a></p>
+        <p style="font-weight: bold; font-size:1.2em">Already have an account? <a class="Sign-up" href="../login/login.php">Login now</a></p>
     </form>
     <script src="registration.js"></script>
 </body>

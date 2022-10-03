@@ -11,54 +11,54 @@ function registration_validation() {
     document.getElementById("pass-help").innerHTML = "";
     document.getElementById("passc-help").innerHTML = "";
     document.getElementById("email-help").innerHTML = "";
-    document.getElementById("reg-form").style.height = "32em";
+    document.getElementById("reg-form").style.height = "43em";
   } else if (upass === "") {
     document.getElementById("pass-help").innerHTML = "Password field is empty!";
     document.getElementById("user-help").innerHTML = "";
     document.getElementById("passc-help").innerHTML = "";
     document.getElementById("email-help").innerHTML = "";
-    document.getElementById("reg-form").style.height = "32em";
+    document.getElementById("reg-form").style.height = "43em";
   } else if (upassc === "") {
     document.getElementById("passc-help").innerHTML =
       "Password Confirmation field is empty!";
     document.getElementById("user-help").innerHTML = "";
     document.getElementById("pass-help").innerHTML = "";
     document.getElementById("email-help").innerHTML = "";
-    document.getElementById("reg-form").style.height = "32em";
+    document.getElementById("reg-form").style.height = "43em";
   } else if (uemail === "") {
     document.getElementById("email-help").innerHTML = "Email field is empty!";
     document.getElementById("user-help").innerHTML = "";
     document.getElementById("pass-help").innerHTML = "";
     document.getElementById("passc-help").innerHTML = "";
-    document.getElementById("reg-form").style.height = "32em";
+    document.getElementById("reg-form").style.height = "43em";
   } else if (uname.length < 6 || uname.length > 16) {
     document.getElementById("user-help").innerHTML =
       "Username must be between 6 and 16 characters!";
-    document.getElementById("reg-form").style.height = "32em";
+    document.getElementById("reg-form").style.height = "43em";
   } else if (uname.indexOf(" ") > 0) {
     document.getElementById("user-help").innerHTML =
       "Username must not have spaces!";
     document.getElementById("pass-help").innerHTML = "";
     document.getElementById("passc-help").innerHTML = "";
     document.getElementById("email-help").innerHTML = "";
-    document.getElementById("reg-form").style.height = "32em";
+    document.getElementById("reg-form").style.height = "43em";
   } else if (upass !== upassc) {
     document.getElementById("pass-help").innerHTML = "Passwords must match!";
     document.getElementById("user-help").innerHTML = "";
     document.getElementById("passc-help").innerHTML = "";
     document.getElementById("email-help").innerHTML = "";
-    document.getElementById("reg-form").style.height = "32em";
+    document.getElementById("reg-form").style.height = "43em";
   } else if (upass.length < 8) {
     document.getElementById("pass-help").innerHTML =
       "Password must be at least 8 characters!";
     document.getElementById("user-help").innerHTML = "";
     document.getElementById("passc-help").innerHTML = "";
     document.getElementById("email-help").innerHTML = "";
-    document.getElementById("reg-form").style.height = "32em";
+    document.getElementById("reg-form").style.height = "43em";
   } else if (upass.indexOf(" ") > 0) {
     document.getElementById("pass-help").innerHTML =
       "Password must not have spaces!";
-    document.getElementById("reg-form").style.height = "32em";
+    document.getElementById("reg-form").style.height = "43em";
   } else if (
     !/[A-Z]/g.test(upass) ||
     !/[0-9]/g.test(upass) ||
@@ -69,7 +69,7 @@ function registration_validation() {
     document.getElementById("user-help").innerHTML = "";
     document.getElementById("passc-help").innerHTML = "";
     document.getElementById("email-help").innerHTML = "";
-    document.getElementById("reg-form").style.height = "35em";
+    document.getElementById("reg-form").style.height = "45em";
   } else {
     $.ajax({
       type: "POST",
@@ -88,28 +88,28 @@ function registration_validation() {
           document.getElementById("pass-help").innerHTML = "";
           document.getElementById("passc-help").innerHTML = "";
           document.getElementById("email-help").innerHTML = "";
-          document.getElementById("reg-form").style.height = "32em";
+          document.getElementById("reg-form").style.height = "43em";
         } else if (res.trim() === "This email is already being used.") {
           document.getElementById("email-help").innerHTML =
             "This email is already being used!";
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "";
           document.getElementById("passc-help").innerHTML = "";
-          document.getElementById("reg-form").style.height = "32em";
+          document.getElementById("reg-form").style.height = "43em";
         } else if (res.trim() === "Please enter a valid email address") {
           document.getElementById("email-help").innerHTML =
             "Please enter a valid email address";
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "";
           document.getElementById("passc-help").innerHTML = "";
-          document.getElementById("reg-form").style.height = "32em";
+          document.getElementById("reg-form").style.height = "43em";
         } else if (
           res.trim() === "Something went wrong! Please try again later!"
         ) {
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML =
             "Something went wrong! Please try again later!";
-          document.getElementById("reg-form").style.height = "32em";
+          document.getElementById("reg-form").style.height = "43em";
         } else if (res.trim() === "Success") {
           window.location = "http://localhost/project/login/login.php";
         }
