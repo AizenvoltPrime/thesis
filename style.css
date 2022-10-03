@@ -102,11 +102,11 @@ input {
   border-bottom: 0.0625em solid black;
 }
 
-.sidenav a i{
+.sidenav a i {
   margin-right: 0.5em;
 }
 
-.nav-element:hover{
+.nav-element:hover {
   padding-left: 3.125em;
 }
 
@@ -148,7 +148,7 @@ input {
   border-bottom: 0.0625em solid black;
 }
 
-.user-nav a i{
+.user-nav a i {
   margin-right: 0.5em;
 }
 
@@ -165,30 +165,29 @@ input {
   margin-right: 3.125em;
 }
 
-.top-row{
+.top-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
 #sidenav-icon {
-  font-size:1.875em;
+  font-size: 1.875em;
   cursor: pointer;
   align-self: flex-start;
 }
 
-#add-post-icon{
+#add-post-icon {
   cursor: pointer;
   align-self: center;
 }
 
-#profile-icon{
+#profile-icon {
   cursor: pointer;
   align-self: center;
 }
 
-#all-filters
-{
+#all-filters {
   display: flex;
   margin-top: 6%;
   gap: 0.75em;
@@ -196,7 +195,7 @@ input {
   flex-wrap: wrap;
 }
 
-#hot{
+#hot {
   background-color: #2c3134;
   padding: 0.4em;
   border-radius: 1em;
@@ -206,11 +205,11 @@ input {
   cursor: pointer;
 }
 
-#hot i{
+#hot i {
   margin-right: 0.5em;
 }
 
-#recent{
+#recent {
   background-color: #2c3134;
   padding: 0.4em;
   border-radius: 1em;
@@ -220,11 +219,11 @@ input {
   cursor: pointer;
 }
 
-#recent i{
+#recent i {
   margin-right: 0.5em;
 }
 
-#preffered-categories{
+#preffered-categories {
   background-color: #2c3134;
   padding: 0.4em;
   border-radius: 1em;
@@ -234,11 +233,11 @@ input {
   cursor: pointer;
 }
 
-#preffered-categories i{
+#preffered-categories i {
   margin-right: 0.5em;
 }
 
-#filter{
+#filter {
   background-color: #2c3134;
   padding: 0.4em;
   border-radius: 1em;
@@ -248,11 +247,11 @@ input {
   cursor: pointer;
 }
 
-#filter i{
+#filter i {
   margin-right: 0.5em;
 }
 
-#search{
+#search {
   background-color: #2c3134;
   padding: 0.4em;
   border-radius: 1em;
@@ -262,67 +261,67 @@ input {
   cursor: pointer;
 }
 
-#search i{
+#search i {
   margin-right: 0.5em;
 }
 
-.fa-bars{
-background: -webkit-linear-gradient(200deg, #cc0000, #000);
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
-
-.fa-plus{
-background: -webkit-linear-gradient(200deg, #cc0000, #000);
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
-
-.fa-user{
-background: -webkit-linear-gradient(200deg, #cc0000, #000);
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
-
-.fa-circle-user{
+.fa-bars {
   background: -webkit-linear-gradient(200deg, #cc0000, #000);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.fa-lock{
+.fa-plus {
   background: -webkit-linear-gradient(200deg, #cc0000, #000);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.fa-envelope{
+.fa-user {
   background: -webkit-linear-gradient(200deg, #cc0000, #000);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.fa-house{
+.fa-circle-user {
   background: -webkit-linear-gradient(200deg, #cc0000, #000);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.fa-times{
+.fa-lock {
   background: -webkit-linear-gradient(200deg, #cc0000, #000);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.fa-arrow-right-from-bracket{
+.fa-envelope {
+  background: -webkit-linear-gradient(200deg, #cc0000, #000);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fa-house {
+  background: -webkit-linear-gradient(200deg, #cc0000, #000);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fa-times {
+  background: -webkit-linear-gradient(200deg, #cc0000, #000);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fa-arrow-right-from-bracket {
   background: -webkit-linear-gradient(200deg, #cc0000, #000);
   background-clip: text;
   -webkit-background-clip: text;
@@ -345,7 +344,7 @@ background-clip: text;
 #passc-help {
   margin-top: 0.11em;
   color: #cc0000;
-  font-weight:bold;
+  font-weight: bold;
   padding-left: 1em;
   padding-right: 1em;
 }
@@ -397,16 +396,16 @@ background-clip: text;
 .form-control {
   height: 1.85em;
   padding-top: 1.15em;
-  border:none;
+  border: none;
   border-bottom: 0.2em solid #cc0000;
-  border-image: linear-gradient(to right,#000,#cc0000) 1;
+  border-image: linear-gradient(to right, #000, #cc0000) 1;
   background-color: #2c3134;
   font-weight: 900;
   width: 14.7em;
   font-size: 1.5em;
 }
 
-input.form-control{
+input.form-control {
   text-align: center;
 }
 
@@ -607,17 +606,20 @@ html {
 }
 
 /*Placeholder color*/
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #cccccc;
   opacity: 1; /* Firefox */
   text-align: center;
 }
 
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
   color: #cccccc;
 }
 
-::-ms-input-placeholder { /* Microsoft Edge */
+::-ms-input-placeholder {
+  /* Microsoft Edge */
   color: #cccccc;
 }
 
@@ -637,14 +639,14 @@ input:focus::placeholder {
     --size-divisor: 1.5;
   }
 }
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
   :root {
     --size-divisor: 1;
   }
 }
-@media (min-width: 1200px) { 
+@media (min-width: 1200px) {
   :root {
-    --size-divisor: .67;
+    --size-divisor: 0.67;
   }
 }
 
@@ -654,16 +656,18 @@ textarea,
 button,
 select,
 a {
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-a:focus,a:visited,a:active{
+a:focus,
+a:visited,
+a:active {
   outline: none;
 }
 * {
-    -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
-#poll-selection{
+#poll-selection {
   display: none;
   flex-direction: row;
   margin-top: 6%;
@@ -672,7 +676,7 @@ a:focus,a:visited,a:active{
   flex-wrap: wrap;
 }
 
-#first-quetion{
+#first-quetion {
   padding: 0.4em;
   color: #000;
   font-size: 1.875em;
@@ -681,7 +685,7 @@ a:focus,a:visited,a:active{
   text-align: center;
 }
 
-#yes-no{
+#yes-no {
   background-color: #2c3134;
   padding: 0.3em;
   border-radius: 1em;
@@ -692,7 +696,7 @@ a:focus,a:visited,a:active{
   border: 0.1em solid #2c3134;
 }
 
-#rating{
+#rating {
   background-color: #2c3134;
   padding: 0.3em;
   border-radius: 1em;
@@ -703,7 +707,7 @@ a:focus,a:visited,a:active{
   border: 0.1em solid #2c3134;
 }
 
-#approval{
+#approval {
   background-color: #2c3134;
   padding: 0.3em;
   border-radius: 1em;
@@ -714,7 +718,7 @@ a:focus,a:visited,a:active{
   border: 0.1em solid #2c3134;
 }
 
-#ranking{
+#ranking {
   background-color: #2c3134;
   padding: 0.3em;
   border-radius: 1em;
@@ -726,30 +730,30 @@ a:focus,a:visited,a:active{
 }
 
 @keyframes fade_in_show {
-     0% {
-          opacity: 0;
-          transform: scale(0)
-     }
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
 
-     100% {
-          opacity: 1;
-          transform: scale(1)
-     }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes fade_out_show {
-     0% {
-          opacity: 1;
-          transform: scale(1)
-     }
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
 
-     100% {
-          opacity: 0;
-          transform: scale(0)
-     }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
 }
 
-#poll-question{
+#poll-question {
   display: none;
   flex-direction: column;
   margin-top: 5%;
@@ -759,7 +763,7 @@ a:focus,a:visited,a:active{
   align-items: center;
 }
 
-#question-instruction{
+#question-instruction {
   padding: 0.4em;
   color: #000;
   font-size: 1.875em;
@@ -775,16 +779,18 @@ a:focus,a:visited,a:active{
   background: #2c3134;
   border-radius: 0.7em;
   background-color: #2c3134;
-  max-width:98.5%;
+  max-width: 98.5%;
   overflow: hidden;
+  resize: none;
 }
 
-#question:focus{
+#question:focus {
   outline: none !important;
   border: 0.0625em solid #cc0000;
 }
 
-#warning-nothing-selected, #warning-empty-text-area{
+#warning-nothing-selected,
+#warning-empty-text-area {
   display: none;
   padding: 0.4em;
   color: #cc0000;
