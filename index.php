@@ -46,11 +46,13 @@ require_once "config.php";
       <div id="approval" onclick="approval()">Approval</div>
       <div id="ranking" onclick="ranking()">Ranking</div>
     </div>
+    <div id="warning-nothing-selected">You must choose a poll type!</div>
     <form id="poll-question">
         <div id="question-instruction">Type your question.</div>
         <textarea id="question" type="text" name="question-text"></textarea>
         <input id= "sum" type="button" value="Post Poll" onclick="postPoll()" style="width:8em; height:3em; font-size: 1.3em;">
     </form>
+    <div id="warning-empty-text-area">Textarea cannot be empty!</div>
     <script src="index.js"></script>
   </body>
 </html>

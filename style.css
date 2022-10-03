@@ -783,3 +783,13 @@ a:focus,a:visited,a:active{
   outline: none !important;
   border: 0.0625em solid #cc0000;
 }
+
+#warning-nothing-selected, #warning-empty-text-area{
+  display: none;
+  padding: 0.4em;
+  color: #cc0000;
+  font-size: 1.5em;
+  font-weight: bold;
+  flex-basis: 100%;
+  text-align: center;
+}
