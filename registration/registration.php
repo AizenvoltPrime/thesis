@@ -36,36 +36,35 @@ require_once "../config.php";
         <a class="nav-element" href="../login/login.php"><i class="fa-solid fa-user"></i>Login</a>
     </div>
     <form id="reg-form" name="registration-form" class="reg">
-        <div class="flex-login">
-            <div>
-                <i style="margin-left:0.13em;" class="fa-solid fa-circle-user fa-10x"></i>
-            </div>
-            <div class="input-icons">
-                <input type="text" class="form-control" name="username" placeholder="Username">
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <small style="width:20em;">Min: 6 and max 16 characters</small>
-            <span id="user-help"></span>
-            <div class="input-icons">
-                <input type="email" class="form-control" name="email" placeholder="Email">
-                <i class="fa-solid fa-envelope"></i>
-            </div>
-            <span id="email-help"></span>
-            <div class="input-icons">
-                <input type="password" class="form-control" name="password" placeholder="Password">
-                <i class="fa-solid fa-lock"></i>
-            </div>
-            <span style="width:20em;" id="pass-help"></span>
-            <div class="input-icons">
-                <input type="password" class="form-control" name="password_confirm" placeholder="Repeat Password">
-                <i class="fa-solid fa-lock"></i>
-            </div>
-            <span id="passc-help"></span>
-            <div>
-                <input type="button" class="btn btn-primary" id="sum" value="Submit" onclick="registration_validation()">
-            </div>
-            <p style="width:13em; font-weight: bold;">Already have an account? <a class="Sign-up" href="../login/login.php">Login now</a></p>
+        <div>
+            <i style="margin-left:0.13em;" class="fa-solid fa-circle-user fa-10x"></i>
         </div>
+        <div class="input-icons">
+            <input type="text" class="form-control" name="username" placeholder="Username">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <small style="">Min: 6 and max 16 characters</small>
+        <span id="user-help"></span>
+        <div class="input-icons">
+            <input type="email" class="form-control" name="email" placeholder="Email">
+            <i class="fa-solid fa-envelope"></i>
+        </div>
+        <span id="email-help" style=""></span>
+        <div class="input-icons">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+            <i class="fa-solid fa-lock"></i>
+        </div>
+        <span id="pass-help"></span>
+        <span id="pass-help"></span>
+        <div class="input-icons">
+            <input type="password" class="form-control" name="password_confirm" placeholder="Repeat Password">
+            <i class="fa-solid fa-lock"></i>
+        </div>
+        <span id="passc-help"></span>
+        <div>
+            <input type="button" class="btn btn-primary" id="sum" value="Submit" onclick="registration_validation()">
+        </div>
+        <p style="width:13em; font-weight: bold;">Already have an account? <a class="Sign-up" href="../login/login.php">Login now</a></p>
     </form>
     <script src="registration.js"></script>
 </body>

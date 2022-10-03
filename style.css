@@ -77,16 +77,6 @@ input {
   outline: none;
 }
 
-
-.flex-login{
-  padding:20px;
-  display: flex;
-  flex-direction: column;
-  width: 10em;
-  margin-left: 23%;
-  justify-content: space-between;
-}
-
 .sidenav {
   height: 100%;
   width: 0;
@@ -355,17 +345,22 @@ background-clip: text;
 #passc-help {
   margin-top: 0.11em;
   color: #cc0000;
-  width: 25em;
   font-weight:bold;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 #login-form {
-  display: block;
+  display: flex;
+  flex-direction: column;
   margin-left: auto;
   margin-right: auto;
   margin-top: 14em;
   width: 30em;
   height: 24em;
+  max-width: 98%;
+  justify-content: center;
+  align-items: center;
   border-radius: 1em;
   background-color: #2c3134;
   color: black;
@@ -377,12 +372,16 @@ background-clip: text;
 }
 
 #reg-form {
-  display: block;
+  display: flex;
+  flex-direction: column;
   margin-left: auto;
   margin-right: auto;
   margin-top: 13em;
   width: 30em;
   height: 31em;
+  max-width: 98%;
+  justify-content: center;
+  align-items: center;
   border-radius: 1em;
   background-color: #2c3134;
   color: black;
