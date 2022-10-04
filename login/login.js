@@ -7,11 +7,9 @@ function login_validation() {
   if (uname === "") {
     document.getElementById("user-help").innerHTML = "Username field is empty!";
     document.getElementById("pass-help").innerHTML = "";
-    document.getElementById("login-form").style.height = "32em";
   } else if (upass === "") {
     document.getElementById("pass-help").innerHTML = "Password field is empty!";
     document.getElementById("user-help").innerHTML = "";
-    document.getElementById("login-form").style.height = "32em";
   } else {
     $.ajax({
       type: "POST",
@@ -26,15 +24,12 @@ function login_validation() {
         if (res.trim() === "Wrong Password") {
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "Incorrect Username or Password!";
-          document.getElementById("login-form").style.height = "32em";
         } else if (res.trim() === "Wrong Username") {
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "Incorrect Username or Password!";
-          document.getElementById("login-form").style.height = "32em";
         } else if (res.trim() === "Oops! Something went wrong! Please try again later!") {
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "Oops! Something went wrong! Please try again later!";
-          document.getElementById("login-form").style.height = "32em";
         } else if (res.trim() === "Success") {
           window.location = "../index.php";
         }
@@ -66,15 +61,15 @@ function closeNav() {
 }
 
 function handleMousePos(event) {
-      var mouseClickWidth = event.clientX;
-      if(mouseClickWidth>=300){
-        document.getElementById("sidenav").style.width = "0";
-        document.getElementById("sidenav-icon").style.visibility = "visible";
-      }
-      if(mouseClickWidth<=window.innerWidth-300){
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
-      }
+  var mouseClickWidth = event.clientX;
+  if (mouseClickWidth >= 300) {
+    document.getElementById("sidenav").style.width = "0";
+    document.getElementById("sidenav-icon").style.visibility = "visible";
+  }
+  if (mouseClickWidth <= window.innerWidth - 300) {
+    document.getElementById("user-nav").style.width = "0";
+    document.getElementById("profile-icon").style.visibility = "visible";
+  }
 }
 
 document.addEventListener("click", handleMousePos);

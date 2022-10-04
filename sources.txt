@@ -2,3 +2,4 @@ Media divisor source: https://css-tricks.com/turning-a-fixed-size-object-into-a-
 https://www.w3schools.com/howto/howto_js_sidenav.asp
 Remove blue highlight: https://www.youtube.com/watch?v=DVrJtKI8N2I
 Hide menu Johncy:https://stackoverflow.com/questions/29960942/hide-menu-sidebar-when-clicking-outside-the-bar-or-the-button
+get data from date format Clyde Lobo:https://stackoverflow.com/questions/12246394/how-to-get-month-from-string-in-javascript

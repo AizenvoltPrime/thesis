@@ -11,7 +11,7 @@ a:visited {
 }
 
 body {
-  background-color: #626262;
+  background-color: #a9a9a9;
   color: #b5b5b5;
   overflow-x: hidden;
 }
@@ -199,7 +199,7 @@ input {
   background-color: #2c3134;
   padding: 0.4em;
   border-radius: 1em;
-  color: #000;
+  color: #f3f3f3;
   font-size: 1.875em;
   font-weight: bold;
   cursor: pointer;
@@ -213,7 +213,7 @@ input {
   background-color: #2c3134;
   padding: 0.4em;
   border-radius: 1em;
-  color: #000;
+  color: #f3f3f3;
   font-size: 1.875em;
   font-weight: bold;
   cursor: pointer;
@@ -227,7 +227,7 @@ input {
   background-color: #2c3134;
   padding: 0.4em;
   border-radius: 1em;
-  color: #000;
+  color: #f3f3f3;
   font-size: 1.875em;
   font-weight: bold;
   cursor: pointer;
@@ -241,7 +241,7 @@ input {
   background-color: #2c3134;
   padding: 0.4em;
   border-radius: 1em;
-  color: #000;
+  color: #f3f3f3;
   font-size: 1.875em;
   font-weight: bold;
   cursor: pointer;
@@ -255,7 +255,7 @@ input {
   background-color: #2c3134;
   padding: 0.4em;
   border-radius: 1em;
-  color: #000;
+  color: #f3f3f3;
   font-size: 1.875em;
   font-weight: bold;
   cursor: pointer;
@@ -356,9 +356,9 @@ input {
   margin-right: auto;
   margin-top: 10em;
   width: 30em;
-  height: 30em;
+  height: fit-content;
   max-width: 98%;
-  padding-top: 1em;
+  padding-top: 1.3em;
   justify-content: center;
   align-items: center;
   border-radius: 1em;
@@ -378,9 +378,9 @@ input {
   margin-right: auto;
   margin-top: 3.5em;
   width: 30em;
-  height: 41em;
+  height: fit-content;
   max-width: 98%;
-  padding-top: 1em;
+  padding-top: 1.3em;
   justify-content: center;
   align-items: center;
   border-radius: 1em;
@@ -793,9 +793,120 @@ a:active {
 #warning-empty-text-area {
   display: none;
   padding: 0.4em;
-  color: #cc0000;
+  color: #ab0000;
   font-size: 1.5em;
   font-weight: bold;
   flex-basis: 100%;
   text-align: center;
+}
+
+#posts {
+  display: flex;
+  background-color: #2c3134;
+  justify-content: start;
+  height: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+  font-size: 1.3em;
+  font-weight: bold;
+  width: 40em;
+  border-radius: 1em;
+  padding: 1em;
+  column-gap: 0.8em;
+}
+
+#posts-info {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-basis: 88%;
+  column-gap: 0.8em;
+}
+
+#posts-critic {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  column-gap: 1em;
+}
+
+#user-who-posted {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.8em;
+  font-size: 0.6em;
+  align-items: center;
+}
+
+#user-question-answers {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 0.5em;
+}
+
+#post-user-name {
+  margin-left: 0.25em;
+}
+
+#post-user-name:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.fa-bookmark {
+  font-size: 1.8em;
+  margin-left: 0.8em;
+  cursor: pointer;
+}
+
+.post-question {
+  height: fit-content;
+  width: fit-content;
+  flex-basis: 100%;
+  color: #f3f3f3;
+  margin-bottom: 0.5em;
+}
+
+.answer {
+  background-color: #00ffffbb;
+  padding: 0.4em;
+  border-radius: 1em;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  width: 2em;
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+#show-graph {
+  background-color: #0099f1;
+  padding: 0.4em;
+  border-radius: 1em;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  width: fit-content;
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+.fa-chevron-up {
+  cursor: pointer;
+}
+
+.fa-chevron-down {
+  cursor: pointer;
+}
+
+#critic-icons,
+#critic-score {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+  justify-content: center;
+  align-items: center;
 }
