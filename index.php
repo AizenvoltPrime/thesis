@@ -15,6 +15,8 @@ require_once "config.php";
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    
   </head>
   <body>
     <div class="top-row">
@@ -53,29 +55,33 @@ require_once "config.php";
         <input id= "sum" type="button" value="Post Poll" onclick="postPoll()" style="width:8em; height:3em; font-size: 1.3em;">
     </form>
     <div id="warning-empty-text-area">Textarea needs to have at least 15 characters!</div>
-    <div style="display:flex; max-width=98%;">
-      <div id="posts">
-        <div id="posts-info">
+    <div id="posts-container">
+      <div id="post">
+        <div id="post-info">
           <div id="user-who-posted">
             <div>Posted by</div>
-            <div id="post-user-name">Aizenvolt</div>
+            <div id="post-user-name"></div>
+            <div style="display:flex; flex-direction:column-reverse; align-items:center;">
+              <div id="post-time"></div>
+              <div id="post-time-detailed"></div>
+            </div>
             <div><i class="fa-regular fa-bookmark"></i></div>
           </div>
           <div id="user-question-answers">
-            <div class="post-question">Is Greece the greatest country in the world?</div>
+            <div class="post-question"></div>
             <div class="answer" onclick="answered_yes()">Yes</div>
             <div class="answer" style="margin-right:0.5em;" onclick="answered_no()">No</div>
             <div id="show-graph">Show Graph</div>
           </div>
         </div>
-        <div id="posts-critic">
+        <div id="post-critic">
           <div id="critic-icons">
             <div><i class="fa-solid fa-chevron-up" onclick="answered_chevron_up()"></i></div>
             <div><i class="fa-solid fa-chevron-down" onclick="answered_chevron_down()"></i></div>
           </div>
           <div id="critic-score">
-            <div class="score">11</div>
-            <div class="score">3</div>
+            <div class="score"></div>
+            <div class="score"></div>
           </div>
         </div>
       </div>

@@ -800,7 +800,12 @@ a:active {
   text-align: center;
 }
 
-#posts {
+#posts-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#post {
   display: flex;
   background-color: #2c3134;
   justify-content: start;
@@ -816,7 +821,7 @@ a:active {
   column-gap: 0.8em;
 }
 
-#posts-info {
+#post-info {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -824,7 +829,7 @@ a:active {
   column-gap: 0.8em;
 }
 
-#posts-critic {
+#post-critic {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -854,6 +859,24 @@ a:active {
 #post-user-name:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+#post-time {
+  margin-left: 0.25em;
+  cursor: pointer;
+}
+
+#post-time-detailed {
+  display: none;
+}
+#post-time:hover + #post-time-detailed {
+  display: block;
+  position: absolute;
+  margin-bottom: 2em;
+  background-color: #000000;
+  border-radius: 1em;
+  color: #f3f3f3;
+  padding: 0.5em;
 }
 
 .fa-bookmark {
