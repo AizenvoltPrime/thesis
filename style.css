@@ -735,6 +735,7 @@ a:active {
 
 #post-time {
   cursor: pointer;
+  margin-right: 0.6em;
 }
 
 #post-time-detailed {
@@ -753,7 +754,6 @@ a:active {
 
 .fa-bookmark {
   font-size: 1.8em;
-  margin-left: 0.6em;
   cursor: pointer;
 }
 

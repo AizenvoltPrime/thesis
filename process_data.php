@@ -59,11 +59,9 @@ else if($_POST['request'] == "get_post_data")
     $post_data=array();
     $post="Fuck";
 
-    $sql = "SELECT COUNT(*) as number_of_users FROM user WHERE role='user'";
-
     $sql = "SELECT user.username AS username,polls.poll_name AS poll_name,categories.category_name AS category_name,post_text,chevron_up,chevron_down,post_date 
     FROM posts INNER JOIN user ON posts.user_id=user.id INNER JOIN polls ON posts.poll_type=polls.poll_id INNER JOIN categories 
-    ON posts.post_category=categories.category_id;";
+    ON posts.post_category=categories.category_id ORDER BY post_date DESC";
 
     $result = mysqli_query($conn, $sql);
     if($result->num_rows > 0) {
