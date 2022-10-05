@@ -283,12 +283,12 @@ function generate_posts() {
 
           document.getElementById(clone_name).style.display = "flex";
           document.getElementById(clone_name).style.backgroundColor = "#2c3134";
-          document.getElementById(clone_name).style.justifyContent = "start";
+          document.getElementById(clone_name).style.justifyContent = "space-between";
           document.getElementById(clone_name).style.height = "fit-content";
           document.getElementById(clone_name).style.fontSize = "1.3em";
           document.getElementById(clone_name).style.fontWeight = "bold";
           document.getElementById(clone_name).style.borderRadius = "1em";
-          document.getElementById(clone_name).style.padding = "1em 0em 1em 1em";
+          document.getElementById(clone_name).style.padding = "1em 1em 1em 1em";
           document.getElementById(clone_name).style.width = "100%";
         }
       }
