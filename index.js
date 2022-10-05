@@ -285,10 +285,6 @@ function generate_posts() {
           document.getElementById(clone_name).style.backgroundColor = "#2c3134";
           document.getElementById(clone_name).style.justifyContent = "start";
           document.getElementById(clone_name).style.height = "fit-content";
-          document.getElementById(clone_name).style.marginLeft = "auto";
-          document.getElementById(clone_name).style.marginRight = "auto";
-          document.getElementById(clone_name).style.marginTop = "2em";
-          document.getElementById(clone_name).style.marginBottom = "1em";
           document.getElementById(clone_name).style.fontSize = "1.3em";
           document.getElementById(clone_name).style.fontWeight = "bold";
           document.getElementById(clone_name).style.borderRadius = "1em";

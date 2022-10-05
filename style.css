@@ -674,11 +674,13 @@ a:active {
 }
 
 #posts-container {
-  display: grid;
-  max-width: 99.7%;
-  place-items: stretch;
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
   justify-content: center;
-  grid-template-columns: min(100vw, 40em);
+  align-items: center;
+  max-width: 50em;
+  margin: 2em auto 0;
 }
 
 #post {
@@ -686,14 +688,10 @@ a:active {
   background-color: #2c3134;
   justify-content: start;
   height: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 2em;
   font-size: 1.3em;
   font-weight: bold;
   border-radius: 1em;
   padding: 1em 0em 1em 1em;
-  margin-bottom: 1em;
   width: 100%;
 }
 
