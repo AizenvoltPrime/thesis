@@ -674,12 +674,11 @@ a:active {
 }
 
 #posts-container {
-  display: flex;
+  display: grid;
   max-width: 99.7%;
-  align-items: center;
+  place-items: stretch;
   justify-content: center;
-  flex-direction: column;
-  flex-wrap: wrap;
+  grid-template-columns: min(100vw, 40em);
 }
 
 #post {
@@ -693,8 +692,9 @@ a:active {
   font-size: 1.3em;
   font-weight: bold;
   border-radius: 1em;
-  padding: 1em;
-  width: 40em;
+  padding: 1em 0em 1em 1em;
+  margin-bottom: 1em;
+  width: 100%;
 }
 
 #post-info {
@@ -764,7 +764,7 @@ a:active {
   width: fit-content;
   flex-basis: 100%;
   color: #f3f3f3;
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
 }
 
 .answer {

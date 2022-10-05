@@ -52,7 +52,7 @@ require_once "config.php";
     <form id="poll-question">
         <div id="question-instruction">Type your question.</div>
         <textarea id="question" type="text" name="question-text"></textarea>
-        <button id= "sum" type="button" value="Post Poll" style="width:8em; height:3em; font-size: 1.3em;">Post Poll</button>
+        <input id= "sum" type="button" value="Post Poll" style="width:8em; height:3em; font-size: 1.3em;">
     </form>
     <div id="warning-empty-text-area">Textarea needs to have at least 15 characters!</div>
     <div id="posts-container">

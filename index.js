@@ -280,18 +280,20 @@ function generate_posts() {
           clone[i - 1].querySelector("#post-time").innerHTML = post_time;
           clone[i - 1].querySelector("#post-time-detailed").innerHTML = post_data[i][6];
           document.getElementById("posts-container").appendChild(clone[i - 1]);
+
           document.getElementById(clone_name).style.display = "flex";
           document.getElementById(clone_name).style.backgroundColor = "#2c3134";
           document.getElementById(clone_name).style.justifyContent = "start";
           document.getElementById(clone_name).style.height = "fit-content";
           document.getElementById(clone_name).style.marginLeft = "auto";
           document.getElementById(clone_name).style.marginRight = "auto";
-          document.getElementById(clone_name).style.marginTop = "1em";
+          document.getElementById(clone_name).style.marginTop = "2em";
+          document.getElementById(clone_name).style.marginBottom = "1em";
           document.getElementById(clone_name).style.fontSize = "1.3em";
           document.getElementById(clone_name).style.fontWeight = "bold";
           document.getElementById(clone_name).style.borderRadius = "1em";
-          document.getElementById(clone_name).style.padding = "1em";
-          document.getElementById(clone_name).style.width = "40em";
+          document.getElementById(clone_name).style.padding = "1em 0em 1em 1em";
+          document.getElementById(clone_name).style.width = "100%";
         }
       }
       console.log(post_data);
