@@ -629,11 +629,10 @@ a:active {
 #poll-question {
   display: none;
   flex-direction: column;
-  margin-top: 5%;
   gap: 0.75em;
   justify-content: center;
-  flex-wrap: wrap;
   align-items: center;
+  margin: 8em auto 0;
 }
 
 #question-instruction {
