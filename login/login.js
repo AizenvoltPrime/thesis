@@ -1,6 +1,6 @@
 "use strict";
 
-function login_validation() {
+document.getElementById("sum").addEventListener("click", function () {
   let uname = document.forms["login-form"]["username"].value;
   let upass = document.forms["login-form"]["password"].value;
 
@@ -36,7 +36,7 @@ function login_validation() {
       },
     });
   }
-}
+});
 
 (function () {
   var c = document.getElementById("sum");
@@ -50,15 +50,15 @@ function login_validation() {
   c.addEventListener("mouseover", addAnim);
 })();
 
-function openNav() {
+document.getElementById("sidenav-icon").addEventListener("click", function () {
   document.getElementById("sidenav").style.width = "18.75em";
   document.getElementById("sidenav-icon").style.visibility = "hidden";
-}
+});
 
-function closeNav() {
+document.getElementsByClassName("closebtn")[0].addEventListener("click", function () {
   document.getElementById("sidenav").style.width = "0";
   document.getElementById("sidenav-icon").style.visibility = "visible";
-}
+});
 
 function handleMousePos(event) {
   var mouseClickWidth = event.clientX;
@@ -74,12 +74,12 @@ function handleMousePos(event) {
 
 document.addEventListener("click", handleMousePos);
 
-function openUserNav() {
+document.getElementById("profile-icon").addEventListener("click", function () {
   document.getElementById("user-nav").style.width = "18.75em";
   document.getElementById("profile-icon").style.visibility = "hidden";
-}
+});
 
-function closeUserNav() {
+document.getElementsByClassName("closeuserbtn")[0].addEventListener("click", function () {
   document.getElementById("user-nav").style.width = "0";
   document.getElementById("profile-icon").style.visibility = "visible";
-}
+});

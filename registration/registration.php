@@ -23,16 +23,16 @@ require_once "../config.php";
 </head>
 <body style="overflow:hidden;">
     <div class="top-row">
-        <div id="sidenav-icon" onclick="openNav()"><i class="fa-solid fa-bars fa-2x"></i></div>
+        <div id="sidenav-icon"><i class="fa-solid fa-bars fa-2x"></i></div>
         <div id="add-post-icon" style="visibility:hidden;"><i class="fa-solid fa-plus fa-4x"></i></div>
-        <div id="profile-icon"  onclick="openUserNav()"><i class="fa-solid fa-user fa-4x"></i></div>
+        <div id="profile-icon"><i class="fa-solid fa-user fa-4x"></i></div>
     </div>
     <div id="sidenav" class="sidenav">
-        <div class="closebtn" onclick="closeNav()"><i class="fa-solid fa-times fa-2x"></i></div>
+        <div class="closebtn"><i class="fa-solid fa-times fa-2x"></i></div>
         <a class="nav-element" href="../index.php"><i class="fa-solid fa-house"></i>Home</a>
     </div>
     <div id="user-nav" class="user-nav">
-        <div class="closeuserbtn" onclick="closeUserNav()"><i class="fa-solid fa-times fa-2x"></i></div>
+        <div class="closeuserbtn"><i class="fa-solid fa-times fa-2x"></i></div>
         <a class="nav-element" href="../login/login.php"><i class="fa-solid fa-user"></i>Login</a>
     </div>
     <form id="reg-form" name="registration-form" class="reg">
@@ -62,7 +62,7 @@ require_once "../config.php";
         </div>
         <span id="passc-help"></span>
         <div>
-            <input type="button" class="btn btn-primary" id="sum" value="Submit" onclick="registration_validation()">
+            <input type="button" class="btn btn-primary" id="sum" value="Submit">
         </div>
         <p style="font-weight: bold; font-size:1.2em">Already have an account? <a class="Sign-up" href="../login/login.php">Login now</a></p>
     </form>
