@@ -7,15 +7,15 @@ let number_of_cloned_posts = 0;
 let node = [];
 let clone = [];
 
-function openNav() {
+document.getElementById("sidenav-icon").addEventListener("click", function () {
   document.getElementById("sidenav").style.width = "18.75em";
   document.getElementById("sidenav-icon").style.visibility = "hidden";
-}
+});
 
-function closeNav() {
+document.getElementsByClassName("closebtn")[0].addEventListener("click", function () {
   document.getElementById("sidenav").style.width = "0";
   document.getElementById("sidenav-icon").style.visibility = "visible";
-}
+});
 
 function handleMousePos(event) {
   var mouseClickWidth = event.clientX;
@@ -31,7 +31,7 @@ function handleMousePos(event) {
 
 document.addEventListener("click", handleMousePos);
 
-function openUserNav() {
+document.getElementById("profile-icon").addEventListener("click", function () {
   $.ajax({
     type: "POST",
     url: "process_data.php",
@@ -49,52 +49,52 @@ function openUserNav() {
   });
   document.getElementById("user-nav").style.width = "18.75em";
   document.getElementById("profile-icon").style.visibility = "hidden";
-}
+});
 
-function closeUserNav() {
+document.getElementsByClassName("closeuserbtn")[0].addEventListener("click", function () {
   document.getElementById("user-nav").style.width = "0";
   document.getElementById("profile-icon").style.visibility = "visible";
-}
+});
 
-function hot() {
+document.getElementById("hot").addEventListener("click", function () {
   highlight_filter("fa-fire-flame-curved");
   null_style("fa-sun");
   null_style("fa-table-list");
   null_style("fa-filter");
   null_style("fa-magnifying-glass");
-}
+});
 
-function recent() {
+document.getElementById("recent").addEventListener("click", function () {
   highlight_filter("fa-sun");
   null_style("fa-fire-flame-curved");
   null_style("fa-table-list");
   null_style("fa-filter");
   null_style("fa-magnifying-glass");
-}
+});
 
-function preffered_categories() {
+document.getElementById("preferred-categories").addEventListener("click", function () {
   highlight_filter("fa-table-list");
   null_style("fa-fire-flame-curved");
   null_style("fa-sun");
   null_style("fa-filter");
   null_style("fa-magnifying-glass");
-}
+});
 
-function filter() {
+document.getElementById("filter").addEventListener("click", function () {
   highlight_filter("fa-filter");
   null_style("fa-fire-flame-curved");
   null_style("fa-sun");
   null_style("fa-table-list");
   null_style("fa-magnifying-glass");
-}
+});
 
-function search() {
+document.getElementById("search").addEventListener("click", function () {
   highlight_filter("fa-magnifying-glass");
   null_style("fa-fire-flame-curved");
   null_style("fa-sun");
   null_style("fa-filter");
   null_style("fa-table-list");
-}
+});
 
 function null_style(class_name) {
   document.getElementsByClassName(class_name)[0].style.background = null;
@@ -110,7 +110,7 @@ function highlight_filter(class_name) {
   document.getElementsByClassName(class_name)[0].style.webkitTextFillColor = "transparent";
 }
 
-function createPoll() {
+document.getElementById("add-post-icon").addEventListener("click", function () {
   $.ajax({
     type: "POST",
     url: "process_data.php",
@@ -141,23 +141,23 @@ function createPoll() {
       }
     },
   });
-}
+});
 
-function yes_no() {
+document.getElementById("yes-no").addEventListener("click", function () {
   choice_highlight("yes-no", "rating", "approval", "ranking");
-}
+});
 
-function rating() {
+document.getElementById("rating").addEventListener("click", function () {
   choice_highlight("rating", "yes-no", "approval", "ranking");
-}
+});
 
-function approval() {
+document.getElementById("approval").addEventListener("click", function () {
   choice_highlight("approval", "yes-no", "rating", "ranking");
-}
+});
 
-function ranking() {
+document.getElementById("ranking").addEventListener("click", function () {
   choice_highlight("ranking", "yes-no", "rating", "approval");
-}
+});
 
 function choice_highlight(choice, dehigh1, dehigh2, dehigh3) {
   choice_dehighlight(dehigh1);
@@ -173,7 +173,7 @@ function choice_dehighlight(choice) {
   document.getElementById(choice).style.color = null;
 }
 
-function postPoll() {
+document.getElementById("sum").addEventListener("click", function () {
   let question_text = document.forms["poll-question"]["question-text"].value;
   if (user_choice === "none") {
     $("#warning-nothing-selected").fadeIn(300, function () {});
@@ -207,29 +207,19 @@ function postPoll() {
       },
     });
   }
-}
+});
 
-function answered_yes() {
+document.getElementsByClassName("answer")[0].addEventListener("click", function () {
   user_yes_no_answer = [1, 0];
-}
+});
 
-function answered_no() {}
-{
+document.getElementsByClassName("answer")[1].addEventListener("click", function () {
   user_yes_no_answer = [0, 1];
-}
+});
 
-function answered_yes() {
-  user_chevron_answer = [1, 0];
-}
+document.getElementsByClassName("fa-solid fa-chevron-up")[0].addEventListener("click", function () {});
 
-function answered_no() {}
-{
-  user_chevron_answer = [0, 1];
-}
-
-function answered_chevron_up() {}
-
-function answered_chevron_down() {}
+document.getElementsByClassName("fa-solid fa-chevron-down")[0].addEventListener("click", function () {});
 
 function generate_posts() {
   number_of_cloned_posts = 0;
@@ -269,7 +259,6 @@ function generate_posts() {
           post_data[i][6][18];
         const d = new Date(post_data[i][6]);
         post_data[i][6] = days[d.getDay()] + "," + " " + post_data[i][6] + " UTC+3";
-
         if (i == 0) {
           document.getElementById("post-user-name").innerHTML = post_data[i][0];
           document.getElementsByClassName("post-question")[0].innerHTML = post_data[i][3];
@@ -291,7 +280,6 @@ function generate_posts() {
           clone[i - 1].querySelector("#post-time").innerHTML = post_time;
           clone[i - 1].querySelector("#post-time-detailed").innerHTML = post_data[i][6];
           document.getElementById("posts-container").appendChild(clone[i - 1]);
-
           document.getElementById(clone_name).style.display = "flex";
           document.getElementById(clone_name).style.backgroundColor = "#2c3134";
           document.getElementById(clone_name).style.justifyContent = "start";
@@ -301,10 +289,9 @@ function generate_posts() {
           document.getElementById(clone_name).style.marginTop = "1em";
           document.getElementById(clone_name).style.fontSize = "1.3em";
           document.getElementById(clone_name).style.fontWeight = "bold";
-          document.getElementById(clone_name).style.width = "40em";
           document.getElementById(clone_name).style.borderRadius = "1em";
           document.getElementById(clone_name).style.padding = "1em";
-          document.getElementById(clone_name).style.columnGap = "0.8em";
+          document.getElementById(clone_name).style.width = "40em";
         }
       }
       console.log(post_data);

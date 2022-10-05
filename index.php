@@ -20,46 +20,46 @@ require_once "config.php";
   </head>
   <body>
     <div class="top-row">
-      <div id="sidenav-icon" onclick="openNav()"><i class="fa-solid fa-bars fa-2x"></i></div>
-      <div id="add-post-icon" onclick="createPoll()"><i class="fa-solid fa-plus fa-4x"></i></div>
-      <div id="profile-icon"  onclick="openUserNav()"><i class="fa-solid fa-user fa-4x"></i></div>
+      <button id="sidenav-icon"><i class="fa-solid fa-bars fa-2x"></i></button>
+      <button id="add-post-icon"><i class="fa-solid fa-plus fa-4x"></i></button>
+      <button id="profile-icon"><i class="fa-solid fa-user fa-4x"></i></button>
     </div>
     <div id="sidenav" class="sidenav">
-      <div class="closebtn" onclick="closeNav()"><i class="fa-solid fa-times fa-2x"></i></div>
+      <button class="closebtn"><i class="fa-solid fa-times fa-2x"></i></button>
       <a class="nav-element" href="index.php"><i class="fa-solid fa-house"></i>Home</a>
     </div>
     <div id="user-nav" class="user-nav">
-      <div class="closeuserbtn" onclick="closeUserNav()"><i class="fa-solid fa-times fa-2x"></i></div>
+      <button class="closeuserbtn"><i class="fa-solid fa-times fa-2x"></i></button>
       <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user"></i>Login</a>
       <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user"></i>Registration</a>
       <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
     </div>
     <div id="all-filters">
-      <div id="hot" onclick="hot()"><i class="fa-solid fa-fire-flame-curved"></i>Hot</div>
-      <div id="recent" onclick="recent()"><i class="fa-solid fa-sun"></i>Recent</div>
-      <div id="preffered-categories" onclick="preffered_categories()"><i class="fa-solid fa-table-list"></i>Preffered Categories</div>
-      <div id="filter" onclick="filter()"><i class="fa-solid fa-filter"></i>Filter</div>
-      <div id="search" onclick="search()"><i class="fa-solid fa-magnifying-glass"></i>Search</div>
+      <button id="hot"><i class="fa-solid fa-fire-flame-curved"></i>Hot</button>
+      <button id="recent"><i class="fa-solid fa-sun"></i>Recent</button>
+      <button id="preferred-categories"><i class="fa-solid fa-table-list"></i>Preferred Categories</button>
+      <button id="filter"><i class="fa-solid fa-filter"></i>Filter</button>
+      <button id="search"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
     </div>
     <div id="poll-selection">
       <div id="first-quetion">Choose one of the following poll types.</div>
-      <div id="yes-no" onclick="yes_no()">Yes/No</div>
-      <div id="rating" onclick="rating()">Rating</div>
-      <div id="approval" onclick="approval()">Approval</div>
-      <div id="ranking" onclick="ranking()">Ranking</div>
+      <button id="yes-no">Yes/No</button>
+      <button id="rating">Rating</button>
+      <button id="approval">Approval</button>
+      <button id="ranking">Ranking</button>
     </div>
     <div id="warning-nothing-selected">You must choose a poll type!</div>
     <form id="poll-question">
         <div id="question-instruction">Type your question.</div>
         <textarea id="question" type="text" name="question-text"></textarea>
-        <input id= "sum" type="button" value="Post Poll" onclick="postPoll()" style="width:8em; height:3em; font-size: 1.3em;">
+        <button id= "sum" type="button" value="Post Poll" style="width:8em; height:3em; font-size: 1.3em;">Post Poll</button>
     </form>
     <div id="warning-empty-text-area">Textarea needs to have at least 15 characters!</div>
     <div id="posts-container">
       <div id="post">
         <div id="post-info">
           <div id="user-who-posted">
-            <div>Posted by</div>
+            <div style="margin-right: 0.25em;">Posted by</div>
             <div id="post-user-name"></div>
             <div style="display:flex; flex-direction:column-reverse; align-items:center;">
               <div id="post-time"></div>
@@ -69,15 +69,15 @@ require_once "config.php";
           </div>
           <div id="user-question-answers">
             <div class="post-question"></div>
-            <div class="answer" onclick="answered_yes()">Yes</div>
-            <div class="answer" style="margin-right:0.5em;" onclick="answered_no()">No</div>
+            <button class="answer">Yes</button>
+            <button class="answer" style="margin-right:0.5em;">No</button>
             <div id="show-graph">Show Graph</div>
           </div>
         </div>
         <div id="post-critic">
           <div id="critic-icons">
-            <div><i class="fa-solid fa-chevron-up" onclick="answered_chevron_up()"></i></div>
-            <div><i class="fa-solid fa-chevron-down" onclick="answered_chevron_down()"></i></div>
+            <button><i class="fa-solid fa-chevron-up"></i></button>
+            <button><i class="fa-solid fa-chevron-down"></i></button>
           </div>
           <div id="critic-score">
             <div class="score"></div>
