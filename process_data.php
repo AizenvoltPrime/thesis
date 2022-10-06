@@ -59,10 +59,7 @@ else if($data['request'] == "get_post_data")
     require_once "config.php";
     $post_data=array();
 
-    $sql = "SELECT post_number,user.username AS username,polls.poll_name AS poll_name,categories.category_name AS category_name,post_text,SUM(chevron_vote.chevron_up) 
-    AS chevron_up, SUM(chevron_vote.chevron_down) AS chevron_down,post_date FROM posts INNER JOIN user ON posts.user_id=user.id INNER JOIN polls 
-    ON posts.poll_type=polls.poll_id INNER JOIN categories ON posts.post_category=categories.category_id INNER JOIN chevron_vote ON posts.post_number=chevron_vote.post_id 
-    GROUP BY user.username,post_number ORDER BY post_date DESC";
+    $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_up,chevron_down,post_date FROM posts_info";
 
     $result = mysqli_query($conn, $sql);
     if($result->num_rows > 0) {

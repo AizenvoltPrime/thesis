@@ -56,7 +56,7 @@ require_once "config.php";
     </form>
     <div id="warning-empty-text-area">Textarea needs to have at least 15 characters!</div>
     <div id="posts-container">
-      <div id="post">
+      <div class="post">
         <div id="post-info">
           <div id="user-who-posted">
             <div style="margin-right: 0.25em;">Posted by</div>
