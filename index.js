@@ -32,21 +32,19 @@ function handleMousePos(event) {
 document.addEventListener("click", handleMousePos);
 
 document.getElementById("profile-icon").addEventListener("click", function () {
-  $.ajax({
-    type: "POST",
-    url: "process_data.php",
-    data: {
-      request: "user_status",
-    },
-    success: function (res) {
-      if (res === "false") {
+  fetch("process_data.php", {
+    method: "POST",
+    body: JSON.stringify({ request: "user_status" }),
+  })
+    .then((res) => res.text())
+    .then((response) => {
+      if (response === "false") {
         document.getElementsByClassName("nav-element")[3].style.display = "none";
       } else {
         document.getElementsByClassName("nav-element")[1].style.display = "none";
         document.getElementsByClassName("nav-element")[2].style.display = "none";
       }
-    },
-  });
+    });
   document.getElementById("user-nav").style.width = "18.75em";
   document.getElementById("profile-icon").style.visibility = "hidden";
 });
@@ -111,14 +109,13 @@ function highlight_filter(class_name) {
 }
 
 document.getElementById("add-post-icon").addEventListener("click", function () {
-  $.ajax({
-    type: "POST",
-    url: "process_data.php",
-    data: {
-      request: "user_status",
-    },
-    success: function (res) {
-      if (res === "false") {
+  fetch("process_data.php", {
+    method: "POST",
+    body: JSON.stringify({ request: "user_status" }),
+  })
+    .then((res) => res.text())
+    .then((response) => {
+      if (response === "false") {
         window.location = "login/login.php";
       } else {
         $("#add-post-icon").fadeOut(300, function () {});
@@ -139,8 +136,7 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
           $("#sum").fadeIn(300, function () {});
         });
       }
-    },
-  });
+    });
 });
 
 document.getElementById("yes-no").addEventListener("click", function () {
@@ -180,16 +176,13 @@ document.getElementById("sum").addEventListener("click", function () {
   } else if ($("#question").val().trim().length < 15) {
     $("#warning-empty-text-area").fadeIn(300, function () {});
   } else if (user_choice !== "none" && $("#question").val().trim().length >= 1) {
-    $.ajax({
-      type: "POST",
-      url: "process_data.php",
-      data: {
-        request: "upload_post_data",
-        question: question_text,
-        poll_choice: user_choice,
-      },
-      success: function (res) {
-        console.log(res);
+    fetch("process_data.php", {
+      method: "POST",
+      body: JSON.stringify({ request: "upload_post_data", question: question_text, poll_choice: user_choice }),
+    })
+      .then((res) => res.text())
+      .then((response) => {
+        console.log(response);
         $("#warning-nothing-selected").fadeOut(300, function () {});
         $("#warning-empty-text-area").fadeOut(300, function () {});
         $("#poll-selection").fadeOut(300, function () {});
@@ -204,8 +197,7 @@ document.getElementById("sum").addEventListener("click", function () {
         choice_dehighlight(user_choice);
         user_choice = "none";
         document.forms["poll-question"]["question-text"].value = "";
-      },
-    });
+      });
   }
 });
 
@@ -223,14 +215,14 @@ document.getElementsByClassName("fa-solid fa-chevron-down")[0].addEventListener(
 
 function generate_posts() {
   number_of_cloned_posts = 0;
-  $.ajax({
-    type: "POST",
-    url: "process_data.php",
-    data: {
-      request: "get_post_data",
-    },
-    success: function (res) {
-      let post_data = JSON.parse(res);
+
+  fetch("process_data.php", {
+    method: "POST",
+    body: JSON.stringify({ request: "get_post_data" }),
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      let post_data = response;
       let post_time;
       let clone_name;
       for (let i = 0; i < post_data.length; i++) {
@@ -293,8 +285,7 @@ function generate_posts() {
         }
       }
       console.log(post_data);
-    },
-  });
+    });
 }
 
 generate_posts();

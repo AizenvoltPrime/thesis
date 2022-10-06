@@ -2,17 +2,20 @@
 
 session_start();
 
-if($_POST['request'] == "user_status")
+$jsonString = file_get_contents('php://input');
+$data = json_decode($jsonString, true);
+
+if($data['request'] == "user_status")
 {
     if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         echo "false";
     }
 }
-else if($_POST['request'] == "upload_post_data")
+else if($data['request'] == "upload_post_data")
 {
     require_once "config.php";
-    $post_text=$_POST['question'];
-    $poll_type=$_POST['poll_choice'];
+    $post_text=$data['question'];
+    $poll_type=$data['poll_choice'];
 
     if($poll_type=="yes-no")
     {
@@ -53,7 +56,7 @@ else if($_POST['request'] == "upload_post_data")
     mysqli_stmt_close($stmt);
     }
 }
-else if($_POST['request'] == "get_post_data")
+else if($data['request'] == "get_post_data")
 {
     require_once "config.php";
     $post_data=array();
