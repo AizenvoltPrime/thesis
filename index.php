@@ -76,8 +76,8 @@ require_once "config.php";
         </div>
         <div id="post-critic">
           <div id="critic-icons">
-            <button><i class="fa-solid fa-chevron-up"></i></button>
-            <button><i class="fa-solid fa-chevron-down"></i></button>
+            <button data-dir="up"><i class="fa-solid fa-chevron-up"></i></button>
+            <button data-dir="down"><i class="fa-solid fa-chevron-down"></i></button>
           </div>
           <div id="critic-score">
             <div class="score"></div>

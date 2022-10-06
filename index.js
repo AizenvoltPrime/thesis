@@ -226,38 +226,38 @@ function generate_posts() {
       let post_time;
       let clone_name;
       for (let i = 0; i < post_data.length; i++) {
-        post_time = moment(post_data[i][6], "YYYY-MM-DD HH:mm:ss").fromNow();
-        let arr = post_data[i][6].split("-");
+        post_time = moment(post_data[i][7], "YYYY-MM-DD HH:mm:ss").fromNow();
+        let arr = post_data[i][7].split("-");
         let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         let month_index = parseInt(arr[1], 10) - 1;
-        post_data[i][6] =
-          post_data[i][6][8] +
-          post_data[i][6][9] +
+        post_data[i][7] =
+          post_data[i][7][8] +
+          post_data[i][7][9] +
           " " +
           months[month_index] +
           "," +
           " " +
           arr[0] +
           "," +
-          post_data[i][6][10] +
-          post_data[i][6][11] +
-          post_data[i][6][12] +
-          post_data[i][6][13] +
-          post_data[i][6][14] +
-          post_data[i][6][15] +
-          post_data[i][6][16] +
-          post_data[i][6][17] +
-          post_data[i][6][18];
-        const d = new Date(post_data[i][6]);
-        post_data[i][6] = days[d.getDay()] + "," + " " + post_data[i][6] + " UTC+3";
+          post_data[i][7][10] +
+          post_data[i][7][11] +
+          post_data[i][7][12] +
+          post_data[i][7][13] +
+          post_data[i][7][14] +
+          post_data[i][7][15] +
+          post_data[i][7][16] +
+          post_data[i][7][17] +
+          post_data[i][7][18];
+        const d = new Date(post_data[i][7]);
+        post_data[i][7] = days[d.getDay()] + "," + " " + post_data[i][7] + " UTC+3";
         if (i == 0) {
-          document.getElementById("post-user-name").innerHTML = post_data[i][0];
-          document.getElementsByClassName("post-question")[0].innerHTML = post_data[i][3];
-          document.getElementsByClassName("score")[0].innerHTML = post_data[i][4];
-          document.getElementsByClassName("score")[1].innerHTML = post_data[i][5];
+          document.getElementById("post-user-name").innerHTML = post_data[i][1];
+          document.getElementsByClassName("post-question")[0].innerHTML = post_data[i][4];
+          document.getElementsByClassName("score")[0].innerHTML = post_data[i][5];
+          document.getElementsByClassName("score")[1].innerHTML = post_data[i][6];
           document.getElementById("post-time").innerHTML = post_time;
-          document.getElementById("post-time-detailed").innerHTML = post_data[i][6];
+          document.getElementById("post-time-detailed").innerHTML = post_data[i][7];
         } else if (i > 0) {
           number_of_cloned_posts++;
           clone_name = "cloned_post" + (i - 1);
@@ -265,12 +265,12 @@ function generate_posts() {
           clone[i - 1] = node[i - 1].cloneNode(true);
           clone[i - 1].setAttribute("id", clone_name);
           console.log(clone_name);
-          clone[i - 1].querySelector("#post-user-name").innerHTML = post_data[i][0];
-          clone[i - 1].querySelectorAll(".post-question")[0].innerHTML = post_data[i][3];
-          clone[i - 1].querySelectorAll(".score")[0].innerHTML = post_data[i][4];
-          clone[i - 1].querySelectorAll(".score")[1].innerHTML = post_data[i][5];
+          clone[i - 1].querySelector("#post-user-name").innerHTML = post_data[i][1];
+          clone[i - 1].querySelectorAll(".post-question")[0].innerHTML = post_data[i][4];
+          clone[i - 1].querySelectorAll(".score")[0].innerHTML = post_data[i][5];
+          clone[i - 1].querySelectorAll(".score")[1].innerHTML = post_data[i][6];
           clone[i - 1].querySelector("#post-time").innerHTML = post_time;
-          clone[i - 1].querySelector("#post-time-detailed").innerHTML = post_data[i][6];
+          clone[i - 1].querySelector("#post-time-detailed").innerHTML = post_data[i][7];
           document.getElementById("posts-container").appendChild(clone[i - 1]);
 
           document.getElementById(clone_name).style.display = "flex";
