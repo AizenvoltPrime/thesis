@@ -52,40 +52,35 @@ document.getElementById("sum").addEventListener("click", function () {
     document.getElementById("passc-help").innerHTML = "";
     document.getElementById("email-help").innerHTML = "";
   } else {
-    $.ajax({
-      type: "POST",
-      url: "user_registration.php",
-      dataType: "text",
-      data: {
-        username: uname,
-        password: upass,
-        email: uemail,
-      },
-      cache: false,
-      success: function (res) {
-        if (res.trim() === "This username is already taken.") {
+    const form = new FormData(document.getElementById("reg-form"));
+    fetch("user_registration.php", {
+      method: "POST",
+      body: form,
+    })
+      .then((res) => res.text())
+      .then((response) => {
+        if (response.trim() === "This username is already taken.") {
           document.getElementById("user-help").innerHTML = "This username is already taken!";
           document.getElementById("pass-help").innerHTML = "";
           document.getElementById("passc-help").innerHTML = "";
           document.getElementById("email-help").innerHTML = "";
-        } else if (res.trim() === "This email is already being used.") {
+        } else if (response.trim() === "This email is already being used.") {
           document.getElementById("email-help").innerHTML = "This email is already being used!";
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "";
           document.getElementById("passc-help").innerHTML = "";
-        } else if (res.trim() === "Please enter a valid email address") {
+        } else if (response.trim() === "Please enter a valid email address") {
           document.getElementById("email-help").innerHTML = "Please enter a valid email address";
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "";
           document.getElementById("passc-help").innerHTML = "";
-        } else if (res.trim() === "Something went wrong! Please try again later!") {
+        } else if (response.trim() === "Something went wrong! Please try again later!") {
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "Something went wrong! Please try again later!";
-        } else if (res.trim() === "Success") {
+        } else if (response.trim() === "Success") {
           window.location = "http://localhost/project/login/login.php";
         }
-      },
-    });
+      });
   }
 });
 

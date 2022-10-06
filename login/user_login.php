@@ -5,6 +5,9 @@ session_start();
 // Include config file
 require_once "../config.php";
 
+$jsonString = file_get_contents('php://input');
+$data = json_decode($jsonString, true);
+
 // Define variables and initialize with empty values
 $username_err = $password_err = "";
 // Processing form data when form is submitted
@@ -16,7 +19,7 @@ $username_err = $password_err = "";
             mysqli_stmt_bind_param($stmt, "s", $param_username);
             
             // Set parameters
-            $param_username = $_POST['username'];
+            $param_username = $data['username'];
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Store result
@@ -27,7 +30,7 @@ $username_err = $password_err = "";
                     // Bind result variables
                     mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $role);
                     if(mysqli_stmt_fetch($stmt)){
-                        if(password_verify($_POST['password'], $hashed_password)){
+                        if(password_verify($data['password'], $hashed_password)){
                             // Password is correct, so start a new session             
                             // Store data in session variables
                             echo "Success";

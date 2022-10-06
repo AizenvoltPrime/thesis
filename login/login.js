@@ -11,30 +11,25 @@ document.getElementById("sum").addEventListener("click", function () {
     document.getElementById("pass-help").innerHTML = "Password field is empty!";
     document.getElementById("user-help").innerHTML = "";
   } else {
-    $.ajax({
-      type: "POST",
-      url: "user_login.php",
-      dataType: "text",
-      data: {
-        username: uname,
-        password: upass,
-      },
-      cache: false,
-      success: function (res) {
-        if (res.trim() === "Wrong Password") {
+    fetch("user_login.php", {
+      method: "POST",
+      body: JSON.stringify({ username: uname, password: upass }),
+    })
+      .then((res) => res.text())
+      .then((response) => {
+        if (response.trim() === "Wrong Password") {
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "Incorrect Username or Password!";
-        } else if (res.trim() === "Wrong Username") {
+        } else if (response.trim() === "Wrong Username") {
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "Incorrect Username or Password!";
-        } else if (res.trim() === "Oops! Something went wrong! Please try again later!") {
+        } else if (response.trim() === "Oops! Something went wrong! Please try again later!") {
           document.getElementById("user-help").innerHTML = "";
           document.getElementById("pass-help").innerHTML = "Oops! Something went wrong! Please try again later!";
-        } else if (res.trim() === "Success") {
+        } else if (response.trim() === "Success") {
           window.location = "../index.php";
         }
-      },
-    });
+      });
   }
 });
 
