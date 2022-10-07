@@ -51,10 +51,10 @@ require_once "config.php";
     <div id="warning-nothing-selected">You must choose a poll type!</div>
     <form id="poll-question">
         <div id="question-instruction">Type your question.</div>
-        <textarea id="question" type="text" name="question-text"></textarea>
+        <textarea id="question" type="text" name="question-text" maxlength="150"></textarea>
         <button id= "sum" type="button" style="width:8em; height:3em; font-size: 1.3em;">Post Poll</button>
     </form>
-    <div id="warning-empty-text-area">Textarea needs to have at least 15 characters!</div>
+    <div id="warning-empty-text-area">Textarea needs to have at least 15 characters and at most 150 characters!</div>
     <div id="posts-container">
       <div class="post">
         <div id="post-info">

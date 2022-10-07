@@ -170,6 +170,7 @@ document.getElementById("sum").addEventListener("click", function () {
     $("#warning-nothing-selected").fadeIn(300, function () {});
   } else if ($("#question").val().trim().length < 15) {
     $("#warning-empty-text-area").fadeIn(300, function () {});
+    $("#warning-nothing-selected").fadeOut(300, function () {});
   } else if (user_choice !== "none" && $("#question").val().trim().length >= 1) {
     fetch("process_data.php", {
       method: "POST",
