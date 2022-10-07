@@ -2,8 +2,10 @@
 
 let user_choice = "none";
 let user_yes_no_answer = [0, 0];
+let user_chevron_vote = [];
 let node = [];
 let clone = [];
+let post_data = [];
 
 document.getElementById("sidenav-icon").addEventListener("click", function () {
   document.getElementById("sidenav").style.width = "18.75em";
@@ -119,6 +121,8 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
         $("#add-post-icon").fadeOut(300, function () {});
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
+        document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
+        document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
         $("#all-filters").fadeOut(300, function () {
           document.getElementById("poll-selection").style.display = "flex";
           document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
@@ -206,7 +210,9 @@ function generate_posts() {
   })
     .then((res) => res.json())
     .then((response) => {
-      let post_data = response;
+      post_data.length = 0;
+      user_chevron_vote.length = 0;
+      post_data = response;
       let post_time;
       for (let i = 0; i < post_data.length; i++) {
         post_time = moment(post_data[i][7], "YYYY-MM-DD HH:mm:ss").fromNow();
@@ -253,6 +259,31 @@ function generate_posts() {
           document.getElementById("posts-container").appendChild(clone[i - 1]);
         }
       }
+      if (post_data[0].length > 8) {
+        for (let i = 0; i < post_data.length; i++) {
+          if (i == 0) {
+            if (post_data[i][8] == 1) {
+              document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
+              user_chevron_vote.push([true, false]);
+            } else if (post_data[i][9] == 1) {
+              document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
+              user_chevron_vote.push([false, true]);
+            } else if (post_data[i][8] != 1 && post_data[i][9] != 1) {
+              user_chevron_vote.push([false, false]);
+            }
+          } else if (i > 0) {
+            if (post_data[i][8] == 1) {
+              document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
+              user_chevron_vote.push([true, false]);
+            } else if (post_data[i][9] == 1) {
+              document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
+              user_chevron_vote.push([false, true]);
+            } else if (post_data[i][8] != 1 && post_data[i][9] != 1) {
+              user_chevron_vote.push([false, false]);
+            }
+          }
+        }
+      }
       console.log(post_data);
     });
 }
@@ -264,10 +295,117 @@ const postContainer = document.querySelector("#posts-container");
 postContainer.addEventListener(
   "click",
   (e) => {
-    const btn = e.target.closest('button[data-dir="up"]');
-    if (!btn) return;
-    const post = btn.closest(".post");
-    const postIndex = [...postContainer.children].indexOf(post);
+    const btn_up = e.target.closest('button[data-dir="up"]');
+    const btn_down = e.target.closest('button[data-dir="down"]');
+    if (post_data[0].length > 8) {
+      if (btn_up) {
+        const post_up = btn_up.closest(".post");
+        const postIndexUP = [...postContainer.children].indexOf(post_up);
+
+        if (user_chevron_vote[postIndexUP][0] == true && user_chevron_vote[postIndexUP][1] == false) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "chevron_vote", direction: "up", previous_vote: "up", post_id: post_data[postIndexUP][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                post_data[postIndexUP][5]--;
+                document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-up")[0].style.color = null;
+                document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerHTML = post_data[postIndexUP][5];
+                user_chevron_vote[postIndexUP][0] = false;
+              }
+            });
+        } else if (user_chevron_vote[postIndexUP][0] == false && user_chevron_vote[postIndexUP][1] == true) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "chevron_vote", direction: "up", previous_vote: "down", post_id: post_data[postIndexUP][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                post_data[postIndexUP][5]++;
+                post_data[postIndexUP][6]--;
+                document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-up")[0].style.color = "#00ffd0";
+                document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-down")[0].style.color = null;
+                document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerHTML = post_data[postIndexUP][5];
+                document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[1].innerHTML = post_data[postIndexUP][6];
+                user_chevron_vote[postIndexUP][0] = true;
+                user_chevron_vote[postIndexUP][1] = false;
+              }
+            });
+        } else if (user_chevron_vote[postIndexUP][0] == false && user_chevron_vote[postIndexUP][1] == false) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "chevron_vote", direction: "up", previous_vote: "no", post_id: post_data[postIndexUP][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                post_data[postIndexUP][5]++;
+                document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-up")[0].style.color = "#00ffd0";
+                document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerHTML = post_data[postIndexUP][5];
+                user_chevron_vote[postIndexUP][0] = true;
+              }
+            });
+        }
+      } else if (btn_down) {
+        const post_down = btn_down.closest(".post");
+        const postIndexDown = [...postContainer.children].indexOf(post_down);
+
+        if (user_chevron_vote[postIndexDown][0] == false && user_chevron_vote[postIndexDown][1] == true) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "chevron_vote", direction: "down", previous_vote: "down", post_id: post_data[postIndexDown][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                post_data[postIndexDown][6]--;
+                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = null;
+                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[1].innerHTML = post_data[postIndexDown][6];
+                user_chevron_vote[postIndexDown][1] = false;
+              }
+            });
+        } else if (user_chevron_vote[postIndexDown][0] == true && user_chevron_vote[postIndexDown][1] == false) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "chevron_vote", direction: "down", previous_vote: "up", post_id: post_data[postIndexDown][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                post_data[postIndexDown][5]--;
+                post_data[postIndexDown][6]++;
+                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-up")[0].style.color = null;
+                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = "#cc0000";
+                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerHTML = post_data[postIndexDown][5];
+                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[1].innerHTML = post_data[postIndexDown][6];
+                user_chevron_vote[postIndexDown][0] = false;
+                user_chevron_vote[postIndexDown][1] = true;
+              }
+            });
+        } else if (user_chevron_vote[postIndexDown][0] == false && user_chevron_vote[postIndexDown][1] == false) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "chevron_vote", direction: "down", previous_vote: "no", post_id: post_data[postIndexDown][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                post_data[postIndexDown][6]++;
+                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = "#cc0000";
+                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[1].innerHTML = post_data[postIndexDown][6];
+                user_chevron_vote[postIndexDown][1] = true;
+              }
+            });
+        }
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
   },
   { passive: true }
 );

@@ -3,3 +3,22 @@ https://www.w3schools.com/howto/howto_js_sidenav.asp
 Remove blue highlight: https://www.youtube.com/watch?v=DVrJtKI8N2I
 Hide menu Johncy:https://stackoverflow.com/questions/29960942/hide-menu-sidebar-when-clicking-outside-the-bar-or-the-button
 get data from date format Clyde Lobo:https://stackoverflow.com/questions/12246394/how-to-get-month-from-string-in-javascript
+
+CREATE VIEW posts_info AS SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name 
+AS category_name, posts.post_text AS post_text, sum(chevron_vote.chevron_up) AS chevron_up, sum(chevron_vote.chevron_down) AS chevron_down, posts.post_date 
+AS post_date FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories on posts.post_category = categories.category_id 
+join chevron_vote ON posts.post_number = chevron_vote.post_id GROUP BY posts.post_number ORDER BY posts.post_date DESC
+
+SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
+ posts.post_text AS post_text, sum(chevron_vote.chevron_up) AS chevron_up, sum(chevron_vote.chevron_down) AS chevron_down, posts.post_date AS post_date, 
+ chevron_vote.chevron_up AS user_chevron_up, chevron_vote.chevron_down AS user_chevron_down 
+ FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
+on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
+GROUP BY posts.post_number ORDER BY posts.post_date DESC;
+
+
+SELECT posts.post_number AS post_number, user.username AS username, sum(chevron_vote.chevron_up) AS 
+chevron_up, sum(chevron_vote.chevron_down) AS chevron_down, posts.post_date AS post_date, (SELECT chevron_vote.chevron_up FROM chevron_vote 
+WHERE chevron_vote.user_id=1 and chevron_vote.post_id=post_number) AS user_chevron_up, (SELECT chevron_vote.chevron_down FROM chevron_vote 
+WHERE chevron_vote.user_id=1 and chevron_vote.post_id=post_number) AS user_chevron_down FROM posts join 
+user on posts.user_id = user.id join chevron_vote ON posts.post_number = chevron_vote.post_id GROUP BY posts.post_number ORDER BY posts.post_date DESC;
