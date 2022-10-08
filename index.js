@@ -309,7 +309,7 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                post_data[postIndexUP][5]--;
+                post_data[postIndexUP][5] = parseInt(post_data[postIndexUP][5]) - 1;
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-up")[0].style.color = null;
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerHTML = post_data[postIndexUP][5];
                 user_chevron_vote[postIndexUP][0] = false;
@@ -323,7 +323,7 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                post_data[postIndexUP][5] = post_data[postIndexUP][5] + 2;
+                post_data[postIndexUP][5] = parseInt(post_data[postIndexUP][5]) + 2;
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-up")[0].style.color = "#00ffd0";
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-down")[0].style.color = null;
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerHTML = post_data[postIndexUP][5];
@@ -339,7 +339,7 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                post_data[postIndexUP][5]++;
+                post_data[postIndexUP][5] = parseInt(post_data[postIndexUP][5]) + 1;
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-up")[0].style.color = "#00ffd0";
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerHTML = post_data[postIndexUP][5];
                 user_chevron_vote[postIndexUP][0] = true;
@@ -358,7 +358,7 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                post_data[postIndexDown][5]++;
+                post_data[postIndexDown][5] = parseInt(post_data[postIndexDown][5]) + 1;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = null;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerHTML = post_data[postIndexDown][5];
                 user_chevron_vote[postIndexDown][1] = false;
@@ -372,7 +372,7 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                post_data[postIndexDown][5] = post_data[postIndexDown][5] - 2;
+                post_data[postIndexDown][5] = parseInt(post_data[postIndexDown][5]) - 2;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-up")[0].style.color = null;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = "#cc0000";
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerHTML = post_data[postIndexDown][5];
@@ -388,7 +388,7 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                post_data[postIndexDown][5]--;
+                post_data[postIndexDown][5] = parseInt(post_data[postIndexDown][5]) - 1;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = "#cc0000";
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerHTML = post_data[postIndexDown][5];
                 user_chevron_vote[postIndexDown][1] = true;
