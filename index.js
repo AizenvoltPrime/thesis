@@ -216,70 +216,68 @@ function generate_posts() {
       post_data = response;
       let post_time;
       for (let i = 0; i < post_data.length; i++) {
-        post_time = moment(post_data[i][7], "YYYY-MM-DD HH:mm:ss").fromNow();
-        let arr = post_data[i][7].split("-");
+        post_time = moment(post_data[i][6], "YYYY-MM-DD HH:mm:ss").fromNow();
+        let arr = post_data[i][6].split("-");
         let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         let month_index = parseInt(arr[1], 10) - 1;
-        post_data[i][7] =
-          post_data[i][7][8] +
-          post_data[i][7][9] +
+        post_data[i][6] =
+          post_data[i][6][8] +
+          post_data[i][6][9] +
           " " +
           months[month_index] +
           "," +
           " " +
           arr[0] +
           "," +
-          post_data[i][7][10] +
-          post_data[i][7][11] +
-          post_data[i][7][12] +
-          post_data[i][7][13] +
-          post_data[i][7][14] +
-          post_data[i][7][15] +
-          post_data[i][7][16] +
-          post_data[i][7][17] +
-          post_data[i][7][18];
-        const d = new Date(post_data[i][7]);
-        post_data[i][7] = days[d.getDay()] + "," + " " + post_data[i][7] + " UTC+3";
+          post_data[i][6][10] +
+          post_data[i][6][11] +
+          post_data[i][6][12] +
+          post_data[i][6][13] +
+          post_data[i][6][14] +
+          post_data[i][6][15] +
+          post_data[i][6][16] +
+          post_data[i][6][17] +
+          post_data[i][6][18];
+        const d = new Date(post_data[i][6]);
+        post_data[i][6] = days[d.getDay()] + "," + " " + post_data[i][6] + " UTC+3";
         if (i == 0) {
           document.getElementById("post-user-name").innerHTML = post_data[i][1];
           document.getElementsByClassName("post-question")[0].innerHTML = post_data[i][4];
           document.getElementsByClassName("score")[0].innerHTML = post_data[i][5];
-          document.getElementsByClassName("score")[1].innerHTML = post_data[i][6];
           document.getElementById("post-time").innerHTML = post_time;
-          document.getElementById("post-time-detailed").innerHTML = post_data[i][7];
+          document.getElementById("post-time-detailed").innerHTML = post_data[i][6];
         } else if (i > 0) {
           node[i - 1] = document.getElementsByClassName("post")[0];
           clone[i - 1] = node[i - 1].cloneNode(true);
           clone[i - 1].querySelector("#post-user-name").innerHTML = post_data[i][1];
           clone[i - 1].querySelectorAll(".post-question")[0].innerHTML = post_data[i][4];
           clone[i - 1].querySelectorAll(".score")[0].innerHTML = post_data[i][5];
-          clone[i - 1].querySelectorAll(".score")[1].innerHTML = post_data[i][6];
           clone[i - 1].querySelector("#post-time").innerHTML = post_time;
-          clone[i - 1].querySelector("#post-time-detailed").innerHTML = post_data[i][7];
+          clone[i - 1].querySelector("#post-time-detailed").innerHTML = post_data[i][6];
           document.getElementById("posts-container").appendChild(clone[i - 1]);
         }
       }
-      if (post_data[0].length > 8) {
+      if (post_data[0].length > 7) {
         for (let i = 0; i < post_data.length; i++) {
           if (i == 0) {
-            if (post_data[i][8] == 1) {
+            if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
               user_chevron_vote.push([true, false]);
-            } else if (post_data[i][9] == 1) {
+            } else if (post_data[i][7] == -1) {
               document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
               user_chevron_vote.push([false, true]);
-            } else if (post_data[i][8] != 1 && post_data[i][9] != 1) {
+            } else if (post_data[i][7] != 1 && post_data[i][7] != -1) {
               user_chevron_vote.push([false, false]);
             }
           } else if (i > 0) {
-            if (post_data[i][8] == 1) {
+            if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
               user_chevron_vote.push([true, false]);
-            } else if (post_data[i][9] == 1) {
+            } else if (post_data[i][7] == -1) {
               document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
               user_chevron_vote.push([false, true]);
-            } else if (post_data[i][8] != 1 && post_data[i][9] != 1) {
+            } else if (post_data[i][7] != 1 && post_data[i][7] != -1) {
               user_chevron_vote.push([false, false]);
             }
           }
@@ -298,7 +296,7 @@ postContainer.addEventListener(
   (e) => {
     const btn_up = e.target.closest('button[data-dir="up"]');
     const btn_down = e.target.closest('button[data-dir="down"]');
-    if (post_data[0].length > 8) {
+    if (post_data[0].length > 7) {
       if (btn_up) {
         const post_up = btn_up.closest(".post");
         const postIndexUP = [...postContainer.children].indexOf(post_up);
@@ -325,12 +323,10 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                post_data[postIndexUP][5]++;
-                post_data[postIndexUP][6]--;
+                post_data[postIndexUP][5] = post_data[postIndexUP][5] + 2;
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-up")[0].style.color = "#00ffd0";
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-down")[0].style.color = null;
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerHTML = post_data[postIndexUP][5];
-                document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[1].innerHTML = post_data[postIndexUP][6];
                 user_chevron_vote[postIndexUP][0] = true;
                 user_chevron_vote[postIndexUP][1] = false;
               }
@@ -362,9 +358,9 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                post_data[postIndexDown][6]--;
+                post_data[postIndexDown][5]++;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = null;
-                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[1].innerHTML = post_data[postIndexDown][6];
+                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerHTML = post_data[postIndexDown][5];
                 user_chevron_vote[postIndexDown][1] = false;
               }
             });
@@ -376,12 +372,10 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                post_data[postIndexDown][5]--;
-                post_data[postIndexDown][6]++;
+                post_data[postIndexDown][5] = post_data[postIndexDown][5] - 2;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-up")[0].style.color = null;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = "#cc0000";
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerHTML = post_data[postIndexDown][5];
-                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[1].innerHTML = post_data[postIndexDown][6];
                 user_chevron_vote[postIndexDown][0] = false;
                 user_chevron_vote[postIndexDown][1] = true;
               }
@@ -394,9 +388,9 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                post_data[postIndexDown][6]++;
+                post_data[postIndexDown][5]--;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = "#cc0000";
-                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[1].innerHTML = post_data[postIndexDown][6];
+                document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerHTML = post_data[postIndexDown][5];
                 user_chevron_vote[postIndexDown][1] = true;
               }
             });

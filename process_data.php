@@ -66,9 +66,8 @@ else if($data['request'] == "get_post_data")
     if(isset($_SESSION['id']))
     {
         $sql = "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
-            posts.post_text AS post_text, sum(chevron_vote.chevron_up) AS chevron_up, sum(chevron_vote.chevron_down) AS chevron_down, posts.post_date AS post_date, 
-            COALESCE((SELECT chevron_vote.chevron_up FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' and chevron_vote.post_id=post_number),0) AS user_chevron_up, 
-            COALESCE((SELECT chevron_vote.chevron_down FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' and chevron_vote.post_id=post_number),0) AS user_chevron_down 
+            posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
+            COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' and chevron_vote.post_id=post_number),0) AS user_chevron_result
             FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
             on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
             GROUP BY posts.post_number ORDER BY posts.post_date DESC";
@@ -76,19 +75,19 @@ else if($data['request'] == "get_post_data")
         $result = mysqli_query($conn, $sql);
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $tmp = array($row["post_number"],$row["username"], $row["poll_name"],$row["category_name"],$row["post_text"],$row["chevron_up"],$row["chevron_down"],$row["post_date"],$row["user_chevron_up"],$row["user_chevron_down"]);
+                $tmp = array($row["post_number"],$row["username"], $row["poll_name"],$row["category_name"],$row["post_text"],$row["chevron_result"],$row["post_date"],$row["user_chevron_result"]);
                 array_push($post_data,$tmp);
             }
         }
         echo json_encode($post_data);
     }
     else {
-        $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_up,chevron_down,post_date FROM posts_info";
+        $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_result,post_date FROM posts_info";
 
         $result = mysqli_query($conn, $sql);
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $tmp = array($row["post_number"],$row["username"], $row["poll_name"],$row["category_name"],$row["post_text"],$row["chevron_up"],$row["chevron_down"],$row["post_date"]);
+                $tmp = array($row["post_number"],$row["username"], $row["poll_name"],$row["category_name"],$row["post_text"],$row["chevron_result"],$row["post_date"]);
                 array_push($post_data,$tmp);
             }
         }
@@ -101,12 +100,12 @@ else if($data['request'] == "chevron_vote")
 
     if($data['direction'] == "up" && $data['previous_vote'] == "up")
     {
-        $sql = "UPDATE chevron_vote SET chevron_up = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
+        $sql = "UPDATE chevron_vote SET chevron_result = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
         mysqli_query($conn, $sql);
         echo "Success";
     }
     else if ($data['direction'] == "up" && $data['previous_vote'] == "down") {
-        $sql = "UPDATE chevron_vote SET chevron_up = 1, chevron_down = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
+        $sql = "UPDATE chevron_vote SET chevron_result = 1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
         mysqli_query($conn, $sql);
         echo "Success";
     }
@@ -116,26 +115,26 @@ else if($data['request'] == "chevron_vote")
         $result = mysqli_query($conn, $sql);
         if($result->num_rows > 0)
         {
-            $sql = "UPDATE chevron_vote SET chevron_up = 1, chevron_down = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
+            $sql = "UPDATE chevron_vote SET chevron_result = 1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
             mysqli_query($conn, $sql);
             echo "Success";
         }
         else if($result->num_rows == 0)
         {
-            $sql = "INSERT INTO chevron_vote(post_id,user_id,chevron_up,chevron_down) VALUES ('$data[post_id]','$_SESSION[id]',1,0)";       
+            $sql = "INSERT INTO chevron_vote(post_id,user_id,chevron_result) VALUES ('$data[post_id]','$_SESSION[id]',1)";       
             mysqli_query($conn, $sql);
             echo "Success";
         }
     }
     else if($data['direction'] == "down" && $data['previous_vote'] == "down")
     {
-        $sql = "UPDATE chevron_vote SET chevron_down = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
+        $sql = "UPDATE chevron_vote SET chevron_result = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
         mysqli_query($conn, $sql);
         echo "Success";
     }
     else if($data['direction'] == "down" && $data['previous_vote'] == "up")
     {
-        $sql = "UPDATE chevron_vote SET chevron_up = 0, chevron_down = 1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
+        $sql = "UPDATE chevron_vote SET chevron_result = -1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
         mysqli_query($conn, $sql);
         echo "Success";
     }
@@ -145,13 +144,13 @@ else if($data['request'] == "chevron_vote")
         $result = mysqli_query($conn, $sql);
         if($result->num_rows > 0)
         {
-            $sql = "UPDATE chevron_vote SET chevron_up = 0, chevron_down = 1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
+            $sql = "UPDATE chevron_vote SET chevron_result = -1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
             mysqli_query($conn, $sql);
             echo "Success";
         }
         else if($result->num_rows == 0)
         {
-            $sql = "INSERT INTO chevron_vote(post_id,user_id,chevron_up,chevron_down) VALUES ('$data[post_id]','$_SESSION[id]',0,1)";       
+            $sql = "INSERT INTO chevron_vote(post_id,user_id,chevron_result) VALUES ('$data[post_id]','$_SESSION[id]',-1)";       
             mysqli_query($conn, $sql);
             echo "Success";
         }

@@ -693,6 +693,7 @@ a:active {
   border-radius: 1em;
   padding: 1em 1em 1em 1em;
   width: 100%;
+  flex-direction: column;
 }
 
 #post-info {
@@ -705,9 +706,9 @@ a:active {
 #post-critic {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   column-gap: 1em;
   padding-right: 0.9em;
+  padding-top: 1em;
 }
 
 #user-who-posted {
@@ -792,13 +793,4 @@ a:active {
 .fa-chevron-up,
 .fa-chevron-down {
   cursor: pointer;
-}
-
-#critic-icons,
-#critic-score {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1em;
-  justify-content: center;
-  align-items: center;
 }
