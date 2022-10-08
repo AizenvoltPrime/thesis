@@ -125,6 +125,7 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
         document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
         document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
         document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
         $("#all-filters").fadeOut(300, function () {
           document.getElementById("poll-selection").style.display = "flex";
           document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
@@ -273,6 +274,22 @@ function generate_posts() {
           } else if (post_data[i][8] == 0 && post_data[i][9] == 0) {
             user_yes_no_vote.push([false, false]);
           }
+          if (post_data[i][10] == 1) {
+            let new_bookmark = document.createElement("i");
+            new_bookmark.className = "fa-solid fa-bookmark";
+            document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
+            document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = "#ff9c08";
+          } else if (post_data[i][10] == 0) {
+            let new_bookmark = document.createElement("i");
+            new_bookmark.className = "fa-regular fa-bookmark";
+            document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
+          }
+        }
+      } else if (post_data[0].length <= 7) {
+        for (let i = 0; i < post_data.length; i++) {
+          let new_bookmark = document.createElement("i");
+          new_bookmark.className = "fa-regular fa-bookmark";
+          document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
         }
       }
       console.log(post_data);
@@ -291,6 +308,7 @@ postContainer.addEventListener(
     const btn_yes = e.target.closest('button[data-dir="yes"]');
     const btn_no = e.target.closest('button[data-dir="no"]');
     const btn_show_graph = e.target.closest('button[data-dir="show-graph"]');
+    const btn_bookmark = e.target.closest('button[data-dir="bookmark"]');
     if (post_data[0].length > 7) {
       if (btn_up) {
         const post_up = btn_up.closest(".post");
@@ -496,6 +514,47 @@ postContainer.addEventListener(
       } else if (btn_show_graph) {
         const post_show_graph = btn_show_graph.closest(".post");
         const postIndexShowGraph = [...postContainer.children].indexOf(post_show_graph);
+      } else if (btn_bookmark) {
+        const post_bookmark = btn_bookmark.closest(".post");
+        const postIndexBookmark = [...postContainer.children].indexOf(post_bookmark);
+
+        if (post_data[postIndexBookmark][10] == 1) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({
+              request: "bookmark",
+              current_state: "checked",
+              previous_state: "checked",
+              post_id: post_data[postIndexBookmark][0],
+            }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                document.getElementsByClassName("parent_of_bookmark")[postIndexBookmark].children[0].className = "fa-regular fa-bookmark";
+                document.getElementsByClassName("parent_of_bookmark")[postIndexBookmark].children[0].style.color = null;
+                post_data[postIndexBookmark][10] = 0;
+              }
+            });
+        } else if (post_data[postIndexBookmark][10] == 0) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({
+              request: "bookmark",
+              current_state: "checked",
+              previous_state: "not_checked",
+              post_id: post_data[postIndexBookmark][0],
+            }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                document.getElementsByClassName("parent_of_bookmark")[postIndexBookmark].children[0].className = "fa-solid fa-bookmark";
+                document.getElementsByClassName("parent_of_bookmark")[postIndexBookmark].children[0].style.color = "#ff9c08";
+                post_data[postIndexBookmark][10] = 1;
+              }
+            });
+        }
       } else {
         return;
       }

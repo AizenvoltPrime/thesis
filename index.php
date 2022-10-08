@@ -77,7 +77,7 @@ require_once "config.php";
             <button data-dir="up"><i class="fa-solid fa-chevron-up"></i></button>
             <div class="score"></div>
             <button data-dir="down" style="margin-right:auto;"><i class="fa-solid fa-chevron-down"></i></button>
-            <div><i class="fa-regular fa-bookmark"></i></div>
+            <button class= "parent_of_bookmark" data-dir="bookmark"></button>
         </div>
       </div>
     </div>
