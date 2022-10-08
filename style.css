@@ -770,7 +770,8 @@ a:active {
   margin-bottom: 0.1em;
 }
 
-.answer {
+.answer-yes,
+.answer-no {
   background-color: #00ffffbb;
   padding: 0.4em;
   border-radius: 1em;

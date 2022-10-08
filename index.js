@@ -1,8 +1,8 @@
 "use strict";
 
 let user_choice = "none";
-let user_yes_no_answer = [0, 0];
 let user_chevron_vote = [];
+let user_yes_no_vote = [];
 let node = [];
 let clone = [];
 let post_data = [];
@@ -123,6 +123,8 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
         $(".post").not(":first").remove();
         document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
         document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
+        document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
         $("#all-filters").fadeOut(300, function () {
           document.getElementById("poll-selection").style.display = "flex";
           document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
@@ -196,14 +198,6 @@ document.getElementById("sum").addEventListener("click", function () {
   }
 });
 
-document.getElementsByClassName("answer")[0].addEventListener("click", function () {
-  user_yes_no_answer = [1, 0];
-});
-
-document.getElementsByClassName("answer")[1].addEventListener("click", function () {
-  user_yes_no_answer = [0, 1];
-});
-
 function generate_posts() {
   fetch("process_data.php", {
     method: "POST",
@@ -260,26 +254,23 @@ function generate_posts() {
       }
       if (post_data[0].length > 7) {
         for (let i = 0; i < post_data.length; i++) {
-          if (i == 0) {
-            if (post_data[i][7] == 1) {
-              document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
-              user_chevron_vote.push([true, false]);
-            } else if (post_data[i][7] == -1) {
-              document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
-              user_chevron_vote.push([false, true]);
-            } else if (post_data[i][7] != 1 && post_data[i][7] != -1) {
-              user_chevron_vote.push([false, false]);
-            }
-          } else if (i > 0) {
-            if (post_data[i][7] == 1) {
-              document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
-              user_chevron_vote.push([true, false]);
-            } else if (post_data[i][7] == -1) {
-              document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
-              user_chevron_vote.push([false, true]);
-            } else if (post_data[i][7] != 1 && post_data[i][7] != -1) {
-              user_chevron_vote.push([false, false]);
-            }
+          if (post_data[i][7] == 1) {
+            document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
+            user_chevron_vote.push([true, false]);
+          } else if (post_data[i][7] == -1) {
+            document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
+            user_chevron_vote.push([false, true]);
+          } else if (post_data[i][7] != 1 && post_data[i][7] != -1) {
+            user_chevron_vote.push([false, false]);
+          }
+          if (post_data[i][8] == 1) {
+            document.getElementsByClassName("answer-yes")[i].style.background = "#00ffd0";
+            user_yes_no_vote.push([true, false]);
+          } else if (post_data[i][9] == 1) {
+            document.getElementsByClassName("answer-no")[i].style.background = "#cc0000";
+            user_yes_no_vote.push([false, true]);
+          } else if (post_data[i][8] == 0 && post_data[i][9] == 0) {
+            user_yes_no_vote.push([false, false]);
           }
         }
       }
@@ -296,6 +287,9 @@ postContainer.addEventListener(
   (e) => {
     const btn_up = e.target.closest('button[data-dir="up"]');
     const btn_down = e.target.closest('button[data-dir="down"]');
+    const btn_yes = e.target.closest('button[data-dir="yes"]');
+    const btn_no = e.target.closest('button[data-dir="no"]');
+    const btn_show_graph = e.target.closest('button[data-dir="show-graph"]');
     if (post_data[0].length > 7) {
       if (btn_up) {
         const post_up = btn_up.closest(".post");
@@ -413,6 +407,55 @@ postContainer.addEventListener(
               }
             });
         }
+      } else if (btn_yes) {
+        const post_yes = btn_yes.closest(".post");
+        const postIndexYes = [...postContainer.children].indexOf(post_yes);
+
+        if (user_yes_no_vote[postIndexYes][0] == true && user_yes_no_vote[postIndexYes][1] == false) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "yes", post_id: post_data[postIndexYes][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffffbb";
+                user_yes_no_vote[postIndexYes][0] = false;
+              }
+            });
+        } else if (user_yes_no_vote[postIndexYes][0] == false && user_yes_no_vote[postIndexYes][1] == true) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "no", post_id: post_data[postIndexYes][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
+                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-no")[0].style.background = "#00ffffbb";
+                user_yes_no_vote[postIndexYes][0] = true;
+                user_yes_no_vote[postIndexYes][1] = false;
+              }
+            });
+        } else if (user_yes_no_vote[postIndexYes][0] == false && user_yes_no_vote[postIndexYes][1] == false) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "nothing", post_id: post_data[postIndexYes][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
+                user_yes_no_vote[postIndexYes][0] = true;
+              }
+            });
+        }
+      } else if (btn_no) {
+        const post_no = btn_no.closest(".post");
+        const postIndexNo = [...postContainer.children].indexOf(post_no);
+      } else if (btn_show_graph) {
+        const post_show_graph = btn_show_graph.closest(".post");
+        const postIndexShowGraph = [...postContainer.children].indexOf(post_show_graph);
       } else {
         return;
       }

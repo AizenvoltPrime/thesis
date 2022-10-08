@@ -68,9 +68,9 @@ require_once "config.php";
           </div>
           <div id="user-question-answers">
             <div class="post-question"></div>
-            <button class="answer">Yes</button>
-            <button class="answer" style="margin-right:0.5em;">No</button>
-            <div id="show-graph">Show Graph</div>
+            <button data-dir="yes" class="answer-yes">Yes</button>
+            <button data-dir="no" class="answer-no" style="margin-right:0.5em;">No</button>
+            <button data-dir="show-graph" id="show-graph">Show Graph</button>
           </div>
         </div>
         <div id="post-critic">
