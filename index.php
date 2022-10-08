@@ -65,7 +65,6 @@ require_once "config.php";
               <div id="post-time"></div>
               <div id="post-time-detailed"></div>
             </div>
-            <div><i class="fa-regular fa-bookmark"></i></div>
           </div>
           <div id="user-question-answers">
             <div class="post-question"></div>
@@ -77,7 +76,8 @@ require_once "config.php";
         <div id="post-critic">
             <button data-dir="up"><i class="fa-solid fa-chevron-up"></i></button>
             <div class="score"></div>
-            <button data-dir="down"><i class="fa-solid fa-chevron-down"></i></button>
+            <button data-dir="down" style="margin-right:auto;"><i class="fa-solid fa-chevron-down"></i></button>
+            <div><i class="fa-regular fa-bookmark"></i></div>
         </div>
       </div>
     </div>

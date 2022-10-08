@@ -705,10 +705,8 @@ a:active {
 
 #post-critic {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   column-gap: 1em;
-  padding-right: 0.9em;
-  padding-top: 1em;
 }
 
 #user-who-posted {
@@ -723,6 +721,7 @@ a:active {
   display: flex;
   flex-wrap: wrap;
   column-gap: 0.5em;
+  word-break: break-word;
 }
 
 #post-user-name {
@@ -754,7 +753,7 @@ a:active {
 }
 
 .fa-bookmark {
-  font-size: 1.8em;
+  font-size: 2em;
   cursor: pointer;
 }
 
@@ -763,7 +762,7 @@ a:active {
   width: fit-content;
   flex-basis: 100%;
   color: #f3f3f3;
-  margin-bottom: 1em;
+  margin-bottom: 0.1em;
 }
 
 .answer {
@@ -788,6 +787,7 @@ a:active {
   width: fit-content;
   text-align: center;
   margin-top: 0.5em;
+  margin-right: 1.8em;
 }
 
 .fa-chevron-up,
