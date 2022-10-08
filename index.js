@@ -207,6 +207,7 @@ function generate_posts() {
     .then((response) => {
       post_data.length = 0;
       user_chevron_vote.length = 0;
+      user_yes_no_vote.length = 0;
       post_data = response;
       let post_time;
       for (let i = 0; i < post_data.length; i++) {
@@ -410,7 +411,6 @@ postContainer.addEventListener(
       } else if (btn_yes) {
         const post_yes = btn_yes.closest(".post");
         const postIndexYes = [...postContainer.children].indexOf(post_yes);
-
         if (user_yes_no_vote[postIndexYes][0] == true && user_yes_no_vote[postIndexYes][1] == false) {
           fetch("process_data.php", {
             method: "POST",
