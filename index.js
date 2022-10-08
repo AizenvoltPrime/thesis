@@ -238,19 +238,19 @@ function generate_posts() {
         const d = new Date(post_data[i][6]);
         post_data[i][6] = days[d.getDay()] + "," + " " + post_data[i][6] + " UTC+3";
         if (i == 0) {
-          document.getElementById("post-user-name").innerHTML = post_data[i][1];
-          document.getElementsByClassName("post-question")[0].innerHTML = post_data[i][4];
-          document.getElementsByClassName("score")[0].innerHTML = post_data[i][5];
-          document.getElementById("post-time").innerHTML = post_time;
-          document.getElementById("post-time-detailed").innerHTML = post_data[i][6];
+          document.getElementById("post-user-name").innerText = post_data[i][1];
+          document.getElementsByClassName("post-question")[0].innerText = post_data[i][4];
+          document.getElementsByClassName("score")[0].innerText = post_data[i][5];
+          document.getElementById("post-time").innerText = post_time;
+          document.getElementById("post-time-detailed").innerText = post_data[i][6];
         } else if (i > 0) {
           node[i - 1] = document.getElementsByClassName("post")[0];
           clone[i - 1] = node[i - 1].cloneNode(true);
-          clone[i - 1].querySelector("#post-user-name").innerHTML = post_data[i][1];
-          clone[i - 1].querySelectorAll(".post-question")[0].innerHTML = post_data[i][4];
-          clone[i - 1].querySelectorAll(".score")[0].innerHTML = post_data[i][5];
-          clone[i - 1].querySelector("#post-time").innerHTML = post_time;
-          clone[i - 1].querySelector("#post-time-detailed").innerHTML = post_data[i][6];
+          clone[i - 1].querySelector("#post-user-name").innerText = post_data[i][1];
+          clone[i - 1].querySelectorAll(".post-question")[0].innerText = post_data[i][4];
+          clone[i - 1].querySelectorAll(".score")[0].innerText = post_data[i][5];
+          clone[i - 1].querySelector("#post-time").innerText = post_time;
+          clone[i - 1].querySelector("#post-time-detailed").innerText = post_data[i][6];
           document.getElementById("posts-container").appendChild(clone[i - 1]);
         }
       }
@@ -325,7 +325,7 @@ postContainer.addEventListener(
                 post_data[postIndexUP][5] = parseInt(post_data[postIndexUP][5]) - 1;
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-up")[0].style.color = null;
                 $(document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0]).fadeOut(300, function () {
-                  document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerHTML = post_data[postIndexUP][5];
+                  document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerText = post_data[postIndexUP][5];
                   $(document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0]).fadeIn(300, function () {});
                 });
                 user_chevron_vote[postIndexUP][0] = false;
@@ -343,7 +343,7 @@ postContainer.addEventListener(
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-up")[0].style.color = "#00ffd0";
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-down")[0].style.color = null;
                 $(document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0]).fadeOut(300, function () {
-                  document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerHTML = post_data[postIndexUP][5];
+                  document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerText = post_data[postIndexUP][5];
                   $(document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0]).fadeIn(300, function () {});
                 });
                 user_chevron_vote[postIndexUP][0] = true;
@@ -361,7 +361,7 @@ postContainer.addEventListener(
                 post_data[postIndexUP][5] = parseInt(post_data[postIndexUP][5]) + 1;
                 document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".fa-chevron-up")[0].style.color = "#00ffd0";
                 $(document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0]).fadeOut(300, function () {
-                  document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerHTML = post_data[postIndexUP][5];
+                  document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0].innerText = post_data[postIndexUP][5];
                   $(document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0]).fadeIn(300, function () {});
                 });
                 user_chevron_vote[postIndexUP][0] = true;
@@ -383,7 +383,7 @@ postContainer.addEventListener(
                 post_data[postIndexDown][5] = parseInt(post_data[postIndexDown][5]) + 1;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = null;
                 $(document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0]).fadeOut(300, function () {
-                  document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerHTML = post_data[postIndexDown][5];
+                  document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerText = post_data[postIndexDown][5];
                   $(document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0]).fadeIn(300, function () {});
                 });
                 user_chevron_vote[postIndexDown][1] = false;
@@ -401,7 +401,7 @@ postContainer.addEventListener(
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-up")[0].style.color = null;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = "#cc0000";
                 $(document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0]).fadeOut(300, function () {
-                  document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerHTML = post_data[postIndexDown][5];
+                  document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerText = post_data[postIndexDown][5];
                   $(document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0]).fadeIn(300, function () {});
                 });
                 user_chevron_vote[postIndexDown][0] = false;
@@ -419,7 +419,7 @@ postContainer.addEventListener(
                 post_data[postIndexDown][5] = parseInt(post_data[postIndexDown][5]) - 1;
                 document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".fa-chevron-down")[0].style.color = "#cc0000";
                 $(document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0]).fadeOut(300, function () {
-                  document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerHTML = post_data[postIndexDown][5];
+                  document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0].innerText = post_data[postIndexDown][5];
                   $(document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0]).fadeIn(300, function () {});
                 });
                 user_chevron_vote[postIndexDown][1] = true;

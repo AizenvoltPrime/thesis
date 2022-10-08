@@ -5,11 +5,11 @@ document.getElementById("sum").addEventListener("click", function () {
   let upass = document.forms["login-form"]["password"].value;
 
   if (uname === "") {
-    document.getElementById("user-help").innerHTML = "Username field is empty!";
-    document.getElementById("pass-help").innerHTML = "";
+    document.getElementById("user-help").innerText = "Username field is empty!";
+    document.getElementById("pass-help").innerText = "";
   } else if (upass === "") {
-    document.getElementById("pass-help").innerHTML = "Password field is empty!";
-    document.getElementById("user-help").innerHTML = "";
+    document.getElementById("pass-help").innerText = "Password field is empty!";
+    document.getElementById("user-help").innerText = "";
   } else {
     fetch("user_login.php", {
       method: "POST",
@@ -18,14 +18,14 @@ document.getElementById("sum").addEventListener("click", function () {
       .then((res) => res.text())
       .then((response) => {
         if (response.trim() === "Wrong Password") {
-          document.getElementById("user-help").innerHTML = "";
-          document.getElementById("pass-help").innerHTML = "Incorrect Username or Password!";
+          document.getElementById("user-help").innerText = "";
+          document.getElementById("pass-help").innerText = "Incorrect Username or Password!";
         } else if (response.trim() === "Wrong Username") {
-          document.getElementById("user-help").innerHTML = "";
-          document.getElementById("pass-help").innerHTML = "Incorrect Username or Password!";
+          document.getElementById("user-help").innerText = "";
+          document.getElementById("pass-help").innerText = "Incorrect Username or Password!";
         } else if (response.trim() === "Oops! Something went wrong! Please try again later!") {
-          document.getElementById("user-help").innerHTML = "";
-          document.getElementById("pass-help").innerHTML = "Oops! Something went wrong! Please try again later!";
+          document.getElementById("user-help").innerText = "";
+          document.getElementById("pass-help").innerText = "Oops! Something went wrong! Please try again later!";
         } else if (response.trim() === "Success") {
           window.location = "../index.php";
         }
