@@ -706,7 +706,12 @@ a:active {
 #post-critic {
   display: flex;
   align-items: flex-end;
-  column-gap: 1em;
+  column-gap: 0.5em;
+}
+
+.score {
+  width: 2.5em;
+  text-align: center;
 }
 
 #user-who-posted {
