@@ -453,6 +453,46 @@ postContainer.addEventListener(
       } else if (btn_no) {
         const post_no = btn_no.closest(".post");
         const postIndexNo = [...postContainer.children].indexOf(post_no);
+
+        if (user_yes_no_vote[postIndexNo][0] == false && user_yes_no_vote[postIndexNo][1] == true) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "no", post_id: post_data[postIndexNo][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#00ffffbb";
+                user_yes_no_vote[postIndexNo][1] = false;
+              }
+            });
+        } else if (user_yes_no_vote[postIndexNo][0] == true && user_yes_no_vote[postIndexNo][1] == false) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "yes", post_id: post_data[postIndexNo][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-yes")[0].style.background = "#00ffffbb";
+                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
+                user_yes_no_vote[postIndexNo][0] = false;
+                user_yes_no_vote[postIndexNo][1] = true;
+              }
+            });
+        } else if (user_yes_no_vote[postIndexNo][0] == false && user_yes_no_vote[postIndexNo][1] == false) {
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "nothing", post_id: post_data[postIndexNo][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
+                user_yes_no_vote[postIndexNo][1] = true;
+              }
+            });
+        }
       } else if (btn_show_graph) {
         const post_show_graph = btn_show_graph.closest(".post");
         const postIndexShowGraph = [...postContainer.children].indexOf(post_show_graph);

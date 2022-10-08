@@ -191,5 +191,33 @@ else if($data['request'] == "yes_no_vote")
             echo "Success";
         }
     }
+    else if($data['current_vote'] == "no" && $data['previous_vote'] == "no")
+    {
+        $sql = "UPDATE yes_no SET answer_no = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
+        mysqli_query($conn, $sql);
+        echo "Success";
+    }
+    else if ($data['current_vote'] == "no" && $data['previous_vote'] == "yes") {
+        $sql = "UPDATE yes_no SET answer_yes = 0, answer_no=1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
+        mysqli_query($conn, $sql);
+        echo "Success";
+    }
+    else if($data['current_vote'] == "no" && $data['previous_vote'] == "nothing")
+    {
+        $sql = "SELECT post_id,user_id FROM yes_no WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'"; 
+        $result = mysqli_query($conn, $sql);
+        if($result->num_rows > 0)
+        {
+            $sql = "UPDATE yes_no SET answer_no = 1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
+            mysqli_query($conn, $sql);
+            echo "Success";
+        }
+        else if($result->num_rows == 0)
+        {
+            $sql = "INSERT INTO yes_no(post_id,user_id,post_category,answer_yes,answer_no) VALUES ('$data[post_id]','$_SESSION[id]',1,0,1)";       
+            mysqli_query($conn, $sql);
+            echo "Success";
+        }
+    }
 }
 ?>
