@@ -16,7 +16,7 @@ require_once "config.php";
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-    
+    <script type="module" src="index.js"></script>
   </head>
   <body>
     <div class="top-row">
@@ -81,6 +81,5 @@ require_once "config.php";
         </div>
       </div>
     </div>
-    <script src="index.js"></script>
   </body>
 </html>

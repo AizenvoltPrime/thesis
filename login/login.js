@@ -1,5 +1,3 @@
-"use strict";
-
 document.getElementById("sum").addEventListener("click", function () {
   let uname = document.forms["login-form"]["username"].value;
   let upass = document.forms["login-form"]["password"].value;

@@ -19,6 +19,7 @@ require_once "../config.php";
     <meta name="viewport" content="width=device-width, initial-scale=0.7"/>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+    <script type="module" src="registration.js"></script>
 </head>
 <body style="overflow:hidden;">
     <div class="top-row">
@@ -65,6 +66,5 @@ require_once "../config.php";
         </div>
         <p style="font-weight: bold; font-size:1.2em">Already have an account? <a class="Sign-up" href="../login/login.php">Login now</a></p>
     </form>
-    <script src="registration.js"></script>
 </body>
 </html>

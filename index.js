@@ -1,5 +1,3 @@
-"use strict";
-
 let user_choice = "none";
 let user_chevron_vote = [];
 let user_yes_no_vote = [];
