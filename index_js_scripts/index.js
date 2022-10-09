@@ -15,24 +15,44 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
       if (response === "false") {
         window.location = "login/login.php";
       } else {
-        $("#add-post-icon").fadeOut(300, function () {});
-        $("#all-filters").fadeOut(300, function () {});
-        $(".post").fadeOut(300, function () {});
-        $(".post")
-          .promise()
-          .done(function () {
-            $(".post").not(":first").remove();
-            document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
-            document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
-            document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
-            document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
-            document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
-            document.getElementById("poll-selection").style.display = "flex";
-            document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
-            document.getElementById("poll-question").style.display = "flex";
-            document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
-            $("#sum").fadeIn(300, function () {});
-          });
+        if (post_data[0] !== undefined) {
+          $("#add-post-icon").fadeOut(300, function () {});
+          $("#all-filters").fadeOut(300, function () {});
+          $(".post").fadeOut(300, function () {});
+          $(".post")
+            .promise()
+            .done(function () {
+              $(".post").not(":first").remove();
+              document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
+              document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
+              document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
+              document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+              document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+              document.getElementById("poll-selection").style.display = "flex";
+              document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
+              document.getElementById("poll-question").style.display = "flex";
+              document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
+              $("#sum").fadeIn(300, function () {});
+            });
+        } else {
+          console.log("feqwfqw");
+          $("#add-post-icon").fadeOut(300, function () {});
+          $("#all-filters").fadeOut(300, function () {});
+          $("#all-filters")
+            .promise()
+            .done(function () {
+              document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
+              document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
+              document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
+              document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+              document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+              document.getElementById("poll-selection").style.display = "flex";
+              document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
+              document.getElementById("poll-question").style.display = "flex";
+              document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
+              $("#sum").fadeIn(300, function () {});
+            });
+        }
       }
     });
 });
@@ -196,6 +216,9 @@ function generate_posts(bookmark_filter) {
           $("#all-filters").fadeIn(300, function () {});
           $(".post").fadeIn(300, function () {});
         }
+      } else {
+        $("#add-post-icon").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
       }
       console.log(post_data);
     });
