@@ -28,7 +28,7 @@ require_once "config.php";
     </div>
     <div id="sidenav" class="sidenav">
       <button class="closebtn"><i class="fa-solid fa-times fa-2x"></i></button>
-      <a class="nav-element" href="index.php"><i class="fa-solid fa-house"></i>Home</a>
+      <a class="nav-element"><i class="fa-solid fa-house"></i>Home</a>
     </div>
     <div id="user-nav" class="user-nav">
       <button class="closeuserbtn"><i class="fa-solid fa-times fa-2x"></i></button>

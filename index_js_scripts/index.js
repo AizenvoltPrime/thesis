@@ -81,25 +81,23 @@ document.getElementById("sum").addEventListener("click", function () {
         $("#warning-nothing-selected").fadeOut(300, function () {});
         $("#warning-empty-text-area").fadeOut(300, function () {});
         $("#poll-selection").fadeOut(300, function () {});
-        $("#poll-question").fadeOut(300, function () {
-          $("#sum").fadeOut(300, function () {});
+        $("#poll-question").fadeOut(300, function () {});
+        $("#sum").fadeOut(300, function () {
           $("#all-filters").fadeIn(300, function () {});
           $("#add-post-icon").fadeIn(300, function () {});
-          document.querySelectorAll(".post")[0].style.display = "flex";
-          document.querySelectorAll(".post")[0].style.animation = "fade_in_show 0.5s";
-          generate_posts();
+          generate_posts(false);
+          choice_dehighlight(user_choice);
+          user_choice = "none";
+          document.forms["poll-question"]["question-text"].value = "";
         });
-        choice_dehighlight(user_choice);
-        user_choice = "none";
-        document.forms["poll-question"]["question-text"].value = "";
       });
   }
 });
 
-function generate_posts() {
+function generate_posts(bookmark_filter) {
   fetch("process_data.php", {
     method: "POST",
-    body: JSON.stringify({ request: "get_post_data" }),
+    body: JSON.stringify({ request: "get_post_data", bookmarks_only: bookmark_filter }),
   })
     .then((res) => res.json())
     .then((response) => {
@@ -151,49 +149,54 @@ function generate_posts() {
           document.getElementById("posts-container").appendChild(clone[i - 1]);
         }
       }
-      if (post_data[0].length > 7) {
-        for (let i = 0; i < post_data.length; i++) {
-          if (post_data[i][7] == 1) {
-            document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
-            user_chevron_vote.push([true, false]);
-          } else if (post_data[i][7] == -1) {
-            document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
-            user_chevron_vote.push([false, true]);
-          } else if (post_data[i][7] != 1 && post_data[i][7] != -1) {
-            user_chevron_vote.push([false, false]);
+      if (post_time !== undefined && post_time !== null) {
+        if (post_data[0].length > 7) {
+          for (let i = 0; i < post_data.length; i++) {
+            if (post_data[i][7] == 1) {
+              document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
+              user_chevron_vote.push([true, false]);
+            } else if (post_data[i][7] == -1) {
+              document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
+              user_chevron_vote.push([false, true]);
+            } else if (post_data[i][7] != 1 && post_data[i][7] != -1) {
+              user_chevron_vote.push([false, false]);
+            }
+            if (post_data[i][8] == 1) {
+              document.getElementsByClassName("answer-yes")[i].style.background = "#00ffd0";
+              user_yes_no_vote.push([true, false]);
+            } else if (post_data[i][9] == 1) {
+              document.getElementsByClassName("answer-no")[i].style.background = "#cc0000";
+              user_yes_no_vote.push([false, true]);
+            } else if (post_data[i][8] == 0 && post_data[i][9] == 0) {
+              user_yes_no_vote.push([false, false]);
+            }
+            if (post_data[i][10] == 1) {
+              let new_bookmark = document.createElement("i");
+              new_bookmark.className = "fa-solid fa-bookmark";
+              document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
+              document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = "#ff9c08";
+            } else if (post_data[i][10] == 0) {
+              let new_bookmark = document.createElement("i");
+              new_bookmark.className = "fa-regular fa-bookmark";
+              document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
+            }
           }
-          if (post_data[i][8] == 1) {
-            document.getElementsByClassName("answer-yes")[i].style.background = "#00ffd0";
-            user_yes_no_vote.push([true, false]);
-          } else if (post_data[i][9] == 1) {
-            document.getElementsByClassName("answer-no")[i].style.background = "#cc0000";
-            user_yes_no_vote.push([false, true]);
-          } else if (post_data[i][8] == 0 && post_data[i][9] == 0) {
-            user_yes_no_vote.push([false, false]);
-          }
-          if (post_data[i][10] == 1) {
-            let new_bookmark = document.createElement("i");
-            new_bookmark.className = "fa-solid fa-bookmark";
-            document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
-            document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = "#ff9c08";
-          } else if (post_data[i][10] == 0) {
+        } else if (post_data[0].length <= 7) {
+          for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
             document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
           }
         }
-      } else if (post_data[0].length <= 7) {
-        for (let i = 0; i < post_data.length; i++) {
-          let new_bookmark = document.createElement("i");
-          new_bookmark.className = "fa-regular fa-bookmark";
-          document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
+        if (bookmark_filter == true || bookmark_filter == false) {
+          $(".post").fadeIn(300, function () {});
         }
       }
       console.log(post_data);
     });
 }
 
-generate_posts();
+generate_posts(false);
 
 const postContainer = document.querySelector("#posts-container");
 
@@ -461,3 +464,76 @@ postContainer.addEventListener(
   },
   { passive: true }
 );
+
+document.getElementsByClassName("nav-element")[3].addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
+    $("#warning-nothing-selected").fadeOut(300, function () {});
+    $("#warning-empty-text-area").fadeOut(300, function () {});
+    $("#poll-selection").fadeOut(300, function () {});
+    $("#poll-question").fadeOut(300, function () {});
+    $("#sum").fadeOut(300, function () {
+      $("#all-filters").fadeIn(300, function () {});
+      $("#add-post-icon").fadeIn(300, function () {});
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      generate_posts(true);
+      if (user_choice !== "none") {
+        choice_dehighlight(user_choice);
+        user_choice = "none";
+      }
+      document.forms["poll-question"]["question-text"].value = "";
+    });
+  } else {
+    $(".post").fadeOut(300, function () {});
+    $(".post")
+      .promise()
+      .done(function () {
+        $(".post").fadeOut(300, function () {});
+        $(".post").not(":first").remove();
+        document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
+        document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
+        document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+        document.getElementById("user-nav").style.width = "0";
+        document.getElementById("profile-icon").style.visibility = "visible";
+        generate_posts(true);
+      });
+  }
+});
+
+document.getElementsByClassName("nav-element")[0].addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
+    $("#warning-nothing-selected").fadeOut(300, function () {});
+    $("#warning-empty-text-area").fadeOut(300, function () {});
+    $("#poll-selection").fadeOut(300, function () {});
+    $("#poll-question").fadeOut(300, function () {});
+    $("#sum").fadeOut(300, function () {
+      $("#all-filters").fadeIn(300, function () {});
+      $("#add-post-icon").fadeIn(300, function () {});
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("sidenav-icon").style.visibility = "visible";
+      generate_posts(false);
+      if (user_choice !== "none") {
+        choice_dehighlight(user_choice);
+        user_choice = "none";
+      }
+      document.forms["poll-question"]["question-text"].value = "";
+    });
+  } else {
+    $(".post").fadeOut(300, function () {});
+    $(".post")
+      .promise()
+      .done(function () {
+        $(".post").not(":first").remove();
+        document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
+        document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
+        document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+        document.getElementById("sidenav").style.width = "0";
+        document.getElementById("sidenav-icon").style.visibility = "visible";
+        generate_posts(false);
+      });
+  }
+});
