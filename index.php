@@ -34,6 +34,7 @@ require_once "config.php";
       <button class="closeuserbtn"><i class="fa-solid fa-times fa-2x"></i></button>
       <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user"></i>Login</a>
       <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user"></i>Registration</a>
+      <a class="nav-element"><i class="fa-solid fa-bookmark fa-1x"></i>Bookmarks</a>
       <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
     </div>
     <div id="all-filters">

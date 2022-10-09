@@ -31,9 +31,16 @@ document.getElementById("profile-icon").addEventListener("click", function () {
     .then((response) => {
       if (response === "false") {
         document.getElementsByClassName("nav-element")[3].style.display = "none";
+        document.getElementsByClassName("nav-element")[4].style.display = "none";
       } else {
         document.getElementsByClassName("nav-element")[1].style.display = "none";
         document.getElementsByClassName("nav-element")[2].style.display = "none";
+        document.getElementsByClassName("nav-element")[3].style.cursor = "pointer";
+        document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.background = "-webkit-linear-gradient(200deg, #cc0000, #000)";
+        document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.backgroundClip = "text";
+        document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.webkitBackgroundClip = "text";
+        document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.webkitTextFillColor = "transparent";
+        document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.paddingRight = "0.35em";
       }
     });
   document.getElementById("user-nav").style.width = "18.75em";
