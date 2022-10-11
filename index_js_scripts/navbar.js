@@ -1,13 +1,16 @@
+//This is for when the user clicks the left navbar icon for it to appear.
 document.getElementById("sidenav-icon").addEventListener("click", function () {
   document.getElementById("sidenav").style.width = "18.75em";
   document.getElementById("sidenav-icon").style.visibility = "hidden";
 });
 
+//This is for when the user clicks the left navbar close icon for the navbar to disappear.
 document.getElementsByClassName("closebtn")[0].addEventListener("click", function () {
   document.getElementById("sidenav").style.width = "0";
   document.getElementById("sidenav-icon").style.visibility = "visible";
 });
 
+//This is for the 2 navbars to close when user clicks outside them when they are open.
 function handleMousePos(event) {
   var mouseClickWidth = event.clientX;
   if (mouseClickWidth >= 300) {
@@ -22,6 +25,7 @@ function handleMousePos(event) {
 
 document.addEventListener("click", handleMousePos);
 
+//This is for when the user clicks the right navbar icon for it to appear.
 document.getElementById("profile-icon").addEventListener("click", function () {
   fetch("process_data.php", {
     method: "POST",
@@ -49,6 +53,7 @@ document.getElementById("profile-icon").addEventListener("click", function () {
   document.getElementById("profile-icon").style.visibility = "hidden";
 });
 
+//This is for when the user clicks the right navbar close icon for the navbar to disappear.
 document.getElementsByClassName("closeuserbtn")[0].addEventListener("click", function () {
   document.getElementById("user-nav").style.width = "0";
   document.getElementById("profile-icon").style.visibility = "visible";

@@ -5,6 +5,7 @@ let node = [];
 let clone = [];
 let post_data = [];
 
+//This is for button animation.
 (function () {
   var c = document.getElementById("sum");
   var d = document.getElementById("username-change");
@@ -22,6 +23,7 @@ let post_data = [];
   d.addEventListener("mouseover", addAnim);
 })();
 
+//This is for when the user clicks the "Plus" icon.
 document.getElementById("add-post-icon").addEventListener("click", function () {
   fetch("process_data.php", {
     method: "POST",
@@ -107,6 +109,7 @@ function choice_dehighlight(choice) {
   document.getElementById(choice).style.color = null;
 }
 
+//This is for when the user submits the poll information from the template.
 document.getElementById("sum").addEventListener("click", function () {
   let question_text = document.forms["poll-question"]["question-text"].value;
   if (user_choice === "none") {
@@ -137,6 +140,7 @@ document.getElementById("sum").addEventListener("click", function () {
   }
 });
 
+//This generates the posts on the home page.
 function generate_posts(bookmark_filter) {
   fetch("process_data.php", {
     method: "POST",
@@ -248,6 +252,7 @@ generate_posts(false);
 
 const postContainer = document.querySelector("#posts-container");
 
+//This determines which post the user clicked to change its data.
 postContainer.addEventListener(
   "click",
   (e) => {
@@ -513,6 +518,7 @@ postContainer.addEventListener(
   { passive: true }
 );
 
+//This is for when the user clicks "Bookmarks" on the user navabar.
 document.getElementsByClassName("nav-element")[3].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     $("#warning-nothing-selected").fadeOut(300, function () {});
@@ -558,6 +564,7 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
   }
 });
 
+//This is for when the user clicks "Home" on the left navbar.
 document.getElementsByClassName("nav-element")[0].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     $("#warning-nothing-selected").fadeOut(300, function () {});
@@ -602,6 +609,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
   }
 });
 
+//This is for when the user clicks "Change Username" on the user navbar.
 document.getElementsByClassName("nav-element")[4].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     $("#warning-nothing-selected").fadeOut(300, function () {});
@@ -639,6 +647,7 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
   }
 });
 
+//This is for when the user submits the form data to change Username.
 document.getElementById("username-change").addEventListener("click", function () {
   let new_username = document.forms["username-change-form"]["username"].value;
   let upass = document.forms["username-change-form"]["password"].value;
