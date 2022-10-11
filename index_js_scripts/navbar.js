@@ -32,6 +32,8 @@ document.getElementById("profile-icon").addEventListener("click", function () {
       if (response === "false") {
         document.getElementsByClassName("nav-element")[3].style.display = "none";
         document.getElementsByClassName("nav-element")[4].style.display = "none";
+        document.getElementsByClassName("nav-element")[5].style.display = "none";
+        document.getElementsByClassName("nav-element")[6].style.display = "none";
       } else {
         document.getElementsByClassName("nav-element")[1].style.display = "none";
         document.getElementsByClassName("nav-element")[2].style.display = "none";

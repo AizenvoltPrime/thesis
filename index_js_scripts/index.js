@@ -5,6 +5,23 @@ let node = [];
 let clone = [];
 let post_data = [];
 
+(function () {
+  var c = document.getElementById("sum");
+  var d = document.getElementById("username-change");
+  function addAnim() {
+    c.classList.add("animated");
+    // remove the listener, no longer needed
+    c.removeEventListener("mouseover", addAnim);
+    d.classList.add("animated");
+    // remove the listener, no longer needed
+    d.removeEventListener("mouseover", addAnim);
+  }
+
+  // listen to mouseover for the container
+  c.addEventListener("mouseover", addAnim);
+  d.addEventListener("mouseover", addAnim);
+})();
+
 document.getElementById("add-post-icon").addEventListener("click", function () {
   fetch("process_data.php", {
     method: "POST",
@@ -18,6 +35,9 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
         if (post_data[0] !== undefined) {
           $("#add-post-icon").fadeOut(300, function () {});
           $("#all-filters").fadeOut(300, function () {});
+          if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
+            $("#username-change-form").fadeOut(300, function () {});
+          }
           $(".post").fadeOut(300, function () {});
           $(".post")
             .promise()
@@ -499,6 +519,9 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
     $("#warning-empty-text-area").fadeOut(300, function () {});
     $("#poll-selection").fadeOut(300, function () {});
     $("#poll-question").fadeOut(300, function () {});
+    if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
+      $("#username-change-form").fadeOut(300, function () {});
+    }
     $("#sum").fadeOut(300, function () {
       $("#all-filters").fadeIn(300, function () {});
       $("#add-post-icon").fadeIn(300, function () {});
@@ -514,6 +537,9 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
   } else {
     $("#add-post-icon").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
+    if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
+      $("#username-change-form").fadeOut(300, function () {});
+    }
     $(".post").fadeOut(300, function () {});
     $(".post")
       .promise()
@@ -538,6 +564,9 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
     $("#warning-empty-text-area").fadeOut(300, function () {});
     $("#poll-selection").fadeOut(300, function () {});
     $("#poll-question").fadeOut(300, function () {});
+    if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
+      $("#username-change-form").fadeOut(300, function () {});
+    }
     $("#sum").fadeOut(300, function () {
       $("#all-filters").fadeIn(300, function () {});
       $("#add-post-icon").fadeIn(300, function () {});
@@ -553,6 +582,9 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
   } else {
     $("#add-post-icon").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
+    if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
+      $("#username-change-form").fadeOut(300, function () {});
+    }
     $(".post").fadeOut(300, function () {});
     $(".post")
       .promise()
@@ -566,6 +598,92 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
         document.getElementById("sidenav").style.width = "0";
         document.getElementById("sidenav-icon").style.visibility = "visible";
         generate_posts(false);
+      });
+  }
+});
+
+document.getElementsByClassName("nav-element")[4].addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
+    $("#warning-nothing-selected").fadeOut(300, function () {});
+    $("#warning-empty-text-area").fadeOut(300, function () {});
+    $("#poll-selection").fadeOut(300, function () {});
+    $("#poll-question").fadeOut(300, function () {});
+    $("#sum").fadeOut(300, function () {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#username-change-form").fadeIn(300, function () {});
+      if (user_choice !== "none") {
+        choice_dehighlight(user_choice);
+        user_choice = "none";
+      }
+      document.forms["poll-question"]["question-text"].value = "";
+    });
+  } else {
+    $("#add-post-icon").fadeOut(300, function () {});
+    $("#all-filters").fadeOut(300, function () {});
+    $(".post").fadeOut(300, function () {});
+    $(".post")
+      .promise()
+      .done(function () {
+        $(".post").fadeOut(300, function () {});
+        $(".post").not(":first").remove();
+        document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
+        document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
+        document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+        document.getElementById("user-nav").style.width = "0";
+        document.getElementById("profile-icon").style.visibility = "visible";
+        $("#username-change-form").fadeIn(300, function () {});
+      });
+  }
+});
+
+document.getElementById("username-change").addEventListener("click", function () {
+  let new_username = document.forms["username-change-form"]["username"].value;
+  let upass = document.forms["username-change-form"]["password"].value;
+
+  if (new_username === "") {
+    document.getElementById("user-help").innerText = "Username must be filled!";
+    document.getElementById("pass-help").innerText = "";
+  } else if (new_username.length < 6 || new_username.length > 16) {
+    document.getElementById("user-help").innerText = "Username must be between 6 and 16 characters!";
+    document.getElementById("pass-help").innerText = "";
+  } else if (new_username.indexOf(" ") > 0) {
+    document.getElementById("user-help").innerText = "Username must not have spaces!";
+    document.getElementById("pass-help").innerText = "";
+  } else if (upass === "") {
+    document.getElementById("user-help").innerText = "";
+    document.getElementById("pass-help").innerText = "Password must be filled!";
+  } else {
+    document.getElementById("user-help").innerText = "";
+    document.getElementById("pass-help").innerText = "";
+    fetch("process_data.php", {
+      method: "POST",
+      body: JSON.stringify({ request: "username_change", username: new_username, password: upass }),
+    })
+      .then((res) => res.text())
+      .then((response) => {
+        if (response.trim() == "Username Unavailable!") {
+          document.getElementById("user-help").innerText = "Username Unavailable!";
+          document.getElementById("pass-help").innerText = "";
+        } else if (response.trim() == "Incorrect Password!") {
+          document.getElementById("user-help").innerText = "";
+          document.getElementById("pass-help").innerText = "Incorrect Password!";
+        } else if (response.trim() == "Success") {
+          document.getElementById("user-help").innerText = "";
+          document.getElementById("pass-help").innerText = "";
+          $("#username-change-form").fadeOut(300, function () {});
+          $("#username-change-form")
+            .promise()
+            .done(function () {
+              document.getElementsByClassName("logged-form-control")[0].value = "";
+              document.getElementsByClassName("logged-form-control")[1].value = "";
+              $("#all-filters").fadeIn(300, function () {});
+              $("#add-post-icon").fadeIn(300, function () {});
+              generate_posts(false);
+            });
+        }
       });
   }
 });

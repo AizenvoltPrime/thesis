@@ -35,6 +35,8 @@ require_once "config.php";
       <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user"></i>Login</a>
       <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user"></i>Registration</a>
       <a class="nav-element"><i class="fa-solid fa-bookmark fa-1x"></i>Bookmarks</a>
+      <a class="nav-element"><i class="fa-solid fa-user fa-1x"></i>Change Username</a>
+      <a class="nav-element"><i class="fa-solid fa-lock fa-1x"></i>Change Password</a>
       <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
     </div>
     <div id="all-filters">
@@ -58,6 +60,24 @@ require_once "config.php";
         <button id= "sum" type="button" style="width:8em; height:3em; font-size: 1.3em;">Post Poll</button>
     </form>
     <div id="warning-empty-text-area">Textarea needs to have at least 15 characters and at most 150 characters!</div>
+    <form id="username-change-form" style="display:none;" name="username-change-form">
+            <div>
+                <i class="fa-solid fa-circle-user fa-10x"></i>
+            </div>
+            <div class="input-icons">
+                <input type="text" name="username" class="logged-form-control" placeholder="New Username">
+                <i class="fa-solid fa-user fa-2x"></i>
+            </div>
+            <span id="user-help"></span>
+            <div class="input-icons">
+                <input type="password" name="password" class="logged-form-control" placeholder="Password">
+                <i class="fa-solid fa-lock fa-2x"></i>
+            </div>
+            <span id="pass-help"></span>
+            <div>
+                <input id="username-change" type="button" value="Submit">
+            </div>
+    </form>
     <div id="posts-container">
       <div class="post">
         <div id="post-info">
