@@ -797,7 +797,6 @@ document.getElementById("password-change").addEventListener("click", function ()
         } else if (response.trim() == "Success") {
           document.getElementById("password-help").innerText = "";
           document.getElementById("passc-help").innerText = "";
-          console.log(response);
           $("#password-change-form").fadeOut(300, function () {});
           $("#password-change-form")
             .promise()
