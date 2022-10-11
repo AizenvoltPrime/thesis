@@ -9,18 +9,20 @@ let post_data = [];
 (function () {
   var c = document.getElementById("sum");
   var d = document.getElementById("username-change");
+  var e = document.getElementById("password-change");
   function addAnim() {
     c.classList.add("animated");
-    // remove the listener, no longer needed
     c.removeEventListener("mouseover", addAnim);
     d.classList.add("animated");
-    // remove the listener, no longer needed
     d.removeEventListener("mouseover", addAnim);
+    e.classList.add("animated");
+    e.removeEventListener("mouseover", addAnim);
   }
 
   // listen to mouseover for the container
   c.addEventListener("mouseover", addAnim);
   d.addEventListener("mouseover", addAnim);
+  e.addEventListener("mouseover", addAnim);
 })();
 
 //This is for when the user clicks the "Plus" icon.
@@ -39,6 +41,9 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
           $("#all-filters").fadeOut(300, function () {});
           if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
             $("#username-change-form").fadeOut(300, function () {});
+          }
+          if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
+            $("#password-change-form").fadeOut(300, function () {});
           }
           $(".post").fadeOut(300, function () {});
           $(".post")
@@ -528,6 +533,9 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       $("#username-change-form").fadeOut(300, function () {});
     }
+    if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
+      $("#password-change-form").fadeOut(300, function () {});
+    }
     $("#sum").fadeOut(300, function () {
       $("#all-filters").fadeIn(300, function () {});
       $("#add-post-icon").fadeIn(300, function () {});
@@ -545,6 +553,9 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
     $("#all-filters").fadeOut(300, function () {});
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       $("#username-change-form").fadeOut(300, function () {});
+    }
+    if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
+      $("#password-change-form").fadeOut(300, function () {});
     }
     $(".post").fadeOut(300, function () {});
     $(".post")
@@ -574,6 +585,9 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       $("#username-change-form").fadeOut(300, function () {});
     }
+    if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
+      $("#password-change-form").fadeOut(300, function () {});
+    }
     $("#sum").fadeOut(300, function () {
       $("#all-filters").fadeIn(300, function () {});
       $("#add-post-icon").fadeIn(300, function () {});
@@ -591,6 +605,9 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
     $("#all-filters").fadeOut(300, function () {});
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       $("#username-change-form").fadeOut(300, function () {});
+    }
+    if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
+      $("#password-change-form").fadeOut(300, function () {});
     }
     $(".post").fadeOut(300, function () {});
     $(".post")
@@ -616,6 +633,9 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
     $("#warning-empty-text-area").fadeOut(300, function () {});
     $("#poll-selection").fadeOut(300, function () {});
     $("#poll-question").fadeOut(300, function () {});
+    if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
+      $("#password-change-form").fadeOut(300, function () {});
+    }
     $("#sum").fadeOut(300, function () {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
@@ -688,6 +708,103 @@ document.getElementById("username-change").addEventListener("click", function ()
             .done(function () {
               document.getElementsByClassName("logged-form-control")[0].value = "";
               document.getElementsByClassName("logged-form-control")[1].value = "";
+              $("#all-filters").fadeIn(300, function () {});
+              $("#add-post-icon").fadeIn(300, function () {});
+              generate_posts(false);
+            });
+        }
+      });
+  }
+});
+
+//This is for when the user clicks "Change Password" on the user navbar.
+document.getElementsByClassName("nav-element")[5].addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
+    $("#warning-nothing-selected").fadeOut(300, function () {});
+    $("#warning-empty-text-area").fadeOut(300, function () {});
+    $("#poll-selection").fadeOut(300, function () {});
+    $("#poll-question").fadeOut(300, function () {});
+    if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
+      $("#username-change-form").fadeOut(300, function () {});
+    }
+    $("#sum").fadeOut(300, function () {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#password-change-form").fadeIn(300, function () {});
+      if (user_choice !== "none") {
+        choice_dehighlight(user_choice);
+        user_choice = "none";
+      }
+      document.forms["poll-question"]["question-text"].value = "";
+    });
+  } else {
+    $("#add-post-icon").fadeOut(300, function () {});
+    $("#all-filters").fadeOut(300, function () {});
+    $(".post").fadeOut(300, function () {});
+    $(".post")
+      .promise()
+      .done(function () {
+        $(".post").fadeOut(300, function () {});
+        $(".post").not(":first").remove();
+        document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
+        document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
+        document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+        document.getElementById("user-nav").style.width = "0";
+        document.getElementById("profile-icon").style.visibility = "visible";
+        $("#password-change-form").fadeIn(300, function () {});
+      });
+  }
+});
+
+//This is for when the user submits the form data to change Password.
+document.getElementById("password-change").addEventListener("click", function () {
+  let current_password = document.forms["password-change-form"]["current-password"].value;
+  let new_pass = document.forms["password-change-form"]["new-password"].value;
+  let conf_pass = document.forms["password-change-form"]["repeat-new-password"].value;
+
+  if (new_pass === "" || conf_pass === "" || current_password === "") {
+    document.getElementById("password-help").innerText = "One of the password fields is empty!";
+    document.getElementById("passc-help").innerText = "";
+  } else if (new_pass !== conf_pass) {
+    document.getElementById("password-help").innerText = "";
+    document.getElementById("passc-help").innerText = "Passwords must match!";
+  } else if (new_pass.length < 8) {
+    document.getElementById("password-help").innerText = "";
+    document.getElementById("passc-help").innerText = "Password must be at least 8 characters!";
+  } else if (new_pass.indexOf(" ") > 0) {
+    document.getElementById("password-help").innerText = "";
+    document.getElementById("passc-help").innerText = "Password must not have spaces!";
+  } else if (!/[A-Z]/g.test(new_pass) || !/[0-9]/g.test(new_pass) || !/[.!@#$&*]/g.test(new_pass)) {
+    document.getElementById("password-help").innerText = "";
+    document.getElementById("passc-help").innerText =
+      "Password must contain at least 8 character and must also contain, at least one capital letter, a digit and one of these symbols (e.g. .!#$*&@)!";
+  } else {
+    fetch("process_data.php", {
+      method: "POST",
+      body: JSON.stringify({
+        request: "password_change",
+        current_password: current_password,
+        new_password: new_pass,
+      }),
+    })
+      .then((res) => res.text())
+      .then((response) => {
+        if (response.trim() == "Incorrect Password!") {
+          document.getElementById("password-help").innerText = "Incorrect Password!";
+          document.getElementById("passc-help").innerText = "";
+        } else if (response.trim() == "Success") {
+          document.getElementById("password-help").innerText = "";
+          document.getElementById("passc-help").innerText = "";
+          console.log(response);
+          $("#password-change-form").fadeOut(300, function () {});
+          $("#password-change-form")
+            .promise()
+            .done(function () {
+              document.getElementsByClassName("logged-form-control")[2].value = "";
+              document.getElementsByClassName("logged-form-control")[3].value = "";
+              document.getElementsByClassName("logged-form-control")[4].value = "";
               $("#all-filters").fadeIn(300, function () {});
               $("#add-post-icon").fadeIn(300, function () {});
               generate_posts(false);

@@ -245,6 +245,7 @@ input {
 
 #user-help,
 #pass-help,
+#password-help,
 #email-help,
 #passc-help {
   margin-top: 0.11em;
@@ -312,15 +313,15 @@ input {
 }
 
 .logged-form-control {
-  height: 1.85em;
+  height: 2.5em;
   padding-top: 1.15em;
   border: none;
   border-bottom: 0.2em solid #cc0000;
   border-image: linear-gradient(to right, #000, #cc0000) 1;
   background-color: #2c3134;
   font-weight: 900;
-  width: 11.5em;
-  font-size: 1.5em;
+  width: 13.1em;
+  font-size: 1.2em;
 }
 
 input.form-control,
@@ -328,7 +329,8 @@ input.logged-form-control {
   text-align: center;
 }
 
-#username-change-form {
+#username-change-form,
+#password-change-form {
   display: flex;
   flex-direction: column;
   margin-left: auto;
@@ -348,7 +350,8 @@ input.logged-form-control {
 }
 
 #sum,
-#username-change {
+#username-change,
+#password-change {
   height: 3em;
   width: 8em;
   font-size: 1.5em;
@@ -362,7 +365,8 @@ input.logged-form-control {
 }
 
 #sum.animated,
-#username-change.animated {
+#username-change.animated,
+#password-change.animated {
   animation-name: logBtnOut;
   animation-duration: 0.2s;
   animation-fill-mode: forwards;
@@ -371,7 +375,8 @@ input.logged-form-control {
 }
 
 #sum:hover,
-#username-change:hover {
+#username-change:hover,
+#password-change:hover {
   color: #c00;
   animation-name: logBtnIn;
   animation-duration: 0.2s;

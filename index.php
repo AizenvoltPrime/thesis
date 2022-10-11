@@ -74,9 +74,27 @@ require_once "config.php";
                 <i class="fa-solid fa-lock fa-2x"></i>
             </div>
             <span id="pass-help"></span>
+            <input id="username-change" type="button" value="Submit">
+    </form>
+    <form id="password-change-form" style="display:none;" name="username-change-form">
             <div>
-                <input id="username-change" type="button" value="Submit">
+                <i class="fa-solid fa-circle-user fa-10x"></i>
             </div>
+            <div class="input-icons">
+                <input type="password" name="current-password" class="logged-form-control" placeholder="Current Password">
+                <i class="fa-solid fa-lock fa-2x"></i>
+            </div>
+            <span id="password-help"></span>
+            <div class="input-icons">
+                <input type="password" name="new-password" class="logged-form-control" placeholder="New Password">
+                <i class="fa-solid fa-lock fa-2x"></i>
+            </div>
+            <span id="passc-help"></span>
+            <div class="input-icons">
+                <input type="password" name="repeat-new-password" class="logged-form-control" placeholder="Repeat Password">
+                <i class="fa-solid fa-lock fa-2x"></i>
+            </div>
+            <input id="password-change" type="button" value="Submit">
     </form>
     <div id="posts-container">
       <div class="post">

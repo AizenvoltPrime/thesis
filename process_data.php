@@ -80,6 +80,48 @@ else if($data["request"] == "username_change"){
         mysqli_close($conn);
     }
 }
+else if($data["request"] == "password_change"){
+    require_once "config.php";
+
+    $sql = "SELECT password FROM user WHERE username = ?";
+        
+    if($stmt = mysqli_prepare($conn, $sql)){
+        mysqli_stmt_bind_param($stmt, "s", $_SESSION['username']);
+            
+        if(mysqli_stmt_execute($stmt)){
+            mysqli_stmt_store_result($stmt);
+            if(mysqli_stmt_num_rows($stmt) == 1){  
+                mysqli_stmt_bind_result($stmt, $hashed_password);
+                if(mysqli_stmt_fetch($stmt)){
+                    if(password_verify($data['current_password'], $hashed_password)){
+                        mysqli_stmt_close($stmt);
+                        $sql = "UPDATE user SET password = ? WHERE id = ?";        
+                        if($stmt = mysqli_prepare($conn, $sql)){
+                            mysqli_stmt_bind_param($stmt, "si", $param_password, $_SESSION['id']);
+                            $param_password = password_hash($data["new_password"], PASSWORD_DEFAULT);
+                            if(mysqli_stmt_execute($stmt)){
+                                echo "Success";
+                            } else{
+                                echo "Oops! Something went wrong. Please try again later.";
+                            }
+                            // Close statement
+                            mysqli_stmt_close($stmt);
+                        }
+                    }
+                    else {
+                        echo "Incorrect Password!";
+                    }
+                }
+            }
+        }
+    } 
+        else{
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+            
+        // Close statement
+        mysqli_close($conn);
+}
 else if($data['request'] == "upload_post_data")
 {
     require_once "config.php";
