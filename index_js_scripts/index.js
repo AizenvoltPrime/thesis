@@ -268,6 +268,22 @@ postContainer.addEventListener(
     const btn_no = e.target.closest('button[data-dir="no"]');
     const btn_show_graph = e.target.closest('button[data-dir="show-graph"]');
     const btn_bookmark = e.target.closest('button[data-dir="bookmark"]');
+
+    if (btn_show_graph) {
+      const post_show_graph = btn_show_graph.closest(".post");
+      const postIndexShowGraph = [...postContainer.children].indexOf(post_show_graph);
+
+      if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexShowGraph]).display === "block") {
+        document.querySelectorAll(".show-graph")[postIndexShowGraph].style.backgroundColor = "#00a1ff80";
+        document.querySelectorAll(".chartCard")[postIndexShowGraph].style.display = "none";
+        if (myChart[postIndexShowGraph]) {
+          myChart[postIndexShowGraph].destroy();
+        }
+      } else {
+        document.querySelectorAll(".show-graph")[postIndexShowGraph].style.backgroundColor = "#00a1ff";
+        get_yes_no_data(postIndexShowGraph);
+      }
+    }
     if (post_data[0].length > 7) {
       if (btn_up) {
         const post_up = btn_up.closest(".post");
@@ -487,20 +503,6 @@ postContainer.addEventListener(
                 get_yes_no_data(postIndexNo);
               }
             });
-        }
-      } else if (btn_show_graph) {
-        const post_show_graph = btn_show_graph.closest(".post");
-        const postIndexShowGraph = [...postContainer.children].indexOf(post_show_graph);
-
-        if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexShowGraph]).display === "block") {
-          document.querySelectorAll(".show-graph")[postIndexShowGraph].style.backgroundColor = "#00a1ff80";
-          document.querySelectorAll(".chartCard")[postIndexShowGraph].style.display = "none";
-          if (myChart[postIndexShowGraph]) {
-            myChart[postIndexShowGraph].destroy();
-          }
-        } else {
-          document.querySelectorAll(".show-graph")[postIndexShowGraph].style.backgroundColor = "#00a1ff";
-          get_yes_no_data(postIndexShowGraph);
         }
       } else if (btn_bookmark) {
         const post_bookmark = btn_bookmark.closest(".post");
