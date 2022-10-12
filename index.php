@@ -121,9 +121,7 @@ require_once "config.php";
             <button data-dir="down" style="margin-right:auto;"><i class="fa-solid fa-chevron-down"></i></button>
             <button class= "parent_of_bookmark" data-dir="bookmark"></button>
         </div>
-        <div class="chartCard" style="display:none;">
-            <canvas class="myChart"></canvas>
-        </div>
+        <div class="chartCard" style="display:none;"></div>
       </div>
     </div>
   </body>

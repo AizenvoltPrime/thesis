@@ -58,7 +58,9 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
               document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
               document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
               document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+              document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
               document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+              document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
               document.getElementById("poll-selection").style.display = "flex";
               document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
               document.getElementById("poll-question").style.display = "flex";
@@ -66,7 +68,6 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
               $("#sum").fadeIn(300, function () {});
             });
         } else {
-          console.log("feqwfqw");
           $("#add-post-icon").fadeOut(300, function () {});
           $("#all-filters").fadeOut(300, function () {});
           $("#all-filters")
@@ -76,7 +77,9 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
               document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
               document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
               document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+              document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
               document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+              document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
               document.getElementById("poll-selection").style.display = "flex";
               document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
               document.getElementById("poll-question").style.display = "flex";
@@ -236,12 +239,18 @@ function generate_posts(bookmark_filter) {
               new_bookmark.className = "fa-regular fa-bookmark";
               document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
             }
+            let new_canvas = document.createElement("canvas");
+            new_canvas.className = "myChart";
+            document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
           }
         } else if (post_data[0].length <= 7) {
           for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
             document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
+            let new_canvas = document.createElement("canvas");
+            new_canvas.className = "myChart";
+            document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
           }
         }
         if (bookmark_filter == true || bookmark_filter == false) {
@@ -600,7 +609,9 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
         document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
         document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
         document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
         document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+        document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
         document.getElementById("user-nav").style.width = "0";
         document.getElementById("profile-icon").style.visibility = "visible";
         generate_posts(true);
@@ -651,7 +662,9 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
         document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
         document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
         document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
         document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+        document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
         document.getElementById("sidenav").style.width = "0";
         document.getElementById("sidenav-icon").style.visibility = "visible";
         generate_posts(false);
@@ -692,7 +705,9 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
         document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
         document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
         document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
         document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+        document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
         document.getElementById("user-nav").style.width = "0";
         document.getElementById("profile-icon").style.visibility = "visible";
         $("#username-change-form").fadeIn(300, function () {});
@@ -783,7 +798,9 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
         document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
         document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
         document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+        document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
         document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+        document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
         document.getElementById("user-nav").style.width = "0";
         document.getElementById("profile-icon").style.visibility = "visible";
         $("#password-change-form").fadeIn(300, function () {});
