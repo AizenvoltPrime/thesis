@@ -54,13 +54,7 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
             .promise()
             .done(function () {
               $(".post").not(":first").remove();
-              document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
-              document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
-              document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
-              document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
-              document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
-              document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
-              document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
+              reset_poll_data();
               document.getElementById("poll-selection").style.display = "flex";
               document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
               document.getElementById("poll-question").style.display = "flex";
@@ -73,13 +67,7 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
           $("#all-filters")
             .promise()
             .done(function () {
-              document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
-              document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
-              document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
-              document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
-              document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
-              document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
-              document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
+              reset_poll_data();
               document.getElementById("poll-selection").style.display = "flex";
               document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
               document.getElementById("poll-question").style.display = "flex";
@@ -605,13 +593,7 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
       .done(function () {
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
-        document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
-        document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
-        document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
-        document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
+        reset_poll_data();
         document.getElementById("user-nav").style.width = "0";
         document.getElementById("profile-icon").style.visibility = "visible";
         generate_posts(true);
@@ -658,13 +640,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
       .promise()
       .done(function () {
         $(".post").not(":first").remove();
-        document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
-        document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
-        document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
-        document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
+        reset_poll_data();
         document.getElementById("sidenav").style.width = "0";
         document.getElementById("sidenav-icon").style.visibility = "visible";
         generate_posts(false);
@@ -701,13 +677,7 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
       .done(function () {
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
-        document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
-        document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
-        document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
-        document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
+        reset_poll_data();
         document.getElementById("user-nav").style.width = "0";
         document.getElementById("profile-icon").style.visibility = "visible";
         $("#username-change-form").fadeIn(300, function () {});
@@ -794,13 +764,7 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
       .done(function () {
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
-        document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
-        document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
-        document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
-        document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
-        document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
+        reset_poll_data();
         document.getElementById("user-nav").style.width = "0";
         document.getElementById("profile-icon").style.visibility = "visible";
         $("#password-change-form").fadeIn(300, function () {});
@@ -917,4 +881,14 @@ function get_yes_no_data(post_number) {
         },
       });
     });
+}
+
+function reset_poll_data() {
+  document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
+  document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
+  document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
+  document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
+  document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
+  document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+  document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
 }
