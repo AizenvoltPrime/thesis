@@ -16,6 +16,7 @@ require_once "config.php";
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script type="module" src="index_js_scripts/index.js"></script>
     <script type="module" src="index_js_scripts/navbar.js"></script>
     <script type="module" src="index_js_scripts/filters.js"></script>
@@ -111,7 +112,7 @@ require_once "config.php";
             <div class="post-question"></div>
             <button data-dir="yes" class="answer-yes">Yes</button>
             <button data-dir="no" class="answer-no" style="margin-right:0.5em;">No</button>
-            <button data-dir="show-graph" id="show-graph">Show Graph</button>
+            <button data-dir="show-graph" class="show-graph">Show Graph</button>
           </div>
         </div>
         <div id="post-critic">
@@ -119,6 +120,9 @@ require_once "config.php";
             <div class="score"></div>
             <button data-dir="down" style="margin-right:auto;"><i class="fa-solid fa-chevron-down"></i></button>
             <button class= "parent_of_bookmark" data-dir="bookmark"></button>
+        </div>
+        <div class="chartCard" style="display:none;">
+            <canvas class="myChart"></canvas>
         </div>
       </div>
     </div>

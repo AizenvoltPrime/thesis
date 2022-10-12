@@ -4,6 +4,10 @@ let user_yes_no_vote = [];
 let node = [];
 let clone = [];
 let post_data = [];
+let ctx = [];
+let myChart = [];
+
+Chart.defaults.font.size = 20;
 
 //This is for button animation.
 (function () {
@@ -395,8 +399,11 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffffbb";
+                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                 user_yes_no_vote[postIndexYes][0] = false;
+              }
+              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
+                get_yes_no_data(postIndexYes);
               }
             });
         } else if (user_yes_no_vote[postIndexYes][0] == false && user_yes_no_vote[postIndexYes][1] == true) {
@@ -408,9 +415,12 @@ postContainer.addEventListener(
             .then((response) => {
               if (response.trim() == "Success") {
                 document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
-                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-no")[0].style.background = "#00ffffbb";
+                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
                 user_yes_no_vote[postIndexYes][0] = true;
                 user_yes_no_vote[postIndexYes][1] = false;
+              }
+              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
+                get_yes_no_data(postIndexYes);
               }
             });
         } else if (user_yes_no_vote[postIndexYes][0] == false && user_yes_no_vote[postIndexYes][1] == false) {
@@ -423,6 +433,9 @@ postContainer.addEventListener(
               if (response.trim() == "Success") {
                 document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
                 user_yes_no_vote[postIndexYes][0] = true;
+              }
+              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
+                get_yes_no_data(postIndexYes);
               }
             });
         }
@@ -438,8 +451,11 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#00ffffbb";
+                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
                 user_yes_no_vote[postIndexNo][1] = false;
+              }
+              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
+                get_yes_no_data(postIndexNo);
               }
             });
         } else if (user_yes_no_vote[postIndexNo][0] == true && user_yes_no_vote[postIndexNo][1] == false) {
@@ -450,10 +466,13 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-yes")[0].style.background = "#00ffffbb";
+                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                 document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
                 user_yes_no_vote[postIndexNo][0] = false;
                 user_yes_no_vote[postIndexNo][1] = true;
+              }
+              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
+                get_yes_no_data(postIndexNo);
               }
             });
         } else if (user_yes_no_vote[postIndexNo][0] == false && user_yes_no_vote[postIndexNo][1] == false) {
@@ -467,11 +486,25 @@ postContainer.addEventListener(
                 document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
                 user_yes_no_vote[postIndexNo][1] = true;
               }
+              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
+                get_yes_no_data(postIndexNo);
+              }
             });
         }
       } else if (btn_show_graph) {
         const post_show_graph = btn_show_graph.closest(".post");
         const postIndexShowGraph = [...postContainer.children].indexOf(post_show_graph);
+
+        if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexShowGraph]).display === "block") {
+          document.querySelectorAll(".show-graph")[postIndexShowGraph].style.backgroundColor = "#00a1ff80";
+          document.querySelectorAll(".chartCard")[postIndexShowGraph].style.display = "none";
+          if (myChart[postIndexShowGraph]) {
+            myChart[postIndexShowGraph].destroy();
+          }
+        } else {
+          document.querySelectorAll(".show-graph")[postIndexShowGraph].style.backgroundColor = "#00a1ff";
+          get_yes_no_data(postIndexShowGraph);
+        }
       } else if (btn_bookmark) {
         const post_bookmark = btn_bookmark.closest(".post");
         const postIndexBookmark = [...postContainer.children].indexOf(post_bookmark);
@@ -812,3 +845,59 @@ document.getElementById("password-change").addEventListener("click", function ()
       });
   }
 });
+
+function get_yes_no_data(post_number) {
+  fetch("process_data.php", {
+    method: "POST",
+    body: JSON.stringify({ request: "yes_no_data", post_id: post_data[post_number][0] }),
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      if (myChart[post_number]) {
+        myChart[post_number].destroy();
+      }
+      document.querySelectorAll(".chartCard")[post_number].style.display = "block";
+      ctx[post_number] = document.getElementsByClassName("myChart")[post_number].getContext("2d");
+      myChart[post_number] = new Chart(ctx[post_number], {
+        type: "bar",
+        data: {
+          labels: ["Yes", "No"],
+          datasets: [
+            {
+              label: "Yes/No Poll",
+              data: [parseInt(response[0]), parseInt(response[1])],
+              backgroundColor: [],
+              borderColor: ["#00ffffbb", "#cc0000"],
+              borderWidth: 1,
+              hoverBackgroundColor: ["#00ffffbb", "#cc0000"],
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          hover: { mode: null },
+          plugins: {
+            legend: {
+              labels: {
+                color: "#f3f3f3",
+                boxWidth: 0,
+                fontSize: 2,
+              },
+            },
+          },
+          scales: {
+            y: {
+              ticks: {
+                color: "#f3f3f3",
+              },
+            },
+            x: {
+              ticks: {
+                color: "#f3f3f3",
+              },
+            },
+          },
+        },
+      });
+    });
+}

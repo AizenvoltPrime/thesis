@@ -47,6 +47,8 @@ document.getElementById("profile-icon").addEventListener("click", function () {
         document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.webkitBackgroundClip = "text";
         document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.webkitTextFillColor = "transparent";
         document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.paddingRight = "0.35em";
+        document.getElementsByClassName("fa-solid fa-user fa-1x")[0].style.paddingRight = "0.25em";
+        document.getElementsByClassName("fa-solid fa-lock fa-1x")[0].style.paddingRight = "0.25em";
       }
     });
   document.getElementById("user-nav").style.width = "18.75em";

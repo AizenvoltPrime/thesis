@@ -393,4 +393,18 @@ else if($data['request'] == "bookmark")
         }
     }
 }
+else if($data['request'] == "yes_no_data")
+{
+    require_once "config.php";
+
+    $sql = "SELECT number_of_yes,number_of_no FROM posts_yes_no_info WHERE post_number='$data[post_id]'"; 
+    $result = mysqli_query($conn, $sql);
+    if($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $tmp = array($row["number_of_yes"],$row["number_of_no"]);
+        }
+    }
+    echo json_encode($tmp);
+    mysqli_close($conn);
+}
 ?>

@@ -814,7 +814,7 @@ a:active {
 
 .answer-yes,
 .answer-no {
-  background-color: #00ffffbb;
+  background-color: #007e7e;
   padding: 0.4em;
   border-radius: 1em;
   color: #000;
@@ -825,8 +825,8 @@ a:active {
   margin-top: 0.5em;
 }
 
-#show-graph {
-  background-color: #0099f1;
+.show-graph {
+  background-color: #00a1ff80;
   padding: 0.4em;
   border-radius: 1em;
   color: #000;
@@ -841,4 +841,11 @@ a:active {
 .fa-chevron-up,
 .fa-chevron-down {
   cursor: pointer;
+}
+
+.chartCard {
+  margin-top: 1em;
+  background-color: #606060;
+  height: 20em;
+  border-radius: 1em;
 }
