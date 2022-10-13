@@ -38,3 +38,12 @@ SELECT posts.post_number AS post_number, user.username AS username, polls.poll_n
             on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
             WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=14 and bookmarks.post_id=post_number),0) = 1
             GROUP BY posts.post_number ORDER BY posts.post_date DESC
+
+
+ΕΠΟΜΕΝΑ TASK:
+
+ΝΑ ΒΑΛΩ ΠΕΡΙΟΡΙΣΜΟ ΤΟΠΕΘΕΣΙΑΣ ΓΙΑ ΝΑ ΜΠΟΡΕΙ ΝΑ ΑΠΑΝΤΗΣΕΙ ΚΑΠΟΙΟΣ
+ΝΑ ΒΑΛΩ ΕΙΔΟΠΟΙΗΣΕΙΣ ΌΤΙ ΠΧ ΔΕΝ ΜΠΟΡΕΙΣ ΝΑ ΨΗΦΙΣΕΙΣ ΑΝ ΔΕΝ ΕΙΣΑΙ LOGGED in
+NA ΒΑΛΩ TIMER ΣΤΑ POST ΩΣΤΕ ΝΑ ΜΗ ΜΠΟΡΟΥΝ ΝΑ ΨΗΦΙΣΟΥΝ ΟΙ ΧΡΗΣΤΕΣ ΜΕΤΑ ΑΠΟ ΚΑΠΟΙΟ ΔΙΑΣΤΗΜΑ
+ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
+ΝΑ ΦΤΙΑΞΩ ΓΙΑ ΤΟΝ ADMIN ΧΑΡΤΗ ΜΕ ΤΙΣ ΤΟΠΟΘΕΣΙΕΣ ΟΛΩΝ ΤΩΝ ΧΡΗΣΤΩΝ ΩΣΤΕ ΝΑ ΒΛΕΠΕΙ ΠΟΙΕΣ ΠΕΡΙΟΧΕΣ ΕΙΝΑΙ ΠΙΟ ΕΝΕΡΓΕΣ

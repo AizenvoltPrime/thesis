@@ -33,7 +33,6 @@ $username_err = $password_err = "";
                         if(password_verify($data['password'], $hashed_password)){
                             // Password is correct, so start a new session             
                             // Store data in session variables
-                            echo "Success";
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
@@ -44,6 +43,10 @@ $username_err = $password_err = "";
                             else{
                                 $_SESSION["role"] = "user";
                             }                 
+                            $sql = "UPDATE user SET city_latitude = '$data[latitude]', city_longitude = '$data[longitude]' WHERE id='$_SESSION[id]'";
+                            mysqli_query($conn, $sql);
+                            echo "Success";
+                            
                         } else{
                             // Display an error message if password is not valid
                             echo "Wrong Password";
@@ -56,11 +59,8 @@ $username_err = $password_err = "";
             } else{
                 echo "Oops! Something went wrong! Please try again later!";
             }
-
-            // Close statement
             mysqli_stmt_close($stmt);
-        }
-    
+        }   
     // Close connection
     mysqli_close($conn);
 

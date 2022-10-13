@@ -9,24 +9,33 @@ document.getElementById("sum").addEventListener("click", function () {
     document.getElementById("pass-help").innerText = "Password field is empty!";
     document.getElementById("user-help").innerText = "";
   } else {
-    fetch("user_login.php", {
-      method: "POST",
-      body: JSON.stringify({ username: uname, password: upass }),
-    })
-      .then((res) => res.text())
-      .then((response) => {
-        if (response.trim() === "Wrong Password") {
-          document.getElementById("user-help").innerText = "";
-          document.getElementById("pass-help").innerText = "Incorrect Username or Password!";
-        } else if (response.trim() === "Wrong Username") {
-          document.getElementById("user-help").innerText = "";
-          document.getElementById("pass-help").innerText = "Incorrect Username or Password!";
-        } else if (response.trim() === "Oops! Something went wrong! Please try again later!") {
-          document.getElementById("user-help").innerText = "";
-          document.getElementById("pass-help").innerText = "Oops! Something went wrong! Please try again later!";
-        } else if (response.trim() === "Success") {
-          window.location = "../index.php";
-        }
+    fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        const loc = jsonResponse.loc.split(",");
+        const coords = {
+          latitude: loc[0],
+          longitude: loc[1],
+        };
+        fetch("user_login.php", {
+          method: "POST",
+          body: JSON.stringify({ username: uname, password: upass, latitude: coords.latitude, longitude: coords.longitude }),
+        })
+          .then((res) => res.text())
+          .then((response) => {
+            if (response.trim() === "Wrong Password") {
+              document.getElementById("user-help").innerText = "";
+              document.getElementById("pass-help").innerText = "Incorrect Username or Password!";
+            } else if (response.trim() === "Wrong Username") {
+              document.getElementById("user-help").innerText = "";
+              document.getElementById("pass-help").innerText = "Incorrect Username or Password!";
+            } else if (response.trim() === "Oops! Something went wrong! Please try again later!") {
+              document.getElementById("user-help").innerText = "";
+              document.getElementById("pass-help").innerText = "Oops! Something went wrong! Please try again later!";
+            } else if (response.trim() === "Success") {
+              window.location = "../index.php";
+            }
+          });
       });
   }
 });
