@@ -55,10 +55,22 @@ require_once "config.php";
       <button id="ranking">Ranking</button>
     </div>
     <div id="warning-nothing-selected">You must choose a poll type!</div>
+    <div id="poll-template-time-choice" style="display:none;">
+      <div id="time-limit">Do you want to close your poll after a set time limit?</div>
+      <button id="yes">Yes</button>
+      <button id="no">No</button>
+    </div>
+    <div id="warning-no-time-limit-choice" style="display:none;">You must choose to continue!</div>
+    <form id="time-choice" style="display:none;">
+      <label id="time-limit">Select time limit:</label>
+      <input type="time" id="time-limit-selector" name="time-limit-choice">
+      <div id="warning-no-time-limit" style="display:none;">You must set a time limit!</div>
+    </form>
+    <button id= "next-step" type="button" style="width:8em; height:3em; font-size: 1.3em;">Next</button>
     <form id="poll-question">
-        <div id="question-instruction">Type your question.</div>
-        <textarea id="question" type="text" name="question-text" maxlength="150"></textarea>
-        <button id= "sum" type="button" style="width:8em; height:3em; font-size: 1.3em;">Post Poll</button>
+      <div id="question-instruction">Type your question.</div>
+      <textarea id="question" type="text" name="question-text" maxlength="150"></textarea>
+      <button id= "sum" type="button" style="width:8em; height:3em; font-size: 1.3em;">Post Poll</button>
     </form>
     <div id="warning-empty-text-area">Textarea needs to have at least 15 characters and at most 150 characters!</div>
     <form id="username-change-form" style="display:none;" name="username-change-form">

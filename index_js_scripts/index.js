@@ -1,4 +1,5 @@
 let user_choice = "none";
+let time_limit_choice = "none";
 let user_chevron_vote = [];
 let user_yes_no_vote = [];
 let node = [];
@@ -6,6 +7,9 @@ let clone = [];
 let post_data = [];
 let ctx = [];
 let myChart = [];
+let time_limit;
+let chose_poll_type = false;
+let chose_set_time_limit = false;
 
 Chart.defaults.font.size = 20;
 
@@ -57,9 +61,8 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
               reset_poll_data();
               document.getElementById("poll-selection").style.display = "flex";
               document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
-              document.getElementById("poll-question").style.display = "flex";
-              document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
-              $("#sum").fadeIn(300, function () {});
+              document.getElementById("next-step").style.display = "block";
+              document.getElementById("next-step").style.animation = "fade_in_show 0.5s";
             });
         } else {
           $("#add-post-icon").fadeOut(300, function () {});
@@ -70,13 +73,70 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
               reset_poll_data();
               document.getElementById("poll-selection").style.display = "flex";
               document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
-              document.getElementById("poll-question").style.display = "flex";
-              document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
-              $("#sum").fadeIn(300, function () {});
+              document.getElementById("next-step").style.display = "block";
+              document.getElementById("next-step").style.animation = "fade_in_show 0.5s";
             });
         }
       }
     });
+});
+
+document.getElementById("next-step").addEventListener("click", function () {
+  time_limit = document.forms["time-choice"]["time-limit-choice"].value;
+  console.log(chose_set_time_limit);
+  console.log(time_limit);
+  if (time_limit === "" && chose_set_time_limit === false) {
+    if (user_choice === "none") {
+      $("#warning-nothing-selected").fadeIn(300, function () {});
+    } else if (user_choice !== "none" && chose_poll_type === false) {
+      $("#warning-nothing-selected").fadeOut(300, function () {});
+      $("#poll-selection").fadeOut(300, function () {});
+      $("#next-step").fadeOut(300, function () {});
+      $("#next-step")
+        .promise()
+        .done(function () {
+          $("#poll-template-time-choice").fadeIn(300, function () {});
+          $("#next-step").fadeIn(300, function () {});
+          chose_poll_type = true;
+        });
+    } else if (user_choice !== "none" && chose_poll_type === true) {
+      if (time_limit_choice !== "yes" && time_limit_choice !== "no") {
+        $("#warning-no-time-limit-choice").fadeIn(300, function () {});
+      } else {
+        if (time_limit_choice === "yes") {
+          $("#poll-template-time-choice").fadeOut(300, function () {});
+          $("#warning-no-time-limit-choice").fadeOut(300, function () {});
+          $("#next-step").fadeOut(300, function () {
+            $("#time-choice").fadeIn(300, function () {});
+            $("#next-step").fadeIn(300, function () {});
+          });
+          choice_dehighlight("yes");
+          chose_set_time_limit = true;
+          time_limit_choice = "none";
+        } else if (time_limit_choice === "no") {
+          $("#poll-template-time-choice").fadeOut(300, function () {});
+          $("#warning-no-time-limit-choice").fadeOut(300, function () {});
+          $("#next-step").fadeOut(300, function () {
+            document.getElementById("poll-question").style.display = "flex";
+            document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
+            $("#sum").fadeIn(300, function () {});
+            choice_dehighlight("no");
+            time_limit_choice = "none";
+          });
+        }
+      }
+    }
+  } else if (time_limit === "" && chose_set_time_limit === true) {
+    $("#warning-no-time-limit").fadeIn(300, function () {});
+  } else if (time_limit !== "" && chose_set_time_limit === true) {
+    $("#time-choice").fadeOut(300, function () {});
+    $("#warning-no-time-limit").fadeOut(300, function () {});
+    $("#next-step").fadeOut(300, function () {
+      document.getElementById("poll-question").style.display = "flex";
+      document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
+      $("#sum").fadeIn(300, function () {});
+    });
+  }
 });
 
 document.getElementById("yes-no").addEventListener("click", function () {
@@ -95,6 +155,14 @@ document.getElementById("ranking").addEventListener("click", function () {
   choice_highlight("ranking", "yes-no", "rating", "approval");
 });
 
+document.getElementById("yes").addEventListener("click", function () {
+  choice_highlight_binary("yes", "no");
+});
+
+document.getElementById("no").addEventListener("click", function () {
+  choice_highlight_binary("no", "yes");
+});
+
 function choice_highlight(choice, dehigh1, dehigh2, dehigh3) {
   choice_dehighlight(dehigh1);
   choice_dehighlight(dehigh2);
@@ -102,6 +170,13 @@ function choice_highlight(choice, dehigh1, dehigh2, dehigh3) {
   document.getElementById(choice).style.border = "0.1em solid #cc0000";
   document.getElementById(choice).style.color = "#cc0000";
   user_choice = choice;
+}
+
+function choice_highlight_binary(choice, dehigh1) {
+  choice_dehighlight(dehigh1);
+  document.getElementById(choice).style.border = "0.1em solid #cc0000";
+  document.getElementById(choice).style.color = "#cc0000";
+  time_limit_choice = choice;
 }
 
 function choice_dehighlight(choice) {
@@ -112,9 +187,7 @@ function choice_dehighlight(choice) {
 //This is for when the user submits the poll information from the template.
 document.getElementById("sum").addEventListener("click", function () {
   let question_text = document.forms["poll-question"]["question-text"].value;
-  if (user_choice === "none") {
-    $("#warning-nothing-selected").fadeIn(300, function () {});
-  } else if ($("#question").val().trim().length < 15) {
+  if ($("#question").val().trim().length < 15) {
     $("#warning-empty-text-area").fadeIn(300, function () {});
     $("#warning-nothing-selected").fadeOut(300, function () {});
   } else if (user_choice !== "none" && $("#question").val().trim().length >= 1) {
@@ -124,17 +197,13 @@ document.getElementById("sum").addEventListener("click", function () {
     })
       .then((res) => res.text())
       .then((response) => {
-        $("#warning-nothing-selected").fadeOut(300, function () {});
         $("#warning-empty-text-area").fadeOut(300, function () {});
-        $("#poll-selection").fadeOut(300, function () {});
         $("#poll-question").fadeOut(300, function () {});
         $("#sum").fadeOut(300, function () {
           $("#all-filters").fadeIn(300, function () {});
           $("#add-post-icon").fadeIn(300, function () {});
           generate_posts(false);
           choice_dehighlight(user_choice);
-          user_choice = "none";
-          document.forms["poll-question"]["question-text"].value = "";
         });
       });
   }
@@ -562,6 +631,10 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
     $("#warning-empty-text-area").fadeOut(300, function () {});
     $("#poll-selection").fadeOut(300, function () {});
     $("#poll-question").fadeOut(300, function () {});
+    $("#warning-no-time-limit-choice").fadeOut(300, function () {});
+    $("#poll-template-time-choice").fadeOut(300, function () {});
+    $("#next-step").fadeOut(300, function () {});
+    $("#time-choice").fadeOut(300, function () {});
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       $("#username-change-form").fadeOut(300, function () {});
     }
@@ -610,6 +683,10 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
     $("#warning-empty-text-area").fadeOut(300, function () {});
     $("#poll-selection").fadeOut(300, function () {});
     $("#poll-question").fadeOut(300, function () {});
+    $("#warning-no-time-limit-choice").fadeOut(300, function () {});
+    $("#poll-template-time-choice").fadeOut(300, function () {});
+    $("#next-step").fadeOut(300, function () {});
+    $("#time-choice").fadeOut(300, function () {});
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       $("#username-change-form").fadeOut(300, function () {});
     }
@@ -657,6 +734,10 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
     $("#warning-empty-text-area").fadeOut(300, function () {});
     $("#poll-selection").fadeOut(300, function () {});
     $("#poll-question").fadeOut(300, function () {});
+    $("#warning-no-time-limit-choice").fadeOut(300, function () {});
+    $("#poll-template-time-choice").fadeOut(300, function () {});
+    $("#next-step").fadeOut(300, function () {});
+    $("#time-choice").fadeOut(300, function () {});
     if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
       $("#password-change-form").fadeOut(300, function () {});
     }
@@ -744,6 +825,10 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
     $("#warning-empty-text-area").fadeOut(300, function () {});
     $("#poll-selection").fadeOut(300, function () {});
     $("#poll-question").fadeOut(300, function () {});
+    $("#warning-no-time-limit-choice").fadeOut(300, function () {});
+    $("#poll-template-time-choice").fadeOut(300, function () {});
+    $("#next-step").fadeOut(300, function () {});
+    $("#time-choice").fadeOut(300, function () {});
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       $("#username-change-form").fadeOut(300, function () {});
     }
@@ -893,4 +978,9 @@ function reset_poll_data() {
   document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
   document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
   document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
+  user_choice = "none";
+  document.forms["poll-question"]["question-text"].value = "";
+  document.forms["time-choice"]["time-limit-choice"].value = "";
+  chose_poll_type = false;
+  chose_set_time_limit = false;
 }
