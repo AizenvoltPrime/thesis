@@ -860,6 +860,8 @@ a:active {
   border-radius: 1em;
   color: #f3f3f3;
   padding: 0.5em;
+  margin-right: 0.21em;
+  margin-left: 0.21em;
 }
 
 .fa-clock:hover + .poll-remaining-time {
