@@ -144,12 +144,11 @@ else if($data['request'] == "upload_post_data")
     {
         $param_poll_type = 4;
     }
-
-
-    $sql = "INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date) VALUES (?, ?, ?, ?, ?)";
+    
+    $sql = "INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date) VALUES (?, ?, ?, ?, ?, ?)";
     if ($stmt = mysqli_prepare($conn, $sql)){
         // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "iiiss", $param_userID, $param_poll_type, $param_post_category, $param_text, $param_date);
+        mysqli_stmt_bind_param($stmt, "iiisss", $param_userID, $param_poll_type, $param_post_category, $param_text, $param_date, $data['time_limiter']);
         $param_userID = $_SESSION["id"];
         $param_post_category = 1;
         $param_text = $post_text;

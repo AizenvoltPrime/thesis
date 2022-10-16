@@ -10,8 +10,34 @@ let myChart = [];
 let time_limit;
 let chose_poll_type = false;
 let chose_set_time_limit = false;
-
+var DateTime = luxon.DateTime;
 Chart.defaults.font.size = 20;
+
+let min_time = DateTime.now().plus({ minutes: 30 }).toFormat("HH:mm");
+let min_day = DateTime.now().plus({ minutes: 30 }).toFormat("yyyy-MM-dd");
+let max_day = DateTime.now().plus({ years: 1 }).toFormat("yyyy-MM-dd");
+
+flatpickr("#time-limit-selector", {
+  enableTime: true,
+  dateFormat: "Y-m-d H:i",
+  time_24hr: true,
+  enable: [
+    {
+      from: min_day,
+      to: max_day,
+    },
+  ],
+  plugins: [
+    new minMaxTimePlugin({
+      table: {
+        [min_day]: {
+          minTime: min_time,
+          maxTime: "23:59",
+        },
+      },
+    }),
+  ],
+});
 
 //This is for button animation.
 (function () {
@@ -187,9 +213,12 @@ document.getElementById("sum").addEventListener("click", function () {
     $("#warning-empty-text-area").fadeIn(300, function () {});
     $("#warning-nothing-selected").fadeOut(300, function () {});
   } else if (user_choice !== "none" && $("#question").val().trim().length >= 1) {
+    if (time_limit !== "") {
+      time_limit = time_limit + ":00";
+    }
     fetch("process_data.php", {
       method: "POST",
-      body: JSON.stringify({ request: "upload_post_data", question: question_text, poll_choice: user_choice }),
+      body: JSON.stringify({ request: "upload_post_data", question: question_text, poll_choice: user_choice, time_limiter: time_limit }),
     })
       .then((res) => res.text())
       .then((response) => {
@@ -218,31 +247,8 @@ function generate_posts(bookmark_filter) {
       post_data = response;
       let post_time;
       for (let i = 0; i < post_data.length; i++) {
-        post_time = moment(post_data[i][6], "YYYY-MM-DD HH:mm:ss").fromNow();
-        let arr = post_data[i][6].split("-");
-        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        let month_index = parseInt(arr[1], 10) - 1;
-        post_data[i][6] =
-          post_data[i][6][8] +
-          post_data[i][6][9] +
-          " " +
-          months[month_index] +
-          "," +
-          " " +
-          arr[0] +
-          "," +
-          post_data[i][6][10] +
-          post_data[i][6][11] +
-          post_data[i][6][12] +
-          post_data[i][6][13] +
-          post_data[i][6][14] +
-          post_data[i][6][15] +
-          post_data[i][6][16] +
-          post_data[i][6][17] +
-          post_data[i][6][18];
-        const d = new Date(post_data[i][6]);
-        post_data[i][6] = days[d.getDay()] + "," + " " + post_data[i][6] + " UTC+3";
+        post_time = DateTime.fromFormat(post_data[i][6], "yyyy-MM-dd HH:mm:ss").toRelative();
+        post_data[i][6] = DateTime.fromFormat(post_data[i][6], "yyyy-MM-dd HH:mm:ss").toFormat("cccc, dd MMMM, yyyy, TTTT");
         if (i == 0) {
           document.getElementById("post-user-name").innerText = post_data[i][1];
           document.getElementsByClassName("post-question")[0].innerText = post_data[i][4];

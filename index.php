@@ -15,7 +15,10 @@ require_once "config.php";
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/plugins/minMaxTimePlugin.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.4/luxon.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script type="module" src="index_js_scripts/index.js"></script>
     <script type="module" src="index_js_scripts/navbar.js"></script>
@@ -63,7 +66,7 @@ require_once "config.php";
     <div id="warning-no-time-limit-choice" style="display:none;">You must choose to continue!</div>
     <form id="time-choice" style="display:none;">
       <label id="time-limit">Select time limit:</label>
-      <input type="time" id="time-limit-selector" name="time-limit-choice">
+      <input id="time-limit-selector" type="datetime-local" name="time-limit-choice"></input>
       <div id="warning-no-time-limit" style="display:none;">You must set a time limit!</div>
     </form>
     <button id= "next-step" type="button" style="width:8em; height:3em; font-size: 1.3em;">Next</button>
@@ -136,5 +139,6 @@ require_once "config.php";
         <div class="chartCard" style="display:none;"></div>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   </body>
 </html>
