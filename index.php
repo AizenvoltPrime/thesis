@@ -50,6 +50,12 @@ require_once "config.php";
       <button id="filter"><i class="fa-solid fa-filter"></i>Filter</button>
       <button id="search"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
     </div>
+    <div id="notification-container">
+      <div id="notification">
+        <div id="notification-text"></div>
+        <button id= "notification-button" type="button">OK</button>
+      </div>
+    </div>
     <div id="poll-selection">
       <div id="first-quetion">Choose one of the following poll types.</div>
       <button id="yes-no">Yes/No</button>

@@ -619,7 +619,16 @@ postContainer.addEventListener(
         return;
       }
     } else {
-      return;
+      if (btn_up || btn_down) {
+        $("#notification-container").fadeIn(300, function () {});
+        document.getElementById("notification-text").innerText = "You have to be logged-in to like or dislike a post!";
+      } else if (btn_yes || btn_no) {
+        $("#notification-container").fadeIn(300, function () {});
+        document.getElementById("notification-text").innerText = "You have to be logged-in to vote!";
+      } else if (btn_bookmark) {
+        $("#notification-container").fadeIn(300, function () {});
+        document.getElementById("notification-text").innerText = "You have to be logged-in to bookmark a post!";
+      }
     }
   },
   { passive: true }
@@ -1009,3 +1018,7 @@ function clear_screen() {
   $("#poll-template-time-choice").fadeOut(300, function () {});
   $("#time-choice").fadeOut(300, function () {});
 }
+
+document.getElementById("notification-button").addEventListener("click", function () {
+  $("#notification-container").fadeOut(300, function () {});
+});
