@@ -144,7 +144,10 @@ else if($data['request'] == "upload_post_data")
     {
         $param_poll_type = 4;
     }
-    
+    if($data['time_limiter']=="")
+    {
+        $data['time_limiter']=null;
+    }
     $sql = "INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date) VALUES (?, ?, ?, ?, ?, ?)";
     if ($stmt = mysqli_prepare($conn, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -179,7 +182,8 @@ else if($data['request'] == "get_post_data")
                 COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' and chevron_vote.post_id=post_number),0) AS user_chevron_result,
                 COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_yes_answer,
                 COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_no_answer,
-                COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark
+                COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark,
+                posts.post_expiration_date AS post_expiration_date
                 FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                 on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                 GROUP BY posts.post_number ORDER BY posts.post_date DESC";
@@ -191,7 +195,8 @@ else if($data['request'] == "get_post_data")
                 COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' and chevron_vote.post_id=post_number),0) AS user_chevron_result,
                 COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_yes_answer,
                 COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_no_answer,
-                COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark
+                COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark,
+                posts.post_expiration_date AS post_expiration_date
                 FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                 on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                 WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) = 1
@@ -201,8 +206,8 @@ else if($data['request'] == "get_post_data")
         $result = mysqli_query($conn, $sql);
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $tmp = array($row["post_number"],$row["username"], $row["poll_name"],$row["category_name"],$row["post_text"],
-                $row["chevron_result"],$row["post_date"],$row["user_chevron_result"],$row["user_yes_answer"],$row["user_no_answer"],$row["user_bookmark"]);
+                $tmp = array($row["post_number"],$row["username"], $row["poll_name"],$row["category_name"],$row["post_text"],$row["chevron_result"],
+                $row["post_date"],$row["user_chevron_result"],$row["user_yes_answer"],$row["user_no_answer"],$row["user_bookmark"],$row["post_expiration_date"]);
                 array_push($post_data,$tmp);
             }
         }
@@ -210,12 +215,13 @@ else if($data['request'] == "get_post_data")
         mysqli_close($conn);
     }
     else {
-        $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_result,post_date FROM posts_info";
+        $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info";
 
         $result = mysqli_query($conn, $sql);
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $tmp = array($row["post_number"],$row["username"], $row["poll_name"],$row["category_name"],$row["post_text"],$row["chevron_result"],$row["post_date"]);
+                $tmp = array($row["post_number"],$row["username"], $row["poll_name"],$row["category_name"],$row["post_text"],$row["chevron_result"],$row["post_date"],
+                            $row["post_expiration_date"]);
                 array_push($post_data,$tmp);
             }
         }

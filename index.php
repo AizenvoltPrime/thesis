@@ -75,7 +75,7 @@ require_once "config.php";
       <input id="time-limit-selector" type="datetime-local" name="time-limit-choice"></input>
       <div id="warning-no-time-limit" style="display:none;">You must set a time limit!</div>
     </form>
-    <button id= "next-step" type="button" style="width:8em; height:3em; font-size: 1.3em;">Next</button>
+    <button id= "next-step" type="button">Next</button>
     <form id="poll-question">
       <div id="question-instruction">Type your question.</div>
       <textarea id="question" type="text" name="question-text" maxlength="150"></textarea>
@@ -124,9 +124,13 @@ require_once "config.php";
           <div id="user-who-posted">
             <div style="margin-right: 0.25em;">Posted by</div>
             <div id="post-user-name"></div>
-            <div style="display:flex; flex-direction:column-reverse; align-items:center;">
+            <div style="display:flex; flex-direction:column-reverse; align-items:center; margin-right:auto">
               <div id="post-time"></div>
               <div id="post-time-detailed"></div>
+            </div>
+            <div class="poll-timer-container">
+              <i class="fa-regular fa-clock"></i>
+              <div class="poll-remaining-time"></div>
             </div>
           </div>
           <div id="user-question-answers">

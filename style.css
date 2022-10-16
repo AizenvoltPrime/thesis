@@ -394,6 +394,9 @@ input.logged-form-control {
   border-radius: 0.5em;
   font-weight: 900;
   color: #cc0000;
+  width: 8em;
+  height: 3em;
+  font-size: 1.3em;
 }
 
 .label-color {
@@ -834,12 +837,18 @@ a:active {
   cursor: pointer;
 }
 
-#post-time {
-  cursor: pointer;
-  margin-right: 0.6em;
+.poll-timer-container {
+  display: none;
+  flex-direction: column-reverse;
+  align-items: center;
 }
 
-#post-time-detailed {
+#post-time {
+  cursor: pointer;
+}
+
+#post-time-detailed,
+.poll-remaining-time {
   display: none;
 }
 
@@ -853,11 +862,26 @@ a:active {
   padding: 0.5em;
 }
 
+.fa-clock:hover + .poll-remaining-time {
+  display: block;
+  position: absolute;
+  margin-bottom: 2.5em;
+  background-color: #000000;
+  border-radius: 1em;
+  color: #f3f3f3;
+  padding: 0.5em;
+}
+
 .fa-bookmark {
   font-size: 2em;
   cursor: pointer;
 }
 
+.fa-clock {
+  display: none;
+  font-size: 2em;
+  cursor: pointer;
+}
 .post-question {
   height: fit-content;
   width: fit-content;

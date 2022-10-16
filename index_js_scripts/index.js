@@ -267,7 +267,7 @@ function generate_posts(bookmark_filter) {
         }
       }
       if (post_time !== undefined && post_time !== null) {
-        if (post_data[0].length > 7) {
+        if (post_data[0].length > 8) {
           for (let i = 0; i < post_data.length; i++) {
             if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
@@ -297,11 +297,22 @@ function generate_posts(bookmark_filter) {
               new_bookmark.className = "fa-regular fa-bookmark";
               document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
             }
+            if (post_data[i][11] !== null && DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") === -1) {
+              document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                "Poll closes " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
+              document.querySelectorAll(".poll-timer-container")[i].style.display = "flex";
+              document.querySelectorAll(".fa-clock")[i].style.color = "#00ffd0";
+            } else if (post_data[i][11] !== null && DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1) {
+              document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                "Poll closed " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
+              document.querySelectorAll(".poll-timer-container")[i].style.display = "flex";
+              document.querySelectorAll(".poll-timer-container")[i].style.color = "#cc0000";
+            }
             let new_canvas = document.createElement("canvas");
             new_canvas.className = "myChart";
             document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
           }
-        } else if (post_data[0].length <= 7) {
+        } else if (post_data[0].length <= 8) {
           for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
@@ -309,6 +320,17 @@ function generate_posts(bookmark_filter) {
             let new_canvas = document.createElement("canvas");
             new_canvas.className = "myChart";
             document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
+            if (post_data[i][7] !== null && DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") === -1) {
+              document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                "Poll closes " + DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative();
+              document.querySelectorAll(".poll-timer-container")[i].style.display = "flex";
+              document.querySelectorAll(".fa-clock")[i].style.color = "#00ffd0";
+            } else if (post_data[i][7] !== null && DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1) {
+              document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                "Poll closed " + DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative();
+              document.querySelectorAll(".poll-timer-container")[i].style.display = "flex";
+              document.querySelectorAll(".poll-timer-container")[i].style.color = "#cc0000";
+            }
           }
         }
         if (bookmark_filter == true || bookmark_filter == false) {
@@ -354,7 +376,7 @@ postContainer.addEventListener(
         get_yes_no_data(postIndexShowGraph);
       }
     }
-    if (post_data[0].length > 7) {
+    if (post_data[0].length > 8) {
       if (btn_up) {
         const post_up = btn_up.closest(".post");
         const postIndexUP = [...postContainer.children].indexOf(post_up);
@@ -474,105 +496,120 @@ postContainer.addEventListener(
       } else if (btn_yes) {
         const post_yes = btn_yes.closest(".post");
         const postIndexYes = [...postContainer.children].indexOf(post_yes);
-        if (user_yes_no_vote[postIndexYes][0] == true && user_yes_no_vote[postIndexYes][1] == false) {
-          fetch("process_data.php", {
-            method: "POST",
-            body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "yes", post_id: post_data[postIndexYes][0] }),
-          })
-            .then((res) => res.text())
-            .then((response) => {
-              if (response.trim() == "Success") {
-                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
-                user_yes_no_vote[postIndexYes][0] = false;
-              }
-              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
-                get_yes_no_data(postIndexYes);
-              }
-            });
-        } else if (user_yes_no_vote[postIndexYes][0] == false && user_yes_no_vote[postIndexYes][1] == true) {
-          fetch("process_data.php", {
-            method: "POST",
-            body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "no", post_id: post_data[postIndexYes][0] }),
-          })
-            .then((res) => res.text())
-            .then((response) => {
-              if (response.trim() == "Success") {
-                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
-                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
-                user_yes_no_vote[postIndexYes][0] = true;
-                user_yes_no_vote[postIndexYes][1] = false;
-              }
-              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
-                get_yes_no_data(postIndexYes);
-              }
-            });
-        } else if (user_yes_no_vote[postIndexYes][0] == false && user_yes_no_vote[postIndexYes][1] == false) {
-          fetch("process_data.php", {
-            method: "POST",
-            body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "nothing", post_id: post_data[postIndexYes][0] }),
-          })
-            .then((res) => res.text())
-            .then((response) => {
-              if (response.trim() == "Success") {
-                document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
-                user_yes_no_vote[postIndexYes][0] = true;
-              }
-              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
-                get_yes_no_data(postIndexYes);
-              }
-            });
+        if (
+          post_data[postIndexYes][11] !== null &&
+          DateTime.fromFormat(post_data[postIndexYes][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText = "Poll is closed!";
+        } else {
+          if (user_yes_no_vote[postIndexYes][0] == true && user_yes_no_vote[postIndexYes][1] == false) {
+            fetch("process_data.php", {
+              method: "POST",
+              body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "yes", post_id: post_data[postIndexYes][0] }),
+            })
+              .then((res) => res.text())
+              .then((response) => {
+                if (response.trim() == "Success") {
+                  document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
+                  user_yes_no_vote[postIndexYes][0] = false;
+                }
+                if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
+                  get_yes_no_data(postIndexYes);
+                }
+              });
+          } else if (user_yes_no_vote[postIndexYes][0] == false && user_yes_no_vote[postIndexYes][1] == true) {
+            fetch("process_data.php", {
+              method: "POST",
+              body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "no", post_id: post_data[postIndexYes][0] }),
+            })
+              .then((res) => res.text())
+              .then((response) => {
+                if (response.trim() == "Success") {
+                  document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
+                  document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
+                  user_yes_no_vote[postIndexYes][0] = true;
+                  user_yes_no_vote[postIndexYes][1] = false;
+                }
+                if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
+                  get_yes_no_data(postIndexYes);
+                }
+              });
+          } else if (user_yes_no_vote[postIndexYes][0] == false && user_yes_no_vote[postIndexYes][1] == false) {
+            fetch("process_data.php", {
+              method: "POST",
+              body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "nothing", post_id: post_data[postIndexYes][0] }),
+            })
+              .then((res) => res.text())
+              .then((response) => {
+                if (response.trim() == "Success") {
+                  document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
+                  user_yes_no_vote[postIndexYes][0] = true;
+                }
+                if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
+                  get_yes_no_data(postIndexYes);
+                }
+              });
+          }
         }
       } else if (btn_no) {
         const post_no = btn_no.closest(".post");
         const postIndexNo = [...postContainer.children].indexOf(post_no);
-
-        if (user_yes_no_vote[postIndexNo][0] == false && user_yes_no_vote[postIndexNo][1] == true) {
-          fetch("process_data.php", {
-            method: "POST",
-            body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "no", post_id: post_data[postIndexNo][0] }),
-          })
-            .then((res) => res.text())
-            .then((response) => {
-              if (response.trim() == "Success") {
-                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
-                user_yes_no_vote[postIndexNo][1] = false;
-              }
-              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
-                get_yes_no_data(postIndexNo);
-              }
-            });
-        } else if (user_yes_no_vote[postIndexNo][0] == true && user_yes_no_vote[postIndexNo][1] == false) {
-          fetch("process_data.php", {
-            method: "POST",
-            body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "yes", post_id: post_data[postIndexNo][0] }),
-          })
-            .then((res) => res.text())
-            .then((response) => {
-              if (response.trim() == "Success") {
-                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
-                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
-                user_yes_no_vote[postIndexNo][0] = false;
-                user_yes_no_vote[postIndexNo][1] = true;
-              }
-              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
-                get_yes_no_data(postIndexNo);
-              }
-            });
-        } else if (user_yes_no_vote[postIndexNo][0] == false && user_yes_no_vote[postIndexNo][1] == false) {
-          fetch("process_data.php", {
-            method: "POST",
-            body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "nothing", post_id: post_data[postIndexNo][0] }),
-          })
-            .then((res) => res.text())
-            .then((response) => {
-              if (response.trim() == "Success") {
-                document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
-                user_yes_no_vote[postIndexNo][1] = true;
-              }
-              if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
-                get_yes_no_data(postIndexNo);
-              }
-            });
+        if (
+          post_data[postIndexNo][11] !== null &&
+          DateTime.fromFormat(post_data[postIndexNo][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText = "Poll is closed!";
+        } else {
+          if (user_yes_no_vote[postIndexNo][0] == false && user_yes_no_vote[postIndexNo][1] == true) {
+            fetch("process_data.php", {
+              method: "POST",
+              body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "no", post_id: post_data[postIndexNo][0] }),
+            })
+              .then((res) => res.text())
+              .then((response) => {
+                if (response.trim() == "Success") {
+                  document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
+                  user_yes_no_vote[postIndexNo][1] = false;
+                }
+                if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
+                  get_yes_no_data(postIndexNo);
+                }
+              });
+          } else if (user_yes_no_vote[postIndexNo][0] == true && user_yes_no_vote[postIndexNo][1] == false) {
+            fetch("process_data.php", {
+              method: "POST",
+              body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "yes", post_id: post_data[postIndexNo][0] }),
+            })
+              .then((res) => res.text())
+              .then((response) => {
+                if (response.trim() == "Success") {
+                  document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
+                  document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
+                  user_yes_no_vote[postIndexNo][0] = false;
+                  user_yes_no_vote[postIndexNo][1] = true;
+                }
+                if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
+                  get_yes_no_data(postIndexNo);
+                }
+              });
+          } else if (user_yes_no_vote[postIndexNo][0] == false && user_yes_no_vote[postIndexNo][1] == false) {
+            fetch("process_data.php", {
+              method: "POST",
+              body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "nothing", post_id: post_data[postIndexNo][0] }),
+            })
+              .then((res) => res.text())
+              .then((response) => {
+                if (response.trim() == "Success") {
+                  document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
+                  user_yes_no_vote[postIndexNo][1] = true;
+                }
+                if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
+                  get_yes_no_data(postIndexNo);
+                }
+              });
+          }
         }
       } else if (btn_bookmark) {
         const post_bookmark = btn_bookmark.closest(".post");
@@ -997,6 +1034,9 @@ function reset_poll_data() {
   document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
   document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
   document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+  document.querySelectorAll(".poll-timer-container").forEach((main_class) => (main_class.style.display = null));
+  document.querySelectorAll(".fa-clock").forEach((main_class) => (main_class.style.color = null));
+  document.querySelectorAll(".poll-remaining-time").forEach((main_class) => (main_class.innerText = ""));
   document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
   if (user_choice !== "none") {
     choice_dehighlight(user_choice);
