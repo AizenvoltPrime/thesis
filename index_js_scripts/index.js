@@ -1,32 +1,33 @@
-let user_choice = "none";
-let question_choice = "none";
-let template_status = "000001";
-let user_chevron_vote = [];
-let user_yes_no_vote = [];
-let node = [];
-let clone = [];
-let post_data = [];
-let ctx = [];
-let myChart = [];
-let time_limit;
-let user_coordinates = [];
-let event_coordinates = [];
-var DateTime = luxon.DateTime;
+let user_choice = "none"; //poll choice
+let question_choice = "none"; //yes/no response choices
+let template_status = "000001"; //used to navigate through poll templates
+let user_chevron_vote = []; //like/dislike vote
+let user_yes_no_vote = []; //yes/no vote
+let node = []; //used for cloning posts template
+let clone = []; //used to store cloned posts data
+let post_data = []; //used to store all posts data
+let ctx = []; //used for charts
+let myChart = []; //the chart
+let time_limit; //stores the time when the poll will close
+let user_coordinates = []; //stores user coordinates
+let event_coordinates = []; //stores coordinates of the event when location restricted voting is used
+var DateTime = luxon.DateTime; //used for time features
 Chart.defaults.font.size = 20;
 
-let min_time;
-let min_day;
-let max_day;
+let min_time; //minimum time for poll timer
+let min_day; //earliest day for poll timer
+let max_day; //farthest possible day for poll timer
 
 var map = L.map("map").setView([38.222807817437634, 21.783142089843754], 7);
-let event_marker = null;
-let allowed_vote_radius = null;
-let event_radius = null;
+let event_marker = null; //marker for location of event
+let allowed_vote_radius = null; //the circle around the event marker
+let event_radius = null; //the radius of the circle is saved in this variable
 
 L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
+//used for creating marker and circle radius when user clicks the map
 map.on("click", function (e) {
   event_coordinates = [e.latlng.lat, e.latlng.lng];
   if (event_marker !== null) {
@@ -46,6 +47,7 @@ map.on("click", function (e) {
   event_radius = allowed_vote_radius.getRadius();
 });
 
+//used to change default radius for location restricted voting
 document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("click", function () {
   if (document.forms["location-choice"]["radius"].value >= 5000) {
     if (allowed_vote_radius !== null) {
@@ -143,6 +145,7 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
     });
 });
 
+//Used to navigate through poll templates
 document.getElementById("next-step").addEventListener("click", function () {
   time_limit = document.forms["time-choice"]["time-limit-choice"].value;
   if (template_status === "000001") {
@@ -1085,6 +1088,7 @@ document.getElementById("password-change").addEventListener("click", function ()
   }
 });
 
+//Used to create the charts inside the posts.
 function get_yes_no_data(post_number) {
   fetch("process_data.php", {
     method: "POST",
@@ -1141,6 +1145,7 @@ function get_yes_no_data(post_number) {
     });
 }
 
+//used to clear all posts data each time the user returns to the main page without reloading the page.
 function reset_poll_data() {
   document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
   document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
