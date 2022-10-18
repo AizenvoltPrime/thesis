@@ -23,7 +23,7 @@ let event_marker = null;
 let allowed_vote_radius = null;
 let event_radius = null;
 
-L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
@@ -36,8 +36,34 @@ map.on("click", function (e) {
     map.removeLayer(allowed_vote_radius);
   }
   event_marker = L.marker([event_coordinates[0], event_coordinates[1]]).addTo(map);
-  allowed_vote_radius = L.circle([event_coordinates[0], event_coordinates[1]], { radius: 5000 }).addTo(map);
+  if (document.forms["location-choice"]["radius"].value !== "" && document.forms["location-choice"]["radius"].value >= 5000) {
+    allowed_vote_radius = L.circle([event_coordinates[0], event_coordinates[1]], { radius: document.forms["location-choice"]["radius"].value }).addTo(
+      map
+    );
+  } else {
+    allowed_vote_radius = L.circle([event_coordinates[0], event_coordinates[1]], { radius: 5000 }).addTo(map);
+  }
   event_radius = allowed_vote_radius.getRadius();
+});
+
+document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("click", function () {
+  if (document.forms["location-choice"]["radius"].value >= 5000) {
+    if (allowed_vote_radius !== null) {
+      map.removeLayer(allowed_vote_radius);
+    }
+    allowed_vote_radius = L.circle([event_coordinates[0], event_coordinates[1]], { radius: document.forms["location-choice"]["radius"].value }).addTo(
+      map
+    );
+    event_radius = allowed_vote_radius.getRadius();
+  } else {
+    if (window.getComputedStyle(document.getElementById("warning-no-location-selected")).display !== "none") {
+      $("#warning-no-location-selected").fadeOut(300, function () {
+        $("#warning-radius-too-small").fadeIn(300, function () {});
+      });
+    } else {
+      $("#warning-radius-too-small").fadeIn(300, function () {});
+    }
+  }
 });
 
 //This is for button animation.
@@ -184,6 +210,8 @@ document.getElementById("next-step").addEventListener("click", function () {
           map.invalidateSize();
         });
         $("#next-step").fadeIn(300, function () {});
+        $("#event-radius").fadeIn(300, function () {});
+        $("#radius-number").fadeIn(300, function () {});
       });
       choice_dehighlight("yes-location-restriction");
       template_status = "010000";
@@ -203,6 +231,7 @@ document.getElementById("next-step").addEventListener("click", function () {
       $("#warning-no-location-selected").fadeIn(300, function () {});
     } else {
       $("#warning-no-location-selected").fadeOut(300, function () {});
+      $("#warning-radius-too-small").fadeOut(300, function () {});
       $("#location-choice").fadeOut(300, function () {});
       $("#next-step").fadeOut(300, function () {
         document.getElementById("poll-question").style.display = "flex";
@@ -1134,6 +1163,7 @@ function reset_poll_data() {
   question_choice = "none";
   document.forms["poll-question"]["question-text"].value = "";
   document.forms["time-choice"]["time-limit-choice"].value = "";
+  document.forms["location-choice"]["radius"].value = "";
 
   min_time = DateTime.now().plus({ minutes: 30 }).toFormat("HH:mm");
   min_day = DateTime.now().plus({ minutes: 30 }).toFormat("yyyy-MM-dd");
@@ -1177,9 +1207,12 @@ function reset_poll_data() {
 function clear_screen() {
   $("#warning-nothing-selected").fadeOut(300, function () {});
   $("#warning-empty-text-area").fadeOut(300, function () {});
+  $("#warning-no-time-limit-choice").fadeOut(300, function () {});
+  $("#warning-no-location-restriction-choice").fadeOut(300, function () {});
+  $("#warning-no-location-selected").fadeOut(300, function () {});
+  $("#warning--radius-too-small").fadeOut(300, function () {});
   $("#poll-selection").fadeOut(300, function () {});
   $("#poll-question").fadeOut(300, function () {});
-  $("#warning-no-time-limit-choice").fadeOut(300, function () {});
   $("#poll-template-time-choice").fadeOut(300, function () {});
   $("#time-choice").fadeOut(300, function () {});
   $("#poll-template-location-restriction").fadeOut(300, function () {});

@@ -5,6 +5,7 @@ Hide menu Johncy:https://stackoverflow.com/questions/29960942/hide-menu-sidebar-
 get data from date format Clyde Lobo:https://stackoverflow.com/questions/12246394/how-to-get-month-from-string-in-javascript
 get coordinates by clicking map:https://codepen.io/ckpunmep/pen/QOmwxQ?editors=1111
 https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
+for radius text input filter emkey08:https://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input 
 
 //posts_info
 CREATE VIEW posts_info AS SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name 
@@ -46,6 +47,5 @@ SELECT posts.post_number AS post_number, user.username AS username, polls.poll_n
 
 ΕΠΟΜΕΝΑ TASK:
 
--ΝΑ ΒΑΛΩ ΠΕΡΙΟΡΙΣΜΟ ΤΟΠΕΘΕΣΙΑΣ ΓΙΑ ΝΑ ΜΠΟΡΕΙ ΝΑ ΑΠΑΝΤΗΣΕΙ ΚΑΠΟΙΟΣ
 -ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
 -ΝΑ ΦΤΙΑΞΩ ΓΙΑ ΤΟΝ ADMIN ΧΑΡΤΗ ΜΕ ΤΙΣ ΤΟΠΟΘΕΣΙΕΣ ΟΛΩΝ ΤΩΝ ΧΡΗΣΤΩΝ ΩΣΤΕ ΝΑ ΒΛΕΠΕΙ ΠΟΙΕΣ ΠΕΡΙΟΧΕΣ ΕΙΝΑΙ ΠΙΟ ΕΝΕΡΓΕΣ

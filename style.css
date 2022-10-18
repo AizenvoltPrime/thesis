@@ -630,7 +630,7 @@ a:active {
 
 #poll-selection {
   display: none;
-  margin-top: 12%;
+  margin-top: 11em;
   gap: 0.75em;
   justify-content: center;
   flex-wrap: wrap;
@@ -638,7 +638,8 @@ a:active {
 
 #first-quetion,
 #time-limit,
-#location-restriction {
+#location-restriction,
+#event-radius {
   padding: 0.4em;
   color: #000;
   font-size: 1.875em;
@@ -650,7 +651,7 @@ a:active {
 #poll-template-time-choice,
 #poll-template-location-restriction {
   display: flex;
-  margin-top: 12%;
+  margin-top: 11em;
   justify-content: center;
   align-items: center;
   gap: 0.75em;
@@ -659,12 +660,14 @@ a:active {
   flex-wrap: wrap;
 }
 
-#time-limit-selector {
+#time-limit-selector,
+#radius-number {
   background: #2c3134;
   border-radius: 1em;
   color: white;
   text-align: center;
   font-size: 2em;
+  width: 9.5em;
 }
 
 #yes-time-limit,
@@ -684,7 +687,7 @@ a:active {
 
 #time-choice {
   display: flex;
-  margin-top: 12%;
+  margin-top: 11em;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -738,7 +741,7 @@ a:active {
 #question-instruction {
   padding: 0.4em;
   color: #000;
-  margin-top: 12%;
+  margin-top: 11em;
   font-size: 1.875em;
   font-weight: bold;
 }
@@ -767,7 +770,8 @@ a:active {
 #warning-no-time-limit-choice,
 #warning-no-time-limit,
 #warning-no-location-restriction-choice,
-#warning-no-location-selected {
+#warning-no-location-selected,
+#warning-radius-too-small {
   display: none;
   padding: 0.4em;
   color: #ab0000;
@@ -930,6 +934,11 @@ a:active {
   cursor: pointer;
 }
 
+.fa-circle-chevron-right {
+  color: #000d;
+  cursor: pointer;
+}
+
 .chartCard {
   margin-top: 1em;
   background-color: #606060;
@@ -982,7 +991,7 @@ a:active {
 
 #location-choice {
   display: flex;
-  margin-top: 12%;
+  margin-top: 11em;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -990,4 +999,11 @@ a:active {
 #map {
   width: 70em;
   height: 40em;
+}
+
+#radius-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5em;
 }

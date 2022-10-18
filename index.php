@@ -83,11 +83,17 @@ require_once "config.php";
       <button id="no-location-restriction">No</button>
     </div>
     <div id="warning-no-location-restriction-choice" style="display:none;">You must choose to continue!</div>
-    <div id="location-choice" style="display:none;">
+    <form id="location-choice" style="display:none;">
       <label id="location-restriction">Click on the map to select event location:</label>
       <div id="map"></div>
       <div id="warning-no-location-selected" style="display:none;">You must select a location!</div>
-    </div>
+      <label id="event-radius">Only users inside this radius will be allowed to vote (Default Radius is 5000 meters):</label>
+      <div id= "radius-container">
+        <input id="radius-number" type="text" name="radius" placeholder="Set Radius in Meters" >
+        <i class="fa-solid fa-circle-chevron-right fa-3x"></i>
+      </div>
+      <div id="warning-radius-too-small" style="display:none;">Radius must be at least 5000 meters!</div>
+    </form>
     <button id= "next-step" type="button">Next</button>
     <form id="poll-question">
       <div id="question-instruction">Type your question.</div>
