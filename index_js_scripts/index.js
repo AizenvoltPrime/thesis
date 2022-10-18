@@ -9,60 +9,35 @@ let post_data = [];
 let ctx = [];
 let myChart = [];
 let time_limit;
+let user_coordinates = [];
 let event_coordinates = [];
 var DateTime = luxon.DateTime;
 Chart.defaults.font.size = 20;
 
-let min_time = DateTime.now().plus({ minutes: 30 }).toFormat("HH:mm");
-let min_day = DateTime.now().plus({ minutes: 30 }).toFormat("yyyy-MM-dd");
-let max_day = DateTime.now().plus({ years: 1 }).toFormat("yyyy-MM-dd");
-
-flatpickr("#time-limit-selector", {
-  enableTime: true,
-  dateFormat: "Y-m-d H:i",
-  time_24hr: true,
-  enable: [
-    {
-      from: min_day,
-      to: max_day,
-    },
-  ],
-  plugins: [
-    new minMaxTimePlugin({
-      table: {
-        [min_day]: {
-          minTime: min_time,
-          maxTime: "23:59",
-        },
-      },
-    }),
-  ],
-});
+let min_time;
+let min_day;
+let max_day;
 
 var map = L.map("map").setView([38.222807817437634, 21.783142089843754], 7);
+let event_marker = null;
+let allowed_vote_radius = null;
+let event_radius = null;
 
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-var xlng = 0.000256;
-var xlat = 0.0002;
-
 map.on("click", function (e) {
   event_coordinates = [e.latlng.lat, e.latlng.lng];
-  console.log(event_coordinates);
-  //var c = L.circle([e.latlng.lat, e.latlng.lng], { radius: 15 }).addTo(map);
-  L.polygon([
-    [e.latlng.lat - xlat, e.latlng.lng - xlng],
-    [e.latlng.lat + xlat, e.latlng.lng - xlng],
-    [e.latlng.lat - xlat, e.latlng.lng + xlng],
-    [e.latlng.lat + xlat, e.latlng.lng + xlng],
-  ]).addTo(map);
-
-  L.polyline([
-    [e.latlng.lat, e.latlng.lng - xlng],
-    [e.latlng.lat, e.latlng.lng + xlng],
-  ]).addTo(map);
+  if (event_marker !== null) {
+    map.removeLayer(event_marker);
+  }
+  if (allowed_vote_radius !== null) {
+    map.removeLayer(allowed_vote_radius);
+  }
+  event_marker = L.marker([event_coordinates[0], event_coordinates[1]]).addTo(map);
+  allowed_vote_radius = L.circle([event_coordinates[0], event_coordinates[1]], { radius: 5000 }).addTo(map);
+  event_radius = allowed_vote_radius.getRadius();
 });
 
 //This is for button animation.
@@ -84,6 +59,15 @@ map.on("click", function (e) {
   d.addEventListener("mouseover", addAnim);
   e.addEventListener("mouseover", addAnim);
 })();
+
+//Get user coordinates
+fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
+  .then((response) => response.json())
+  .then((jsonResponse) => {
+    const loc = jsonResponse.loc.split(",");
+    user_coordinates[0] = loc[0];
+    user_coordinates[1] = loc[1];
+  });
 
 //This is for when the user clicks the "Plus" icon.
 document.getElementById("add-post-icon").addEventListener("click", function () {
@@ -295,7 +279,15 @@ document.getElementById("sum").addEventListener("click", function () {
     }
     fetch("process_data.php", {
       method: "POST",
-      body: JSON.stringify({ request: "upload_post_data", question: question_text, poll_choice: user_choice, time_limiter: time_limit }),
+      body: JSON.stringify({
+        request: "upload_post_data",
+        question: question_text,
+        poll_choice: user_choice,
+        time_limiter: time_limit,
+        event_lat: event_coordinates[0],
+        event_long: event_coordinates[1],
+        event_rad: event_radius,
+      }),
     })
       .then((res) => res.text())
       .then((response) => {
@@ -579,6 +571,14 @@ postContainer.addEventListener(
         ) {
           $("#notification-container").fadeIn(300, function () {});
           document.getElementById("notification-text").innerText = "Poll is closed!";
+        } else if (
+          post_data[postIndexYes][12] !== null &&
+          calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexYes][12]), parseFloat(post_data[postIndexYes][13])) >
+            parseInt(post_data[postIndexYes][14])
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText =
+            "You aren't allowed to vote in this post because you are outside the event radius!";
         } else {
           if (user_yes_no_vote[postIndexYes][0] == true && user_yes_no_vote[postIndexYes][1] == false) {
             fetch("process_data.php", {
@@ -638,6 +638,14 @@ postContainer.addEventListener(
         ) {
           $("#notification-container").fadeIn(300, function () {});
           document.getElementById("notification-text").innerText = "Poll is closed!";
+        } else if (
+          post_data[postIndexNo][12] !== null &&
+          calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexNo][12]), parseFloat(post_data[postIndexNo][13])) >
+            parseInt(post_data[postIndexNo][14])
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText =
+            "You aren't allowed to vote in this post because you are outside the event radius!";
         } else {
           if (user_yes_no_vote[postIndexNo][0] == false && user_yes_no_vote[postIndexNo][1] == true) {
             fetch("process_data.php", {
@@ -1126,8 +1134,44 @@ function reset_poll_data() {
   question_choice = "none";
   document.forms["poll-question"]["question-text"].value = "";
   document.forms["time-choice"]["time-limit-choice"].value = "";
+
+  min_time = DateTime.now().plus({ minutes: 30 }).toFormat("HH:mm");
+  min_day = DateTime.now().plus({ minutes: 30 }).toFormat("yyyy-MM-dd");
+  max_day = DateTime.now().plus({ years: 1 }).toFormat("yyyy-MM-dd");
+
+  flatpickr("#time-limit-selector", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    time_24hr: true,
+    enable: [
+      {
+        from: min_day,
+        to: max_day,
+      },
+    ],
+    plugins: [
+      new minMaxTimePlugin({
+        table: {
+          [min_day]: {
+            minTime: min_time,
+            maxTime: "23:59",
+          },
+        },
+      }),
+    ],
+  });
+
   template_status = "000001";
   event_coordinates.length = 0;
+  if (event_marker !== null) {
+    map.removeLayer(event_marker);
+  }
+  if (allowed_vote_radius !== null) {
+    map.removeLayer(allowed_vote_radius);
+  }
+  event_marker = null;
+  allowed_vote_radius = null;
+  event_radius = null;
 }
 
 function clear_screen() {
@@ -1145,3 +1189,22 @@ function clear_screen() {
 document.getElementById("notification-button").addEventListener("click", function () {
   $("#notification-container").fadeOut(300, function () {});
 });
+
+//This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
+function calcCrow(lat1, lon1, lat2, lon2) {
+  var R = 6371; // km
+  var dLat = toRad(lat2 - lat1);
+  var dLon = toRad(lon2 - lon1);
+  var lat1 = toRad(lat1);
+  var lat2 = toRad(lat2);
+
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c * 1000;
+  return parseInt(d);
+}
+
+// Converts numeric degrees to radians
+function toRad(Value) {
+  return (Value * Math.PI) / 180;
+}

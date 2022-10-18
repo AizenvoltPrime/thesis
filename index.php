@@ -84,7 +84,7 @@ require_once "config.php";
     </div>
     <div id="warning-no-location-restriction-choice" style="display:none;">You must choose to continue!</div>
     <div id="location-choice" style="display:none;">
-      <label id="location-restriction">Select location:</label>
+      <label id="location-restriction">Click on the map to select event location:</label>
       <div id="map"></div>
       <div id="warning-no-location-selected" style="display:none;">You must select a location!</div>
     </div>

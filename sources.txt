@@ -4,6 +4,7 @@ Remove blue highlight: https://www.youtube.com/watch?v=DVrJtKI8N2I
 Hide menu Johncy:https://stackoverflow.com/questions/29960942/hide-menu-sidebar-when-clicking-outside-the-bar-or-the-button
 get data from date format Clyde Lobo:https://stackoverflow.com/questions/12246394/how-to-get-month-from-string-in-javascript
 get coordinates by clicking map:https://codepen.io/ckpunmep/pen/QOmwxQ?editors=1111
+https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
 
 //posts_info
 CREATE VIEW posts_info AS SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name 

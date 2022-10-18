@@ -991,16 +991,3 @@ a:active {
   width: 70em;
   height: 40em;
 }
-
-pre {
-  min-width: 18.75em;
-  white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -pre-wrap;
-  white-space: -o-pre-wrap;
-  word-wrap: break-word;
-}
-
-.leaflet-popup-content-wrapper {
-  min-width: 21.875em;
-}
