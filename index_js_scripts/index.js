@@ -1,5 +1,6 @@
 let user_choice = "none";
-let time_limit_choice = "none";
+let question_choice = "none";
+let template_status = "000001";
 let user_chevron_vote = [];
 let user_yes_no_vote = [];
 let node = [];
@@ -8,35 +9,35 @@ let post_data = [];
 let ctx = [];
 let myChart = [];
 let time_limit;
-let chose_poll_type = false;
-let chose_set_time_limit = false;
+let user_coordinates = [];
+let event_coordinates = [];
 var DateTime = luxon.DateTime;
 Chart.defaults.font.size = 20;
 
-let min_time = DateTime.now().plus({ minutes: 30 }).toFormat("HH:mm");
-let min_day = DateTime.now().plus({ minutes: 30 }).toFormat("yyyy-MM-dd");
-let max_day = DateTime.now().plus({ years: 1 }).toFormat("yyyy-MM-dd");
+let min_time;
+let min_day;
+let max_day;
 
-flatpickr("#time-limit-selector", {
-  enableTime: true,
-  dateFormat: "Y-m-d H:i",
-  time_24hr: true,
-  enable: [
-    {
-      from: min_day,
-      to: max_day,
-    },
-  ],
-  plugins: [
-    new minMaxTimePlugin({
-      table: {
-        [min_day]: {
-          minTime: min_time,
-          maxTime: "23:59",
-        },
-      },
-    }),
-  ],
+var map = L.map("map").setView([38.222807817437634, 21.783142089843754], 7);
+let event_marker = null;
+let allowed_vote_radius = null;
+let event_radius = null;
+
+L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
+map.on("click", function (e) {
+  event_coordinates = [e.latlng.lat, e.latlng.lng];
+  if (event_marker !== null) {
+    map.removeLayer(event_marker);
+  }
+  if (allowed_vote_radius !== null) {
+    map.removeLayer(allowed_vote_radius);
+  }
+  event_marker = L.marker([event_coordinates[0], event_coordinates[1]]).addTo(map);
+  allowed_vote_radius = L.circle([event_coordinates[0], event_coordinates[1]], { radius: 5000 }).addTo(map);
+  event_radius = allowed_vote_radius.getRadius();
 });
 
 //This is for button animation.
@@ -58,6 +59,15 @@ flatpickr("#time-limit-selector", {
   d.addEventListener("mouseover", addAnim);
   e.addEventListener("mouseover", addAnim);
 })();
+
+//Get user coordinates
+fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
+  .then((response) => response.json())
+  .then((jsonResponse) => {
+    const loc = jsonResponse.loc.split(",");
+    user_coordinates[0] = loc[0];
+    user_coordinates[1] = loc[1];
+  });
 
 //This is for when the user clicks the "Plus" icon.
 document.getElementById("add-post-icon").addEventListener("click", function () {
@@ -109,10 +119,10 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
 
 document.getElementById("next-step").addEventListener("click", function () {
   time_limit = document.forms["time-choice"]["time-limit-choice"].value;
-  if (time_limit === "" && chose_set_time_limit === false) {
+  if (template_status === "000001") {
     if (user_choice === "none") {
       $("#warning-nothing-selected").fadeIn(300, function () {});
-    } else if (user_choice !== "none" && chose_poll_type === false) {
+    } else if (user_choice !== "none") {
       $("#warning-nothing-selected").fadeOut(300, function () {});
       $("#poll-selection").fadeOut(300, function () {});
       $("#next-step").fadeOut(300, function () {});
@@ -121,43 +131,86 @@ document.getElementById("next-step").addEventListener("click", function () {
         .done(function () {
           $("#poll-template-time-choice").fadeIn(300, function () {});
           $("#next-step").fadeIn(300, function () {});
-          chose_poll_type = true;
+          template_status = "000010";
         });
-    } else if (user_choice !== "none" && chose_poll_type === true) {
-      if (time_limit_choice !== "yes" && time_limit_choice !== "no") {
-        $("#warning-no-time-limit-choice").fadeIn(300, function () {});
-      } else {
-        if (time_limit_choice === "yes") {
-          $("#poll-template-time-choice").fadeOut(300, function () {});
-          $("#warning-no-time-limit-choice").fadeOut(300, function () {});
-          $("#next-step").fadeOut(300, function () {
-            $("#time-choice").fadeIn(300, function () {});
-            $("#next-step").fadeIn(300, function () {});
-          });
-          choice_dehighlight("yes");
-          chose_set_time_limit = true;
-        } else if (time_limit_choice === "no") {
-          $("#poll-template-time-choice").fadeOut(300, function () {});
-          $("#warning-no-time-limit-choice").fadeOut(300, function () {});
-          $("#next-step").fadeOut(300, function () {
-            document.getElementById("poll-question").style.display = "flex";
-            document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
-            $("#sum").fadeIn(300, function () {});
-            choice_dehighlight("no");
-          });
-        }
-      }
     }
-  } else if (time_limit === "" && chose_set_time_limit === true) {
-    $("#warning-no-time-limit").fadeIn(300, function () {});
-  } else if (time_limit !== "" && chose_set_time_limit === true) {
-    $("#time-choice").fadeOut(300, function () {});
-    $("#warning-no-time-limit").fadeOut(300, function () {});
-    $("#next-step").fadeOut(300, function () {
-      document.getElementById("poll-question").style.display = "flex";
-      document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
-      $("#sum").fadeIn(300, function () {});
-    });
+  } else if (template_status === "000010") {
+    if (question_choice !== "yes-time-limit" && question_choice !== "no-time-limit") {
+      $("#warning-no-time-limit-choice").fadeIn(300, function () {});
+    } else if (question_choice === "yes-time-limit") {
+      $("#poll-template-time-choice").fadeOut(300, function () {});
+      $("#warning-no-time-limit-choice").fadeOut(300, function () {});
+      $("#next-step").fadeOut(300, function () {
+        $("#time-choice").fadeIn(300, function () {});
+        $("#next-step").fadeIn(300, function () {});
+      });
+      choice_dehighlight("yes-time-limit");
+      question_choice = "none";
+      template_status = "000100";
+    } else if (question_choice === "no-time-limit") {
+      $("#poll-template-time-choice").fadeOut(300, function () {});
+      $("#warning-no-time-limit-choice").fadeOut(300, function () {});
+      $("#next-step").fadeOut(300, function () {});
+      $("#next-step")
+        .promise()
+        .done(function () {
+          $("#poll-template-location-restriction").fadeIn(300, function () {});
+          $("#next-step").fadeIn(300, function () {});
+          choice_dehighlight("no-time-limit");
+          question_choice = "none";
+          template_status = "001000";
+        });
+    }
+  } else if (template_status === "000100") {
+    if (time_limit === "") {
+      $("#warning-no-time-limit").fadeIn(300, function () {});
+    } else if (time_limit !== "") {
+      $("#time-choice").fadeOut(300, function () {});
+      $("#warning-no-time-limit").fadeOut(300, function () {});
+      $("#next-step").fadeOut(300, function () {
+        $("#poll-template-location-restriction").fadeIn(300, function () {});
+        $("#next-step").fadeIn(300, function () {});
+        template_status = "001000";
+      });
+    }
+  } else if (template_status === "001000") {
+    if (question_choice !== "yes-location-restriction" && question_choice !== "no-location-restriction") {
+      $("#warning-no-location-restriction-choice").fadeIn(300, function () {});
+    } else if (question_choice === "yes-location-restriction") {
+      $("#poll-template-location-restriction").fadeOut(300, function () {});
+      $("#warning-no-location-restriction-choice").fadeOut(300, function () {});
+      $("#next-step").fadeOut(300, function () {
+        $("#location-choice").fadeIn(300, function () {
+          map.invalidateSize();
+        });
+        $("#next-step").fadeIn(300, function () {});
+      });
+      choice_dehighlight("yes-location-restriction");
+      template_status = "010000";
+    } else if (question_choice === "no-location-restriction") {
+      $("#poll-template-location-restriction").fadeOut(300, function () {});
+      $("#warning-no-location-restriction-choice").fadeOut(300, function () {});
+      $("#next-step").fadeOut(300, function () {
+        document.getElementById("poll-question").style.display = "flex";
+        document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
+        $("#sum").fadeIn(300, function () {});
+        choice_dehighlight("no-location-restriction");
+        template_status = "100000";
+      });
+    }
+  } else if (template_status === "010000") {
+    if (event_coordinates.length < 2) {
+      $("#warning-no-location-selected").fadeIn(300, function () {});
+    } else {
+      $("#warning-no-location-selected").fadeOut(300, function () {});
+      $("#location-choice").fadeOut(300, function () {});
+      $("#next-step").fadeOut(300, function () {
+        document.getElementById("poll-question").style.display = "flex";
+        document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
+        $("#sum").fadeIn(300, function () {});
+        template_status = "100000";
+      });
+    }
   }
 });
 
@@ -177,12 +230,20 @@ document.getElementById("ranking").addEventListener("click", function () {
   choice_highlight("ranking", "yes-no", "rating", "approval");
 });
 
-document.getElementById("yes").addEventListener("click", function () {
-  choice_highlight_binary("yes", "no");
+document.getElementById("yes-time-limit").addEventListener("click", function () {
+  choice_highlight_binary("yes-time-limit", "no-time-limit");
 });
 
-document.getElementById("no").addEventListener("click", function () {
-  choice_highlight_binary("no", "yes");
+document.getElementById("no-time-limit").addEventListener("click", function () {
+  choice_highlight_binary("no-time-limit", "yes-time-limit");
+});
+
+document.getElementById("yes-location-restriction").addEventListener("click", function () {
+  choice_highlight_binary("yes-location-restriction", "no-location-restriction");
+});
+
+document.getElementById("no-location-restriction").addEventListener("click", function () {
+  choice_highlight_binary("no-location-restriction", "yes-location-restriction");
 });
 
 function choice_highlight(choice, dehigh1, dehigh2, dehigh3) {
@@ -198,7 +259,7 @@ function choice_highlight_binary(choice, dehigh1) {
   choice_dehighlight(dehigh1);
   document.getElementById(choice).style.border = "0.1em solid #cc0000";
   document.getElementById(choice).style.color = "#cc0000";
-  time_limit_choice = choice;
+  question_choice = choice;
 }
 
 function choice_dehighlight(choice) {
@@ -218,7 +279,15 @@ document.getElementById("sum").addEventListener("click", function () {
     }
     fetch("process_data.php", {
       method: "POST",
-      body: JSON.stringify({ request: "upload_post_data", question: question_text, poll_choice: user_choice, time_limiter: time_limit }),
+      body: JSON.stringify({
+        request: "upload_post_data",
+        question: question_text,
+        poll_choice: user_choice,
+        time_limiter: time_limit,
+        event_lat: event_coordinates[0],
+        event_long: event_coordinates[1],
+        event_rad: event_radius,
+      }),
     })
       .then((res) => res.text())
       .then((response) => {
@@ -502,6 +571,14 @@ postContainer.addEventListener(
         ) {
           $("#notification-container").fadeIn(300, function () {});
           document.getElementById("notification-text").innerText = "Poll is closed!";
+        } else if (
+          post_data[postIndexYes][12] !== null &&
+          calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexYes][12]), parseFloat(post_data[postIndexYes][13])) >
+            parseInt(post_data[postIndexYes][14])
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText =
+            "You aren't allowed to vote in this post because you are outside the event radius!";
         } else {
           if (user_yes_no_vote[postIndexYes][0] == true && user_yes_no_vote[postIndexYes][1] == false) {
             fetch("process_data.php", {
@@ -561,6 +638,14 @@ postContainer.addEventListener(
         ) {
           $("#notification-container").fadeIn(300, function () {});
           document.getElementById("notification-text").innerText = "Poll is closed!";
+        } else if (
+          post_data[postIndexNo][12] !== null &&
+          calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexNo][12]), parseFloat(post_data[postIndexNo][13])) >
+            parseInt(post_data[postIndexNo][14])
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText =
+            "You aren't allowed to vote in this post because you are outside the event radius!";
         } else {
           if (user_yes_no_vote[postIndexNo][0] == false && user_yes_no_vote[postIndexNo][1] == true) {
             fetch("process_data.php", {
@@ -1041,12 +1126,52 @@ function reset_poll_data() {
   if (user_choice !== "none") {
     choice_dehighlight(user_choice);
   }
+  choice_dehighlight("yes-time-limit");
+  choice_dehighlight("no-time-limit");
+  choice_dehighlight("yes-location-restriction");
+  choice_dehighlight("no-location-restriction");
   user_choice = "none";
-  time_limit_choice = "none";
+  question_choice = "none";
   document.forms["poll-question"]["question-text"].value = "";
   document.forms["time-choice"]["time-limit-choice"].value = "";
-  chose_poll_type = false;
-  chose_set_time_limit = false;
+
+  min_time = DateTime.now().plus({ minutes: 30 }).toFormat("HH:mm");
+  min_day = DateTime.now().plus({ minutes: 30 }).toFormat("yyyy-MM-dd");
+  max_day = DateTime.now().plus({ years: 1 }).toFormat("yyyy-MM-dd");
+
+  flatpickr("#time-limit-selector", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    time_24hr: true,
+    enable: [
+      {
+        from: min_day,
+        to: max_day,
+      },
+    ],
+    plugins: [
+      new minMaxTimePlugin({
+        table: {
+          [min_day]: {
+            minTime: min_time,
+            maxTime: "23:59",
+          },
+        },
+      }),
+    ],
+  });
+
+  template_status = "000001";
+  event_coordinates.length = 0;
+  if (event_marker !== null) {
+    map.removeLayer(event_marker);
+  }
+  if (allowed_vote_radius !== null) {
+    map.removeLayer(allowed_vote_radius);
+  }
+  event_marker = null;
+  allowed_vote_radius = null;
+  event_radius = null;
 }
 
 function clear_screen() {
@@ -1057,8 +1182,29 @@ function clear_screen() {
   $("#warning-no-time-limit-choice").fadeOut(300, function () {});
   $("#poll-template-time-choice").fadeOut(300, function () {});
   $("#time-choice").fadeOut(300, function () {});
+  $("#poll-template-location-restriction").fadeOut(300, function () {});
+  $("#location-choice").fadeOut(300, function () {});
 }
 
 document.getElementById("notification-button").addEventListener("click", function () {
   $("#notification-container").fadeOut(300, function () {});
 });
+
+//This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
+function calcCrow(lat1, lon1, lat2, lon2) {
+  var R = 6371; // km
+  var dLat = toRad(lat2 - lat1);
+  var dLon = toRad(lon2 - lon1);
+  var lat1 = toRad(lat1);
+  var lat2 = toRad(lat2);
+
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c * 1000;
+  return parseInt(d);
+}
+
+// Converts numeric degrees to radians
+function toRad(Value) {
+  return (Value * Math.PI) / 180;
+}

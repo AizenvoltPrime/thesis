@@ -637,7 +637,8 @@ a:active {
 }
 
 #first-quetion,
-#time-limit {
+#time-limit,
+#location-restriction {
   padding: 0.4em;
   color: #000;
   font-size: 1.875em;
@@ -646,7 +647,8 @@ a:active {
   text-align: center;
 }
 
-#poll-template-time-choice {
+#poll-template-time-choice,
+#poll-template-location-restriction {
   display: flex;
   margin-top: 12%;
   justify-content: center;
@@ -665,8 +667,10 @@ a:active {
   font-size: 2em;
 }
 
-#yes,
-#no {
+#yes-time-limit,
+#no-time-limit,
+#yes-location-restriction,
+#no-location-restriction {
   background-color: #2c3134;
   padding: 0.3em;
   border-radius: 1em;
@@ -760,8 +764,10 @@ a:active {
 
 #warning-nothing-selected,
 #warning-empty-text-area,
+#warning-no-time-limit-choice,
 #warning-no-time-limit,
-#warning-no-time-limit-choice {
+#warning-no-location-restriction-choice,
+#warning-no-location-selected {
   display: none;
   padding: 0.4em;
   color: #ab0000;
@@ -972,4 +978,16 @@ a:active {
   font-size: 1.875em;
   font-weight: bold;
   padding: 0.5em 1em;
+}
+
+#location-choice {
+  display: flex;
+  margin-top: 12%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#map {
+  width: 70em;
+  height: 40em;
 }

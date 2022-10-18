@@ -148,10 +148,10 @@ else if($data['request'] == "upload_post_data")
     {
         $data['time_limiter']=null;
     }
-    $sql = "INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date, event_lat, event_long, event_radius) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     if ($stmt = mysqli_prepare($conn, $sql)){
         // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "iiisss", $param_userID, $param_poll_type, $param_post_category, $param_text, $param_date, $data['time_limiter']);
+        mysqli_stmt_bind_param($stmt, "iiisssddi", $param_userID, $param_poll_type, $param_post_category, $param_text, $param_date, $data['time_limiter'],$data['event_lat'],$data['event_long'],$data['event_rad']);
         $param_userID = $_SESSION["id"];
         $param_post_category = 1;
         $param_text = $post_text;
@@ -183,7 +183,7 @@ else if($data['request'] == "get_post_data")
                 COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_yes_answer,
                 COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_no_answer,
                 COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark,
-                posts.post_expiration_date AS post_expiration_date
+                posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
                 FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                 on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                 GROUP BY posts.post_number ORDER BY posts.post_date DESC";
@@ -196,7 +196,7 @@ else if($data['request'] == "get_post_data")
                 COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_yes_answer,
                 COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_no_answer,
                 COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark,
-                posts.post_expiration_date AS post_expiration_date
+                posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
                 FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                 on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                 WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) = 1
@@ -207,7 +207,8 @@ else if($data['request'] == "get_post_data")
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $tmp = array($row["post_number"],$row["username"], $row["poll_name"],$row["category_name"],$row["post_text"],$row["chevron_result"],
-                $row["post_date"],$row["user_chevron_result"],$row["user_yes_answer"],$row["user_no_answer"],$row["user_bookmark"],$row["post_expiration_date"]);
+                $row["post_date"],$row["user_chevron_result"],$row["user_yes_answer"],$row["user_no_answer"],$row["user_bookmark"],$row["post_expiration_date"],
+                $row["event_lat"],$row["event_long"],$row["event_radius"]);
                 array_push($post_data,$tmp);
             }
         }

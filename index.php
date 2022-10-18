@@ -17,9 +17,11 @@ require_once "config.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/plugins/minMaxTimePlugin.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.4/luxon.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
     <script type="module" src="index_js_scripts/index.js"></script>
     <script type="module" src="index_js_scripts/navbar.js"></script>
     <script type="module" src="index_js_scripts/filters.js"></script>
@@ -66,8 +68,8 @@ require_once "config.php";
     <div id="warning-nothing-selected">You must choose a poll type!</div>
     <div id="poll-template-time-choice" style="display:none;">
       <div id="time-limit">Do you want to close your poll after a set time limit?</div>
-      <button id="yes">Yes</button>
-      <button id="no">No</button>
+      <button id="yes-time-limit">Yes</button>
+      <button id="no-time-limit">No</button>
     </div>
     <div id="warning-no-time-limit-choice" style="display:none;">You must choose to continue!</div>
     <form id="time-choice" style="display:none;">
@@ -75,6 +77,17 @@ require_once "config.php";
       <input id="time-limit-selector" type="datetime-local" name="time-limit-choice"></input>
       <div id="warning-no-time-limit" style="display:none;">You must set a time limit!</div>
     </form>
+    <div id="poll-template-location-restriction" style="display:none;">
+      <div id="location-restriction">Do you want to put a location restriction for user votes?</div>
+      <button id="yes-location-restriction">Yes</button>
+      <button id="no-location-restriction">No</button>
+    </div>
+    <div id="warning-no-location-restriction-choice" style="display:none;">You must choose to continue!</div>
+    <div id="location-choice" style="display:none;">
+      <label id="location-restriction">Click on the map to select event location:</label>
+      <div id="map"></div>
+      <div id="warning-no-location-selected" style="display:none;">You must select a location!</div>
+    </div>
     <button id= "next-step" type="button">Next</button>
     <form id="poll-question">
       <div id="question-instruction">Type your question.</div>
