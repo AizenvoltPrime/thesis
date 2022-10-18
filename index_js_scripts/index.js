@@ -793,39 +793,41 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
         generate_posts(true);
       });
     } else if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
       $("#password-change-form").fadeOut(300, function () {
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
         generate_posts(true);
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
         generate_posts(true);
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
       $("#sum").fadeOut(300, function () {
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
         generate_posts(true);
       });
     }
   } else {
+    document.getElementById("user-nav").style.width = "0";
+    document.getElementById("profile-icon").style.visibility = "visible";
     $("#add-post-icon").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
@@ -841,8 +843,6 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
         reset_poll_data();
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
         generate_posts(true);
       });
   }
@@ -853,39 +853,41 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
-        document.getElementById("sidenav").style.width = "0";
-        document.getElementById("sidenav-icon").style.visibility = "visible";
         generate_posts(false);
       });
     } else if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#password-change-form").fadeOut(300, function () {
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
-        document.getElementById("sidenav").style.width = "0";
-        document.getElementById("sidenav-icon").style.visibility = "visible";
         generate_posts(false);
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
-        document.getElementById("sidenav").style.width = "0";
-        document.getElementById("sidenav-icon").style.visibility = "visible";
         generate_posts(false);
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#sum").fadeOut(300, function () {
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
-        document.getElementById("sidenav").style.width = "0";
-        document.getElementById("sidenav-icon").style.visibility = "visible";
         generate_posts(false);
       });
     }
   } else {
+    document.getElementById("sidenav").style.width = "0";
+    document.getElementById("sidenav-icon").style.visibility = "visible";
     $("#add-post-icon").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
@@ -900,8 +902,6 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
       .done(function () {
         $(".post").not(":first").remove();
         reset_poll_data();
-        document.getElementById("sidenav").style.width = "0";
-        document.getElementById("sidenav-icon").style.visibility = "visible";
         generate_posts(false);
       });
   }
@@ -912,23 +912,27 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
       $("#password-change-form").fadeOut(300, function () {
         $("#username-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
         $("#username-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
       $("#sum").fadeOut(300, function () {
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
         $("#username-change-form").fadeIn(300, function () {});
       });
     }
   } else {
+    document.getElementById("user-nav").style.width = "0";
+    document.getElementById("profile-icon").style.visibility = "visible";
     $("#add-post-icon").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
@@ -938,8 +942,6 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
         reset_poll_data();
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
         $("#username-change-form").fadeIn(300, function () {});
       });
   }
@@ -1000,23 +1002,27 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
         $("#password-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
         $("#password-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
       $("#sum").fadeOut(300, function () {
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
         $("#password-change-form").fadeIn(300, function () {});
       });
     }
   } else {
+    document.getElementById("user-nav").style.width = "0";
+    document.getElementById("profile-icon").style.visibility = "visible";
     $("#add-post-icon").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
@@ -1026,8 +1032,6 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
         reset_poll_data();
-        document.getElementById("user-nav").style.width = "0";
-        document.getElementById("profile-icon").style.visibility = "visible";
         $("#password-change-form").fadeIn(300, function () {});
       });
   }
