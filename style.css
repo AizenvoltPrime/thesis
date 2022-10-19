@@ -990,14 +990,16 @@ a:active {
   padding: 0.5em 1em;
 }
 
-#location-choice {
+#location-choice,
+#analytics-container {
   display: flex;
   margin-top: 11em;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-#map {
+#event-location-map,
+#location-responses-map {
   width: 70em;
   height: 40em;
 }

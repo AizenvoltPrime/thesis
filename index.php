@@ -86,7 +86,7 @@ require_once "config.php";
     <div id="warning-no-location-restriction-choice" style="display:none;">You must choose to continue!</div>
     <form id="location-choice" style="display:none;">
       <label class="location-restriction">Click on the map to select event location:</label>
-      <div id="map"></div>
+      <div id="event-location-map"></div>
       <div id="warning-no-location-selected" style="display:none;">You must select a location!</div>
       <label id="event-radius">Only users inside this radius will be allowed to vote (Default Radius is 5000 meters):</label>
       <div id= "radius-container">
@@ -138,6 +138,9 @@ require_once "config.php";
             </div>
             <input id="password-change" type="button" value="Submit">
     </form>
+    <div id="analytics-container" style="display:none;">
+      <div id="location-responses-map"></div>
+    </div>
     <div id="posts-container">
       <div class="post">
         <div class="post-info">

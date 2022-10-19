@@ -18,31 +18,31 @@ let min_time; //minimum time for poll timer
 let min_day; //earliest day for poll timer
 let max_day; //farthest possible day for poll timer
 
-var map = L.map("map").setView([38.222807817437634, 21.783142089843754], 7);
+var event_location_map = L.map("event-location-map").setView([38.222807817437634, 21.783142089843754], 7);
 let event_marker = null; //marker for location of event
 let allowed_vote_radius = null; //the circle around the event marker
 let event_radius = null; //the radius of the circle is saved in this variable
 
 L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
+}).addTo(event_location_map);
 
 //used for creating marker and circle radius when user clicks the map
-map.on("click", function (e) {
+event_location_map.on("click", function (e) {
   event_coordinates = [e.latlng.lat, e.latlng.lng];
   if (event_marker !== null) {
-    map.removeLayer(event_marker);
+    event_location_map.removeLayer(event_marker);
   }
   if (allowed_vote_radius !== null) {
-    map.removeLayer(allowed_vote_radius);
+    event_location_map.removeLayer(allowed_vote_radius);
   }
-  event_marker = L.marker([event_coordinates[0], event_coordinates[1]]).addTo(map);
+  event_marker = L.marker([event_coordinates[0], event_coordinates[1]]).addTo(event_location_map);
   if (document.forms["location-choice"]["radius"].value !== "" && document.forms["location-choice"]["radius"].value >= 5000) {
     allowed_vote_radius = L.circle([event_coordinates[0], event_coordinates[1]], { radius: document.forms["location-choice"]["radius"].value }).addTo(
-      map
+      event_location_map
     );
   } else {
-    allowed_vote_radius = L.circle([event_coordinates[0], event_coordinates[1]], { radius: 5000 }).addTo(map);
+    allowed_vote_radius = L.circle([event_coordinates[0], event_coordinates[1]], { radius: 5000 }).addTo(event_location_map);
   }
   event_radius = allowed_vote_radius.getRadius();
 });
@@ -54,10 +54,10 @@ document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("
       $("#warning-radius-too-small").fadeOut(300, function () {});
     }
     if (allowed_vote_radius !== null) {
-      map.removeLayer(allowed_vote_radius);
+      event_location_map.removeLayer(allowed_vote_radius);
     }
     allowed_vote_radius = L.circle([event_coordinates[0], event_coordinates[1]], { radius: document.forms["location-choice"]["radius"].value }).addTo(
-      map
+      event_location_map
     );
     event_radius = allowed_vote_radius.getRadius();
   } else {
@@ -70,6 +70,12 @@ document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("
     }
   }
 });
+
+var location_responses_map = L.map("location-responses-map").setView([38.222807817437634, 21.783142089843754], 7);
+
+L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(location_responses_map);
 
 //This is for button animation.
 (function () {
@@ -213,7 +219,7 @@ document.getElementById("next-step").addEventListener("click", function () {
       $("#warning-no-location-restriction-choice").fadeOut(300, function () {});
       $("#next-step").fadeOut(300, function () {
         $("#location-choice").fadeIn(300, function () {
-          map.invalidateSize();
+          event_location_map.invalidateSize();
         });
         $("#next-step").fadeIn(300, function () {});
         $("#event-radius").fadeIn(300, function () {});
@@ -811,6 +817,14 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(true);
       });
+    } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#analytics-container").fadeOut(300, function () {
+        $("#all-filters").fadeIn(300, function () {});
+        $("#add-post-icon").fadeIn(300, function () {});
+        generate_posts(true);
+      });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
@@ -871,6 +885,14 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(false);
       });
+    } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#analytics-container").fadeOut(300, function () {
+        $("#all-filters").fadeIn(300, function () {});
+        $("#add-post-icon").fadeIn(300, function () {});
+        generate_posts(false);
+      });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
@@ -918,6 +940,12 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#password-change-form").fadeOut(300, function () {
+        $("#username-change-form").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#analytics-container").fadeOut(300, function () {
         $("#username-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
@@ -1008,6 +1036,12 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
+        $("#password-change-form").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#analytics-container").fadeOut(300, function () {
         $("#password-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
@@ -1102,19 +1136,33 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
-        $("#password-change-form").fadeIn(300, function () {});
+        $("#analytics-container").fadeIn(300, function () {
+          location_responses_map.invalidateSize();
+        });
+      });
+    } else if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#password-change-form").fadeOut(300, function () {
+        $("#analytics-container").fadeIn(300, function () {
+          location_responses_map.invalidateSize();
+        });
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
-        $("#password-change-form").fadeIn(300, function () {});
+        $("#analytics-container").fadeIn(300, function () {
+          location_responses_map.invalidateSize();
+        });
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#sum").fadeOut(300, function () {
-        $("#password-change-form").fadeIn(300, function () {});
+        $("#analytics-container").fadeIn(300, function () {
+          location_responses_map.invalidateSize();
+        });
       });
     }
   } else {
@@ -1129,7 +1177,9 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
         reset_poll_data();
-        $("#password-change-form").fadeIn(300, function () {});
+        $("#analytics-container").fadeIn(300, function () {
+          location_responses_map.invalidateSize();
+        });
       });
   }
 });
@@ -1245,10 +1295,10 @@ function reset_poll_data() {
   template_status = "000001";
   event_coordinates.length = 0;
   if (event_marker !== null) {
-    map.removeLayer(event_marker);
+    event_location_map.removeLayer(event_marker);
   }
   if (allowed_vote_radius !== null) {
-    map.removeLayer(allowed_vote_radius);
+    event_location_map.removeLayer(allowed_vote_radius);
   }
   event_marker = null;
   allowed_vote_radius = null;
