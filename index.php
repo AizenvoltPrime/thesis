@@ -43,6 +43,7 @@ require_once "config.php";
       <a class="nav-element"><i class="fa-solid fa-bookmark fa-1x"></i>Bookmarks</a>
       <a class="nav-element"><i class="fa-solid fa-user fa-1x"></i>Change Username</a>
       <a class="nav-element"><i class="fa-solid fa-lock fa-1x"></i>Change Password</a>
+      <a class="nav-element"><i class="fa-solid fa-chart-simple"></i>Analytics</a>
       <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
     </div>
     <div id="all-filters">
@@ -67,24 +68,24 @@ require_once "config.php";
     </div>
     <div id="warning-nothing-selected">You must choose a poll type!</div>
     <div id="poll-template-time-choice" style="display:none;">
-      <div id="time-limit">Do you want to close your poll after a set time limit?</div>
+      <div class="time-limit">Do you want to close your poll after a set time limit?</div>
       <button id="yes-time-limit">Yes</button>
       <button id="no-time-limit">No</button>
     </div>
     <div id="warning-no-time-limit-choice" style="display:none;">You must choose to continue!</div>
     <form id="time-choice" style="display:none;">
-      <label id="time-limit">Select time limit:</label>
+      <label class="time-limit">Select time limit:</label>
       <input id="time-limit-selector" type="datetime-local" name="time-limit-choice"></input>
       <div id="warning-no-time-limit" style="display:none;">You must set a time limit!</div>
     </form>
     <div id="poll-template-location-restriction" style="display:none;">
-      <div id="location-restriction">Do you want to put a location restriction for user votes?</div>
+      <div class="location-restriction">Do you want to put a location restriction for user votes?</div>
       <button id="yes-location-restriction">Yes</button>
       <button id="no-location-restriction">No</button>
     </div>
     <div id="warning-no-location-restriction-choice" style="display:none;">You must choose to continue!</div>
     <form id="location-choice" style="display:none;">
-      <label id="location-restriction">Click on the map to select event location:</label>
+      <label class="location-restriction">Click on the map to select event location:</label>
       <div id="map"></div>
       <div id="warning-no-location-selected" style="display:none;">You must select a location!</div>
       <label id="event-radius">Only users inside this radius will be allowed to vote (Default Radius is 5000 meters):</label>
@@ -139,27 +140,27 @@ require_once "config.php";
     </form>
     <div id="posts-container">
       <div class="post">
-        <div id="post-info">
-          <div id="user-who-posted">
+        <div class="post-info">
+          <div class="user-who-posted">
             <div style="margin-right: 0.25em;">Posted by</div>
-            <div id="post-user-name"></div>
+            <div class="post-user-name"></div>
             <div style="display:flex; flex-direction:column-reverse; align-items:center; margin-right:auto">
-              <div id="post-time"></div>
-              <div id="post-time-detailed"></div>
+              <div class="post-time"></div>
+              <div class="post-time-detailed"></div>
             </div>
             <div class="poll-timer-container">
               <i class="fa-regular fa-clock"></i>
               <div class="poll-remaining-time"></div>
             </div>
           </div>
-          <div id="user-question-answers">
+          <div class="user-question-answers">
             <div class="post-question"></div>
             <button data-dir="yes" class="answer-yes">Yes</button>
             <button data-dir="no" class="answer-no" style="margin-right:0.5em;">No</button>
             <button data-dir="show-graph" class="show-graph">Show Graph</button>
           </div>
         </div>
-        <div id="post-critic">
+        <div class="post-critic">
             <button data-dir="up"><i class="fa-solid fa-chevron-up"></i></button>
             <div class="score"></div>
             <button data-dir="down" style="margin-right:auto;"><i class="fa-solid fa-chevron-down"></i></button>

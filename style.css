@@ -226,7 +226,8 @@ input {
 .fa-envelope,
 .fa-house,
 .fa-times,
-.fa-arrow-right-from-bracket {
+.fa-arrow-right-from-bracket,
+.fa-chart-simple {
   background: -webkit-linear-gradient(200deg, #cc0000, #000);
   background-clip: text;
   -webkit-background-clip: text;
@@ -637,8 +638,8 @@ a:active {
 }
 
 #first-quetion,
-#time-limit,
-#location-restriction,
+.time-limit,
+.location-restriction,
 #event-radius {
   padding: 0.4em;
   color: #000;
@@ -805,14 +806,14 @@ a:active {
   flex-direction: column;
 }
 
-#post-info {
+.post-info {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   column-gap: 0.8em;
 }
 
-#post-critic {
+.post-critic {
   display: flex;
   align-items: flex-end;
   column-gap: 0.5em;
@@ -823,7 +824,7 @@ a:active {
   text-align: center;
 }
 
-#user-who-posted {
+.user-who-posted {
   display: flex;
   margin-bottom: 0.8em;
   font-size: 0.6em;
@@ -831,18 +832,18 @@ a:active {
   flex-wrap: wrap;
 }
 
-#user-question-answers {
+.user-question-answers {
   display: flex;
   flex-wrap: wrap;
   column-gap: 0.5em;
   word-break: break-word;
 }
 
-#post-user-name {
+.post-user-name {
   margin-right: 0.25em;
 }
 
-#post-user-name:hover {
+.post-user-name:hover {
   text-decoration: underline;
   cursor: pointer;
 }
@@ -853,16 +854,16 @@ a:active {
   align-items: center;
 }
 
-#post-time {
+.post-time {
   cursor: pointer;
 }
 
-#post-time-detailed,
+.post-time-detailed,
 .poll-remaining-time {
   display: none;
 }
 
-#post-time:hover + #post-time-detailed {
+.post-time:hover + .post-time-detailed {
   display: block;
   position: absolute;
   margin-bottom: 2em;

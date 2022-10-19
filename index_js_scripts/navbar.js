@@ -38,7 +38,11 @@ document.getElementById("profile-icon").addEventListener("click", function () {
         document.getElementsByClassName("nav-element")[4].style.display = "none";
         document.getElementsByClassName("nav-element")[5].style.display = "none";
         document.getElementsByClassName("nav-element")[6].style.display = "none";
+        document.getElementsByClassName("nav-element")[7].style.display = "none";
       } else {
+        if (response !== "admin") {
+          document.getElementsByClassName("nav-element")[6].style.display = "none";
+        }
         document.getElementsByClassName("nav-element")[1].style.display = "none";
         document.getElementsByClassName("nav-element")[2].style.display = "none";
         document.getElementsByClassName("nav-element")[3].style.cursor = "pointer";
@@ -47,6 +51,7 @@ document.getElementById("profile-icon").addEventListener("click", function () {
         document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.webkitBackgroundClip = "text";
         document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.webkitTextFillColor = "transparent";
         document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.paddingRight = "0.35em";
+        document.getElementsByClassName("fa-solid fa-chart-simple")[0].style.paddingRight = "0.35em";
         document.getElementsByClassName("fa-solid fa-user fa-1x")[0].style.paddingRight = "0.25em";
         document.getElementsByClassName("fa-solid fa-lock fa-1x")[0].style.paddingRight = "0.25em";
       }

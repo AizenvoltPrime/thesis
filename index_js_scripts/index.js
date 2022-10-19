@@ -50,6 +50,9 @@ map.on("click", function (e) {
 //used to change default radius for location restricted voting
 document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("click", function () {
   if (document.forms["location-choice"]["radius"].value >= 5000) {
+    if (window.getComputedStyle(document.getElementById("warning-radius-too-small")).display !== "none") {
+      $("#warning-radius-too-small").fadeOut(300, function () {});
+    }
     if (allowed_vote_radius !== null) {
       map.removeLayer(allowed_vote_radius);
     }
@@ -351,19 +354,19 @@ function generate_posts(bookmark_filter) {
         post_time = DateTime.fromFormat(post_data[i][6], "yyyy-MM-dd HH:mm:ss").toRelative();
         post_data[i][6] = DateTime.fromFormat(post_data[i][6], "yyyy-MM-dd HH:mm:ss").toFormat("cccc, dd MMMM, yyyy, TTTT");
         if (i == 0) {
-          document.getElementById("post-user-name").innerText = post_data[i][1];
+          document.getElementsByClassName("post-user-name")[0].innerText = post_data[i][1];
           document.getElementsByClassName("post-question")[0].innerText = post_data[i][4];
           document.getElementsByClassName("score")[0].innerText = post_data[i][5];
-          document.getElementById("post-time").innerText = post_time;
-          document.getElementById("post-time-detailed").innerText = post_data[i][6];
+          document.getElementsByClassName("post-time")[0].innerText = post_time;
+          document.getElementsByClassName("post-time-detailed")[0].innerText = post_data[i][6];
         } else if (i > 0) {
           node[i - 1] = document.getElementsByClassName("post")[0];
           clone[i - 1] = node[i - 1].cloneNode(true);
-          clone[i - 1].querySelector("#post-user-name").innerText = post_data[i][1];
+          clone[i - 1].querySelectorAll(".post-user-name")[0].innerText = post_data[i][1];
           clone[i - 1].querySelectorAll(".post-question")[0].innerText = post_data[i][4];
           clone[i - 1].querySelectorAll(".score")[0].innerText = post_data[i][5];
-          clone[i - 1].querySelector("#post-time").innerText = post_time;
-          clone[i - 1].querySelector("#post-time-detailed").innerText = post_data[i][6];
+          clone[i - 1].querySelectorAll(".post-time")[0].innerText = post_time;
+          clone[i - 1].querySelectorAll(".post-time-detailed")[0].innerText = post_data[i][6];
           document.getElementById("posts-container").appendChild(clone[i - 1]);
         }
       }
@@ -1088,6 +1091,45 @@ document.getElementById("password-change").addEventListener("click", function ()
               generate_posts(false);
             });
         }
+      });
+  }
+});
+
+document.getElementsByClassName("nav-element")[6].addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
+    clear_screen();
+    if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#username-change-form").fadeOut(300, function () {
+        $("#password-change-form").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#next-step").fadeOut(300, function () {
+        $("#password-change-form").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#sum").fadeOut(300, function () {
+        $("#password-change-form").fadeIn(300, function () {});
+      });
+    }
+  } else {
+    document.getElementById("user-nav").style.width = "0";
+    document.getElementById("profile-icon").style.visibility = "visible";
+    $("#add-post-icon").fadeOut(300, function () {});
+    $("#all-filters").fadeOut(300, function () {});
+    $(".post").fadeOut(300, function () {});
+    $(".post")
+      .promise()
+      .done(function () {
+        $(".post").fadeOut(300, function () {});
+        $(".post").not(":first").remove();
+        reset_poll_data();
+        $("#password-change-form").fadeIn(300, function () {});
       });
   }
 });

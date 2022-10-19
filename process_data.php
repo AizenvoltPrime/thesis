@@ -14,6 +14,10 @@ else if($data['request'] == "user_status")
     if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         echo "false";
     }
+    else if($_SESSION["role"] == "admin")
+    {
+        echo "admin";
+    }
 }
 else if($data["request"] == "username_change"){
     require_once "config.php";
