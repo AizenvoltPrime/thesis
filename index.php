@@ -27,15 +27,18 @@ require_once "config.php";
     <script type="module" src="index_js_scripts/filters.js"></script>
   </head>
   <body>
+    <!--This div is for the three icons at the top of the page.-->
     <div class="top-row">
       <button id="sidenav-icon"><i class="fa-solid fa-bars fa-2x"></i></button>
       <button id="add-post-icon"><i class="fa-solid fa-plus fa-4x"></i></button>
       <button id="profile-icon"><i class="fa-solid fa-user fa-4x"></i></button>
     </div>
+    <!--This div is for the left navbar icons.-->
     <div id="sidenav" class="sidenav">
       <button class="closebtn"><i class="fa-solid fa-times fa-2x"></i></button>
       <a class="nav-element"><i class="fa-solid fa-house"></i>Home</a>
     </div>
+    <!--This div is for the right navbar icons.-->
     <div id="user-nav" class="user-nav">
       <button class="closeuserbtn"><i class="fa-solid fa-times fa-2x"></i></button>
       <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user"></i>Login</a>
@@ -46,6 +49,7 @@ require_once "config.php";
       <a class="nav-element"><i class="fa-solid fa-chart-simple"></i>Analytics</a>
       <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
     </div>
+    <!--This div is for the post filters.-->
     <div id="all-filters">
       <button id="hot"><i class="fa-solid fa-fire-flame-curved"></i>Hot</button>
       <button id="recent"><i class="fa-solid fa-sun"></i>Recent</button>
@@ -53,12 +57,14 @@ require_once "config.php";
       <button id="filter"><i class="fa-solid fa-filter"></i>Filter</button>
       <button id="search"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
     </div>
+    <!--This div is for user notifications.-->
     <div id="notification-container">
       <div id="notification">
         <div id="notification-text"></div>
         <button id= "notification-button" type="button">OK</button>
       </div>
     </div>
+    <!--This div is for choosing a poll type to create.-->
     <div id="poll-selection">
       <div id="first-quetion">Choose one of the following poll types.</div>
       <button id="yes-no">Yes/No</button>
@@ -67,23 +73,27 @@ require_once "config.php";
       <button id="ranking">Ranking</button>
     </div>
     <div id="warning-nothing-selected">You must choose a poll type!</div>
+    <!--This div is for users to decide if they want a time limit to their polls.-->
     <div id="poll-template-time-choice" style="display:none;">
       <div class="time-limit">Do you want to close your poll after a set time limit?</div>
       <button id="yes-time-limit">Yes</button>
       <button id="no-time-limit">No</button>
     </div>
     <div id="warning-no-time-limit-choice" style="display:none;">You must choose to continue!</div>
+    <!--This form is for setting the time limit.-->
     <form id="time-choice" style="display:none;">
       <label class="time-limit">Select time limit:</label>
       <input id="time-limit-selector" type="datetime-local" name="time-limit-choice"></input>
       <div id="warning-no-time-limit" style="display:none;">You must set a time limit!</div>
     </form>
+    <!--This div is for users to decide if they want to restrict votes based on location.-->
     <div id="poll-template-location-restriction" style="display:none;">
       <div class="location-restriction">Do you want to put a location restriction for user votes?</div>
       <button id="yes-location-restriction">Yes</button>
       <button id="no-location-restriction">No</button>
     </div>
     <div id="warning-no-location-restriction-choice" style="display:none;">You must choose to continue!</div>
+    <!--This form is for users to select the event location and the radius in which votes are allowed.-->
     <form id="location-choice" style="display:none;">
       <label class="location-restriction">Click on the map to select event location:</label>
       <div id="event-location-map"></div>
@@ -95,13 +105,16 @@ require_once "config.php";
       </div>
       <div id="warning-radius-too-small" style="display:none;">Radius must be at least 5000 meters!</div>
     </form>
+    <!--This button is used to navigate inside poll creation template.-->
     <button id= "next-step" type="button">Next</button>
-    <form id="poll-question">
+    <!--This form is for users to type the poll question.-->
+    <form id="poll-question" style="display:none;">
       <div id="question-instruction">Type your question.</div>
       <textarea id="question" type="text" name="question-text" maxlength="150"></textarea>
       <button id= "sum" type="button" style="width:8em; height:3em; font-size: 1.3em;">Post Poll</button>
     </form>
     <div id="warning-empty-text-area">Textarea needs to have at least 15 characters and at most 150 characters!</div>
+    <!--This form is for users to change their username.-->
     <form id="username-change-form" style="display:none;" name="username-change-form">
             <div>
                 <i class="fa-solid fa-circle-user fa-10x"></i>
@@ -118,6 +131,7 @@ require_once "config.php";
             <span id="pass-help"></span>
             <input id="username-change" type="button" value="Submit">
     </form>
+    <!--This form is for users to change their password.-->
     <form id="password-change-form" style="display:none;" name="username-change-form">
             <div>
                 <i class="fa-solid fa-circle-user fa-10x"></i>
@@ -138,9 +152,15 @@ require_once "config.php";
             </div>
             <input id="password-change" type="button" value="Submit">
     </form>
+    <!--This div is for administrators only.-->
     <div id="analytics-container" style="display:none;">
+      <div id="all-analytics">
+        <button id="map-analytics"><i class="fa-solid fa-map"></i>Map Analytics</button>
+        <button id="chart-analytics"><i class="fa-solid fa-chart-column"></i>Chart Analytics</button>
+      </div>
       <div id="location-responses-map"></div>
     </div>
+    <!--This div contains all the posts.-->
     <div id="posts-container">
       <div class="post">
         <div class="post-info">

@@ -1,3 +1,5 @@
+import { null_style, highlight_filter } from "./filters.js";
+
 let user_choice = "none"; //poll choice
 let question_choice = "none"; //yes/no response choices
 let template_status = "000001"; //used to navigate through poll templates
@@ -72,6 +74,7 @@ document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("
 });
 
 var location_responses_map = L.map("location-responses-map").setView([38.222807817437634, 21.783142089843754], 7);
+let location_response_marker = [];
 
 L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -886,8 +889,8 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
         generate_posts(false);
       });
     } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
-      document.getElementById("user-nav").style.width = "0";
-      document.getElementById("profile-icon").style.visibility = "visible";
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
@@ -1129,6 +1132,7 @@ document.getElementById("password-change").addEventListener("click", function ()
   }
 });
 
+//This is for when the user clicks "Analytics" on the user navbar.
 document.getElementsByClassName("nav-element")[6].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
@@ -1136,32 +1140,40 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
+        highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
           location_responses_map.invalidateSize();
+          make_location_responses_map();
         });
       });
     } else if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#password-change-form").fadeOut(300, function () {
+        highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
           location_responses_map.invalidateSize();
+          make_location_responses_map();
         });
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
+        highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
           location_responses_map.invalidateSize();
+          make_location_responses_map();
         });
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#sum").fadeOut(300, function () {
+        highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
           location_responses_map.invalidateSize();
+          make_location_responses_map();
         });
       });
     }
@@ -1177,8 +1189,10 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
         reset_poll_data();
+        highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
           location_responses_map.invalidateSize();
+          make_location_responses_map();
         });
       });
   }
@@ -1338,7 +1352,40 @@ function calcCrow(lat1, lon1, lat2, lon2) {
   return parseInt(d);
 }
 
-// Converts numeric degrees to radians
+//Converts numeric degrees to radians
 function toRad(Value) {
   return (Value * Math.PI) / 180;
 }
+
+//This function creates the map for location/responses analytics
+function make_location_responses_map() {
+  fetch("process_data.php", {
+    method: "POST",
+    body: JSON.stringify({
+      request: "location_responses_data",
+    }),
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      for (let i = 0; i < response.length; i++) {
+        if (location_response_marker[i] !== undefined) {
+          location_responses_map.removeLayer(location_response_marker[i]);
+        }
+        location_response_marker[i] = L.marker([response[i][0], response[i][1]])
+          .bindTooltip("User Posts:" + response[i][2] + " | User Responses:" + response[i][3])
+          .addTo(location_responses_map);
+      }
+    });
+}
+
+document.getElementById("map-analytics").addEventListener("click", function () {
+  highlight_filter("fa-solid fa-map");
+  null_style("fa-solid fa-chart-column");
+  $("#location-responses-map").fadeIn(300, function () {});
+});
+
+document.getElementById("chart-analytics").addEventListener("click", function () {
+  highlight_filter("fa-solid fa-chart-column");
+  null_style("fa-solid fa-map");
+  $("#location-responses-map").fadeOut(300, function () {});
+});

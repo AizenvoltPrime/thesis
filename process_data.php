@@ -19,7 +19,7 @@ else if($data['request'] == "user_status")
         echo "admin";
     }
 }
-else if($data["request"] == "username_change"){
+else if($data["request"] == "username_change" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true){
     require_once "config.php";
     $new_username=$data['username'];
 
@@ -84,7 +84,8 @@ else if($data["request"] == "username_change"){
         mysqli_close($conn);
     }
 }
-else if($data["request"] == "password_change"){
+else if($data["request"] == "password_change" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
+{
     require_once "config.php";
 
     $sql = "SELECT password FROM user WHERE username = ?";
@@ -126,7 +127,7 @@ else if($data["request"] == "password_change"){
         // Close statement
         mysqli_close($conn);
 }
-else if($data['request'] == "upload_post_data")
+else if($data['request'] == "upload_post_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
 {
     require_once "config.php";
     $post_text=$data['question'];
@@ -234,7 +235,7 @@ else if($data['request'] == "get_post_data")
         mysqli_close($conn);
     }
 }
-else if($data['request'] == "chevron_vote")
+else if($data['request'] == "chevron_vote" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
 {
     require_once "config.php";
 
@@ -304,7 +305,7 @@ else if($data['request'] == "chevron_vote")
         }
     }
 }
-else if($data['request'] == "yes_no_vote")
+else if($data['request'] == "yes_no_vote" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
 {
     require_once "config.php";
 
@@ -373,7 +374,7 @@ else if($data['request'] == "yes_no_vote")
         }
     }
 }
-else if($data['request'] == "bookmark")
+else if($data['request'] == "bookmark" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
 {
     require_once "config.php";
 
@@ -415,6 +416,27 @@ else if($data['request'] == "yes_no_data")
         }
     }
     echo json_encode($tmp);
+    mysqli_close($conn);
+}
+else if($data['request'] == "location_responses_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
+{
+    require_once "config.php";
+
+    $location_responses_data = array();
+
+    $sql = "SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitude, (SELECT COUNT(post_number) FROM posts WHERE posts.post_loc_lat=post_latitude 
+    AND post_loc_long=post_longitude GROUP BY post_loc_lat,post_loc_long) AS number_of_posts_in_location,(SELECT COUNT(yes_no.post_id) FROM yes_no 
+    INNER JOIN posts ON yes_no.post_id=posts.post_number WHERE (yes_no.answer_yes=1 OR yes_no.answer_no=1) AND posts.post_loc_lat=post_latitude 
+    AND posts.post_loc_long=post_longitude) AS number_of_responses_in_location 
+    FROM posts INNER JOIN yes_no ON posts.post_number=yes_no.post_id GROUP BY post_loc_lat,post_loc_long"; 
+    $result = mysqli_query($conn, $sql);
+        if($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $tmp = array($row["post_latitude"],$row["post_longitude"], $row["number_of_posts_in_location"],$row["number_of_responses_in_location"]);
+                array_push($location_responses_data,$tmp);
+            }
+        }
+    echo json_encode($location_responses_data);
     mysqli_close($conn);
 }
 ?>
