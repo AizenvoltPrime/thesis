@@ -105,6 +105,23 @@ require_once "config.php";
       </div>
       <div id="warning-radius-too-small" style="display:none;">Radius must be at least 5000 meters!</div>
     </form>
+    <div id="post-category-container" style="display:none;">
+      <select id="categories">
+        <option value="0">Select category:</option>
+        <option value="1">Sports</option>
+        <option value="2">Business</option>
+        <option value="3">Cars</option>
+        <option value="4">Entertainment</option>
+        <option value="5">Family</option>
+        <option value="6">Health</option>
+        <option value="7">Politics</option>
+        <option value="8">Religion</option>
+        <option value="9">Science</option>
+        <option value="10">Technology</option>
+        <option value="11">Travel</option>
+      </select>
+    </div>
+    <div id="warning-no-category-selected" style="display:none;">You must select a category!</div>
     <!--This button is used to navigate inside poll creation template.-->
     <button id= "next-step" type="button">Next</button>
     <!--This form is for users to type the poll question.-->

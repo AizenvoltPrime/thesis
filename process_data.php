@@ -156,9 +156,8 @@ else if($data['request'] == "upload_post_data" && isset($_SESSION["loggedin"]) &
     $sql = "INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date, event_lat, event_long, event_radius) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     if ($stmt = mysqli_prepare($conn, $sql)){
         // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "iiisssddi", $param_userID, $param_poll_type, $param_post_category, $param_text, $param_date, $data['time_limiter'],$data['event_lat'],$data['event_long'],$data['event_rad']);
+        mysqli_stmt_bind_param($stmt, "iiisssddi", $param_userID, $param_poll_type, $data['post_category'], $param_text, $param_date, $data['time_limiter'],$data['event_lat'],$data['event_long'],$data['event_rad']);
         $param_userID = $_SESSION["id"];
-        $param_post_category = 1;
         $param_text = $post_text;
         date_default_timezone_set('Europe/Athens');
         $param_date = date('Y/m/d H:i:s', time());
@@ -335,7 +334,7 @@ else if($data['request'] == "yes_no_vote" && isset($_SESSION["loggedin"]) && $_S
         }
         else if($result->num_rows == 0)
         {
-            $sql = "INSERT INTO yes_no(post_id,user_id,post_category,answer_yes,answer_no) VALUES ('$data[post_id]','$_SESSION[id]',1,1,0)";       
+            $sql = "INSERT INTO yes_no(post_id,user_id,poll_type,answer_yes,answer_no) VALUES ('$data[post_id]','$_SESSION[id]',1,1,0)";       
             mysqli_query($conn, $sql);
             echo "Success";
             mysqli_close($conn);
@@ -367,7 +366,7 @@ else if($data['request'] == "yes_no_vote" && isset($_SESSION["loggedin"]) && $_S
         }
         else if($result->num_rows == 0)
         {
-            $sql = "INSERT INTO yes_no(post_id,user_id,post_category,answer_yes,answer_no) VALUES ('$data[post_id]','$_SESSION[id]',1,0,1)";       
+            $sql = "INSERT INTO yes_no(post_id,user_id,poll_type,answer_yes,answer_no) VALUES ('$data[post_id]','$_SESSION[id]',1,0,1)";       
             mysqli_query($conn, $sql);
             echo "Success";
             mysqli_close($conn);
