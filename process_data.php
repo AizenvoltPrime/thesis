@@ -251,7 +251,13 @@ else if($data['request'] == "get_post_data")
         mysqli_close($conn);
     }
     else {
-        $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info";
+        if(isset($data["filter"]) && $data["filter"]=="hot")
+        {
+            $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info ORDER BY chevron_result DESC";
+        }
+        else {
+            $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info";
+        }
 
         $result = mysqli_query($conn, $sql);
         if($result->num_rows > 0) {
