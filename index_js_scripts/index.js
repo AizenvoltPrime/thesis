@@ -52,7 +52,7 @@ event_location_map.on("click", function (e) {
 });
 
 //used to change default radius for location restricted voting
-document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("click", function () {
+document.getElementsByClassName("fa-circle-chevron-right")[1].addEventListener("click", function () {
   if (document.forms["location-choice"]["radius"].value >= 5000) {
     if (window.getComputedStyle(document.getElementById("warning-radius-too-small")).display !== "none") {
       $("#warning-radius-too-small").fadeOut(300, function () {});
@@ -363,10 +363,17 @@ document.getElementById("sum").addEventListener("click", function () {
 });
 
 //This generates the posts on the home page.
-export function generate_posts(bookmark_filter, filter) {
+export function generate_posts(bookmark_filter, filter_hot, filter_preferred_categories, filter_filter, filter_search) {
   fetch("process_data.php", {
     method: "POST",
-    body: JSON.stringify({ request: "get_post_data", bookmarks_only: bookmark_filter, filter: filter }),
+    body: JSON.stringify({
+      request: "get_post_data",
+      bookmarks_only: bookmark_filter,
+      filter_hot: filter_hot,
+      filter_preferred_categories: filter_preferred_categories,
+      filter_filter: filter_filter,
+      filter_search: filter_search,
+    }),
   })
     .then((res) => res.json())
     .then((response) => {

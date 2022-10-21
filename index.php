@@ -57,6 +57,10 @@ require_once "config.php";
       <button id="filter"><i class="fa-solid fa-filter"></i>Filter</button>
       <button id="search"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
     </div>
+    <form id="search-box-container" style="display:none;">
+      <textarea id="search-box" type="text" rows="1" name="search-text" maxlength="150"></textarea>
+      <i class="fa-solid fa-circle-chevron-right fa-3x"></i>
+    </form>
     <!--This div is for user notifications.-->
     <div id="notification-container">
       <div id="notification">
