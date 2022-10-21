@@ -84,12 +84,9 @@ L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
 
 //This is for button animation.
 (function () {
-  var c = document.getElementById("sum");
   var d = document.getElementById("username-change");
   var e = document.getElementById("password-change");
   function addAnim() {
-    c.classList.add("animated");
-    c.removeEventListener("mouseover", addAnim);
     d.classList.add("animated");
     d.removeEventListener("mouseover", addAnim);
     e.classList.add("animated");
@@ -97,7 +94,6 @@ L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   }
 
   // listen to mouseover for the container
-  c.addEventListener("mouseover", addAnim);
   d.addEventListener("mouseover", addAnim);
   e.addEventListener("mouseover", addAnim);
 })();

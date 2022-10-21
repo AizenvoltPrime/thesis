@@ -31,7 +31,7 @@ require_once "config.php";
     <div class="top-row">
       <button id="sidenav-icon"><i class="fa-solid fa-bars fa-2x"></i></button>
       <button id="add-post-icon"><i class="fa-solid fa-plus fa-4x"></i></button>
-      <button id="profile-icon"><i class="fa-solid fa-user fa-4x"></i></button>
+      <button id="profile-icon"><i class="fa-solid fa-user fa-4x" style="color:#2c3134"></i></button>
     </div>
     <!--This div is for the left navbar icons.-->
     <div id="sidenav" class="sidenav">
@@ -41,10 +41,10 @@ require_once "config.php";
     <!--This div is for the right navbar icons.-->
     <div id="user-nav" class="user-nav">
       <button class="closeuserbtn"><i class="fa-solid fa-times fa-2x"></i></button>
-      <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user"></i>Login</a>
-      <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user"></i>Registration</a>
+      <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>Login</a>
+      <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>Registration</a>
       <a class="nav-element"><i class="fa-solid fa-bookmark fa-1x"></i>Bookmarks</a>
-      <a class="nav-element"><i class="fa-solid fa-user fa-1x"></i>Change Username</a>
+      <a class="nav-element"><i class="fa-solid fa-user fa-1x" style=" background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>Change Username</a>
       <a class="nav-element"><i class="fa-solid fa-lock fa-1x"></i>Change Password</a>
       <a class="nav-element"><i class="fa-solid fa-chart-simple"></i>Analytics</a>
       <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
@@ -70,7 +70,9 @@ require_once "config.php";
     </div>
     <!--This div is for choosing a poll type to create.-->
     <div id="poll-selection">
-      <div id="first-quetion">Choose one of the following poll types.</div>
+      <div class="template-instructions-container">
+        <div id="first-quetion">Choose one of the following poll types.</div>
+      </div>
       <button id="yes-no">Yes/No</button>
       <button id="rating">Rating</button>
       <button id="approval">Approval</button>
@@ -79,30 +81,40 @@ require_once "config.php";
     <div id="warning-nothing-selected">You must choose a poll type!</div>
     <!--This div is for users to decide if they want a time limit to their polls.-->
     <div id="poll-template-time-choice" style="display:none;">
-      <div class="time-limit">Do you want to close your poll after a set time limit?</div>
+      <div class="template-instructions-container">
+        <div class="time-limit">Do you want to close your poll after a set time limit?</div>
+      </div>
       <button id="yes-time-limit">Yes</button>
       <button id="no-time-limit">No</button>
     </div>
     <div id="warning-no-time-limit-choice" style="display:none;">You must choose to continue!</div>
     <!--This form is for setting the time limit.-->
     <form id="time-choice" style="display:none;">
-      <label class="time-limit">Select time limit:</label>
+      <div class="template-instructions-container">
+        <label class="time-limit">Select time limit:</label>
+      </div>
       <input id="time-limit-selector" type="datetime-local" name="time-limit-choice"></input>
       <div id="warning-no-time-limit" style="display:none;">You must set a time limit!</div>
     </form>
     <!--This div is for users to decide if they want to restrict votes based on location.-->
     <div id="poll-template-location-restriction" style="display:none;">
-      <div class="location-restriction">Do you want to put a location restriction for user votes?</div>
+      <div class="template-instructions-container">
+        <div class="location-restriction">Do you want to put a location restriction for user votes?</div>
+      </div>
       <button id="yes-location-restriction">Yes</button>
       <button id="no-location-restriction">No</button>
     </div>
     <div id="warning-no-location-restriction-choice" style="display:none;">You must choose to continue!</div>
     <!--This form is for users to select the event location and the radius in which votes are allowed.-->
     <form id="location-choice" style="display:none;">
-      <label class="location-restriction">Click on the map to select event location:</label>
+      <div class="template-instructions-container">
+        <label class="location-restriction">Click on the map to select event location:</label>
+      </div>
       <div id="event-location-map"></div>
       <div id="warning-no-location-selected" style="display:none;">You must select a location!</div>
-      <label id="event-radius">Only users inside this radius will be allowed to vote (Default Radius is 5000 meters):</label>
+      <div class="template-instructions-container">
+        <label id="event-radius">Only users inside this radius will be allowed to vote (Default Radius is 5000 meters):</label>
+      </div>
       <div id= "radius-container">
         <input id="radius-number" type="text" name="radius" placeholder="Set Radius in Meters" >
         <i class="fa-solid fa-circle-chevron-right fa-3x"></i>
@@ -143,7 +155,7 @@ require_once "config.php";
             </div>
             <div class="input-icons">
                 <input type="text" name="username" class="logged-form-control" placeholder="New Username">
-                <i class="fa-solid fa-user fa-2x"></i>
+                <i class="fa-solid fa-user fa-2x" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
             </div>
             <span id="user-help"></span>
             <div class="input-icons">

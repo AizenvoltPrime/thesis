@@ -54,7 +54,7 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 ΕΠΟΜΕΝΑ TASK:
 
 -ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
--ΝΑ ΦΤΙΑΞΩ ΓΙΑ ΤΟΝ ADMIN ΧΑΡΤΗ ΜΕ ΤΙΣ ΤΟΠΟΘΕΣΙΕΣ ΟΛΩΝ ΤΩΝ ΧΡΗΣΤΩΝ ΩΣΤΕ ΝΑ ΒΛΕΠΕΙ ΠΟΙΕΣ ΠΕΡΙΟΧΕΣ ΕΙΝΑΙ ΠΙΟ ΕΝΕΡΓΕΣ
+-ΝΑ ΦΤΙΑΞΩ ΤΑ FILTERS
 
  <option value="0">Select category:</option>
         <option value="1">Sports<i class="fa-solid fa-basketball"></i></option>

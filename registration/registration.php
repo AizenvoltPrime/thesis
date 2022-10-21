@@ -25,7 +25,7 @@ require_once "../config.php";
     <div class="top-row">
         <div id="sidenav-icon"><i class="fa-solid fa-bars fa-2x"></i></div>
         <div id="add-post-icon" style="visibility:hidden;"><i class="fa-solid fa-plus fa-4x"></i></div>
-        <div id="profile-icon"><i class="fa-solid fa-user fa-4x"></i></div>
+        <div id="profile-icon"><i class="fa-solid fa-user fa-4x" style="color:#2c3134"></i></div>
     </div>
     <div id="sidenav" class="sidenav">
         <div class="closebtn"><i class="fa-solid fa-times fa-2x"></i></div>
@@ -33,7 +33,7 @@ require_once "../config.php";
     </div>
     <div id="user-nav" class="user-nav">
         <div class="closeuserbtn"><i class="fa-solid fa-times fa-2x"></i></div>
-        <a class="nav-element" href="../login/login.php"><i class="fa-solid fa-user"></i>Login</a>
+        <a class="nav-element" href="../login/login.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>Login</a>
     </div>
     <form id="reg-form" name="registration-form" class="reg">
         <div>
@@ -41,7 +41,7 @@ require_once "../config.php";
         </div>
         <div class="input-icons">
             <input type="text" class="form-control" name="username" placeholder="Username">
-            <i class="fa-solid fa-user fa-2x"></i>
+            <i class="fa-solid fa-user fa-2x" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
         </div>
         <small style="font-size:1.2em">Min: 6 and max 16 characters</small>
         <span id="user-help"></span>

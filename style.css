@@ -11,7 +11,7 @@ a:visited {
 }
 
 body {
-  background-color: #a9a9a9;
+  background-color: #000;
   color: #b5b5b5;
   overflow-x: hidden;
 }
@@ -202,7 +202,7 @@ input {
 #search,
 #map-analytics,
 #chart-analytics {
-  background-color: #2c3134;
+  background-color: #1a1a1b;
   padding: 0.4em;
   border-radius: 1em;
   color: #f3f3f3;
@@ -223,9 +223,6 @@ input {
   margin-right: 0.5em;
 }
 
-.fa-bars,
-.fa-plus,
-.fa-user,
 .fa-circle-user,
 .fa-lock,
 .fa-envelope,
@@ -237,6 +234,11 @@ input {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.fa-bars,
+.fa-plus {
+  color: #2c3134;
 }
 
 .input-icons {
@@ -275,7 +277,7 @@ input {
   justify-content: center;
   align-items: center;
   border-radius: 1em;
-  background-color: #2c3134;
+  background-color: #1a1a1b;
   color: black;
   animation-name: zoom;
   animation-fill-mode: forwards;
@@ -297,7 +299,7 @@ input {
   justify-content: center;
   align-items: center;
   border-radius: 1em;
-  background-color: #2c3134;
+  background-color: #1a1a1b;
   color: black;
   animation-name: zoom;
   animation-fill-mode: forwards;
@@ -312,10 +314,11 @@ input {
   border: none;
   border-bottom: 0.2em solid #cc0000;
   border-image: linear-gradient(to right, #000, #cc0000) 1;
-  background-color: #2c3134;
+  background-color: #1a1a1b;
   font-weight: 900;
   width: 14.7em;
   font-size: 1.5em;
+  color: #f3f3f3;
 }
 
 .logged-form-control {
@@ -324,10 +327,11 @@ input {
   border: none;
   border-bottom: 0.2em solid #cc0000;
   border-image: linear-gradient(to right, #000, #cc0000) 1;
-  background-color: #2c3134;
+  background-color: #1a1a1b;
   font-weight: 900;
   width: 13.1em;
   font-size: 1.2em;
+  color: #f3f3f3;
 }
 
 input.form-control,
@@ -350,7 +354,7 @@ input.logged-form-control {
   justify-content: center;
   align-items: center;
   border-radius: 1em;
-  background-color: #2c3134;
+  background-color: #1a1a1b;
   color: black;
   box-shadow: 0em 0em 0.5em 0.3125em #cc0000;
 }
@@ -394,8 +398,8 @@ input.logged-form-control {
   display: none;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 3em;
-  background-color: #000;
+  margin-top: 1.5em;
+  background-color: #1a1a1b;
   text-align: center;
   border-radius: 0.5em;
   font-weight: 900;
@@ -637,7 +641,14 @@ a:active {
 #poll-selection {
   display: none;
   margin-top: 11em;
-  gap: 0.75em;
+  gap: 1em;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.template-instructions-container {
+  display: flex;
+  flex-basis: 100%;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -646,12 +657,14 @@ a:active {
 .time-limit,
 .location-restriction,
 #event-radius {
-  padding: 0.4em;
-  color: #000;
+  max-width: 27em;
+  color: #f3f3f3;
   font-size: 1.875em;
   font-weight: bold;
-  flex-basis: 100%;
   text-align: center;
+  background-color: #1a1a1b;
+  border-radius: 1em;
+  padding: 0.4em;
 }
 
 #poll-template-time-choice,
@@ -660,7 +673,7 @@ a:active {
   margin-top: 11em;
   justify-content: center;
   align-items: center;
-  gap: 0.75em;
+  gap: 1em;
   margin-left: auto;
   margin-right: auto;
   flex-wrap: wrap;
@@ -668,7 +681,7 @@ a:active {
 
 #time-limit-selector,
 #radius-number {
-  background: #2c3134;
+  background: #1a1a1b;
   border-radius: 1em;
   color: white;
   text-align: center;
@@ -680,13 +693,13 @@ a:active {
 #no-time-limit,
 #yes-location-restriction,
 #no-location-restriction {
-  background-color: #2c3134;
+  background-color: #1a1a1b;
   padding: 0.3em;
   border-radius: 1em;
   font-size: 1.875em;
   font-weight: bold;
   cursor: pointer;
-  border: 0.1em solid #2c3134;
+  border: 0.1em solid #1a1a1b;
   width: 3em;
   color: #f3f3f3;
 }
@@ -696,20 +709,21 @@ a:active {
   margin-top: 11em;
   justify-content: center;
   flex-wrap: wrap;
+  gap: 1em;
 }
 
 #yes-no,
 #rating,
 #approval,
 #ranking {
-  background-color: #2c3134;
+  background-color: #1a1a1b;
   padding: 0.3em;
   border-radius: 1em;
   color: #f3f3f3;
   font-size: 1.875em;
   font-weight: bold;
   cursor: pointer;
-  border: 0.1em solid #2c3134;
+  border: 0.1em solid #1a1a1b;
 }
 
 @keyframes fade_in_show {
@@ -739,7 +753,7 @@ a:active {
 #poll-question {
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 1em;
   justify-content: center;
   align-items: center;
   margin-top: 11em;
@@ -747,9 +761,11 @@ a:active {
 
 #question-instruction {
   padding: 0.4em;
-  color: #000;
+  color: #f3f3f3;
   font-size: 1.875em;
   font-weight: bold;
+  background: #1a1a1b;
+  border-radius: 1em;
 }
 
 #question {
@@ -758,9 +774,9 @@ a:active {
   color: #f3f3f3;
   font-size: 1.3em;
   font-weight: bold;
-  background: #2c3134;
+  background: #1a1a1b;
   border-radius: 0.7em;
-  background-color: #2c3134;
+  background-color: #1a1a1b;
   max-width: 98.5%;
   overflow: hidden;
   resize: none;
@@ -801,7 +817,7 @@ a:active {
 
 .post {
   display: flex;
-  background-color: #2c3134;
+  background-color: #1a1a1b;
   justify-content: space-between;
   height: fit-content;
   font-size: 1.3em;
@@ -942,7 +958,7 @@ a:active {
 }
 
 .fa-circle-chevron-right {
-  color: #000d;
+  color: #1a1a1b;
   cursor: pointer;
 }
 
@@ -1001,6 +1017,7 @@ a:active {
   margin-top: 11em;
   justify-content: center;
   flex-wrap: wrap;
+  gap: 1em;
 }
 
 #event-location-map,
@@ -1038,7 +1055,7 @@ a:active {
   color: #f3f3f3;
   font-size: 2.51em;
   text-align: center;
-  background: #2c3134;
+  background: #1a1a1b;
   border-radius: 1em;
 }
 
@@ -1057,9 +1074,9 @@ a:active {
   color: #f3f3f3;
   font-size: 1.3em;
   font-weight: bold;
-  background: #2c3134;
+  background: #1a1a1b;
   border-radius: 1em;
-  background-color: #2c3134;
+  background-color: #1a1a1b;
   max-width: 98.5%;
   overflow: hidden;
   resize: none;
