@@ -1,9 +1,25 @@
+import { generate_posts, reset_poll_data, get_variables } from "./index.js";
+
 document.getElementById("hot").addEventListener("click", function () {
   highlight_filter("fa-fire-flame-curved");
   null_style("fa-sun");
   null_style("fa-table-list");
   null_style("fa-filter");
   null_style("fa-magnifying-glass");
+
+  $(".post").fadeOut(300, function () {});
+  $(".post")
+    .promise()
+    .done(function () {
+      $(".post").fadeOut(300, function () {});
+      $(".post").not(":first").remove();
+      reset_poll_data();
+      if (get_variables()[0] === true) {
+        generate_posts(true, "hot");
+      } else {
+        generate_posts(false, "hot");
+      }
+    });
 });
 
 document.getElementById("recent").addEventListener("click", function () {
@@ -12,6 +28,20 @@ document.getElementById("recent").addEventListener("click", function () {
   null_style("fa-table-list");
   null_style("fa-filter");
   null_style("fa-magnifying-glass");
+
+  $(".post").fadeOut(300, function () {});
+  $(".post")
+    .promise()
+    .done(function () {
+      $(".post").fadeOut(300, function () {});
+      $(".post").not(":first").remove();
+      reset_poll_data();
+      if (get_variables()[0] === true) {
+        generate_posts(true);
+      } else {
+        generate_posts(false);
+      }
+    });
 });
 
 document.getElementById("preferred-categories").addEventListener("click", function () {

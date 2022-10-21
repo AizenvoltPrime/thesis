@@ -55,3 +55,16 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 
 -ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
 -ΝΑ ΦΤΙΑΞΩ ΓΙΑ ΤΟΝ ADMIN ΧΑΡΤΗ ΜΕ ΤΙΣ ΤΟΠΟΘΕΣΙΕΣ ΟΛΩΝ ΤΩΝ ΧΡΗΣΤΩΝ ΩΣΤΕ ΝΑ ΒΛΕΠΕΙ ΠΟΙΕΣ ΠΕΡΙΟΧΕΣ ΕΙΝΑΙ ΠΙΟ ΕΝΕΡΓΕΣ
+
+ <option value="0">Select category:</option>
+        <option value="1">Sports<i class="fa-solid fa-basketball"></i></option>
+        <option value="2">Business<i class="fa-solid fa-briefcase"></i></option>
+        <option value="3">Cars<i class="fa-solid fa-car"></i></option>
+        <option value="4">Entertainment<i class="fa-solid fa-film"></i></option>
+        <option value="5">Family<i class="fa-solid fa-people-roof"></i></option>
+        <option value="6">Health<i class="fa-solid fa-briefcase-medical"></i></option>
+        <option value="7">Politics<i class="fa-solid fa-landmark"></i></option>
+        <option value="8">Religion<i class="fa-solid fa-church"></i></option>
+        <option value="9">Science<i class="fa-solid fa-flask"></i></option>
+        <option value="10">Technology<i class="fa-solid fa-microchip"></i></option>
+        <option value="11">Travel<i class="fa-solid fa-plane"></i></option>

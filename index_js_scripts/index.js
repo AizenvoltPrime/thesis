@@ -11,7 +11,8 @@ let post_data = []; //used to store all posts data
 let ctx = []; //used for charts
 let myChart = []; //the chart
 let time_limit; //stores the time when the poll will close
-let post_category;
+let post_category; //stores post category
+let bookmarks_active = false; //helps decide whether to use filters on all posts or on bookmakred posts only
 let user_coordinates = []; //stores user coordinates
 let event_coordinates = []; //stores coordinates of the event when location restricted voting is used
 var DateTime = luxon.DateTime; //used for time features
@@ -112,6 +113,7 @@ fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
 
 //This is for when the user clicks the "Plus" icon.
 document.getElementById("add-post-icon").addEventListener("click", function () {
+  bookmarks_active = false;
   fetch("process_data.php", {
     method: "POST",
     body: JSON.stringify({ request: "user_status" }),
@@ -353,6 +355,7 @@ document.getElementById("sum").addEventListener("click", function () {
         $("#sum").fadeOut(300, function () {
           $("#all-filters").fadeIn(300, function () {});
           $("#add-post-icon").fadeIn(300, function () {});
+          null_all_styles();
           generate_posts(false);
         });
       });
@@ -360,10 +363,10 @@ document.getElementById("sum").addEventListener("click", function () {
 });
 
 //This generates the posts on the home page.
-function generate_posts(bookmark_filter) {
+export function generate_posts(bookmark_filter, filter) {
   fetch("process_data.php", {
     method: "POST",
-    body: JSON.stringify({ request: "get_post_data", bookmarks_only: bookmark_filter }),
+    body: JSON.stringify({ request: "get_post_data", bookmarks_only: bookmark_filter, filter: filter }),
   })
     .then((res) => res.json())
     .then((response) => {
@@ -815,7 +818,9 @@ postContainer.addEventListener(
 
 //This is for when the user clicks "Bookmarks" on the user navabar.
 document.getElementsByClassName("nav-element")[3].addEventListener("click", function () {
+  bookmarks_active = true;
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
+    null_all_styles();
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
@@ -873,8 +878,8 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
     $(".post")
       .promise()
       .done(function () {
-        $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
+        null_all_styles();
         reset_poll_data();
         generate_posts(true);
       });
@@ -883,7 +888,9 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
 
 //This is for when the user clicks "Home" on the left navbar.
 document.getElementsByClassName("nav-element")[0].addEventListener("click", function () {
+  bookmarks_active = false;
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
+    null_all_styles();
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       document.getElementById("sidenav").style.width = "0";
@@ -942,6 +949,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
       .promise()
       .done(function () {
         $(".post").not(":first").remove();
+        null_all_styles();
         reset_poll_data();
         generate_posts(false);
       });
@@ -950,6 +958,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
 
 //This is for when the user clicks "Change Username" on the user navbar.
 document.getElementsByClassName("nav-element")[4].addEventListener("click", function () {
+  bookmarks_active = false;
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
@@ -1046,6 +1055,7 @@ document.getElementById("username-change").addEventListener("click", function ()
 
 //This is for when the user clicks "Change Password" on the user navbar.
 document.getElementsByClassName("nav-element")[5].addEventListener("click", function () {
+  bookmarks_active = false;
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
@@ -1147,6 +1157,7 @@ document.getElementById("password-change").addEventListener("click", function ()
 
 //This is for when the user clicks "Analytics" on the user navbar.
 document.getElementsByClassName("nav-element")[6].addEventListener("click", function () {
+  bookmarks_active = false;
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
@@ -1269,7 +1280,7 @@ function get_yes_no_data(post_number) {
 }
 
 //used to clear all posts data each time the user returns to the main page without reloading the page.
-function reset_poll_data() {
+export function reset_poll_data() {
   document.querySelectorAll(".fa-chevron-up").forEach((icon) => (icon.style.color = null));
   document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
   document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
@@ -1405,3 +1416,17 @@ document.getElementById("chart-analytics").addEventListener("click", function ()
   null_style("fa-solid fa-map");
   $("#location-responses-map").fadeOut(300, function () {});
 });
+
+//exports variables to other js files
+export function get_variables() {
+  return [bookmarks_active];
+}
+
+//clears filter styles
+function null_all_styles() {
+  null_style("fa-fire-flame-curved");
+  null_style("fa-sun");
+  null_style("fa-table-list");
+  null_style("fa-filter");
+  null_style("fa-magnifying-glass");
+}

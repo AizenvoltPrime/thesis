@@ -105,6 +105,7 @@ require_once "config.php";
       </div>
       <div id="warning-radius-too-small" style="display:none;">Radius must be at least 5000 meters!</div>
     </form>
+    <!--This div is for users to select the post category.-->
     <div id="post-category-container" style="display:none;">
       <select id="categories">
         <option value="0">Select category:</option>

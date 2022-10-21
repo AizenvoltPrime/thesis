@@ -181,30 +181,61 @@ else if($data['request'] == "get_post_data")
     {
         if($data["bookmarks_only"]==false)
         {
-            $sql = "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
-                posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
-                COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' and chevron_vote.post_id=post_number),0) AS user_chevron_result,
-                COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_yes_answer,
-                COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_no_answer,
-                COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark,
-                posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
-                FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
-                on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
-                GROUP BY posts.post_number ORDER BY posts.post_date DESC";
+            if(isset($data["filter"]) && $data["filter"]=="hot")
+            {
+                $sql = "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
+                    posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
+                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' and chevron_vote.post_id=post_number),0) AS user_chevron_result,
+                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_yes_answer,
+                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_no_answer,
+                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark,
+                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
+                    FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
+                    on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
+                    GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC";
+            }
+            else{
+                $sql = "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
+                    posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
+                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' and chevron_vote.post_id=post_number),0) AS user_chevron_result,
+                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_yes_answer,
+                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_no_answer,
+                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark,
+                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
+                    FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
+                    on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
+                    GROUP BY posts.post_number ORDER BY posts.post_date DESC";
+            }
         }
         else if($data["bookmarks_only"]==true)
         {
-            $sql= "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
-                posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
-                COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' and chevron_vote.post_id=post_number),0) AS user_chevron_result,
-                COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_yes_answer,
-                COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_no_answer,
-                COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark,
-                posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
-                FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
-                on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
-                WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) = 1
-                GROUP BY posts.post_number ORDER BY posts.post_date DESC";
+            if(isset($data["filter"]) && $data["filter"]=="hot")
+            {
+                $sql= "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
+                    posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
+                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' and chevron_vote.post_id=post_number),0) AS user_chevron_result,
+                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_yes_answer,
+                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_no_answer,
+                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark,
+                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
+                    FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
+                    on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
+                    WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) = 1
+                    GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC";
+            }
+            else{
+                $sql= "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
+                    posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
+                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' and chevron_vote.post_id=post_number),0) AS user_chevron_result,
+                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_yes_answer,
+                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' and yes_no.post_id=post_number),0) AS user_no_answer,
+                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) AS user_bookmark,
+                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
+                    FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
+                    on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
+                    WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' and bookmarks.post_id=post_number),0) = 1
+                    GROUP BY posts.post_number ORDER BY posts.post_date DESC";
+            }
         }
 
         $result = mysqli_query($conn, $sql);
