@@ -555,19 +555,19 @@ html {
 }
 
 ::-webkit-scrollbar {
-  width: 1.0625em;
-  height: 0.1875em;
+  width: 0.6em;
+  height: 0.1em;
 }
 ::-webkit-scrollbar-track {
-  background-color: #646464;
+  background-color: #030303;
 }
 ::-webkit-scrollbar-track-piece {
-  background-color: #333333;
+  background-color: #030303;
 }
 ::-webkit-scrollbar-thumb {
   height: 3.125em;
-  background-color: #666;
-  border-radius: 0.1875em;
+  background-color: #1a1a1b;
+  border-radius: 1em;
 }
 ::-webkit-scrollbar-corner {
   background-color: #646464;
