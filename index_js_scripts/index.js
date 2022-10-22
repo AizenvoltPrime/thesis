@@ -1,6 +1,7 @@
 import { null_style, highlight_filter } from "./filters.js";
 
 let user_choice = "none"; //poll choice
+let specific_user_posts = null; //this is for showing posts of a specified user
 let question_choice = "none"; //yes/no response choices
 let template_status = "0000001"; //used to navigate through poll templates
 let user_chevron_vote = []; //like/dislike vote
@@ -110,6 +111,7 @@ fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
 //This is for when the user clicks the "Plus" icon.
 document.getElementById("add-post-icon").addEventListener("click", function () {
   bookmarks_active = false;
+  specific_user_posts = null;
   fetch("process_data.php", {
     method: "POST",
     body: JSON.stringify({ request: "user_status" }),
@@ -359,7 +361,7 @@ document.getElementById("sum").addEventListener("click", function () {
 });
 
 //This generates the posts on the home page.
-export function generate_posts(bookmark_filter, filter_hot, filter_preferred_categories, filter_filter, filter_search) {
+export function generate_posts(bookmark_filter, filter_hot, filter_preferred_categories, filter_filter, filter_search, user_search) {
   fetch("process_data.php", {
     method: "POST",
     body: JSON.stringify({
@@ -369,6 +371,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
       filter_preferred_categories: filter_preferred_categories,
       filter_filter: filter_filter,
       filter_search: filter_search,
+      user_search: user_search,
     }),
   })
     .then((res) => res.json())
@@ -492,6 +495,7 @@ postContainer.addEventListener(
     const btn_no = e.target.closest('button[data-dir="no"]');
     const btn_show_graph = e.target.closest('button[data-dir="show-graph"]');
     const btn_bookmark = e.target.closest('button[data-dir="bookmark"]');
+    const btn_user_name = e.target.closest(".post-user-name");
 
     if (btn_show_graph) {
       const post_show_graph = btn_show_graph.closest(".post");
@@ -507,6 +511,17 @@ postContainer.addEventListener(
         document.querySelectorAll(".show-graph")[postIndexShowGraph].style.backgroundColor = "#00a1ff";
         get_yes_no_data(postIndexShowGraph);
       }
+    }
+    if (btn_user_name) {
+      const post_user_name = btn_user_name.closest(".post");
+      const postIndexPostUserName = [...postContainer.children].indexOf(post_user_name);
+
+      specific_user_posts = post_data[postIndexPostUserName][1];
+      $(".post").fadeOut(300, function () {});
+      $(".post").not(":first").remove();
+      reset_poll_data();
+      null_all_styles();
+      generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1]);
     }
     if (post_data[0].length > 8) {
       if (btn_up) {
@@ -822,6 +837,7 @@ postContainer.addEventListener(
 //This is for when the user clicks "Bookmarks" on the user navabar.
 document.getElementsByClassName("nav-element")[3].addEventListener("click", function () {
   bookmarks_active = true;
+  specific_user_posts = null;
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     null_all_styles();
     clear_screen();
@@ -892,6 +908,7 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
 //This is for when the user clicks "Home" on the left navbar.
 document.getElementsByClassName("nav-element")[0].addEventListener("click", function () {
   bookmarks_active = false;
+  specific_user_posts = null;
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     null_all_styles();
     clear_screen();
@@ -962,6 +979,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
 //This is for when the user clicks "Change Username" on the user navbar.
 document.getElementsByClassName("nav-element")[4].addEventListener("click", function () {
   bookmarks_active = false;
+  specific_user_posts = null;
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
@@ -1059,6 +1077,7 @@ document.getElementById("username-change").addEventListener("click", function ()
 //This is for when the user clicks "Change Password" on the user navbar.
 document.getElementsByClassName("nav-element")[5].addEventListener("click", function () {
   bookmarks_active = false;
+  specific_user_posts = null;
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
@@ -1161,6 +1180,7 @@ document.getElementById("password-change").addEventListener("click", function ()
 //This is for when the user clicks "Analytics" on the user navbar.
 document.getElementsByClassName("nav-element")[6].addEventListener("click", function () {
   bookmarks_active = false;
+  specific_user_posts = null;
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
@@ -1422,7 +1442,7 @@ document.getElementById("chart-analytics").addEventListener("click", function ()
 
 //exports variables to other js files
 export function get_variables() {
-  return [bookmarks_active];
+  return [bookmarks_active, specific_user_posts];
 }
 
 //clears filter styles

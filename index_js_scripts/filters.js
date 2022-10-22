@@ -2,6 +2,9 @@ import { generate_posts, reset_poll_data, get_variables } from "./index.js";
 
 document.getElementById("hot").addEventListener("click", function () {
   let search_text = document.forms["search-box-container"]["search-text"].value;
+  if (search_text.replace(/\s/g, "") === "") {
+    search_text = null;
+  }
   if (window.getComputedStyle(document.getElementsByClassName("fa-magnifying-glass")[0]).backgroundClip === "text") {
     if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
       null_style("fa-fire-flame-curved");
@@ -18,11 +21,7 @@ document.getElementById("hot").addEventListener("click", function () {
           $(".post").fadeOut(300, function () {});
           $(".post").not(":first").remove();
           reset_poll_data();
-          if (get_variables()[0] === true) {
-            generate_posts(true, "hot", null, null, search_text);
-          } else if (get_variables()[0] === false) {
-            generate_posts(false, "hot", null, null, search_text);
-          }
+          generate_posts(get_variables()[0], "hot", null, null, search_text, get_variables()[1]);
         });
     }
   } else if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
@@ -39,17 +38,16 @@ document.getElementById("hot").addEventListener("click", function () {
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
         reset_poll_data();
-        if (get_variables()[0] === true) {
-          generate_posts(true, "hot");
-        } else {
-          generate_posts(false, "hot");
-        }
+        generate_posts(get_variables()[0], "hot", null, null, null, get_variables()[1]);
       });
   }
 });
 
 document.getElementById("recent").addEventListener("click", function () {
   let search_text = document.forms["search-box-container"]["search-text"].value;
+  if (search_text.replace(/\s/g, "") === "") {
+    search_text = null;
+  }
   if (window.getComputedStyle(document.getElementsByClassName("fa-magnifying-glass")[0]).backgroundClip === "text") {
     if (window.getComputedStyle(document.getElementsByClassName("fa-sun")[0]).backgroundClip === "text") {
       null_style("fa-sun");
@@ -66,11 +64,7 @@ document.getElementById("recent").addEventListener("click", function () {
           $(".post").fadeOut(300, function () {});
           $(".post").not(":first").remove();
           reset_poll_data();
-          if (get_variables()[0] === true) {
-            generate_posts(true, null, null, null, search_text);
-          } else if (get_variables()[0] === false) {
-            generate_posts(false, null, null, null, search_text);
-          }
+          generate_posts(get_variables()[0], null, null, null, search_text, get_variables()[1]);
         });
     }
   } else if (window.getComputedStyle(document.getElementsByClassName("fa-sun")[0]).backgroundClip === "text") {
@@ -87,11 +81,7 @@ document.getElementById("recent").addEventListener("click", function () {
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
         reset_poll_data();
-        if (get_variables()[0] === true) {
-          generate_posts(true);
-        } else {
-          generate_posts(false);
-        }
+        generate_posts(get_variables()[0], null, null, null, null, get_variables()[1]);
       });
   }
 });
@@ -127,6 +117,9 @@ document.getElementById("search").addEventListener("click", function () {
 //used to change default radius for location restricted voting
 document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("click", function () {
   let search_text = document.forms["search-box-container"]["search-text"].value;
+  if (search_text.replace(/\s/g, "") === "") {
+    search_text = null;
+  }
   $(".post").fadeOut(300, function () {});
   $(".post")
     .promise()
@@ -138,22 +131,22 @@ document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("
         get_variables()[0] === true &&
         window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text"
       ) {
-        generate_posts(true, "hot", null, null, search_text);
+        generate_posts(true, "hot", null, null, search_text, get_variables()[1]);
       } else if (
         get_variables()[0] === true &&
         window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip !== "text"
       ) {
-        generate_posts(true, null, null, null, search_text);
+        generate_posts(true, null, null, null, search_text, get_variables()[1]);
       } else if (
         get_variables()[0] === false &&
         window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text"
       ) {
-        generate_posts(false, "hot", null, null, search_text);
+        generate_posts(false, "hot", null, null, search_text, get_variables()[1]);
       } else if (
         get_variables()[0] === false &&
         window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip !== "text"
       ) {
-        generate_posts(false, null, null, null, search_text);
+        generate_posts(false, null, null, null, search_text, get_variables()[1]);
       }
     });
 });

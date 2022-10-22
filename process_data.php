@@ -180,7 +180,14 @@ else if($data['request'] == "get_post_data")
     $where_query="1=1";
     if(isset($data["filter_search"]))
     {
-        $where_query="post_text LIKE '%$data[filter_search]%'";
+        $where_query="post_text LIKE '%$data[filter_search]%' ";
+    }
+    if(!isset($data["filter_search"]) && isset($data["user_search"]))
+    {
+        $where_query="username LIKE '%$data[user_search]%'";
+    }
+    else if(isset($data["filter_search"]) && isset($data["user_search"])){
+        $where_query.="AND username LIKE '%$data[user_search]%'";
     }
 
     if(isset($_SESSION['id']))
