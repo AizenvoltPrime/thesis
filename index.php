@@ -44,7 +44,7 @@ require_once "config.php";
       <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>Login</a>
       <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>Registration</a>
       <a class="nav-element"><i class="fa-solid fa-bookmark fa-1x"></i>Bookmarks</a>
-      <a class="nav-element"><i class="fa-solid fa-user fa-1x" style=" background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>Change Username</a>
+      <a class="nav-element"><i class="fa-solid fa-user fa-1x" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>Change Username</a>
       <a class="nav-element"><i class="fa-solid fa-lock fa-1x"></i>Change Password</a>
       <a class="nav-element"><i class="fa-solid fa-chart-simple"></i>Analytics</a>
       <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
@@ -61,6 +61,22 @@ require_once "config.php";
       <textarea id="search-box" type="text" rows="1" name="search-text" maxlength="150"></textarea>
       <i class="fa-solid fa-circle-chevron-right fa-3x"></i>
     </form>
+    <div id="preferred-categories-container" style="display:none;">
+      <div id="categories-container">
+        <div class="category"><i class="fa-solid fa-basketball"></i>Sports</div>
+        <div class="category"><i class="fa-solid fa-briefcase"></i>Business</div>
+        <div class="category"><i class="fa-solid fa-car"></i>Cars</div>
+        <div class="category"><i class="fa-solid fa-people-roof"></i>Family</div>
+        <div class="category"><i class="fa-solid fa-briefcase-medical"></i>Health</div>
+        <div class="category"><i class="fa-solid fa-landmark"></i>Politics</div>
+        <div class="category"><i class="fa-solid fa-church"></i>Religion</div>
+        <div class="category"><i class="fa-solid fa-flask"></i>Science</div>
+        <div class="category"><i class="fa-solid fa-microchip"></i>Technology</div>
+        <div class="category"><i class="fa-solid fa-plane"></i>Travel</div>
+        <div class="category"><i class="fa-solid fa-film"></i>Entertainment</div>
+        <button id= "category-button" type="button">OK</button>
+      </div>
+    </div>
     <!--This div is for user notifications.-->
     <div id="notification-container">
       <div id="notification">

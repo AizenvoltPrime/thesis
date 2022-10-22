@@ -92,6 +92,8 @@ document.getElementById("preferred-categories").addEventListener("click", functi
   null_style("fa-sun");
   null_style("fa-filter");
   null_style("fa-magnifying-glass");
+
+  $("#preferred-categories-container").fadeIn(300, function () {});
 });
 
 document.getElementById("filter").addEventListener("click", function () {
@@ -223,3 +225,23 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
 document.getElementById("add-post-icon").addEventListener("click", function () {
   $("#search-box-container").fadeOut(300, function () {});
 });
+
+document.getElementById("categories-container").addEventListener(
+  "click",
+  (e) => {
+    if (
+      e.target.id !== "category-button" &&
+      e.target.id !== "categories-container" &&
+      String(e.target.closest(".category").className) === "category"
+    ) {
+      let target_category_icon = e.target.closest(".category").getElementsByTagName("i")[0].classList[1];
+      if (window.getComputedStyle(document.getElementsByClassName(target_category_icon)[0]).backgroundClip !== "text") {
+        highlight_filter(target_category_icon);
+      } else if (window.getComputedStyle(document.getElementsByClassName(target_category_icon)[0]).backgroundClip === "text") {
+        null_style(target_category_icon);
+      }
+    }
+    //console.log(e.target.innerText.toLowerCase());
+  },
+  { passive: true }
+);
