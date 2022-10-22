@@ -518,10 +518,14 @@ postContainer.addEventListener(
 
       specific_user_posts = post_data[postIndexPostUserName][1];
       $(".post").fadeOut(300, function () {});
-      $(".post").not(":first").remove();
-      reset_poll_data();
-      null_all_styles();
-      generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1]);
+      $(".post")
+        .promise()
+        .done(function () {
+          $(".post").not(":first").remove();
+          reset_poll_data();
+          null_all_styles();
+          generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1]);
+        });
     }
     if (post_data[0].length > 8) {
       if (btn_up) {
