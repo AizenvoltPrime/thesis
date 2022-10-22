@@ -43,7 +43,7 @@ require_once "../config.php";
             <input type="text" class="form-control" name="username" placeholder="Username">
             <i class="fa-solid fa-user fa-2x" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
         </div>
-        <small style="font-size:1.2em">Min: 6 and max 16 characters</small>
+        <small style="font-size:1.2em; color:#f3f3f3;">Min: 6 and max 16 characters</small>
         <span id="user-help"></span>
         <div class="input-icons">
             <input type="email" class="form-control" name="email" placeholder="Email">
@@ -64,7 +64,7 @@ require_once "../config.php";
         <div>
             <input type="button" class="btn btn-primary" id="sum" value="Submit">
         </div>
-        <p style="font-weight: bold; font-size:1.2em">Already have an account? <a class="Sign-up" href="../login/login.php">Login now</a></p>
+        <p style="font-weight: bold; font-size:1.2em; color:#f3f3f3;">Already have an account? <a class="Sign-up" href="../login/login.php">Login now</a></p>
     </form>
 </body>
 </html>
