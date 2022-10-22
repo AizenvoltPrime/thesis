@@ -423,7 +423,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
               let new_bookmark = document.createElement("i");
               new_bookmark.className = "fa-solid fa-bookmark";
               document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
-              document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = "#ff9c08";
+              document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = "#98d9ff";
             } else if (post_data[i][10] == 0) {
               let new_bookmark = document.createElement("i");
               new_bookmark.className = "fa-regular fa-bookmark";
@@ -795,7 +795,7 @@ postContainer.addEventListener(
             .then((response) => {
               if (response.trim() == "Success") {
                 document.getElementsByClassName("parent_of_bookmark")[postIndexBookmark].children[0].className = "fa-solid fa-bookmark";
-                document.getElementsByClassName("parent_of_bookmark")[postIndexBookmark].children[0].style.color = "#ff9c08";
+                document.getElementsByClassName("parent_of_bookmark")[postIndexBookmark].children[0].style.color = "#98d9ff";
                 post_data[postIndexBookmark][10] = 1;
               }
             });
