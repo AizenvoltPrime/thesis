@@ -155,15 +155,14 @@ require_once "config.php";
       </select>
     </div>
     <div id="warning-no-category-selected" style="display:none;">You must select a category!</div>
-    <!--This button is used to navigate inside poll creation template.-->
-    <button id= "next-step" type="button">Next</button>
     <!--This form is for users to type the poll question.-->
     <form id="poll-question" style="display:none;">
       <div id="question-instruction">Type your question.</div>
       <textarea id="question" type="text" name="question-text" maxlength="150"></textarea>
-      <button id= "sum" type="button" style="width:8em; height:3em; font-size: 1.3em;">Post Poll</button>
     </form>
+    <!--This button is used to navigate inside poll creation template.-->
     <div id="warning-empty-text-area">Textarea needs to have at least 15 characters and at most 150 characters!</div>
+    <button id= "next-step" type="button">Next</button>
     <!--This form is for users to change their username.-->
     <form id="username-change-form" style="display:none;" name="username-change-form">
             <div>

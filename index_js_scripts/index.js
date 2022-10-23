@@ -262,11 +262,49 @@ document.getElementById("next-step").addEventListener("click", function () {
       $("#warning-no-category-selected").fadeOut(300, function () {});
       $("#post-category-container").fadeOut(300, function () {});
       $("#next-step").fadeOut(300, function () {
-        document.getElementById("poll-question").style.display = "flex";
-        document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
-        $("#sum").fadeIn(300, function () {});
-        template_status = "1000000";
+        document.getElementById("next-step").innerText = "Post Poll";
       });
+      $("#next-step")
+        .promise()
+        .done(function () {
+          $("#next-step").fadeIn(300, function () {});
+          $("#poll-question").fadeIn(300, function () {});
+          template_status = "1000000";
+        });
+    }
+  } else if (template_status === "1000000") {
+    let question_text = document.forms["poll-question"]["question-text"].value;
+    if ($("#question").val().trim().length < 15) {
+      $("#warning-empty-text-area").fadeIn(300, function () {});
+    } else if (user_choice !== "none" && $("#question").val().trim().length >= 1) {
+      if (time_limit !== "") {
+        time_limit = time_limit + ":00";
+      }
+      fetch("process_data.php", {
+        method: "POST",
+        body: JSON.stringify({
+          request: "upload_post_data",
+          question: question_text,
+          poll_choice: user_choice,
+          time_limiter: time_limit,
+          event_lat: event_coordinates[0],
+          event_long: event_coordinates[1],
+          event_rad: event_radius,
+          post_category: parseInt(post_category),
+        }),
+      })
+        .then((res) => res.text())
+        .then((response) => {
+          $("#warning-empty-text-area").fadeOut(300, function () {});
+          $("#poll-question").fadeOut(300, function () {});
+          $("#next-step").fadeOut(300, function () {
+            document.getElementById("next-step").innerText = "Next";
+            $("#all-filters").fadeIn(300, function () {});
+            $("#add-post-icon").fadeIn(300, function () {});
+            null_all_styles();
+            generate_posts(false);
+          });
+        });
     }
   }
 });
@@ -323,42 +361,6 @@ function choice_dehighlight(choice) {
   document.getElementById(choice).style.border = null;
   document.getElementById(choice).style.color = null;
 }
-
-//This is for when the user submits the poll information from the template.
-document.getElementById("sum").addEventListener("click", function () {
-  let question_text = document.forms["poll-question"]["question-text"].value;
-  if ($("#question").val().trim().length < 15) {
-    $("#warning-empty-text-area").fadeIn(300, function () {});
-  } else if (user_choice !== "none" && $("#question").val().trim().length >= 1) {
-    if (time_limit !== "") {
-      time_limit = time_limit + ":00";
-    }
-    fetch("process_data.php", {
-      method: "POST",
-      body: JSON.stringify({
-        request: "upload_post_data",
-        question: question_text,
-        poll_choice: user_choice,
-        time_limiter: time_limit,
-        event_lat: event_coordinates[0],
-        event_long: event_coordinates[1],
-        event_rad: event_radius,
-        post_category: parseInt(post_category),
-      }),
-    })
-      .then((res) => res.text())
-      .then((response) => {
-        $("#warning-empty-text-area").fadeOut(300, function () {});
-        $("#poll-question").fadeOut(300, function () {});
-        $("#sum").fadeOut(300, function () {
-          $("#all-filters").fadeIn(300, function () {});
-          $("#add-post-icon").fadeIn(300, function () {});
-          null_all_styles();
-          generate_posts(false);
-        });
-      });
-  }
-});
 
 //This generates the posts on the home page.
 export function generate_posts(bookmark_filter, filter_hot, filter_preferred_categories, filter_filter, filter_search, user_search) {
@@ -878,14 +880,6 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(true);
       });
-    } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
-      document.getElementById("user-nav").style.width = "0";
-      document.getElementById("profile-icon").style.visibility = "visible";
-      $("#sum").fadeOut(300, function () {
-        $("#all-filters").fadeIn(300, function () {});
-        $("#add-post-icon").fadeIn(300, function () {});
-        generate_posts(true);
-      });
     }
   } else {
     document.getElementById("user-nav").style.width = "0";
@@ -949,14 +943,6 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(false);
       });
-    } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
-      document.getElementById("sidenav").style.width = "0";
-      document.getElementById("sidenav-icon").style.visibility = "visible";
-      $("#sum").fadeOut(300, function () {
-        $("#all-filters").fadeIn(300, function () {});
-        $("#add-post-icon").fadeIn(300, function () {});
-        generate_posts(false);
-      });
     }
   } else {
     document.getElementById("sidenav").style.width = "0";
@@ -1003,12 +989,6 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
-        $("#username-change-form").fadeIn(300, function () {});
-      });
-    } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
-      document.getElementById("user-nav").style.width = "0";
-      document.getElementById("profile-icon").style.visibility = "visible";
-      $("#sum").fadeOut(300, function () {
         $("#username-change-form").fadeIn(300, function () {});
       });
     }
@@ -1101,12 +1081,6 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
-        $("#password-change-form").fadeIn(300, function () {});
-      });
-    } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
-      document.getElementById("user-nav").style.width = "0";
-      document.getElementById("profile-icon").style.visibility = "visible";
-      $("#sum").fadeOut(300, function () {
         $("#password-change-form").fadeIn(300, function () {});
       });
     }
@@ -1218,16 +1192,6 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
           make_location_responses_map();
         });
       });
-    } else if (window.getComputedStyle(document.getElementById("next-step")).display === "none") {
-      document.getElementById("user-nav").style.width = "0";
-      document.getElementById("profile-icon").style.visibility = "visible";
-      $("#sum").fadeOut(300, function () {
-        highlight_filter("fa-solid fa-map");
-        $("#analytics-container").fadeIn(300, function () {
-          location_responses_map.invalidateSize();
-          make_location_responses_map();
-        });
-      });
     }
   } else {
     document.getElementById("user-nav").style.width = "0";
@@ -1332,6 +1296,7 @@ export function reset_poll_data() {
   document.forms["time-choice"]["time-limit-choice"].value = "";
   document.forms["location-choice"]["radius"].value = "";
   document.getElementById("categories").value = "0";
+  document.getElementById("next-step").innerText = "Next";
 
   min_time = DateTime.now().plus({ minutes: 30 }).toFormat("HH:mm");
   min_day = DateTime.now().plus({ minutes: 30 }).toFormat("yyyy-MM-dd");
