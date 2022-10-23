@@ -2,12 +2,14 @@ import { generate_posts, reset_poll_data, get_variables } from "./index.js";
 
 let preferred_categories = "1=1";
 
-document.getElementById("hot").addEventListener("click", function () {
+document.getElementById("hot").addEventListener("click", function (e) {
+  if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
+    return false;
+  }
   let search_text = document.forms["search-box-container"]["search-text"].value;
   if (search_text.replace(/\s/g, "") === "") {
     search_text = null;
   }
-
   if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
     null_style("fa-fire-flame-curved");
   } else {
@@ -26,6 +28,9 @@ document.getElementById("hot").addEventListener("click", function () {
 });
 
 document.getElementById("recent").addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
+    return false;
+  }
   let search_text = document.forms["search-box-container"]["search-text"].value;
   if (search_text.replace(/\s/g, "") === "") {
     search_text = null;
@@ -53,6 +58,9 @@ document.getElementById("preferred-categories").addEventListener("click", functi
 });
 
 document.getElementById("filter").addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
+    return false;
+  }
   highlight_filter("fa-filter");
   null_style("fa-fire-flame-curved");
   null_style("fa-sun");
@@ -60,6 +68,9 @@ document.getElementById("filter").addEventListener("click", function () {
 });
 
 document.getElementById("search").addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
+    return false;
+  }
   if (window.getComputedStyle(document.getElementsByClassName("fa-magnifying-glass")[0]).backgroundClip !== "text") {
     highlight_filter("fa-magnifying-glass");
     null_style("fa-filter");
@@ -73,6 +84,9 @@ document.getElementById("search").addEventListener("click", function () {
 
 //used to change default radius for location restricted voting
 document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
+    return false;
+  }
   let search_text = document.forms["search-box-container"]["search-text"].value;
   if (search_text.replace(/\s/g, "") === "") {
     search_text = null;
@@ -140,27 +154,27 @@ setInputFilter(
   "Only digits are allowed"
 );
 
-document.getElementsByClassName("nav-element")[0].addEventListener("click", function () {
+document.getElementsByClassName("nav-element")[0].addEventListener("click", function (e) {
   clear_filters();
 });
 
-document.getElementsByClassName("nav-element")[3].addEventListener("click", function () {
+document.getElementsByClassName("nav-element")[3].addEventListener("click", function (e) {
   clear_filters();
 });
 
-document.getElementsByClassName("nav-element")[4].addEventListener("click", function () {
+document.getElementsByClassName("nav-element")[4].addEventListener("click", function (e) {
   clear_filters();
 });
 
-document.getElementsByClassName("nav-element")[5].addEventListener("click", function () {
+document.getElementsByClassName("nav-element")[5].addEventListener("click", function (e) {
   clear_filters();
 });
 
-document.getElementsByClassName("nav-element")[6].addEventListener("click", function () {
+document.getElementsByClassName("nav-element")[6].addEventListener("click", function (e) {
   clear_filters();
 });
 
-document.getElementById("add-post-icon").addEventListener("click", function () {
+document.getElementById("add-post-icon").addEventListener("click", function (e) {
   clear_filters();
 });
 
@@ -237,3 +251,17 @@ function clear_filters() {
   });
   preferred_categories = "1=1";
 }
+
+window.addEventListener("click", function (e) {
+  if (
+    !document.getElementById("preferred-categories-container").contains(e.target) &&
+    window.getComputedStyle(document.getElementById("preferred-categories-container")).opacity === "1"
+  ) {
+    $("#preferred-categories-container").fadeOut(300, function () {
+      document.querySelectorAll(".category").forEach((category) => {
+        null_style(category.getElementsByTagName("i")[0].classList[1]);
+      });
+      null_style("fa-table-list");
+    });
+  }
+});
