@@ -522,6 +522,7 @@ postContainer.addEventListener(
         .promise()
         .done(function () {
           $(".post").not(":first").remove();
+          bookmarks_active = false;
           reset_poll_data();
           null_all_styles();
           generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1]);
