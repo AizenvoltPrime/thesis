@@ -1,6 +1,7 @@
 import { generate_posts, reset_poll_data, get_variables } from "./index.js";
 
 let preferred_categories = "1=1";
+let preferred_categories_closed_no_ok = false;
 
 document.getElementById("hot").addEventListener("click", function (e) {
   if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
@@ -184,6 +185,7 @@ document.getElementById("categories-container").addEventListener(
     if (
       e.target.id !== "category-button" &&
       e.target.id !== "categories-container" &&
+      e.target.id !== "category-box" &&
       String(e.target.closest(".category").className) === "category"
     ) {
       let target_category_icon = e.target.closest(".category").getElementsByTagName("i")[0].classList[1];
@@ -251,17 +253,3 @@ function clear_filters() {
   });
   preferred_categories = "1=1";
 }
-
-window.addEventListener("click", function (e) {
-  if (
-    !document.getElementById("preferred-categories-container").contains(e.target) &&
-    window.getComputedStyle(document.getElementById("preferred-categories-container")).opacity === "1"
-  ) {
-    $("#preferred-categories-container").fadeOut(300, function () {
-      document.querySelectorAll(".category").forEach((category) => {
-        null_style(category.getElementsByTagName("i")[0].classList[1]);
-      });
-      null_style("fa-table-list");
-    });
-  }
-});

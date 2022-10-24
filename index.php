@@ -63,9 +63,9 @@ require_once "config.php";
       <i class="fa-solid fa-circle-chevron-right fa-3x"></i>
     </form>
     <!--This div is for the preferred categories filter.-->
-    <div id="preferred-categories-container" style="display:none;">
+    <div id="preferred-categories-container">
       <div id="categories-container">
-        <div style="display:flex; flex-wrap:wrap; justify-content:space-evenly; gap:0.5em;">
+        <div id="category-box">
           <div class="category"><i class="fa-solid fa-basketball"></i>Sports</div>
           <div class="category"><i class="fa-solid fa-briefcase"></i>Business</div>
           <div class="category"><i class="fa-solid fa-car"></i>Cars</div>
