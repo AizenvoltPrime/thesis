@@ -57,23 +57,27 @@ require_once "config.php";
       <button id="filter"><i class="fa-solid fa-filter"></i>Filter</button>
       <button id="search"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
     </div>
+    <!--This div is for the search filter.-->
     <form id="search-box-container" style="display:none;">
       <textarea id="search-box" type="text" rows="1" name="search-text" maxlength="150"></textarea>
       <i class="fa-solid fa-circle-chevron-right fa-3x"></i>
     </form>
+    <!--This div is for the preferred categories filter.-->
     <div id="preferred-categories-container" style="display:none;">
       <div id="categories-container">
-        <div class="category"><i class="fa-solid fa-basketball"></i>Sports</div>
-        <div class="category"><i class="fa-solid fa-briefcase"></i>Business</div>
-        <div class="category"><i class="fa-solid fa-car"></i>Cars</div>
-        <div class="category"><i class="fa-solid fa-people-roof"></i>Family</div>
-        <div class="category"><i class="fa-solid fa-briefcase-medical"></i>Health</div>
-        <div class="category"><i class="fa-solid fa-landmark"></i>Politics</div>
-        <div class="category"><i class="fa-solid fa-church"></i>Religion</div>
-        <div class="category"><i class="fa-solid fa-flask"></i>Science</div>
-        <div class="category"><i class="fa-solid fa-microchip"></i>Technology</div>
-        <div class="category"><i class="fa-solid fa-plane"></i>Travel</div>
-        <div class="category"><i class="fa-solid fa-film"></i>Entertainment</div>
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-evenly; gap:0.5em;">
+          <div class="category"><i class="fa-solid fa-basketball"></i>Sports</div>
+          <div class="category"><i class="fa-solid fa-briefcase"></i>Business</div>
+          <div class="category"><i class="fa-solid fa-car"></i>Cars</div>
+          <div class="category"><i class="fa-solid fa-people-roof"></i>Family</div>
+          <div class="category"><i class="fa-solid fa-briefcase-medical"></i>Health</div>
+          <div class="category"><i class="fa-solid fa-landmark"></i>Politics</div>
+          <div class="category"><i class="fa-solid fa-church"></i>Religion</div>
+          <div class="category"><i class="fa-solid fa-flask"></i>Science</div>
+          <div class="category"><i class="fa-solid fa-microchip"></i>Technology</div>
+          <div class="category"><i class="fa-solid fa-plane"></i>Travel</div>
+          <div class="category"><i class="fa-solid fa-film"></i>Entertainment</div>
+        </div>
         <button id= "category-button" type="button">OK</button>
       </div>
     </div>
