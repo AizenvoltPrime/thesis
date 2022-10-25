@@ -201,6 +201,14 @@ else if($data['request'] == "get_post_data")
         $filter_search="post_text LIKE '%$data[filter_search]%'";
     }
 
+    if(!isset($data["filter_filter"]))
+    {
+        $filter_filter="1=1";
+    }
+    else {
+        $filter_filter=$data["filter_filter"];
+    }
+
     if(isset($_SESSION['id']))
     {
         if($data["bookmarks_only"]==false)
@@ -216,7 +224,7 @@ else if($data['request'] == "get_post_data")
                     posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
-                    WHERE $user_search AND $filter_preferred_categories AND $filter_search
+                    WHERE $user_search AND $filter_preferred_categories AND $filter_search AND $filter_filter
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC";
             }
             else{
@@ -229,7 +237,7 @@ else if($data['request'] == "get_post_data")
                     posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
-                    WHERE $user_search AND $filter_preferred_categories AND $filter_search
+                    WHERE $user_search AND $filter_preferred_categories AND $filter_search AND $filter_filter
                     GROUP BY posts.post_number ORDER BY posts.post_date DESC"; 
             }
         }
@@ -247,7 +255,7 @@ else if($data['request'] == "get_post_data")
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' AND bookmarks.post_id=post_number),0) = 1 
-                    AND $user_search AND $filter_preferred_categories AND $filter_search
+                    AND $user_search AND $filter_preferred_categories AND $filter_search AND $filter_filter
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC";
             }
             else{
@@ -261,7 +269,7 @@ else if($data['request'] == "get_post_data")
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id='$_SESSION[id]' AND bookmarks.post_id=post_number),0) = 1 
-                    AND $user_search AND $filter_preferred_categories AND $filter_search
+                    AND $user_search AND $filter_preferred_categories AND $filter_search AND $filter_filter
                     GROUP BY posts.post_number ORDER BY posts.post_date DESC";
             }
         }
@@ -282,11 +290,11 @@ else if($data['request'] == "get_post_data")
         if(isset($data["filter_hot"]) && $data["filter_hot"]=="hot")
         {
             $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info 
-            WHERE $user_search AND $filter_preferred_categories AND $filter_search ORDER BY chevron_result DESC";
+            WHERE $user_search AND $filter_preferred_categories AND $filter_search AND $filter_filter ORDER BY chevron_result DESC";
         }
         else {
             $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info 
-            WHERE $user_search AND $filter_preferred_categories AND $filter_search AND $filter_preferred_categories";
+            WHERE $user_search AND $filter_preferred_categories AND $filter_search AND $filter_filter";
         }
 
         $result = mysqli_query($conn, $sql);

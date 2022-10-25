@@ -81,6 +81,16 @@ require_once "config.php";
         <button id= "category-button" type="button">OK</button>
       </div>
     </div>
+    <div id="filters-outside-container" style="display:none;">
+      <div id="filters-inside-container">
+        <form id="time-filter">
+          <label id="time-filter-instruction">Time Filter:</label>
+          <input id="time-filter-selector" type="datetime-local" name="time-filter-choice"></input>
+          <div id="warning-time-filter-choice" style="display:none;">You must select a date range!</div>
+        </form>
+        <button id= "filter-button" type="button">Filter</button>
+      </div>
+    </div>
     <!--This div is for user notifications.-->
     <div id="notification-container">
       <div id="notification">
