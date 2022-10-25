@@ -1,7 +1,6 @@
 import { generate_posts, reset_poll_data, get_variables } from "./index.js";
 
 let preferred_categories = "1=1";
-let poll_filter = "1=1";
 
 document.getElementById("hot").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementsByClassName("post")[0]).opacity === "1") {
@@ -17,7 +16,6 @@ document.getElementById("hot").addEventListener("click", function () {
     } else {
       highlight_filter("fa-fire-flame-curved");
       null_style("fa-sun");
-      null_style("fa-filter");
       $(".post").fadeOut(300, function () {});
       $(".post")
         .promise()
@@ -44,7 +42,6 @@ document.getElementById("recent").addEventListener("click", function () {
     } else {
       highlight_filter("fa-sun");
       null_style("fa-fire-flame-curved");
-      null_style("fa-filter");
       $(".post").fadeOut(300, function () {});
       $(".post")
         .promise()
@@ -66,11 +63,19 @@ document.getElementById("filter").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
     return false;
   }
-  highlight_filter("fa-filter");
-  $("#filters-outside-container").fadeIn(300, function () {});
-  null_style("fa-fire-flame-curved");
-  null_style("fa-sun");
-  null_style("fa-magnifying-glass");
+  if (window.getComputedStyle(document.getElementById("filters-outside-container")).display === "none") {
+    highlight_filter("fa-filter");
+    $("#filters-outside-container").fadeIn(300, function () {});
+  } else {
+    $("#filters-outside-container").fadeOut(300, function () {
+      null_style("fa-filter");
+      document.querySelectorAll(".poll-filter").forEach((poll_filter) => {
+        poll_filter.style.color = null;
+        poll_filter.style.border = null;
+        document.forms["time-filter"]["time-filter-choice"].value = "";
+      });
+    });
+  }
 });
 
 document.getElementById("search").addEventListener("click", function () {
@@ -79,7 +84,6 @@ document.getElementById("search").addEventListener("click", function () {
   }
   if (window.getComputedStyle(document.getElementsByClassName("fa-magnifying-glass")[0]).backgroundClip !== "text") {
     highlight_filter("fa-magnifying-glass");
-    null_style("fa-filter");
     $("#search-box-container").fadeIn(300, function () {});
   } else {
     document.forms["search-box-container"]["search-text"].value = "";
@@ -269,12 +273,12 @@ function clear_filters() {
     document.querySelectorAll(".poll-filter").forEach((poll_filter) => {
       poll_filter.style.color = null;
       poll_filter.style.border = null;
+      document.forms["time-filter"]["time-filter-choice"].value = "";
     });
   });
   $("#warning-time-filter-choice").fadeOut(300, function () {});
   preferred_categories = "1=1";
   document.forms["search-box-container"]["search-text"].value = "";
-  document.forms["time-filter"]["time-filter-choice"].value = "";
 }
 
 document.getElementById("filter-button").addEventListener("click", function () {
@@ -318,6 +322,7 @@ function filter_check(obj) {
 function filter_query() {
   let filter = document.forms["time-filter"]["time-filter-choice"].value;
   let poll_filter_counter = 0;
+  let poll_filter = "1=1";
   if (filter.search("to") > -1) {
     $("#warning-time-filter-choice").fadeOut(300, function () {});
     filter = "post_date BETWEEN " + '"' + filter.replace(" to ", '" AND "') + '"';
