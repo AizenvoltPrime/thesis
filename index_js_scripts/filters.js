@@ -73,6 +73,7 @@ document.getElementById("filter").addEventListener("click", function () {
         poll_filter.style.color = null;
         poll_filter.style.border = null;
         document.forms["time-filter"]["time-filter-choice"].value = "";
+        document.forms["user-filter"]["user-filter-choice"].value = "";
       });
     });
   }
@@ -274,6 +275,7 @@ function clear_filters() {
       poll_filter.style.color = null;
       poll_filter.style.border = null;
       document.forms["time-filter"]["time-filter-choice"].value = "";
+      document.forms["user-filter"]["user-filter-choice"].value = "";
     });
   });
   $("#warning-time-filter-choice").fadeOut(300, function () {});
@@ -323,6 +325,12 @@ function filter_query() {
   let filter = document.forms["time-filter"]["time-filter-choice"].value;
   let poll_filter_counter = 0;
   let poll_filter = "1=1";
+  let user_filter = document.forms["user-filter"]["user-filter-choice"].value;
+  if (user_filter.replace(/\s/g, "") === "") {
+    user_filter = "1=1";
+  } else {
+    user_filter = "username LIKE " + "'%" + user_filter + "%'";
+  }
   if (filter.search("to") > -1) {
     $("#warning-time-filter-choice").fadeOut(300, function () {});
     filter = "post_date BETWEEN " + '"' + filter.replace(" to ", '" AND "') + '"';
@@ -345,6 +353,20 @@ function filter_query() {
   if (poll_filter_counter === 0) {
     poll_filter = "1=1";
   }
-  filter = filter + " AND " + poll_filter;
+  filter = filter + " AND " + poll_filter + " AND " + user_filter;
   return filter;
 }
+
+document.querySelector("#time-filter-selector").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    document.getElementById("filter-button").click();
+  }
+});
+
+document.querySelector("#user-filter-select").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    document.getElementById("filter-button").click();
+  }
+});

@@ -97,6 +97,10 @@ require_once "config.php";
             <button class="poll-filter" name="4">Ranking</button>
           </div>
         </div>
+        <form id="user-filter">
+          <label class="filter-instruction">User Filter</label>
+          <input id="user-filter-select" type="text" name="user-filter-choice" maxlength="16" placeholder="Type Username"></input>
+        </form>
         <button id= "filter-button" type="button">Filter</button>
       </div>
     </div>

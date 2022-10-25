@@ -1095,7 +1095,8 @@ a:active {
   width: 100%;
 }
 
-#time-filter {
+#time-filter,
+#user-filter {
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -1159,6 +1160,16 @@ a:active {
   width: 100%;
   max-width: 18em;
   margin: auto;
+}
+
+#user-filter-select {
+  max-width: 20em;
+  margin: auto;
+  font-size: 1em;
+  background: #1a1a1b;
+  color: #f3f3f3;
+  border-radius: 1em;
+  text-align: center;
 }
 
 #location-choice {
