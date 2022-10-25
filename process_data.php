@@ -215,7 +215,7 @@ else if($data['request'] == "get_post_data")
         {
             if(isset($data["filter_hot"]) && $data["filter_hot"]=="hot")
             {
-                $sql = "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
+                $sql = "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
                     posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
                     COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' AND chevron_vote.post_id=post_number),0) AS user_chevron_result,
                     COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' AND yes_no.post_id=post_number),0) AS user_yes_answer,
@@ -228,7 +228,7 @@ else if($data['request'] == "get_post_data")
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC";
             }
             else{
-                $sql = "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
+                $sql = "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
                     posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
                     COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' AND chevron_vote.post_id=post_number),0) AS user_chevron_result,
                     COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' AND yes_no.post_id=post_number),0) AS user_yes_answer,
@@ -245,7 +245,7 @@ else if($data['request'] == "get_post_data")
         {
             if(isset($data["filter_hot"]) && $data["filter_hot"]=="hot")
             {
-                $sql= "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
+                $sql= "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
                     posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
                     COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' AND chevron_vote.post_id=post_number),0) AS user_chevron_result,
                     COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' AND yes_no.post_id=post_number),0) AS user_yes_answer,
@@ -259,7 +259,7 @@ else if($data['request'] == "get_post_data")
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC";
             }
             else{
-                $sql= "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
+                $sql= "SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
                     posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
                     COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id='$_SESSION[id]' AND chevron_vote.post_id=post_number),0) AS user_chevron_result,
                     COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id='$_SESSION[id]' AND yes_no.post_id=post_number),0) AS user_yes_answer,
@@ -277,7 +277,7 @@ else if($data['request'] == "get_post_data")
         $result = mysqli_query($conn, $sql);
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $tmp = array($row["post_number"],$row["username"], $row["poll_name"],$row["category_name"],$row["post_text"],$row["chevron_result"],
+                $tmp = array($row["post_number"],$row["username"], $row["poll_id"],$row["category_name"],$row["post_text"],$row["chevron_result"],
                 $row["post_date"],$row["user_chevron_result"],$row["user_yes_answer"],$row["user_no_answer"],$row["user_bookmark"],$row["post_expiration_date"],
                 $row["event_lat"],$row["event_long"],$row["event_radius"]);
                 array_push($post_data,$tmp);
@@ -289,18 +289,18 @@ else if($data['request'] == "get_post_data")
     else {
         if(isset($data["filter_hot"]) && $data["filter_hot"]=="hot")
         {
-            $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info 
+            $sql = "SELECT post_number,username,poll_id,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info 
             WHERE $user_search AND $filter_preferred_categories AND $filter_search AND $filter_filter ORDER BY chevron_result DESC";
         }
         else {
-            $sql = "SELECT post_number,username,poll_name,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info 
+            $sql = "SELECT post_number,username,poll_id,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info 
             WHERE $user_search AND $filter_preferred_categories AND $filter_search AND $filter_filter";
         }
 
         $result = mysqli_query($conn, $sql);
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $tmp = array($row["post_number"],$row["username"], $row["poll_name"],$row["category_name"],$row["post_text"],$row["chevron_result"],$row["post_date"],
+                $tmp = array($row["post_number"],$row["username"], $row["poll_id"],$row["category_name"],$row["post_text"],$row["chevron_result"],$row["post_date"],
                             $row["post_expiration_date"]);
                 array_push($post_data,$tmp);
             }

@@ -84,10 +84,19 @@ require_once "config.php";
     <div id="filters-outside-container" style="display:none;">
       <div id="filters-inside-container">
         <form id="time-filter">
-          <label id="time-filter-instruction">Time Filter:</label>
+          <label class="filter-instruction">Time Filter</label>
           <input id="time-filter-selector" type="datetime-local" name="time-filter-choice"></input>
           <div id="warning-time-filter-choice" style="display:none;">You must select a date range!</div>
         </form>
+        <div id="poll-filters-containter">
+          <label class="filter-instruction">Poll Type Filter</label>
+          <div id="poll-filters">
+            <button class="poll-filter" name="1">Yes/No</button>
+            <button class="poll-filter" name="2">Rating</button>
+            <button class="poll-filter" name="3">Approval</button>
+            <button class="poll-filter" name="4">Ranking</button>
+          </div>
+        </div>
         <button id= "filter-button" type="button">Filter</button>
       </div>
     </div>

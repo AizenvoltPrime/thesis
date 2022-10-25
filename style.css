@@ -1102,6 +1102,44 @@ a:active {
   align-content: center;
   text-align: center;
   gap: 0.5em;
+  background: #2c3134;
+  border-radius: 1em;
+  padding: 0.8em;
+}
+
+#poll-filters-containter {
+  display: flex;
+  flex-direction: column;
+  background: #2c3134;
+  border-radius: 1em;
+  padding: 0.8em;
+  gap: 0.5em;
+  justify-content: center;
+}
+
+#poll-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.filter-instruction,
+.poll-filter {
+  background: #5e5e5e;
+  align-self: center;
+  border-radius: 1em;
+  padding: 0.4em;
+  font-size: 1.2em;
+}
+
+.poll-filter {
+  background: #1a1a1b;
+  align-self: center;
+  border-radius: 1em;
+  padding: 0.4em;
+  font-size: 1em;
+  border: 0.1em solid #1a1a1b;
 }
 
 #filter-button {

@@ -9,7 +9,7 @@ for radius text input filter emkey08:https://stackoverflow.com/questions/469357/
 css transition autocomplete Hannes Schneidermayer:https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete
 
 //posts_info
-CREATE VIEW posts_info AS SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name 
+CREATE VIEW posts_info AS SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name 
 AS category_name, posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date 
 AS post_date,posts.post_loc_lat AS post_loc_lat,posts.post_loc_long AS post_loc_long,posts.post_expiration_date AS post_expiration_date FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories on posts.post_category = categories.category_id 
 join chevron_vote ON posts.post_number = chevron_vote.post_id GROUP BY posts.post_number ORDER BY posts.post_date DESC
