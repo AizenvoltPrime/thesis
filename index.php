@@ -81,6 +81,7 @@ require_once "config.php";
         <button id= "category-button" type="button">OK</button>
       </div>
     </div>
+    <!--This div is for the Filter.-->
     <div id="filters-outside-container" style="display:none;">
       <div id="filters-inside-container">
         <form id="time-filter">
@@ -89,7 +90,7 @@ require_once "config.php";
           <div id="warning-time-filter-choice" style="display:none;">You must select a date range!</div>
         </form>
         <div id="poll-filters-containter">
-          <label class="filter-instruction">Poll Type Filter</label>
+          <div class="filter-instruction">Poll Type Filter</div>
           <div id="poll-filters">
             <button class="poll-filter" name="1">Yes/No</button>
             <button class="poll-filter" name="2">Rating</button>
@@ -101,6 +102,13 @@ require_once "config.php";
           <label class="filter-instruction">User Filter</label>
           <input id="user-filter-select" type="text" name="user-filter-choice" maxlength="16" placeholder="Type Username"></input>
         </form>
+        <div id="poll-status-filter-container">
+          <div class="filter-instruction">Poll Status Filter</div>
+          <div id="poll-status-filter">
+            <button class="poll-status" name="1">Show Open</button>
+            <button class="poll-status" name="2">Show Closed</button>
+          </div>
+        </div>
         <button id= "filter-button" type="button">Filter</button>
       </div>
     </div>

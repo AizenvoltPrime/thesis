@@ -513,9 +513,4 @@ else if($data['request'] == "location_responses_data" && isset($_SESSION["logged
     echo json_encode($location_responses_data);
     mysqli_close($conn);
 }
-else if($data['request'] == "test" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
-{
-    $filter_preferred_categories=$data["filter_preferred_categories"];
-     echo $filter_preferred_categories;
-}
 ?>

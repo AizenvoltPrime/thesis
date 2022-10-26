@@ -1067,6 +1067,7 @@ a:active {
   font-size: 1.2em;
   color: #cc0000;
   padding: 0.5em 1em;
+  border: 0.01em solid #5e5e5e;
 }
 
 #filters-outside-container {
@@ -1109,7 +1110,8 @@ a:active {
   padding: 0.8em;
 }
 
-#poll-filters-containter {
+#poll-filters-containter,
+#poll-status-filter-container {
   display: flex;
   flex-direction: column;
   background: #2c3134;
@@ -1119,15 +1121,15 @@ a:active {
   justify-content: center;
 }
 
-#poll-filters {
+#poll-filters,
+#poll-status-filter {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 0.5em;
 }
 
-.filter-instruction,
-.poll-filter {
+.filter-instruction {
   background: #5e5e5e;
   align-self: center;
   border-radius: 1em;
@@ -1135,7 +1137,8 @@ a:active {
   font-size: 1.2em;
 }
 
-.poll-filter {
+.poll-filter,
+.poll-status {
   background: #1a1a1b;
   align-self: center;
   border-radius: 1em;

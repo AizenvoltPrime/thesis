@@ -263,6 +263,29 @@ document.getElementById("poll-filters").addEventListener(
   { passive: true }
 );
 
+document.getElementById("poll-status-filter").addEventListener(
+  "click",
+  (e) => {
+    if (e.target.id !== "poll-status-filter" && e.target.className === "poll-status") {
+      if (window.getComputedStyle(document.getElementsByClassName("poll-status")[e.target.name - 1]).color === "rgb(204, 0, 0)") {
+        document.getElementsByClassName("poll-status")[e.target.name - 1].style.border = null;
+        document.getElementsByClassName("poll-status")[e.target.name - 1].style.color = null;
+      } else {
+        document.getElementsByClassName("poll-status")[e.target.name - 1].style.border = "0.1em solid #cc0000";
+        document.getElementsByClassName("poll-status")[e.target.name - 1].style.color = "#cc0000";
+      }
+      if (e.target.name - 1 == 0) {
+        document.getElementsByClassName("poll-status")[1].style.border = null;
+        document.getElementsByClassName("poll-status")[1].style.color = null;
+      } else if (e.target.name - 1 == 1) {
+        document.getElementsByClassName("poll-status")[0].style.border = null;
+        document.getElementsByClassName("poll-status")[0].style.color = null;
+      }
+    }
+  },
+  { passive: true }
+);
+
 function clear_filters() {
   $("#search-box-container").fadeOut(300, function () {});
   $("#preferred-categories-container").fadeOut(300, function () {
@@ -271,11 +294,15 @@ function clear_filters() {
     });
   });
   $("#filters-outside-container").fadeOut(300, function () {
+    document.forms["user-filter"]["user-filter-choice"].value = "";
+    document.forms["time-filter"]["time-filter-choice"].value = "";
     document.querySelectorAll(".poll-filter").forEach((poll_filter) => {
       poll_filter.style.color = null;
       poll_filter.style.border = null;
-      document.forms["time-filter"]["time-filter-choice"].value = "";
-      document.forms["user-filter"]["user-filter-choice"].value = "";
+    });
+    document.querySelectorAll(".poll-status").forEach((status_filter) => {
+      status_filter.style.color = null;
+      status_filter.style.border = null;
     });
   });
   $("#warning-time-filter-choice").fadeOut(300, function () {});
@@ -284,26 +311,28 @@ function clear_filters() {
 }
 
 document.getElementById("filter-button").addEventListener("click", function () {
-  if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
-    return false;
+  if (window.getComputedStyle(document.getElementsByClassName("post")[0]).opacity === "1") {
+    if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
+      return false;
+    }
+    let search_text = document.forms["search-box-container"]["search-text"].value;
+    if (search_text.replace(/\s/g, "") === "") {
+      search_text = null;
+    }
+    let filter = filter_query();
+    $(".post").fadeOut(300, function () {});
+    $(".post")
+      .promise()
+      .done(function () {
+        $(".post").not(":first").remove();
+        reset_poll_data();
+        if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
+          generate_posts(get_variables()[0], "hot", preferred_categories, filter, search_text, get_variables()[1]);
+        } else {
+          generate_posts(get_variables()[0], null, preferred_categories, filter, search_text, get_variables()[1]);
+        }
+      });
   }
-  let search_text = document.forms["search-box-container"]["search-text"].value;
-  if (search_text.replace(/\s/g, "") === "") {
-    search_text = null;
-  }
-  let filter = filter_query();
-  $(".post").fadeOut(300, function () {});
-  $(".post")
-    .promise()
-    .done(function () {
-      $(".post").not(":first").remove();
-      reset_poll_data();
-      if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
-        generate_posts(get_variables()[0], "hot", preferred_categories, filter, search_text, get_variables()[1]);
-      } else {
-        generate_posts(get_variables()[0], null, preferred_categories, filter, search_text, get_variables()[1]);
-      }
-    });
 });
 
 flatpickr("#time-filter-selector", {
@@ -323,9 +352,11 @@ function filter_check(obj) {
 
 function filter_query() {
   let filter = document.forms["time-filter"]["time-filter-choice"].value;
+  let user_filter = document.forms["user-filter"]["user-filter-choice"].value;
   let poll_filter_counter = 0;
   let poll_filter = "1=1";
-  let user_filter = document.forms["user-filter"]["user-filter-choice"].value;
+  let poll_status = "1=1";
+  var DateTime = luxon.DateTime;
   if (user_filter.replace(/\s/g, "") === "") {
     user_filter = "1=1";
   } else {
@@ -353,7 +384,17 @@ function filter_query() {
   if (poll_filter_counter === 0) {
     poll_filter = "1=1";
   }
-  filter = filter + " AND " + poll_filter + " AND " + user_filter;
+  document.querySelectorAll(".poll-status").forEach((poll_status_type) => {
+    if (window.getComputedStyle(poll_status_type).color === "rgb(204, 0, 0)") {
+      if (poll_status_type.name === "1") {
+        poll_status = "post_expiration_date IS NULL OR post_expiration_date > " + "'" + DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss") + "'";
+      } else if (poll_status_type.name === "2") {
+        poll_status = "post_expiration_date < " + "'" + DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss") + "'";
+      }
+    }
+  });
+  poll_status = "(" + poll_status + ")";
+  filter = filter + " AND " + poll_filter + " AND " + user_filter + " AND " + poll_status;
   return filter;
 }
 
