@@ -357,8 +357,6 @@ function filter_query() {
   let poll_filter_counter = 0;
   let poll_filter = [];
   let poll_status = null;
-  var DateTime = luxon.DateTime;
-  let data_array = [];
   if (user_filter.replace(/\s/g, "") === "") {
     user_filter = null;
   }
