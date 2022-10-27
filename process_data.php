@@ -368,71 +368,63 @@ else if($data['request'] == "get_post_data")
 }
 else if($data['request'] == "chevron_vote" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
 {
-    require_once "old_config.php";
+    require_once "new_config.php";
 
     if($data['direction'] == "up" && $data['previous_vote'] == "up")
     {
-        $sql = "UPDATE chevron_vote SET chevron_result = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-        mysqli_query($conn, $sql);
+        $stmt=$conn->prepare("UPDATE chevron_vote SET chevron_result = 0 WHERE post_id=:post_id AND user_id=:id");  
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);     
         echo "Success";
-        mysqli_close($conn);
     }
     else if ($data['direction'] == "up" && $data['previous_vote'] == "down") {
-        $sql = "UPDATE chevron_vote SET chevron_result = 1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-        mysqli_query($conn, $sql);
+        $stmt=$conn->prepare("UPDATE chevron_vote SET chevron_result = 1 WHERE post_id=:post_id AND user_id=:id");       
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);   
         echo "Success";
-        mysqli_close($conn);
     }
     else if($data['direction'] == "up" && $data['previous_vote'] == "no")
     {
-        $sql = "SELECT post_id,user_id FROM chevron_vote WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'"; 
-        $result = mysqli_query($conn, $sql);
-        if($result->num_rows > 0)
+        $stmt=$conn->prepare("SELECT post_id,user_id FROM chevron_vote WHERE post_id=:post_id AND user_id=:id"); 
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
+        if($stmt->rowCount() > 0)
         {
-            $sql = "UPDATE chevron_vote SET chevron_result = 1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-            mysqli_query($conn, $sql);
+            $stmt=$conn->prepare("UPDATE chevron_vote SET chevron_result = 1 WHERE post_id=:post_id AND user_id=:id");       
+            $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
             echo "Success";
-            mysqli_close($conn);
         }
-        else if($result->num_rows == 0)
+        else if($stmt->rowCount() == 0)
         {
-            $sql = "INSERT INTO chevron_vote(post_id,user_id,chevron_result) VALUES ('$data[post_id]','$_SESSION[id]',1)";       
-            mysqli_query($conn, $sql);
+            $stmt=$conn->prepare("INSERT INTO chevron_vote(post_id,user_id,chevron_result) VALUES (:post_id,:id,1)");       
+            $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
             echo "Success";
-            mysqli_close($conn);
         }
     }
     else if($data['direction'] == "down" && $data['previous_vote'] == "down")
     {
-        $sql = "UPDATE chevron_vote SET chevron_result = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-        mysqli_query($conn, $sql);
+        $stmt=$conn->prepare("UPDATE chevron_vote SET chevron_result = 0 WHERE post_id=:post_id AND user_id=:id");       
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
         echo "Success";
-        mysqli_close($conn);
     }
     else if($data['direction'] == "down" && $data['previous_vote'] == "up")
     {
-        $sql = "UPDATE chevron_vote SET chevron_result = -1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-        mysqli_query($conn, $sql);
+        $stmt=$conn->prepare("UPDATE chevron_vote SET chevron_result = -1 WHERE post_id=:post_id AND user_id=:id");       
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
         echo "Success";
-        mysqli_close($conn);
     }
     else if($data['direction'] == "down" && $data['previous_vote'] == "no")
     {
-        $sql = "SELECT post_id,user_id FROM chevron_vote WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'"; 
-        $result = mysqli_query($conn, $sql);
-        if($result->num_rows > 0)
+        $stmt=$conn->prepare("SELECT post_id,user_id FROM chevron_vote WHERE post_id=:post_id AND user_id=:id"); 
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
+        if($stmt->rowCount() > 0)
         {
-            $sql = "UPDATE chevron_vote SET chevron_result = -1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-            mysqli_query($conn, $sql);
+            $stmt=$conn->prepare("UPDATE chevron_vote SET chevron_result = -1 WHERE post_id=:post_id AND user_id=:id");       
+            $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
             echo "Success";
-            mysqli_close($conn);
         }
-        else if($result->num_rows == 0)
+        else if($stmt->rowCount() == 0)
         {
-            $sql = "INSERT INTO chevron_vote(post_id,user_id,chevron_result) VALUES ('$data[post_id]','$_SESSION[id]',-1)";       
-            mysqli_query($conn, $sql);
+            $stmt=$conn->prepare("INSERT INTO chevron_vote(post_id,user_id,chevron_result) VALUES (:post_id,:id,-1)");       
+            $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
             echo "Success";
-            mysqli_close($conn);
         }
     }
 }
