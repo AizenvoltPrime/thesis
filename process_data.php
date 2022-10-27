@@ -430,136 +430,123 @@ else if($data['request'] == "chevron_vote" && isset($_SESSION["loggedin"]) && $_
 }
 else if($data['request'] == "yes_no_vote" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
 {
-    require_once "old_config.php";
+    require_once "new_config.php";
 
     if($data['current_vote'] == "yes" && $data['previous_vote'] == "yes")
     {
-        $sql = "UPDATE yes_no SET answer_yes = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-        mysqli_query($conn, $sql);
+        $stmt=$conn->prepare("UPDATE yes_no SET answer_yes = 0 WHERE post_id=:post_id AND user_id=:id");       
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
         echo "Success";
-        mysqli_close($conn);
     }
     else if ($data['current_vote'] == "yes" && $data['previous_vote'] == "no") {
-        $sql = "UPDATE yes_no SET answer_yes = 1, answer_no=0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-        mysqli_query($conn, $sql);
+        $stmt=$conn->prepare("UPDATE yes_no SET answer_yes = 1, answer_no=0 WHERE post_id=:post_id AND user_id=:id");       
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
         echo "Success";
-        mysqli_close($conn);
     }
     else if($data['current_vote'] == "yes" && $data['previous_vote'] == "nothing")
     {
-        $sql = "SELECT post_id,user_id FROM yes_no WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'"; 
-        $result = mysqli_query($conn, $sql);
-        if($result->num_rows > 0)
+        $stmt=$conn->prepare("SELECT post_id,user_id FROM yes_no WHERE post_id=:post_id AND user_id=:id"); 
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
+        if($stmt->rowCount() > 0)
         {
-            $sql = "UPDATE yes_no SET answer_yes = 1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-            mysqli_query($conn, $sql);
+            $stmt=$conn->prepare("UPDATE yes_no SET answer_yes = 1 WHERE post_id=:post_id AND user_id=:id");       
+            $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
             echo "Success";
-            mysqli_close($conn);
         }
-        else if($result->num_rows == 0)
+        else if($stmt->rowCount() == 0)
         {
-            $sql = "INSERT INTO yes_no(post_id,user_id,poll_type,answer_yes,answer_no) VALUES ('$data[post_id]','$_SESSION[id]',1,1,0)";       
-            mysqli_query($conn, $sql);
+            $stmt=$conn->prepare("INSERT INTO yes_no(post_id,user_id,poll_type,answer_yes,answer_no) VALUES (:post_id,:id,1,1,0)");       
+            $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
             echo "Success";
-            mysqli_close($conn);
         }
     }
     else if($data['current_vote'] == "no" && $data['previous_vote'] == "no")
     {
-        $sql = "UPDATE yes_no SET answer_no = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-        mysqli_query($conn, $sql);
+        $stmt=$conn->prepare("UPDATE yes_no SET answer_no = 0 WHERE post_id=:post_id AND user_id=:id");       
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
         echo "Success";
-        mysqli_close($conn);
     }
     else if ($data['current_vote'] == "no" && $data['previous_vote'] == "yes") {
-        $sql = "UPDATE yes_no SET answer_yes = 0, answer_no=1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-        mysqli_query($conn, $sql);
+        $stmt=$conn->prepare("UPDATE yes_no SET answer_yes = 0, answer_no=1 WHERE post_id=:post_id AND user_id=:id");       
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
         echo "Success";
-        mysqli_close($conn);
     }
     else if($data['current_vote'] == "no" && $data['previous_vote'] == "nothing")
     {
-        $sql = "SELECT post_id,user_id FROM yes_no WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'"; 
-        $result = mysqli_query($conn, $sql);
-        if($result->num_rows > 0)
+        $stmt=$conn->prepare("SELECT post_id,user_id FROM yes_no WHERE post_id=:post_id AND user_id=:id"); 
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
+        if($stmt->rowCount() > 0)
         {
-            $sql = "UPDATE yes_no SET answer_no = 1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-            mysqli_query($conn, $sql);
+            $stmt=$conn->prepare("UPDATE yes_no SET answer_no = 1 WHERE post_id=:post_id AND user_id=:id");       
+            $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
             echo "Success";
-            mysqli_close($conn);
         }
-        else if($result->num_rows == 0)
+        else if($stmt->rowCount() == 0)
         {
-            $sql = "INSERT INTO yes_no(post_id,user_id,poll_type,answer_yes,answer_no) VALUES ('$data[post_id]','$_SESSION[id]',1,0,1)";       
-            mysqli_query($conn, $sql);
+            $stmt=$conn->prepare("INSERT INTO yes_no(post_id,user_id,poll_type,answer_yes,answer_no) VALUES (:post_id,:id,1,0,1)");       
+            $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
             echo "Success";
-            mysqli_close($conn);
         }
     }
 }
 else if($data['request'] == "bookmark" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
 {
-    require_once "old_config.php";
+    require_once "new_config.php";
 
     if($data['current_state'] == "checked" && $data['previous_state'] == "checked")
     {
-        $sql = "UPDATE bookmarks SET user_bookmark = 0 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-        mysqli_query($conn, $sql);
+        $stmt=$conn->prepare("UPDATE bookmarks SET user_bookmark = 0 WHERE post_id=:post_id AND user_id=:id");       
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
         echo "Success";
-        mysqli_close($conn);
     }
     else if ($data['current_state'] == "checked" && $data['previous_state'] == "not_checked") {
-        $sql = "SELECT post_id,user_id FROM bookmarks WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'"; 
-        $result = mysqli_query($conn, $sql);
-        if($result->num_rows > 0)
+        $stmt=$conn->prepare("SELECT post_id,user_id FROM bookmarks WHERE post_id=:post_id AND user_id=:id"); 
+        $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
+        if($stmt->rowCount() > 0)
         {
-            $sql = "UPDATE bookmarks SET user_bookmark = 1 WHERE post_id='$data[post_id]' AND user_id='$_SESSION[id]'";       
-            mysqli_query($conn, $sql);
+            $stmt=$conn->prepare("UPDATE bookmarks SET user_bookmark = 1 WHERE post_id=:post_id AND user_id=:id");       
+            $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
             echo "Success";
-            mysqli_close($conn);
         }
-        else if($result->num_rows == 0)
+        else if($stmt->rowCount() == 0)
         {
-            $sql = "INSERT INTO bookmarks(post_id,user_id,user_bookmark) VALUES ('$data[post_id]','$_SESSION[id]',1)";       
-            mysqli_query($conn, $sql);
+            $stmt=$conn->prepare("INSERT INTO bookmarks(post_id,user_id,user_bookmark) VALUES (:post_id,:id,1)");       
+            $stmt->execute([":post_id"=>$data["post_id"],":id"=>$_SESSION["id"]]);
             echo "Success";
-            mysqli_close($conn);
         }
     }
 }
 else if($data['request'] == "yes_no_data")
 {
-    require_once "old_config.php";
+    require_once "new_config.php";
 
-    $sql = "SELECT number_of_yes,number_of_no FROM posts_yes_no_info WHERE post_number='$data[post_id]'"; 
-    $result = mysqli_query($conn, $sql);
-    if($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
+    $stmt=$conn->prepare("SELECT number_of_yes,number_of_no FROM posts_yes_no_info WHERE post_number=:post_id"); 
+    $stmt->execute([":post_id"=>$data["post_id"]]);
+    if($stmt->rowCount() > 0) {
+        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
             $tmp = array($row["number_of_yes"],$row["number_of_no"]);
         }
     }
     echo json_encode($tmp);
-    mysqli_close($conn);
 }
 else if($data['request'] == "location_responses_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
 {
-    require_once "old_config.php";
+    require_once "new_config.php";
 
     $location_responses_data = array();
 
-    $sql = "SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitude, (SELECT COUNT(post_number) FROM posts WHERE posts.post_loc_lat=post_latitude 
+    $stmt=$conn->prepare("SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitude, (SELECT COUNT(post_number) FROM posts WHERE posts.post_loc_lat=post_latitude 
     AND post_loc_long=post_longitude GROUP BY post_loc_lat,post_loc_long) AS number_of_posts_in_location,(SELECT COUNT(yes_no.post_id) FROM yes_no 
     INNER JOIN posts ON yes_no.post_id=posts.post_number WHERE (yes_no.answer_yes=1 OR yes_no.answer_no=1) AND posts.post_loc_lat=post_latitude 
     AND posts.post_loc_long=post_longitude) AS number_of_responses_in_location 
-    FROM posts INNER JOIN yes_no ON posts.post_number=yes_no.post_id GROUP BY post_loc_lat,post_loc_long"; 
-    $result = mysqli_query($conn, $sql);
-        if($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
+    FROM posts INNER JOIN yes_no ON posts.post_number=yes_no.post_id GROUP BY post_loc_lat,post_loc_long"); 
+    $stmt->execute();  
+        if($stmt->rowCount() > 0) {
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
                 $tmp = array($row["post_latitude"],$row["post_longitude"], $row["number_of_posts_in_location"],$row["number_of_responses_in_location"]);
                 array_push($location_responses_data,$tmp);
             }
         }
     echo json_encode($location_responses_data);
-    mysqli_close($conn);
 }
 ?>
