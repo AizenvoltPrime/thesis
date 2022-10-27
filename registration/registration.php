@@ -7,7 +7,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     exit;
 }
 
-require_once "../config.php";
+require_once "../old_config.php";
 
 ?>
 <!doctype html>

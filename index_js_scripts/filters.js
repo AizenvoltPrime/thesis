@@ -1,6 +1,6 @@
 import { generate_posts, reset_poll_data, get_variables } from "./index.js";
 
-let preferred_categories = "1=1";
+let preferred_categories = null;
 
 document.getElementById("hot").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementsByClassName("post")[0]).opacity === "1") {
@@ -215,21 +215,20 @@ document.getElementById("category-button").addEventListener("click", function ()
   };
   let filter = filter_check(filter_obj);
   let categories_counter = 0;
+  if (preferred_categories === null) {
+    preferred_categories = [];
+    preferred_categories.length = 0;
+  }
   $("#preferred-categories-container").fadeOut(300, function () {
     document.querySelectorAll(".category").forEach((category) => {
       let target_category_icon = category.getElementsByTagName("i")[0].classList[1];
       if (window.getComputedStyle(document.getElementsByClassName(target_category_icon)[0]).backgroundClip === "text") {
+        preferred_categories.push(category.innerText.toLowerCase());
         categories_counter++;
-        if (categories_counter === 1) {
-          preferred_categories = "category_name LIKE " + "'" + category.innerText.toLowerCase() + "'";
-        } else if (categories_counter > 1) {
-          preferred_categories = preferred_categories + " OR category_name LIKE " + "'" + category.innerText.toLowerCase() + "'";
-        }
       }
     });
-    preferred_categories = "(" + preferred_categories + ")";
     if (categories_counter === 0) {
-      preferred_categories = "1=1";
+      preferred_categories = null;
       null_style("fa-table-list");
     }
     $(".post").fadeOut(300, function () {});
@@ -306,7 +305,9 @@ function clear_filters() {
     });
   });
   $("#warning-time-filter-choice").fadeOut(300, function () {});
-  preferred_categories = "1=1";
+  if (preferred_categories !== null) {
+    preferred_categories.length = 0;
+  }
   document.forms["search-box-container"]["search-text"].value = "";
 }
 
@@ -354,48 +355,43 @@ function filter_query() {
   let filter = document.forms["time-filter"]["time-filter-choice"].value;
   let user_filter = document.forms["user-filter"]["user-filter-choice"].value;
   let poll_filter_counter = 0;
-  let poll_filter = "1=1";
-  let poll_status = "1=1";
+  let poll_filter = [];
+  let poll_status = null;
   var DateTime = luxon.DateTime;
+  let data_array = [];
   if (user_filter.replace(/\s/g, "") === "") {
-    user_filter = "1=1";
-  } else {
-    user_filter = "username LIKE " + "'%" + user_filter + "%'";
+    user_filter = null;
   }
   if (filter.search("to") > -1) {
     $("#warning-time-filter-choice").fadeOut(300, function () {});
-    filter = "post_date BETWEEN " + '"' + filter.replace(" to ", '" AND "') + '"';
+    filter = filter.replace(" to ", ",");
   } else if (filter !== "") {
-    filter = "1=1";
+    filter = null;
     $("#warning-time-filter-choice").fadeIn(300, function () {});
   } else {
-    filter = "1=1";
+    filter = null;
   }
+
   document.querySelectorAll(".poll-filter").forEach((poll_filter_type) => {
-    if (window.getComputedStyle(poll_filter_type).color === "rgb(204, 0, 0)" && poll_filter_counter === 0) {
-      poll_filter = "poll_id=" + poll_filter_type.name;
-      poll_filter_counter++;
-    } else if (window.getComputedStyle(poll_filter_type).color === "rgb(204, 0, 0)" && poll_filter_counter > 0) {
-      poll_filter = poll_filter + " OR poll_id=" + poll_filter_type.name;
+    if (window.getComputedStyle(poll_filter_type).color === "rgb(204, 0, 0)") {
+      poll_filter.push(poll_filter_type.name);
       poll_filter_counter++;
     }
   });
-  poll_filter = "(" + poll_filter + ")";
   if (poll_filter_counter === 0) {
-    poll_filter = "1=1";
+    poll_filter = null;
   }
+
   document.querySelectorAll(".poll-status").forEach((poll_status_type) => {
     if (window.getComputedStyle(poll_status_type).color === "rgb(204, 0, 0)") {
       if (poll_status_type.name === "1") {
-        poll_status = "post_expiration_date IS NULL OR post_expiration_date > " + "'" + DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss") + "'";
+        poll_status = 1;
       } else if (poll_status_type.name === "2") {
-        poll_status = "post_expiration_date < " + "'" + DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss") + "'";
+        poll_status = 2;
       }
     }
   });
-  poll_status = "(" + poll_status + ")";
-  filter = filter + " AND " + poll_filter + " AND " + user_filter + " AND " + poll_status;
-  return filter;
+  return [filter, poll_filter, user_filter, poll_status];
 }
 
 document.querySelector("#time-filter-selector").addEventListener("keypress", function (e) {

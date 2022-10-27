@@ -3,7 +3,7 @@
 session_start();
 
 // Include config file
-require_once "../config.php";
+require_once "../old_config.php";
 
 $jsonString = file_get_contents('php://input');
 $data = json_decode($jsonString, true);

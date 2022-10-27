@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once "../config.php";
+require_once "../old_config.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
