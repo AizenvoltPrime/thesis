@@ -1015,6 +1015,7 @@ a:active {
   color: #cc0000;
   font-size: 1.875em;
   padding: 0.5em 1em;
+  border: 0.01em solid #5e5e5e;
 }
 
 #preferred-categories-container {
