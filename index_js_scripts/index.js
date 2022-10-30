@@ -191,26 +191,25 @@ legend.onAdd = function (map) {
 legend.addTo(app_analytics_map);
 
 var all_geojson;
-
 var baseMaps = {};
-
 var overlayMaps = {};
-var layerControl =
-  //This is for button animation.
-  (function () {
-    var d = document.getElementById("username-change");
-    var e = document.getElementById("password-change");
-    function addAnim() {
-      d.classList.add("animated");
-      d.removeEventListener("mouseover", addAnim);
-      e.classList.add("animated");
-      e.removeEventListener("mouseover", addAnim);
-    }
+var layerControl;
 
-    // listen to mouseover for the container
-    d.addEventListener("mouseover", addAnim);
-    e.addEventListener("mouseover", addAnim);
-  })();
+//This is for button animation.
+(function () {
+  var d = document.getElementById("username-change");
+  var e = document.getElementById("password-change");
+  function addAnim() {
+    d.classList.add("animated");
+    d.removeEventListener("mouseover", addAnim);
+    e.classList.add("animated");
+    e.removeEventListener("mouseover", addAnim);
+  }
+
+  // listen to mouseover for the container
+  d.addEventListener("mouseover", addAnim);
+  e.addEventListener("mouseover", addAnim);
+})();
 
 //Get user coordinates
 fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")

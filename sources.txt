@@ -8,6 +8,7 @@ https://stackoverflow.com/questions/18883601/function-to-calculate-distance-betw
 for radius text input filter emkey08:https://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input 
 css transition autocomplete Hannes Schneidermayer:https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete
 greece geojson:https://github.com/codeforgermany/click_that_hood/commit/91e31e6a70f57009b80c152d4c0268ecae011080
+d3.geoContains:https://stackoverflow.com/questions/59864895/point-in-polygon-using-leaflet-pip-and-d3-geocontains
 
 //posts_info
 CREATE VIEW posts_info AS SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name 

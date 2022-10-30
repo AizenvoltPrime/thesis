@@ -1189,7 +1189,8 @@ a:active {
 
 #event-location-map,
 #app-analytics-map {
-  width: 70em;
+  width: 100%;
+  max-width: 70em;
   height: 40em;
   border-radius: 1em;
 }
