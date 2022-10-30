@@ -23,9 +23,11 @@ require_once "new_config.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.4/luxon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+  <script src=https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js></script>
   <script type="module" src="index_js_scripts/index.js"></script>
   <script type="module" src="index_js_scripts/navbar.js"></script>
   <script type="module" src="index_js_scripts/filters.js"></script>
+  <script type="module" src="geojson/greece_regions.js"></script>
 </head>
 
 <body>
@@ -244,7 +246,7 @@ require_once "new_config.php";
       <button id="map-analytics"><i class="fa-solid fa-map"></i>Map Analytics</button>
       <button id="chart-analytics"><i class="fa-solid fa-chart-column"></i>Chart Analytics</button>
     </div>
-    <div id="location-responses-map"></div>
+    <div id="app-analytics-map"></div>
   </div>
   <!--This div contains all the posts.-->
   <div id="posts-container">

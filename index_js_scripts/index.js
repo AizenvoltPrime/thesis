@@ -1,4 +1,5 @@
 import { null_style, highlight_filter } from "./filters.js";
+import { greece_regions } from "../geojson/greece_regions.js";
 
 let user_choice = "none"; //poll choice
 let specific_user_posts = null; //this is for showing posts of a specified user
@@ -76,28 +77,140 @@ document.getElementsByClassName("fa-circle-chevron-right")[1].addEventListener("
   }
 });
 
-var location_responses_map = L.map("location-responses-map").setView([38.222807817437634, 21.783142089843754], 7);
-let location_response_marker = [];
+var app_analytics_map = L.map("app-analytics-map").setView([38.5, 25.5], 6);
+let app_analytics_marker = [];
+let app_analytics_all_markers;
 
-L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+var base_of_map = L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(location_responses_map);
+}).addTo(app_analytics_map);
 
-//This is for button animation.
-(function () {
-  var d = document.getElementById("username-change");
-  var e = document.getElementById("password-change");
-  function addAnim() {
-    d.classList.add("animated");
-    d.removeEventListener("mouseover", addAnim);
-    e.classList.add("animated");
-    e.removeEventListener("mouseover", addAnim);
+var geojson_layer = L.geoJson(greece_regions, { style: style });
+
+function getColor(d) {
+  return d > 100
+    ? "#800026"
+    : d > 50
+    ? "#BD0026"
+    : d > 20
+    ? "#E31A1C"
+    : d > 10
+    ? "#FC4E2A"
+    : d > 5
+    ? "#FD8D3C"
+    : d > 2
+    ? "#FEB24C"
+    : d > 1
+    ? "#FED976"
+    : "#FFEDA0";
+}
+
+function style(feature) {
+  return {
+    fillColor: getColor(feature.properties.number_of_posts),
+    weight: 2,
+    opacity: 1,
+    color: "white",
+    dashArray: "3",
+    fillOpacity: 0.7,
+  };
+}
+
+function highlightFeature(e) {
+  var layer = e.target;
+
+  layer.setStyle({
+    weight: 5,
+    color: "#666",
+    dashArray: "",
+    fillOpacity: 0.7,
+  });
+
+  layer.bringToFront();
+  info.update(layer.feature.properties);
+}
+
+function resetHighlight(e) {
+  geojson.resetStyle(e.target);
+  info.update();
+}
+
+var geojson;
+// ... our listeners
+geojson = L.geoJson(greece_regions);
+
+function zoomToFeature(e) {
+  app_analytics_map.fitBounds(e.target.getBounds());
+}
+
+function onEachFeature(feature, layer) {
+  layer.on({
+    mouseover: highlightFeature,
+    mouseout: resetHighlight,
+    click: zoomToFeature,
+  });
+}
+
+geojson = L.geoJson(greece_regions, {
+  style: style,
+  onEachFeature: onEachFeature,
+});
+
+var info = L.control.layers();
+
+info.onAdd = function (map) {
+  this._div = L.DomUtil.create("div", "info"); // create a div with a class "info"
+  this.update();
+  return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+  this._div.innerHTML =
+    "<h4>Posts Number</h4>" + (props ? "<b>" + props.name + "</b><br />" + props.number_of_posts + " posts" : "Hover over a region");
+};
+
+info.addTo(app_analytics_map);
+
+var legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function (map) {
+  var div = L.DomUtil.create("div", "info legend"),
+    grades = [0, 1, 2, 5, 10, 20, 50, 100],
+    labels = [];
+
+  // loop through our density intervals and generate a label with a colored square for each interval
+  for (var i = 0; i < grades.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' + grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
   }
 
-  // listen to mouseover for the container
-  d.addEventListener("mouseover", addAnim);
-  e.addEventListener("mouseover", addAnim);
-})();
+  return div;
+};
+
+legend.addTo(app_analytics_map);
+
+var all_geojson;
+
+var baseMaps = {};
+
+var overlayMaps = {};
+var layerControl =
+  //This is for button animation.
+  (function () {
+    var d = document.getElementById("username-change");
+    var e = document.getElementById("password-change");
+    function addAnim() {
+      d.classList.add("animated");
+      d.removeEventListener("mouseover", addAnim);
+      e.classList.add("animated");
+      e.removeEventListener("mouseover", addAnim);
+    }
+
+    // listen to mouseover for the container
+    d.addEventListener("mouseover", addAnim);
+    e.addEventListener("mouseover", addAnim);
+  })();
 
 //Get user coordinates
 fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
@@ -868,6 +981,7 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
+        clear_map();
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(true);
@@ -931,6 +1045,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
+        clear_map();
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(false);
@@ -983,6 +1098,7 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
+        clear_map();
         $("#username-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
@@ -1075,6 +1191,7 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
+        clear_map();
         $("#password-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
@@ -1161,35 +1278,37 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
   bookmarks_active = false;
   specific_user_posts = null;
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
-    clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
+        null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
-          location_responses_map.invalidateSize();
-          make_location_responses_map();
+          app_analytics_map.invalidateSize();
+          make_app_analytics_map();
         });
       });
     } else if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#password-change-form").fadeOut(300, function () {
+        null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
-          location_responses_map.invalidateSize();
-          make_location_responses_map();
+          app_analytics_map.invalidateSize();
+          make_app_analytics_map();
         });
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
+        null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
-          location_responses_map.invalidateSize();
-          make_location_responses_map();
+          app_analytics_map.invalidateSize();
+          make_app_analytics_map();
         });
       });
     }
@@ -1205,10 +1324,12 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
         reset_poll_data();
+        null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
-          location_responses_map.invalidateSize();
-          make_location_responses_map();
+          clear_map();
+          app_analytics_map.invalidateSize();
+          make_app_analytics_map();
         });
       });
   }
@@ -1378,7 +1499,7 @@ function toRad(Value) {
 }
 
 //This function creates the map for location/responses analytics
-function make_location_responses_map() {
+function make_app_analytics_map() {
   fetch("process_data.php", {
     method: "POST",
     body: JSON.stringify({
@@ -1387,27 +1508,40 @@ function make_location_responses_map() {
   })
     .then((res) => res.json())
     .then((response) => {
+      all_geojson = L.layerGroup([geojson, geojson_layer]);
       for (let i = 0; i < response.length; i++) {
-        if (location_response_marker[i] !== undefined) {
-          location_responses_map.removeLayer(location_response_marker[i]);
-        }
-        location_response_marker[i] = L.marker([response[i][0], response[i][1]])
-          .bindTooltip("User Posts:" + response[i][2] + " | User Responses:" + response[i][3])
-          .addTo(location_responses_map);
+        app_analytics_marker[i] = L.marker([response[i][0], response[i][1]]).bindTooltip(
+          "User Posts:" + response[i][2] + " | User Responses:" + response[i][3]
+        );
+        app_analytics_all_markers = L.layerGroup().addLayer(app_analytics_marker[i]);
       }
+      layerControl = L.control.layers(null, overlayMaps).addTo(app_analytics_map);
+      layerControl.addOverlay(all_geojson, "Choropleth");
+      layerControl.addOverlay(app_analytics_all_markers, "Post Locations");
     });
 }
 
+function clear_map() {
+  if (layerControl !== undefined) {
+    app_analytics_map.removeControl(layerControl);
+    app_analytics_map.removeLayer(all_geojson);
+    app_analytics_marker.forEach((marker) => {
+      if (marker !== undefined) {
+        app_analytics_map.removeLayer(marker);
+      }
+    });
+  }
+}
 document.getElementById("map-analytics").addEventListener("click", function () {
   highlight_filter("fa-solid fa-map");
   null_style("fa-solid fa-chart-column");
-  $("#location-responses-map").fadeIn(300, function () {});
+  $("#app-analytics-map").fadeIn(300, function () {});
 });
 
 document.getElementById("chart-analytics").addEventListener("click", function () {
   highlight_filter("fa-solid fa-chart-column");
   null_style("fa-solid fa-map");
-  $("#location-responses-map").fadeOut(300, function () {});
+  $("#app-analytics-map").fadeOut(300, function () {});
 });
 
 //exports variables to other js files
@@ -1423,3 +1557,11 @@ function null_all_styles() {
   null_style("fa-filter");
   null_style("fa-magnifying-glass");
 }
+
+// var my_point = [23.441, 38.6751];
+// var geo_out = greece_regions.features.filter(function (d) {
+//   return d3.geoContains(d, my_point);
+// });
+// geo_out.forEach(function (d) {
+//   console.log(d.properties.name);
+// });
