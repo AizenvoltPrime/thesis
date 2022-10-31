@@ -199,6 +199,7 @@ input {
 #recent,
 #preferred-categories,
 #filter,
+#post-locations-filter,
 #search,
 #map-analytics,
 #chart-analytics {
@@ -217,6 +218,7 @@ input {
 #preferred-categories i,
 #filter i,
 #search i,
+#post-locations-filter i,
 .user-nav a i,
 #map-analytics i,
 #chart-analytics i,
@@ -1188,11 +1190,33 @@ a:active {
 }
 
 #event-location-map,
-#app-analytics-map {
+#post-locations-map {
   width: 100%;
   max-width: 70em;
   height: 40em;
   border-radius: 1em;
+}
+
+#post-locations-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 25%;
+}
+
+.close-map {
+  font-size: 3em;
+  color: #cc0000;
+  position: absolute;
+  z-index: 401;
+  bottom: 0em;
+  left: 0.3em;
 }
 
 #radius-container {

@@ -59,6 +59,7 @@ require_once "new_config.php";
     <button id="recent"><i class="fa-solid fa-sun"></i>Recent</button>
     <button id="preferred-categories"><i class="fa-solid fa-table-list"></i>Preferred Categories</button>
     <button id="filter"><i class="fa-solid fa-filter"></i>Filter</button>
+    <button id="post-locations-filter"><i class="fa-sharp fa-solid fa-map-location-dot"></i>Post Locations</button>
     <button id="search"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
   </div>
   <!--This div is for the search filter.-->
@@ -114,6 +115,12 @@ require_once "new_config.php";
         </div>
       </div>
       <button id="filter-button" type="button">Filter</button>
+    </div>
+  </div>
+  <!--This div is for the Post Locations filter.-->
+  <div id="post-locations-container" style="display:none;">
+    <div id="post-locations-map">
+      <button class="close-map"><i class="fa-solid fa-xmark"></i></i></button>
     </div>
   </div>
   <!--This div is for user notifications.-->
