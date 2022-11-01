@@ -415,7 +415,7 @@ document.querySelector("#user-filter-select").addEventListener("keypress", funct
 
 var app_analytics_map = L.map("post-locations-map").setView([38.5, 25.5], 6);
 let app_analytics_marker = [];
-let app_analytics_all_markers;
+let app_analytics_all_markers = L.layerGroup();
 
 var base_of_map = L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -545,7 +545,7 @@ function make_app_analytics_map() {
         app_analytics_marker[i] = L.marker([response[i][0], response[i][1]]).bindTooltip(
           "User Posts:" + response[i][2] + " | User Responses:" + response[i][3]
         );
-        app_analytics_all_markers = L.layerGroup().addLayer(app_analytics_marker[i]);
+        app_analytics_all_markers.addLayer(app_analytics_marker[i]);
       }
       layerControl = L.control.layers(null, overlayMaps).addTo(app_analytics_map);
       layerControl.addOverlay(all_geojson, "Choropleth");
@@ -558,11 +558,7 @@ function clear_map() {
   if (layerControl !== undefined) {
     app_analytics_map.removeControl(layerControl);
     app_analytics_map.removeLayer(all_geojson);
-    app_analytics_marker.forEach((marker) => {
-      if (marker !== undefined) {
-        app_analytics_map.removeLayer(marker);
-      }
-    });
+    app_analytics_map.removeLayer(app_analytics_all_markers);
   }
 }
 
