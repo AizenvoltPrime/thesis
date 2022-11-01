@@ -286,7 +286,7 @@ document.getElementById("poll-status-filter").addEventListener(
   { passive: true }
 );
 
-function clear_filters() {
+export function clear_filters() {
   $("#search-box-container").fadeOut(300, function () {});
   $("#preferred-categories-container").fadeOut(300, function () {
     document.querySelectorAll(".category").forEach((category) => {

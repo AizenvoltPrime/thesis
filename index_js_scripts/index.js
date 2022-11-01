@@ -1,4 +1,4 @@
-import { null_style, highlight_filter } from "./filters.js";
+import { null_style, highlight_filter, clear_filters } from "./filters.js";
 import { greece_regions } from "../geojson/greece_regions.js";
 
 let user_choice = "none"; //poll choice
@@ -545,6 +545,7 @@ postContainer.addEventListener(
       const postIndexPostUserName = [...postContainer.children].indexOf(post_user_name);
 
       specific_user_posts = post_data[postIndexPostUserName][1];
+      clear_filters();
       $(".post").fadeOut(300, function () {});
       $(".post")
         .promise()
