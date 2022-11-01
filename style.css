@@ -918,6 +918,11 @@ a:active {
   cursor: pointer;
 }
 
+.fa-check {
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
 .fa-clock {
   display: none;
   font-size: 2em;

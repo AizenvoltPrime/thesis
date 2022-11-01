@@ -282,6 +282,7 @@ require_once "new_config.php";
         <button data-dir="up"><i class="fa-solid fa-chevron-up"></i></button>
         <div class="score"></div>
         <button data-dir="down" style="margin-right:auto;"><i class="fa-solid fa-chevron-down"></i></button>
+        <i class="parent_of_fa_check" style="margin-right:auto;"></i>
         <button class="parent_of_bookmark" data-dir="bookmark"></button>
       </div>
       <div class="chartCard" style="display:none;"></div>

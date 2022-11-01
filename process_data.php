@@ -216,29 +216,33 @@ if ($data['request'] == "request_username") {
             if (isset($data["filter_hot"]) && $data["filter_hot"] == "hot") {
                 $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
                     posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
-                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=post_number),0) AS user_chevron_result,
-                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=post_number),0) AS user_yes_answer,
-                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=post_number),0) AS user_no_answer,
-                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=post_number),0) AS user_bookmark,
-                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
+                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=posts.post_number),0) AS user_chevron_result,
+                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_yes_answer,
+                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_no_answer,
+                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) AS user_bookmark,
+                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius,
+                    (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
-                    WHERE username LIKE :username ESCAPE '=' AND category_name RLIKE :category_name AND post_text LIKE :filter_search ESCAPE '=' 
-                    AND (post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND username LIKE :filter_username ESCAPE '=' 
+                    join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
+                    WHERE user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
+                    AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
                     AND $filter_filter_poll_status
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC");
             } else {
                 $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
                     posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
-                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=post_number),0) AS user_chevron_result,
-                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=post_number),0) AS user_yes_answer,
-                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=post_number),0) AS user_no_answer,
-                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=post_number),0) AS user_bookmark,
-                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
-                    FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
+                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=posts.post_number),0) AS user_chevron_result,
+                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_yes_answer,
+                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_no_answer,
+                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) AS user_bookmark,
+                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius,
+                    (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result
+                    FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
-                    WHERE username LIKE :username ESCAPE '=' AND category_name RLIKE :category_name AND post_text LIKE :filter_search ESCAPE '=' 
-                    AND (post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND username LIKE :filter_username ESCAPE '=' 
+                    join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
+                    WHERE user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
+                    AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
                     AND $filter_filter_poll_status
                     GROUP BY posts.post_number ORDER BY posts.post_date DESC");
             }
@@ -246,31 +250,35 @@ if ($data['request'] == "request_username") {
             if (isset($data["filter_hot"]) && $data["filter_hot"] == "hot") {
                 $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
                     posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
-                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=post_number),0) AS user_chevron_result,
-                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=post_number),0) AS user_yes_answer,
-                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=post_number),0) AS user_no_answer,
-                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=post_number),0) AS user_bookmark,
-                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
+                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=posts.post_number),0) AS user_chevron_result,
+                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_yes_answer,
+                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_no_answer,
+                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) AS user_bookmark,
+                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius,
+                    (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
-                    WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=post_number),0) = 1 
-                    AND username LIKE :username ESCAPE '=' AND category_name RLIKE :category_name AND post_text LIKE :filter_search ESCAPE '=' 
-                    AND (post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND username LIKE :filter_username ESCAPE '=' 
+                    join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
+                    WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) = 1 
+                    AND user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
+                    AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
                     AND $filter_filter_poll_status
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC");
             } else {
                 $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
                     posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
-                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=post_number),0) AS user_chevron_result,
-                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=post_number),0) AS user_yes_answer,
-                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=post_number),0) AS user_no_answer,
-                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=post_number),0) AS user_bookmark,
-                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius
+                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=posts.post_number),0) AS user_chevron_result,
+                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_yes_answer,
+                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_no_answer,
+                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) AS user_bookmark,
+                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius,
+                    (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
-                    WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=post_number),0) = 1 
-                    AND username LIKE :username ESCAPE '=' AND category_name RLIKE :category_name AND post_text LIKE :filter_search ESCAPE '=' 
-                    AND (post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND username LIKE :filter_username ESCAPE '=' 
+                    join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
+                    WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) = 1 
+                    AND user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
+                    AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
                     AND $filter_filter_poll_status
                     GROUP BY posts.post_number ORDER BY posts.post_date DESC");
             }
@@ -284,21 +292,27 @@ if ($data['request'] == "request_username") {
             $tmp = array(
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"],
                 $row["post_date"], $row["user_chevron_result"], $row["user_yes_answer"], $row["user_no_answer"], $row["user_bookmark"], $row["post_expiration_date"],
-                $row["event_lat"], $row["event_long"], $row["event_radius"]
+                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["event_radius"], $row["post_vote_result"]
             );
             array_push($post_data, $tmp);
         }
         echo json_encode($post_data);
     } else {
         if (isset($data["filter_hot"]) && $data["filter_hot"] == "hot") {
-            $stmt = $conn->prepare("SELECT post_number,username,poll_id,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info 
-            WHERE username LIKE :username ESCAPE '=' AND category_name RLIKE :category_name AND post_text LIKE :filter_search ESCAPE '=' 
-            AND (post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND username LIKE :filter_username ESCAPE '=' 
+            $stmt = $conn->prepare("SELECT posts_info.post_number AS post_number,posts_info.username AS username,poll_id,posts_info.category_name AS category_name,
+            posts_info.post_text AS post_text,chevron_result,posts_info.post_date AS post_date,post_expiration_date, 
+            (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result 
+            FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number
+            WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
+            AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
             AND $filter_filter_poll_status ORDER BY chevron_result DESC");
         } else {
-            $stmt = $conn->prepare("SELECT post_number,username,poll_id,category_name,post_text,chevron_result,post_date,post_expiration_date FROM posts_info 
-            WHERE username LIKE :username ESCAPE '=' AND category_name RLIKE :category_name AND post_text LIKE :filter_search ESCAPE '=' 
-            AND (post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND username LIKE :filter_username ESCAPE '=' 
+            $stmt = $conn->prepare("SELECT posts_info.post_number AS post_number,posts_info.username AS username,poll_id,posts_info.category_name AS category_name,
+            posts_info.post_text AS post_text,chevron_result,posts_info.post_date AS post_date,post_expiration_date, 
+            (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result 
+            FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number
+            WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
+            AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
             AND $filter_filter_poll_status");
         }
 
@@ -308,7 +322,10 @@ if ($data['request'] == "request_username") {
             ":first_date" => $filter_filter_time[0], ":second_date" => $filter_filter_time[1], ":filter_poll_type" => $filter_filter_poll_type, ":filter_username" => $filter_filter_user
         ]);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $tmp = array($row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"], $row["post_date"], $row["post_expiration_date"]);
+            $tmp = array(
+                $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"], $row["post_date"], $row["post_expiration_date"],
+                $row["post_vote_result"]
+            );
             array_push($post_data, $tmp);
         }
         echo json_encode($post_data);
@@ -363,42 +380,82 @@ if ($data['request'] == "request_username") {
     if ($data['current_vote'] == "yes" && $data['previous_vote'] == "yes") {
         $stmt = $conn->prepare("UPDATE yes_no SET answer_yes = 0 WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-        echo "Success";
+        $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $yes_no_tmp = array($row["post_vote_result"], "Success");
+        }
+        echo json_encode($yes_no_tmp);
     } else if ($data['current_vote'] == "yes" && $data['previous_vote'] == "no") {
         $stmt = $conn->prepare("UPDATE yes_no SET answer_yes = 1, answer_no=0 WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-        echo "Success";
+        $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $yes_no_tmp = array($row["post_vote_result"], "Success");
+        }
+        echo json_encode($yes_no_tmp);
     } else if ($data['current_vote'] == "yes" && $data['previous_vote'] == "nothing") {
         $stmt = $conn->prepare("SELECT post_id,user_id FROM yes_no WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
         if ($stmt->rowCount() > 0) {
             $stmt = $conn->prepare("UPDATE yes_no SET answer_yes = 1 WHERE post_id=:post_id AND user_id=:id");
             $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-            echo "Success";
+            $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+            $stmt->execute([":post_id" => $data["post_id"]]);
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $yes_no_tmp = array($row["post_vote_result"], "Success");
+            }
+            echo json_encode($yes_no_tmp);
         } else if ($stmt->rowCount() == 0) {
             $stmt = $conn->prepare("INSERT INTO yes_no(post_id,user_id,poll_type,answer_yes,answer_no) VALUES (:post_id,:id,1,1,0)");
             $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-            echo "Success";
+            $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+            $stmt->execute([":post_id" => $data["post_id"]]);
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $yes_no_tmp = array($row["post_vote_result"], "Success");
+            }
+            echo json_encode($yes_no_tmp);
         }
     } else if ($data['current_vote'] == "no" && $data['previous_vote'] == "no") {
         $stmt = $conn->prepare("UPDATE yes_no SET answer_no = 0 WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-        echo "Success";
+        $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $yes_no_tmp = array($row["post_vote_result"], "Success");
+        }
+        echo json_encode($yes_no_tmp);
     } else if ($data['current_vote'] == "no" && $data['previous_vote'] == "yes") {
         $stmt = $conn->prepare("UPDATE yes_no SET answer_yes = 0, answer_no=1 WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-        echo "Success";
+        $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $yes_no_tmp = array($row["post_vote_result"], "Success");
+        }
+        echo json_encode($yes_no_tmp);
     } else if ($data['current_vote'] == "no" && $data['previous_vote'] == "nothing") {
         $stmt = $conn->prepare("SELECT post_id,user_id FROM yes_no WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
         if ($stmt->rowCount() > 0) {
             $stmt = $conn->prepare("UPDATE yes_no SET answer_no = 1 WHERE post_id=:post_id AND user_id=:id");
             $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-            echo "Success";
+            $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+            $stmt->execute([":post_id" => $data["post_id"]]);
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $yes_no_tmp = array($row["post_vote_result"], "Success");
+            }
+            echo json_encode($yes_no_tmp);
         } else if ($stmt->rowCount() == 0) {
             $stmt = $conn->prepare("INSERT INTO yes_no(post_id,user_id,poll_type,answer_yes,answer_no) VALUES (:post_id,:id,1,0,1)");
             $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-            echo "Success";
+            $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+            $stmt->execute([":post_id" => $data["post_id"]]);
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $yes_no_tmp = array($row["post_vote_result"], "Success");
+            }
+            echo json_encode($yes_no_tmp);
         }
     }
 } else if ($data['request'] == "bookmark" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
@@ -432,7 +489,7 @@ if ($data['request'] == "request_username") {
         }
     }
     echo json_encode($tmp);
-} else if ($data['request'] == "location_responses_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+} else if ($data['request'] == "location_responses_data") {
     require_once "new_config.php";
 
     $location_responses_data = array();

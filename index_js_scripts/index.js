@@ -398,7 +398,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
         }
       }
       if (post_time !== undefined && post_time !== null) {
-        if (post_data[0].length > 8) {
+        if (post_data[0].length > 9) {
           for (let i = 0; i < post_data.length; i++) {
             if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
@@ -439,11 +439,27 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
               document.querySelectorAll(".poll-timer-container")[i].style.display = "flex";
               document.querySelectorAll(".poll-timer-container")[i].style.color = "#cc0000";
             }
+            if (post_data[i][16] > 0 && post_data[i][2] == 1) {
+              let new_check = document.createElement("i");
+              new_check.className = "fa-solid fa-check";
+              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#00ffd0";
+            } else if (post_data[i][16] < 0 && post_data[i][2] == 1) {
+              let new_check = document.createElement("i");
+              new_check.className = "fa-solid fa-check";
+              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#cc0000";
+            } else if (post_data[i][16] == 0 && post_data[i][2] == 1) {
+              let new_check = document.createElement("i");
+              new_check.className = "fa-solid fa-check";
+              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#b5b5b5";
+            }
             let new_canvas = document.createElement("canvas");
             new_canvas.className = "myChart";
             document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
           }
-        } else if (post_data[0].length <= 8) {
+        } else if (post_data[0].length <= 9) {
           for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
@@ -461,6 +477,11 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
                 "Poll closed " + DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative();
               document.querySelectorAll(".poll-timer-container")[i].style.display = "flex";
               document.querySelectorAll(".poll-timer-container")[i].style.color = "#cc0000";
+            }
+            if (post_data[i][8] > 0) {
+              document.getElementsByClassName("fa-solid fa-check")[i].style.color = "#00ffd0";
+            } else if (post_data[i][8] < 0) {
+              document.getElementsByClassName("fa-solid fa-check")[i].style.color = "#cc0000";
             }
           }
         }
@@ -524,7 +545,7 @@ postContainer.addEventListener(
           generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1]);
         });
     }
-    if (post_data[0].length > 8) {
+    if (post_data[0].length > 9) {
       if (btn_up) {
         const post_up = btn_up.closest(".post");
         const postIndexUP = [...postContainer.children].indexOf(post_up);
@@ -664,11 +685,20 @@ postContainer.addEventListener(
               method: "POST",
               body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "yes", post_id: post_data[postIndexYes][0] }),
             })
-              .then((res) => res.text())
+              .then((res) => res.json())
               .then((response) => {
-                if (response.trim() == "Success") {
+                if (response[1].trim() == "Success") {
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                   user_yes_no_vote[postIndexYes][0] = false;
+                  if (post_data[postIndexYes][2] == 1) {
+                    if (parseInt(response[0]) > 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#00ffd0";
+                    } else if (parseInt(response[0]) < 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#cc0000";
+                    } else {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = null;
+                    }
+                  }
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
                   get_yes_no_data(postIndexYes);
@@ -679,13 +709,22 @@ postContainer.addEventListener(
               method: "POST",
               body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "no", post_id: post_data[postIndexYes][0] }),
             })
-              .then((res) => res.text())
+              .then((res) => res.json())
               .then((response) => {
-                if (response.trim() == "Success") {
+                if (response[1].trim() == "Success") {
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
                   user_yes_no_vote[postIndexYes][0] = true;
                   user_yes_no_vote[postIndexYes][1] = false;
+                  if (post_data[postIndexYes][2] == 1) {
+                    if (parseInt(response[0]) > 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#00ffd0";
+                    } else if (parseInt(response[0]) < 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#cc0000";
+                    } else {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = null;
+                    }
+                  }
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
                   get_yes_no_data(postIndexYes);
@@ -696,11 +735,20 @@ postContainer.addEventListener(
               method: "POST",
               body: JSON.stringify({ request: "yes_no_vote", current_vote: "yes", previous_vote: "nothing", post_id: post_data[postIndexYes][0] }),
             })
-              .then((res) => res.text())
+              .then((res) => res.json())
               .then((response) => {
-                if (response.trim() == "Success") {
+                if (response[1] == "Success") {
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
                   user_yes_no_vote[postIndexYes][0] = true;
+                  if (post_data[postIndexYes][2] == 1) {
+                    if (parseInt(response[0]) > 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#00ffd0";
+                    } else if (parseInt(response[0]) < 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#cc0000";
+                    } else {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = null;
+                    }
+                  }
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
                   get_yes_no_data(postIndexYes);
@@ -731,11 +779,20 @@ postContainer.addEventListener(
               method: "POST",
               body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "no", post_id: post_data[postIndexNo][0] }),
             })
-              .then((res) => res.text())
+              .then((res) => res.json())
               .then((response) => {
-                if (response.trim() == "Success") {
+                if (response[1].trim() == "Success") {
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
                   user_yes_no_vote[postIndexNo][1] = false;
+                  if (post_data[postIndexNo][2] == 1) {
+                    if (parseInt(response[0]) > 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#00ffd0";
+                    } else if (parseInt(response[0]) < 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#cc0000";
+                    } else {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = null;
+                    }
+                  }
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
                   get_yes_no_data(postIndexNo);
@@ -746,13 +803,22 @@ postContainer.addEventListener(
               method: "POST",
               body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "yes", post_id: post_data[postIndexNo][0] }),
             })
-              .then((res) => res.text())
+              .then((res) => res.json())
               .then((response) => {
-                if (response.trim() == "Success") {
+                if (response[1].trim() == "Success") {
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
                   user_yes_no_vote[postIndexNo][0] = false;
                   user_yes_no_vote[postIndexNo][1] = true;
+                  if (post_data[postIndexNo][2] == 1) {
+                    if (parseInt(response[0]) > 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#00ffd0";
+                    } else if (parseInt(response[0]) < 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#cc0000";
+                    } else {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = null;
+                    }
+                  }
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
                   get_yes_no_data(postIndexNo);
@@ -763,11 +829,20 @@ postContainer.addEventListener(
               method: "POST",
               body: JSON.stringify({ request: "yes_no_vote", current_vote: "no", previous_vote: "nothing", post_id: post_data[postIndexNo][0] }),
             })
-              .then((res) => res.text())
+              .then((res) => res.json())
               .then((response) => {
-                if (response.trim() == "Success") {
+                if (response[1].trim() == "Success") {
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
                   user_yes_no_vote[postIndexNo][1] = true;
+                  if (post_data[postIndexNo][2] == 1) {
+                    if (parseInt(response[0]) > 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#00ffd0";
+                    } else if (parseInt(response[0]) < 0) {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#cc0000";
+                    } else {
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = null;
+                    }
+                  }
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
                   get_yes_no_data(postIndexNo);
@@ -1264,6 +1339,7 @@ export function reset_poll_data() {
   document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
   document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
   document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
+  document.querySelectorAll(".parent_of_fa_check").forEach((main_class) => (main_class.innerHTML = ""));
   document.querySelectorAll(".poll-timer-container").forEach((main_class) => (main_class.style.display = null));
   document.querySelectorAll(".fa-clock").forEach((main_class) => (main_class.style.color = null));
   document.querySelectorAll(".poll-remaining-time").forEach((main_class) => (main_class.innerText = ""));
