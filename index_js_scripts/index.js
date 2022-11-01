@@ -478,10 +478,21 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
               document.querySelectorAll(".poll-timer-container")[i].style.display = "flex";
               document.querySelectorAll(".poll-timer-container")[i].style.color = "#cc0000";
             }
-            if (post_data[i][8] > 0) {
-              document.getElementsByClassName("fa-solid fa-check")[i].style.color = "#00ffd0";
-            } else if (post_data[i][8] < 0) {
-              document.getElementsByClassName("fa-solid fa-check")[i].style.color = "#cc0000";
+            if (post_data[i][8] > 0 && post_data[i][2] == 1) {
+              let new_check = document.createElement("i");
+              new_check.className = "fa-solid fa-check";
+              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#00ffd0";
+            } else if (post_data[i][8] < 0 && post_data[i][2] == 1) {
+              let new_check = document.createElement("i");
+              new_check.className = "fa-solid fa-check";
+              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#cc0000";
+            } else if (post_data[i][8] == 0 && post_data[i][2] == 1) {
+              let new_check = document.createElement("i");
+              new_check.className = "fa-solid fa-check";
+              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#b5b5b5";
             }
           }
         }
