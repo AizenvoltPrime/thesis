@@ -57,7 +57,6 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 ΕΠΟΜΕΝΑ TASK:
 
 - ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
-- Να μεταφέρω το choropleth από τον admin ώστε να το βλέπουν όλοι οι χρήστες
 - Να βρω ένα τρόπο να ανανεώνονται τα post με το που γίνεται προσθήκη νέου
 - filter για το radius
 - Να φτιάξω χάρτη στο admin analytics ώστε να βλέπει ο admin τις τοποθεσίες των loggen-in users live

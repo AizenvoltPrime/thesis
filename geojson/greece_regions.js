@@ -8842,8 +8842,18 @@ export var greece_regions = {
         updated_at: "2015-06-22T10:15:54Z",
         cartodb_id: 12,
         name_greek: "Κρήτη",
-        number_of_posts: 2,
+        number_of_posts: 0,
       },
     },
   ],
 };
+
+export function update_region_posts(region, posts_number) {
+  region.properties.number_of_posts += posts_number;
+}
+
+export function clear_region_posts() {
+  greece_regions.features.forEach((region) => {
+    region.properties.number_of_posts = 0;
+  });
+}

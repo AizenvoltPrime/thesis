@@ -1,5 +1,5 @@
 import { generate_posts, reset_poll_data, get_variables } from "./index.js";
-import { greece_regions } from "../geojson/greece_regions.js";
+import { greece_regions, update_region_posts, clear_region_posts } from "../geojson/greece_regions.js";
 
 let preferred_categories = null;
 
@@ -546,6 +546,10 @@ function make_app_analytics_map() {
           "User Posts:" + response[i][2] + " | User Responses:" + response[i][3]
         );
         app_analytics_all_markers.addLayer(app_analytics_marker[i]);
+        var geo_out = greece_regions.features.filter(function (d) {
+          return d3.geoContains(d, [response[i][1], response[i][0]]);
+        });
+        update_region_posts(geo_out[0], parseInt(response[i][2]));
       }
       layerControl = L.control.layers(null, overlayMaps).addTo(app_analytics_map);
       layerControl.addOverlay(all_geojson, "Choropleth");
@@ -559,6 +563,7 @@ function clear_map() {
     app_analytics_map.removeControl(layerControl);
     app_analytics_map.removeLayer(all_geojson);
     app_analytics_map.removeLayer(app_analytics_all_markers);
+    clear_region_posts();
   }
 }
 
@@ -583,11 +588,3 @@ document.getElementsByClassName("close-map")[0].addEventListener("click", functi
     null_style("fa-map-location-dot");
   });
 });
-
-// var my_point = [23.441, 38.6751];
-// var geo_out = greece_regions.features.filter(function (d) {
-//   return d3.geoContains(d, my_point);
-// });
-// geo_out.forEach(function (d) {
-//   console.log(d.properties.name);
-// });
