@@ -1,7 +1,10 @@
-import { generate_posts, reset_poll_data, get_variables } from "./index.js";
+import { generate_posts, reset_poll_data, get_variables, conn } from "./index.js";
 import { greece_regions, update_region_posts, clear_region_posts } from "../geojson/greece_regions.js";
 
 let preferred_categories = null;
+let active_filters = () => {
+  generate_posts(false);
+};
 
 document.getElementById("hot").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementsByClassName("post")[0]).opacity === "1") {
@@ -23,7 +26,9 @@ document.getElementById("hot").addEventListener("click", function () {
         .done(function () {
           $(".post").not(":first").remove();
           reset_poll_data();
-          generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          (active_filters = () => {
+            generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          })();
         });
     }
   }
@@ -49,7 +54,9 @@ document.getElementById("recent").addEventListener("click", function () {
         .done(function () {
           $(".post").not(":first").remove();
           reset_poll_data();
-          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          (active_filters = () => {
+            generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          })();
         });
     }
   }
@@ -110,9 +117,13 @@ document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("
       $(".post").not(":first").remove();
       reset_poll_data();
       if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
-        generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+        (active_filters = () => {
+          generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+        })();
       } else {
-        generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+        (active_filters = () => {
+          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+        })();
       }
     });
 });
@@ -239,9 +250,13 @@ document.getElementById("category-button").addEventListener("click", function ()
         $(".post").not(":first").remove();
         reset_poll_data();
         if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
-          generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          (active_filters = () => {
+            generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          })();
         } else {
-          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          (active_filters = () => {
+            generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          })();
         }
       });
   });
@@ -287,6 +302,9 @@ document.getElementById("poll-status-filter").addEventListener(
 );
 
 export function clear_filters() {
+  active_filters = () => {
+    generate_posts(false);
+  };
   $("#search-box-container").fadeOut(300, function () {});
   $("#preferred-categories-container").fadeOut(300, function () {
     document.querySelectorAll(".category").forEach((category) => {
@@ -335,9 +353,13 @@ document.getElementById("filter-button").addEventListener("click", function () {
         $(".post").not(":first").remove();
         reset_poll_data();
         if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
-          generate_posts(get_variables()[0], "hot", preferred_categories, filter, search_text, get_variables()[1]);
+          (active_filters = () => {
+            generate_posts(get_variables()[0], "hot", preferred_categories, filter, search_text, get_variables()[1]);
+          })();
         } else {
-          generate_posts(get_variables()[0], null, preferred_categories, filter, search_text, get_variables()[1]);
+          (active_filters = () => {
+            generate_posts(get_variables()[0], null, preferred_categories, filter, search_text, get_variables()[1]);
+          })();
         }
       });
   }
@@ -587,4 +609,19 @@ document.getElementsByClassName("close-map")[0].addEventListener("click", functi
     clear_map();
     null_style("fa-map-location-dot");
   });
+});
+
+addEventListener("DOMContentLoaded", (event) => {
+  conn.onmessage = function (e) {
+    if (e.data === "new_post_added") {
+      $(".post").fadeOut(300, function () {});
+      $(".post")
+        .promise()
+        .done(function () {
+          $(".post").not(":first").remove();
+          reset_poll_data();
+          active_filters();
+        });
+    }
+  };
 });

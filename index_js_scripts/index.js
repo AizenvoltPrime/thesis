@@ -29,6 +29,16 @@ let event_marker = null; //marker for location of event
 let allowed_vote_radius = null; //the circle around the event marker
 let event_radius = null; //the radius of the circle is saved in this variable
 
+//Websocket creation
+export let conn = new WebSocket("ws://localhost:8080");
+conn.onopen = function (e) {
+  console.log("Connection established!");
+};
+
+// conn.onmessage = function (e) {
+//   console.log("file1");
+// };
+
 L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(event_location_map);
@@ -289,6 +299,7 @@ document.getElementById("next-step").addEventListener("click", function () {
       })
         .then((res) => res.text())
         .then((response) => {
+          conn.send("new_post_added");
           $("#warning-empty-text-area").fadeOut(300, function () {});
           $("#poll-question").fadeOut(300, function () {});
           $("#next-step").fadeOut(300, function () {
