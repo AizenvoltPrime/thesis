@@ -614,14 +614,16 @@ document.getElementsByClassName("close-map")[0].addEventListener("click", functi
 addEventListener("DOMContentLoaded", (event) => {
   conn.onmessage = function (e) {
     if (e.data === "new_post_added") {
-      $(".post").fadeOut(300, function () {});
-      $(".post")
-        .promise()
-        .done(function () {
-          $(".post").not(":first").remove();
-          reset_poll_data();
-          active_filters();
-        });
+      if (get_variables()[0] !== true) {
+        $(".post").fadeOut(300, function () {});
+        $(".post")
+          .promise()
+          .done(function () {
+            $(".post").not(":first").remove();
+            reset_poll_data();
+            active_filters();
+          });
+      }
     }
   };
 });
