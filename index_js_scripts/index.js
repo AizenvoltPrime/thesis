@@ -30,14 +30,14 @@ let allowed_vote_radius = null; //the circle around the event marker
 let event_radius = null; //the radius of the circle is saved in this variable
 
 //Websocket creation
-export let conn = new WebSocket("ws://localhost:8080");
+let conn = new WebSocket("ws://localhost:8080");
 conn.onopen = function (e) {
   console.log("Connection established!");
 };
 
-// conn.onmessage = function (e) {
-//   console.log("file1");
-// };
+conn.onmessage = function (e) {
+  console.log(e.data);
+};
 
 L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
