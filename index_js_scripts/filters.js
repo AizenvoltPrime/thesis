@@ -335,13 +335,9 @@ document.getElementById("filter-button").addEventListener("click", function () {
         $(".post").not(":first").remove();
         reset_poll_data();
         if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
-          (active_filters = () => {
-            generate_posts(get_variables()[0], "hot", preferred_categories, filter, search_text, get_variables()[1]);
-          })();
+          generate_posts(get_variables()[0], "hot", preferred_categories, filter, search_text, get_variables()[1]);
         } else {
-          (active_filters = () => {
-            generate_posts(get_variables()[0], null, preferred_categories, filter, search_text, get_variables()[1]);
-          })();
+          generate_posts(get_variables()[0], null, preferred_categories, filter, search_text, get_variables()[1]);
         }
       });
   }

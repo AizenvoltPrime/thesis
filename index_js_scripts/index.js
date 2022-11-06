@@ -30,13 +30,9 @@ let allowed_vote_radius = null; //the circle around the event marker
 let event_radius = null; //the radius of the circle is saved in this variable
 
 //Websocket creation
-let conn = new WebSocket("ws://localhost:8080");
+export let conn = new WebSocket("ws://localhost:8080");
 conn.onopen = function (e) {
   console.log("Connection established!");
-};
-
-conn.onmessage = function (e) {
-  console.log(e.data);
 };
 
 L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
@@ -297,9 +293,9 @@ document.getElementById("next-step").addEventListener("click", function () {
           post_category: parseInt(post_category),
         }),
       })
-        .then((res) => res.text())
+        .then((res) => res.json())
         .then((response) => {
-          conn.send("new_post_added");
+          conn.send(JSON.stringify(["new_post_added", response]));
           $("#warning-empty-text-area").fadeOut(300, function () {});
           $("#poll-question").fadeOut(300, function () {});
           $("#next-step").fadeOut(300, function () {
@@ -1122,7 +1118,7 @@ document.getElementById("chart-analytics").addEventListener("click", function ()
 
 //exports variables to other js files
 export function get_variables() {
-  return [bookmarks_active, specific_user_posts];
+  return [bookmarks_active, specific_user_posts, post_data[0].length];
 }
 
 //clears filter styles
@@ -1132,4 +1128,9 @@ export function null_all_styles() {
   null_style("fa-table-list");
   null_style("fa-filter");
   null_style("fa-magnifying-glass");
+}
+
+export function add_new_post(new_post) {
+  post_data.unshift(new_post);
+  console.log(post_data);
 }

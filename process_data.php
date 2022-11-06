@@ -113,9 +113,11 @@ if ($data['request'] == "request_username") {
     // Close statement
     mysqli_close($conn);
 } else if ($data['request'] == "upload_post_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
-    require_once "old_config.php";
+    require_once "new_config.php";
     $post_text = $data['question'];
     $poll_type = $data['poll_choice'];
+    date_default_timezone_set('Europe/Athens');
+    $param_date = date('Y/m/d H:i:s', time());
 
     if ($poll_type == "yes-no") {
         $param_poll_type = 1;
@@ -129,24 +131,42 @@ if ($data['request'] == "request_username") {
     if ($data['time_limiter'] == "") {
         $data['time_limiter'] = null;
     }
-    $sql = "INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date, event_lat, event_long, event_radius) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    if ($stmt = mysqli_prepare($conn, $sql)) {
-        // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "iiisssddi", $param_userID, $param_poll_type, $data['post_category'], $param_text, $param_date, $data['time_limiter'], $data['event_lat'], $data['event_long'], $data['event_rad']);
-        $param_userID = $_SESSION["id"];
-        $param_text = $post_text;
-        date_default_timezone_set('Europe/Athens');
-        $param_date = date('Y/m/d H:i:s', time());
-        // Attempt to execute the prepared statement
-        if (mysqli_stmt_execute($stmt)) {
-            echo "Success!";
-        } else {
-            echo "Something went wrong. Please try again later.";
-        }
-        // Close statement
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn);
+    if (!isset($data['event_lat'])) {
+        $data['event_lat'] = null;
+        $data['event_long'] = null;
     }
+
+    $stmt = $conn->prepare("INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date, event_lat, event_long, event_radius) 
+    VALUES (:users_id, :poll_type, :post_category, :post_text, :post_date, :post_expiration_date, :event_lat, :event_long, :event_radius)");
+    $stmt->execute([
+        ":users_id" => $_SESSION["id"], ":poll_type" => $param_poll_type, ":post_category" => $data['post_category'], ":post_text" => $post_text,
+        ":post_date" => $param_date, ":post_expiration_date" => $data['time_limiter'], ":event_lat" => $data['event_lat'], ":event_long" => $data['event_long'],
+        ":event_radius" => $data['event_rad']
+    ]);
+
+    $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
+                    posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
+                    COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=posts.post_number),0) AS user_chevron_result,
+                    COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_yes_answer,
+                    COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_no_answer,
+                    COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) AS user_bookmark,
+                    posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius,
+                    (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result
+                    FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
+                    on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
+                    join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
+                    WHERE posts.user_id = :id AND posts.post_date = :post_date");
+
+    $stmt->execute([":id" => $_SESSION["id"], "post_date" => $param_date]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $new_data =
+            array(
+                $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"],
+                $row["post_date"], $row["user_chevron_result"], $row["user_yes_answer"], $row["user_no_answer"], $row["user_bookmark"], $row["post_expiration_date"],
+                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["event_radius"], $row["post_vote_result"]
+            );
+    }
+    echo json_encode($new_data);
 } else if ($data['request'] == "get_post_data") {
     require "new_config.php";
     $post_data = array();

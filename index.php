@@ -27,6 +27,7 @@ require_once "new_config.php";
   <script type="module" src="index_js_scripts/index.js"></script>
   <script type="module" src="index_js_scripts/navbar.js"></script>
   <script type="module" src="index_js_scripts/filters.js"></script>
+  <script type="module" src="index_js_scripts/update_data.js"></script>
   <script type="module" src="geojson/greece_regions.js"></script>
 </head>
 
