@@ -1132,5 +1132,5 @@ export function null_all_styles() {
 
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
-  console.log(post_data);
+  myChart.unshift(null);
 }
