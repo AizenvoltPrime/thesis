@@ -584,6 +584,7 @@ postContainer.addEventListener(
                   $(document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0]).fadeIn(300, function () {});
                 });
                 user_chevron_vote[postIndexUP][0] = false;
+                conn.send(JSON.stringify(["chevron_vote_up_up", post_data[postIndexUP][0]]));
               }
             });
         } else if (user_chevron_vote[postIndexUP][0] == false && user_chevron_vote[postIndexUP][1] == true) {
@@ -603,6 +604,7 @@ postContainer.addEventListener(
                 });
                 user_chevron_vote[postIndexUP][0] = true;
                 user_chevron_vote[postIndexUP][1] = false;
+                conn.send(JSON.stringify(["chevron_vote_up_down", post_data[postIndexUP][0]]));
               }
             });
         } else if (user_chevron_vote[postIndexUP][0] == false && user_chevron_vote[postIndexUP][1] == false) {
@@ -620,6 +622,7 @@ postContainer.addEventListener(
                   $(document.querySelectorAll(".post")[postIndexUP].querySelectorAll(".score")[0]).fadeIn(300, function () {});
                 });
                 user_chevron_vote[postIndexUP][0] = true;
+                conn.send(JSON.stringify(["chevron_vote_up_no", post_data[postIndexUP][0]]));
               }
             });
         }
@@ -642,6 +645,7 @@ postContainer.addEventListener(
                   $(document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0]).fadeIn(300, function () {});
                 });
                 user_chevron_vote[postIndexDown][1] = false;
+                conn.send(JSON.stringify(["chevron_vote_down_down", post_data[postIndexDown][0]]));
               }
             });
         } else if (user_chevron_vote[postIndexDown][0] == true && user_chevron_vote[postIndexDown][1] == false) {
@@ -661,6 +665,7 @@ postContainer.addEventListener(
                 });
                 user_chevron_vote[postIndexDown][0] = false;
                 user_chevron_vote[postIndexDown][1] = true;
+                conn.send(JSON.stringify(["chevron_vote_down_up", post_data[postIndexDown][0]]));
               }
             });
         } else if (user_chevron_vote[postIndexDown][0] == false && user_chevron_vote[postIndexDown][1] == false) {
@@ -678,6 +683,7 @@ postContainer.addEventListener(
                   $(document.querySelectorAll(".post")[postIndexDown].querySelectorAll(".score")[0]).fadeIn(300, function () {});
                 });
                 user_chevron_vote[postIndexDown][1] = true;
+                conn.send(JSON.stringify(["chevron_vote_down_no", post_data[postIndexDown][0]]));
               }
             });
         }
@@ -1118,7 +1124,7 @@ document.getElementById("chart-analytics").addEventListener("click", function ()
 
 //exports variables to other js files
 export function get_variables() {
-  return [bookmarks_active, specific_user_posts, post_data[0].length];
+  return [bookmarks_active, specific_user_posts, post_data[0].length, post_data];
 }
 
 //clears filter styles
@@ -1132,5 +1138,14 @@ export function null_all_styles() {
 
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
+  user_chevron_vote.unshift([false, false]);
   myChart.unshift(null);
+}
+
+export function edit_chevron(position, value) {
+  $(document.querySelectorAll(".post")[position].querySelectorAll(".score")[0]).fadeOut(300, function () {
+    document.querySelectorAll(".post")[position].querySelectorAll(".score")[0].innerText = value;
+    $(document.querySelectorAll(".post")[position].querySelectorAll(".score")[0]).fadeIn(300, function () {});
+  });
+  post_data[position][5] = parseInt(value);
 }
