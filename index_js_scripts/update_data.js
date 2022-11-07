@@ -44,14 +44,14 @@ addEventListener("DOMContentLoaded", (event) => {
         clone.querySelectorAll(".fa-clock")[0].style.color = "#00ffd0";
       }
 
-      if (JSON.parse(e.data)[1][16] == 0 && JSON.parse(e.data)[1][2] == 1) {
+      if (JSON.parse(e.data)[1][15] == 0 && JSON.parse(e.data)[1][2] == 1) {
         let new_check = document.createElement("i");
         new_check.className = "fa-solid fa-check";
         clone.getElementsByClassName("parent_of_fa_check")[0].appendChild(new_check);
         clone.getElementsByClassName("parent_of_fa_check")[0].children[0].style.color = "#b5b5b5";
       }
 
-      if (get_variables()[2] > 9) {
+      if (get_variables()[2] > 10) {
         add_new_post(JSON.parse(e.data)[1]);
       } else {
         add_new_post([
@@ -63,49 +63,75 @@ addEventListener("DOMContentLoaded", (event) => {
           JSON.parse(e.data)[1][5],
           post_time_detailed,
           JSON.parse(e.data)[1][11],
-          JSON.parse(e.data)[1][16],
+          JSON.parse(e.data)[1][15],
         ]);
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_up_up") {
+      console.log("UP.UP:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) - 1;
-          edit_chevron(i, new_value);
+          if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+            document.getElementsByClassName("fa-chevron-up")[i].style.color = "#b5b5b5";
+          }
+          edit_chevron(i, new_value, [false, false]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_up_down") {
+      console.log("UP.DOWN:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) + 2;
-          edit_chevron(i, new_value);
+          if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+            document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
+            document.getElementsByClassName("fa-chevron-down")[i].style.color = "#b5b5b5";
+          }
+          edit_chevron(i, new_value, [true, false]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_up_no") {
+      console.log("UP.NO:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) + 1;
-          edit_chevron(i, new_value);
+          if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+            document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
+          }
+          edit_chevron(i, new_value, [true, false]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_down_down") {
+      console.log("DOWN.DOWN:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) + 1;
-          edit_chevron(i, new_value);
+          if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+            document.getElementsByClassName("fa-chevron-down")[i].style.color = "#b5b5b5";
+          }
+          edit_chevron(i, new_value, [false, false]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_down_up") {
+      console.log("DOWN.UP:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) - 2;
-          edit_chevron(i, new_value);
+          if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+            document.getElementsByClassName("fa-chevron-up")[i].style.color = "#b5b5b5";
+            document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
+          }
+          edit_chevron(i, new_value, [false, true]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_down_no") {
+      console.log("DOWN.NO:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) - 1;
-          edit_chevron(i, new_value);
+          if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+            document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
+          }
+          edit_chevron(i, new_value, [false, true]);
         }
       }
     }

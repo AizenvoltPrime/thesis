@@ -163,7 +163,7 @@ if ($data['request'] == "request_username") {
             array(
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"],
                 $row["post_date"], $row["user_chevron_result"], $row["user_yes_answer"], $row["user_no_answer"], $row["user_bookmark"], $row["post_expiration_date"],
-                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["event_radius"], $row["post_vote_result"]
+                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"]
             );
     }
     echo json_encode($new_data);
@@ -312,7 +312,7 @@ if ($data['request'] == "request_username") {
             $tmp = array(
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"],
                 $row["post_date"], $row["user_chevron_result"], $row["user_yes_answer"], $row["user_no_answer"], $row["user_bookmark"], $row["post_expiration_date"],
-                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["event_radius"], $row["post_vote_result"]
+                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"]
             );
             array_push($post_data, $tmp);
         }
