@@ -1206,7 +1206,11 @@ document.getElementById("chart-analytics").addEventListener("click", function ()
 
 //exports variables to other js files
 export function get_variables() {
-  return [bookmarks_active, specific_user_posts, post_data[0].length, post_data];
+  if (post_data.length === undefined || post_data.length === 0) {
+    return [bookmarks_active, specific_user_posts];
+  } else {
+    return [bookmarks_active, specific_user_posts, post_data[0].length, post_data];
+  }
 }
 
 //clears filter styles

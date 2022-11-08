@@ -216,7 +216,7 @@ document.getElementById("category-button").addEventListener("click", function ()
   };
   let filter = filter_check(filter_obj);
   let categories_counter = 0;
-  if (preferred_categories === null) {
+  if (preferred_categories === null || preferred_categories.length > 0) {
     preferred_categories = [];
     preferred_categories.length = 0;
   }
