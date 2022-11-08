@@ -712,18 +712,31 @@ postContainer.addEventListener(
             })
               .then((res) => res.json())
               .then((response) => {
-                if (response[1].trim() == "Success") {
+                if (response[2].trim() == "Success") {
+                  post_data[postIndexYes][8] = parseInt(response[0]);
+                  post_data[postIndexYes][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                   user_yes_no_vote[postIndexYes][0] = false;
                   if (post_data[postIndexYes][2] == 1) {
-                    if (parseInt(response[0]) > 0) {
+                    if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#00ffd0";
-                    } else if (parseInt(response[0]) < 0) {
+                    } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#cc0000";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = null;
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#b5b5b5";
                     }
                   }
+                  conn.send(
+                    JSON.stringify([
+                      "yes_no_vote",
+                      "yes_yes",
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0]).color,
+                      post_data[postIndexYes][0],
+                      post_data[0][16],
+                      post_data[postIndexYes][8],
+                      post_data[postIndexYes][9],
+                    ])
+                  );
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
                   get_yes_no_data(postIndexYes);
@@ -736,20 +749,33 @@ postContainer.addEventListener(
             })
               .then((res) => res.json())
               .then((response) => {
-                if (response[1].trim() == "Success") {
+                if (response[2].trim() == "Success") {
+                  post_data[postIndexYes][8] = parseInt(response[0]);
+                  post_data[postIndexYes][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
                   user_yes_no_vote[postIndexYes][0] = true;
                   user_yes_no_vote[postIndexYes][1] = false;
                   if (post_data[postIndexYes][2] == 1) {
-                    if (parseInt(response[0]) > 0) {
+                    if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#00ffd0";
-                    } else if (parseInt(response[0]) < 0) {
+                    } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#cc0000";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = null;
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#b5b5b5";
                     }
                   }
+                  conn.send(
+                    JSON.stringify([
+                      "yes_no_vote",
+                      "yes_no",
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0]).color,
+                      post_data[postIndexYes][0],
+                      post_data[0][16],
+                      post_data[postIndexYes][8],
+                      post_data[postIndexYes][9],
+                    ])
+                  );
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
                   get_yes_no_data(postIndexYes);
@@ -762,18 +788,31 @@ postContainer.addEventListener(
             })
               .then((res) => res.json())
               .then((response) => {
-                if (response[1] == "Success") {
+                if (response[2] == "Success") {
+                  post_data[postIndexYes][8] = parseInt(response[0]);
+                  post_data[postIndexYes][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
                   user_yes_no_vote[postIndexYes][0] = true;
                   if (post_data[postIndexYes][2] == 1) {
-                    if (parseInt(response[0]) > 0) {
+                    if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#00ffd0";
-                    } else if (parseInt(response[0]) < 0) {
+                    } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#cc0000";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = null;
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#b5b5b5";
                     }
                   }
+                  conn.send(
+                    JSON.stringify([
+                      "yes_no_vote",
+                      "yes_nothing",
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0]).color,
+                      post_data[postIndexYes][0],
+                      post_data[0][16],
+                      post_data[postIndexYes][8],
+                      post_data[postIndexYes][9],
+                    ])
+                  );
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexYes]).display === "block") {
                   get_yes_no_data(postIndexYes);
@@ -806,18 +845,31 @@ postContainer.addEventListener(
             })
               .then((res) => res.json())
               .then((response) => {
-                if (response[1].trim() == "Success") {
+                if (response[2].trim() == "Success") {
+                  post_data[postIndexNo][8] = parseInt(response[0]);
+                  post_data[postIndexNo][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
                   user_yes_no_vote[postIndexNo][1] = false;
                   if (post_data[postIndexNo][2] == 1) {
-                    if (parseInt(response[0]) > 0) {
+                    if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#00ffd0";
-                    } else if (parseInt(response[0]) < 0) {
+                    } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#cc0000";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = null;
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#b5b5b5";
                     }
                   }
+                  conn.send(
+                    JSON.stringify([
+                      "yes_no_vote",
+                      "no_no",
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0]).color,
+                      post_data[postIndexNo][0],
+                      post_data[0][16],
+                      post_data[postIndexNo][8],
+                      post_data[postIndexNo][9],
+                    ])
+                  );
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
                   get_yes_no_data(postIndexNo);
@@ -830,20 +882,33 @@ postContainer.addEventListener(
             })
               .then((res) => res.json())
               .then((response) => {
-                if (response[1].trim() == "Success") {
+                if (response[2].trim() == "Success") {
+                  post_data[postIndexNo][8] = parseInt(response[0]);
+                  post_data[postIndexNo][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
                   user_yes_no_vote[postIndexNo][0] = false;
                   user_yes_no_vote[postIndexNo][1] = true;
                   if (post_data[postIndexNo][2] == 1) {
-                    if (parseInt(response[0]) > 0) {
+                    if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#00ffd0";
-                    } else if (parseInt(response[0]) < 0) {
+                    } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#cc0000";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = null;
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#b5b5b5";
                     }
                   }
+                  conn.send(
+                    JSON.stringify([
+                      "yes_no_vote",
+                      "no_yes",
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0]).color,
+                      post_data[postIndexNo][0],
+                      post_data[0][16],
+                      post_data[postIndexNo][8],
+                      post_data[postIndexNo][9],
+                    ])
+                  );
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
                   get_yes_no_data(postIndexNo);
@@ -856,18 +921,31 @@ postContainer.addEventListener(
             })
               .then((res) => res.json())
               .then((response) => {
-                if (response[1].trim() == "Success") {
+                if (response[2].trim() == "Success") {
+                  post_data[postIndexNo][8] = parseInt(response[0]);
+                  post_data[postIndexNo][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
                   user_yes_no_vote[postIndexNo][1] = true;
                   if (post_data[postIndexNo][2] == 1) {
-                    if (parseInt(response[0]) > 0) {
+                    if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#00ffd0";
-                    } else if (parseInt(response[0]) < 0) {
+                    } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#cc0000";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = null;
+                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#b5b5b5";
                     }
                   }
+                  conn.send(
+                    JSON.stringify([
+                      "yes_no_vote",
+                      "no_nothing",
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0]).color,
+                      post_data[postIndexNo][0],
+                      post_data[0][16],
+                      post_data[postIndexNo][8],
+                      post_data[postIndexNo][9],
+                    ])
+                  );
                 }
                 if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexNo]).display === "block") {
                   get_yes_no_data(postIndexNo);
@@ -973,53 +1051,57 @@ function get_yes_no_data(post_number) {
   })
     .then((res) => res.json())
     .then((response) => {
-      if (myChart[post_number]) {
-        myChart[post_number].destroy();
-      }
-      document.querySelectorAll(".chartCard")[post_number].style.display = "block";
-      ctx[post_number] = document.getElementsByClassName("myChart")[post_number].getContext("2d");
-      myChart[post_number] = new Chart(ctx[post_number], {
-        type: "bar",
-        data: {
-          labels: ["Yes", "No"],
-          datasets: [
-            {
-              label: "Yes/No Poll",
-              data: [parseInt(response[0]), parseInt(response[1])],
-              backgroundColor: [],
-              borderColor: ["#00ffffbb", "#cc0000"],
-              borderWidth: 1,
-              hoverBackgroundColor: ["#00ffffbb", "#cc0000"],
-            },
-          ],
-        },
-        options: {
-          maintainAspectRatio: false,
-          hover: { mode: null },
-          plugins: {
-            legend: {
-              labels: {
-                color: "#f3f3f3",
-                boxWidth: 0,
-                fontSize: 2,
-              },
-            },
-          },
-          scales: {
-            y: {
-              ticks: {
-                color: "#f3f3f3",
-              },
-            },
-            x: {
-              ticks: {
-                color: "#f3f3f3",
-              },
-            },
-          },
-        },
-      });
+      make_yes_no_chart(post_number, [parseInt(response[0]), parseInt(response[1])]);
     });
+}
+
+export function make_yes_no_chart(post_number, chart_data) {
+  if (myChart[post_number]) {
+    myChart[post_number].destroy();
+  }
+  document.querySelectorAll(".chartCard")[post_number].style.display = "block";
+  ctx[post_number] = document.getElementsByClassName("myChart")[post_number].getContext("2d");
+  myChart[post_number] = new Chart(ctx[post_number], {
+    type: "bar",
+    data: {
+      labels: ["Yes", "No"],
+      datasets: [
+        {
+          label: "Yes/No Poll",
+          data: chart_data,
+          backgroundColor: [],
+          borderColor: ["#00ffffbb", "#cc0000"],
+          borderWidth: 1,
+          hoverBackgroundColor: ["#00ffffbb", "#cc0000"],
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      hover: { mode: null },
+      plugins: {
+        legend: {
+          labels: {
+            color: "#f3f3f3",
+            boxWidth: 0,
+            fontSize: 2,
+          },
+        },
+      },
+      scales: {
+        y: {
+          ticks: {
+            color: "#f3f3f3",
+          },
+        },
+        x: {
+          ticks: {
+            color: "#f3f3f3",
+          },
+        },
+      },
+    },
+  });
 }
 
 //used to clear all posts data each time the user returns to the main page without reloading the page.
@@ -1138,7 +1220,9 @@ export function null_all_styles() {
 
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
+  post_data[0][16] = post_data[1][16];
   user_chevron_vote.unshift([false, false]);
+  user_yes_no_vote.unshift([false, false]);
   console.log(post_data);
   myChart.unshift(null);
 }
@@ -1149,6 +1233,17 @@ export function edit_chevron(position, value, vote_bool) {
     $(document.querySelectorAll(".post")[position].querySelectorAll(".score")[0]).fadeIn(300, function () {});
   });
   post_data[position][5] = parseInt(value);
-  user_chevron_vote[position][0] = vote_bool[0];
-  user_chevron_vote[position][1] = vote_bool[1];
+  if (vote_bool !== null) {
+    user_chevron_vote[position][0] = vote_bool[0];
+    user_chevron_vote[position][1] = vote_bool[1];
+  }
+}
+
+export function edit_vote(position, value_yes, value_no, vote_bool) {
+  post_data[position][8] = value_yes;
+  post_data[position][9] = value_no;
+  if (vote_bool !== null) {
+    user_yes_no_vote[position][0] = vote_bool[0];
+    user_yes_no_vote[position][1] = vote_bool[1];
+  }
 }

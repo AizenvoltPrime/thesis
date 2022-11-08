@@ -1,4 +1,4 @@
-import { conn, add_new_post, get_variables, edit_chevron } from "./index.js";
+import { conn, add_new_post, get_variables, edit_chevron, make_yes_no_chart, edit_vote } from "./index.js";
 
 var DateTime = luxon.DateTime;
 addEventListener("DOMContentLoaded", (event) => {
@@ -67,71 +67,183 @@ addEventListener("DOMContentLoaded", (event) => {
         ]);
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_up_up") {
-      console.log("UP.UP:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) - 1;
           if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("fa-chevron-up")[i].style.color = "#b5b5b5";
+            edit_chevron(i, new_value, [false, false]);
+          } else {
+            edit_chevron(i, new_value, null);
           }
-          edit_chevron(i, new_value, [false, false]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_up_down") {
-      console.log("UP.DOWN:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) + 2;
           if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
             document.getElementsByClassName("fa-chevron-down")[i].style.color = "#b5b5b5";
+            edit_chevron(i, new_value, [true, false]);
+          } else {
+            edit_chevron(i, new_value, null);
           }
-          edit_chevron(i, new_value, [true, false]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_up_no") {
-      console.log("UP.NO:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) + 1;
           if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
+            edit_chevron(i, new_value, [true, false]);
+          } else {
+            edit_chevron(i, new_value, null);
           }
-          edit_chevron(i, new_value, [true, false]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_down_down") {
-      console.log("DOWN.DOWN:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) + 1;
           if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("fa-chevron-down")[i].style.color = "#b5b5b5";
+            edit_chevron(i, new_value, [false, false]);
+          } else {
+            edit_chevron(i, new_value, null);
           }
-          edit_chevron(i, new_value, [false, false]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_down_up") {
-      console.log("DOWN.UP:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) - 2;
           if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("fa-chevron-up")[i].style.color = "#b5b5b5";
             document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
+            edit_chevron(i, new_value, [false, true]);
+          } else {
+            edit_chevron(i, new_value, null);
           }
-          edit_chevron(i, new_value, [false, true]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "chevron_vote_down_no") {
-      console.log("DOWN.NO:" + e.data);
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           let new_value = parseInt(get_variables()[3][i][5]) - 1;
           if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("fa-chevron-down")[i].style.color = "#cc0000";
+            edit_chevron(i, new_value, [false, true]);
+          } else {
+            edit_chevron(i, new_value, null);
           }
-          edit_chevron(i, new_value, [false, true]);
+        }
+      }
+    } else if (JSON.parse(e.data)[0] === "yes_no_vote") {
+      if (JSON.parse(e.data)[1] === "yes_yes") {
+        for (let i = 0; i < get_variables()[3].length; i++) {
+          if (get_variables()[3][i][0] === JSON.parse(e.data)[3]) {
+            let new_value_yes = JSON.parse(e.data)[5];
+            let new_value_no = JSON.parse(e.data)[6];
+            if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
+              make_yes_no_chart(i, [new_value_yes, new_value_no]);
+            }
+            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+              document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
+              edit_vote(i, new_value_yes, new_value_no, [false, false]);
+            } else {
+              edit_vote(i, new_value_yes, new_value_no, null);
+            }
+          }
+        }
+      } else if (JSON.parse(e.data)[1] === "yes_no") {
+        for (let i = 0; i < get_variables()[3].length; i++) {
+          if (get_variables()[3][i][0] === JSON.parse(e.data)[3]) {
+            let new_value_yes = JSON.parse(e.data)[5];
+            let new_value_no = JSON.parse(e.data)[6];
+            if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
+              make_yes_no_chart(i, [new_value_yes, new_value_no]);
+            }
+            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+              document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
+              document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
+              edit_vote(i, new_value_yes, new_value_no, [true, false]);
+            } else {
+              edit_vote(i, new_value_yes, new_value_no, null);
+            }
+          }
+        }
+      } else if (JSON.parse(e.data)[1] === "yes_nothing") {
+        for (let i = 0; i < get_variables()[3].length; i++) {
+          if (get_variables()[3][i][0] === JSON.parse(e.data)[3]) {
+            let new_value_yes = JSON.parse(e.data)[5];
+            let new_value_no = JSON.parse(e.data)[6];
+            if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
+              make_yes_no_chart(i, [new_value_yes, new_value_no]);
+            }
+            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+              document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
+              edit_vote(i, new_value_yes, new_value_no, [true, false]);
+            } else {
+              edit_vote(i, new_value_yes, new_value_no, null);
+            }
+          }
+        }
+      } else if (JSON.parse(e.data)[1] === "no_no") {
+        for (let i = 0; i < get_variables()[3].length; i++) {
+          if (get_variables()[3][i][0] === JSON.parse(e.data)[3]) {
+            let new_value_yes = JSON.parse(e.data)[5];
+            let new_value_no = JSON.parse(e.data)[6];
+            if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
+              make_yes_no_chart(i, [new_value_yes, new_value_no]);
+            }
+            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+              document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
+              edit_vote(i, new_value_yes, new_value_no, [false, false]);
+            } else {
+              edit_vote(i, new_value_yes, new_value_no, null);
+            }
+          }
+        }
+      } else if (JSON.parse(e.data)[1] === "no_yes") {
+        for (let i = 0; i < get_variables()[3].length; i++) {
+          if (get_variables()[3][i][0] === JSON.parse(e.data)[3]) {
+            let new_value_yes = JSON.parse(e.data)[5];
+            let new_value_no = JSON.parse(e.data)[6];
+            if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
+              make_yes_no_chart(i, [new_value_yes, new_value_no]);
+            }
+            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+              document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
+              document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
+              edit_vote(i, new_value_yes, new_value_no, [false, true]);
+            } else {
+              edit_vote(i, new_value_yes, new_value_no, null);
+            }
+          }
+        }
+      } else if (JSON.parse(e.data)[1] === "no_nothing") {
+        for (let i = 0; i < get_variables()[3].length; i++) {
+          if (get_variables()[3][i][0] === JSON.parse(e.data)[3]) {
+            let new_value_yes = JSON.parse(e.data)[5];
+            let new_value_no = JSON.parse(e.data)[6];
+            if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
+              make_yes_no_chart(i, [new_value_yes, new_value_no]);
+            }
+            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+              document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
+              edit_vote(i, new_value_yes, new_value_no, [false, true]);
+            } else {
+              edit_vote(i, new_value_yes, new_value_no, null);
+            }
+          }
         }
       }
     }

@@ -400,19 +400,19 @@ if ($data['request'] == "request_username") {
     if ($data['current_vote'] == "yes" && $data['previous_vote'] == "yes") {
         $stmt = $conn->prepare("UPDATE yes_no SET answer_yes = 0 WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-        $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+        $stmt = $conn->prepare("SELECT number_of_yes, number_of_no FROM posts_yes_no_info WHERE post_number=:post_id");
         $stmt->execute([":post_id" => $data["post_id"]]);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $yes_no_tmp = array($row["post_vote_result"], "Success");
+            $yes_no_tmp = array($row["number_of_yes"], $row["number_of_no"], "Success");
         }
         echo json_encode($yes_no_tmp);
     } else if ($data['current_vote'] == "yes" && $data['previous_vote'] == "no") {
         $stmt = $conn->prepare("UPDATE yes_no SET answer_yes = 1, answer_no=0 WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-        $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+        $stmt = $conn->prepare("SELECT number_of_yes, number_of_no FROM posts_yes_no_info WHERE post_number=:post_id");
         $stmt->execute([":post_id" => $data["post_id"]]);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $yes_no_tmp = array($row["post_vote_result"], "Success");
+            $yes_no_tmp = array($row["number_of_yes"], $row["number_of_no"], "Success");
         }
         echo json_encode($yes_no_tmp);
     } else if ($data['current_vote'] == "yes" && $data['previous_vote'] == "nothing") {
@@ -421,38 +421,38 @@ if ($data['request'] == "request_username") {
         if ($stmt->rowCount() > 0) {
             $stmt = $conn->prepare("UPDATE yes_no SET answer_yes = 1 WHERE post_id=:post_id AND user_id=:id");
             $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-            $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+            $stmt = $conn->prepare("SELECT number_of_yes, number_of_no FROM posts_yes_no_info WHERE post_number=:post_id");
             $stmt->execute([":post_id" => $data["post_id"]]);
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $yes_no_tmp = array($row["post_vote_result"], "Success");
+                $yes_no_tmp = array($row["number_of_yes"], $row["number_of_no"], "Success");
             }
             echo json_encode($yes_no_tmp);
         } else if ($stmt->rowCount() == 0) {
             $stmt = $conn->prepare("INSERT INTO yes_no(post_id,user_id,poll_type,answer_yes,answer_no) VALUES (:post_id,:id,1,1,0)");
             $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-            $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+            $stmt = $conn->prepare("SELECT number_of_yes, number_of_no FROM posts_yes_no_info WHERE post_number=:post_id");
             $stmt->execute([":post_id" => $data["post_id"]]);
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $yes_no_tmp = array($row["post_vote_result"], "Success");
+                $yes_no_tmp = array($row["number_of_yes"], $row["number_of_no"], "Success");
             }
             echo json_encode($yes_no_tmp);
         }
     } else if ($data['current_vote'] == "no" && $data['previous_vote'] == "no") {
         $stmt = $conn->prepare("UPDATE yes_no SET answer_no = 0 WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-        $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+        $stmt = $conn->prepare("SELECT number_of_yes, number_of_no FROM posts_yes_no_info WHERE post_number=:post_id");
         $stmt->execute([":post_id" => $data["post_id"]]);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $yes_no_tmp = array($row["post_vote_result"], "Success");
+            $yes_no_tmp = array($row["number_of_yes"], $row["number_of_no"], "Success");
         }
         echo json_encode($yes_no_tmp);
     } else if ($data['current_vote'] == "no" && $data['previous_vote'] == "yes") {
         $stmt = $conn->prepare("UPDATE yes_no SET answer_yes = 0, answer_no=1 WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-        $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+        $stmt = $conn->prepare("SELECT number_of_yes, number_of_no FROM posts_yes_no_info WHERE post_number=:post_id");
         $stmt->execute([":post_id" => $data["post_id"]]);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $yes_no_tmp = array($row["post_vote_result"], "Success");
+            $yes_no_tmp = array($row["number_of_yes"], $row["number_of_no"], "Success");
         }
         echo json_encode($yes_no_tmp);
     } else if ($data['current_vote'] == "no" && $data['previous_vote'] == "nothing") {
@@ -461,19 +461,19 @@ if ($data['request'] == "request_username") {
         if ($stmt->rowCount() > 0) {
             $stmt = $conn->prepare("UPDATE yes_no SET answer_no = 1 WHERE post_id=:post_id AND user_id=:id");
             $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-            $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+            $stmt = $conn->prepare("SELECT number_of_yes, number_of_no FROM posts_yes_no_info WHERE post_number=:post_id");
             $stmt->execute([":post_id" => $data["post_id"]]);
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $yes_no_tmp = array($row["post_vote_result"], "Success");
+                $yes_no_tmp = array($row["number_of_yes"], $row["number_of_no"], "Success");
             }
             echo json_encode($yes_no_tmp);
         } else if ($stmt->rowCount() == 0) {
             $stmt = $conn->prepare("INSERT INTO yes_no(post_id,user_id,poll_type,answer_yes,answer_no) VALUES (:post_id,:id,1,0,1)");
             $stmt->execute([":post_id" => $data["post_id"], ":id" => $_SESSION["id"]]);
-            $stmt = $conn->prepare("SELECT (number_of_yes-number_of_no) AS post_vote_result FROM posts_yes_no_info WHERE post_number=:post_id");
+            $stmt = $conn->prepare("SELECT number_of_yes, number_of_no FROM posts_yes_no_info WHERE post_number=:post_id");
             $stmt->execute([":post_id" => $data["post_id"]]);
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $yes_no_tmp = array($row["post_vote_result"], "Success");
+                $yes_no_tmp = array($row["number_of_yes"], $row["number_of_no"], "Success");
             }
             echo json_encode($yes_no_tmp);
         }
