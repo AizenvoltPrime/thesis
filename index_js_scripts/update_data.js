@@ -3,7 +3,14 @@ import { conn, add_new_post, get_variables, edit_chevron, make_yes_no_chart, edi
 var DateTime = luxon.DateTime;
 addEventListener("DOMContentLoaded", (event) => {
   conn.onmessage = function (e) {
-    if (JSON.parse(e.data)[0] === "new_post_added") {
+    if (
+      JSON.parse(e.data)[0] === "new_post_added" &&
+      window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip !== "text" &&
+      window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip !== "text" &&
+      (document.forms["search-box-container"]["search-text"].value === "" ||
+        document.forms["search-box-container"]["search-text"].value === undefined) &&
+      window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text"
+    ) {
       let post_time_relative = DateTime.fromFormat(JSON.parse(e.data)[1][6], "yyyy-MM-dd HH:mm:ss").toRelative();
       let post_time_detailed = DateTime.fromFormat(JSON.parse(e.data)[1][6], "yyyy-MM-dd HH:mm:ss").toFormat("cccc, dd MMMM, yyyy, TTTT");
       let node = document.getElementsByClassName("post")[0];

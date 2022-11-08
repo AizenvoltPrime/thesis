@@ -14,6 +14,14 @@ document.getElementById("hot").addEventListener("click", function () {
     let filter = filter_check(filter_obj);
     if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
       null_style("fa-fire-flame-curved");
+      $(".post").fadeOut(300, function () {});
+      $(".post")
+        .promise()
+        .done(function () {
+          $(".post").not(":first").remove();
+          reset_poll_data();
+          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+        });
     } else {
       highlight_filter("fa-fire-flame-curved");
       null_style("fa-sun");
@@ -70,11 +78,16 @@ document.getElementById("filter").addEventListener("click", function () {
   } else {
     $("#filters-outside-container").fadeOut(300, function () {
       null_style("fa-filter");
+      $("#warning-time-filter-choice").fadeOut(300, function () {});
+      document.forms["user-filter"]["user-filter-choice"].value = "";
+      document.forms["time-filter"]["time-filter-choice"].value = "";
       document.querySelectorAll(".poll-filter").forEach((poll_filter) => {
         poll_filter.style.color = null;
         poll_filter.style.border = null;
-        document.forms["time-filter"]["time-filter-choice"].value = "";
-        document.forms["user-filter"]["user-filter-choice"].value = "";
+      });
+      document.querySelectorAll(".poll-status").forEach((status_filter) => {
+        status_filter.style.color = null;
+        status_filter.style.border = null;
       });
     });
   }
@@ -94,7 +107,6 @@ document.getElementById("search").addEventListener("click", function () {
   }
 });
 
-//used to change default radius for location restricted voting
 document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
     return false;
