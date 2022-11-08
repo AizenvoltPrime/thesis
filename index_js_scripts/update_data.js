@@ -51,9 +51,9 @@ addEventListener("DOMContentLoaded", (event) => {
         clone.getElementsByClassName("parent_of_fa_check")[0].children[0].style.color = "#b5b5b5";
       }
 
-      if (get_variables()[2] > 10) {
+      if (get_variables()[2] > 9) {
         add_new_post(JSON.parse(e.data)[1]);
-      } else {
+      } else if (get_variables()[2] <= 9) {
         add_new_post([
           JSON.parse(e.data)[1][0],
           JSON.parse(e.data)[1][1],

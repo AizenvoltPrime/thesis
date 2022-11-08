@@ -1220,7 +1220,9 @@ export function null_all_styles() {
 
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
-  post_data[0][16] = post_data[1][16];
+  if (new_post.length > 9) {
+    post_data[0][16] = post_data[1][16];
+  }
   user_chevron_vote.unshift([false, false]);
   user_yes_no_vote.unshift([false, false]);
   console.log(post_data);
