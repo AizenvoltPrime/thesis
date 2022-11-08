@@ -60,6 +60,5 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 - Να βρω ένα τρόπο να ανανεώνονται τα post με το που γίνεται προσθήκη νέου
 - filter για το radius
 - Να φτιάξω χάρτη στο admin analytics ώστε να βλέπει ο admin τις τοποθεσίες των loggen-in users live
-- Προβλημα με charts και notifications οταν εισαι logged in δειχνει σαν να μην εισαι
 
 "wss://crowdsource.gamerwelfare.com"

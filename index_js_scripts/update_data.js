@@ -1,4 +1,4 @@
-import { conn, add_new_post, get_variables, edit_chevron, make_yes_no_chart, edit_vote } from "./index.js";
+import { conn, add_new_post, get_variables, edit_chevron, make_yes_no_chart, edit_vote, edit_bookmark } from "./index.js";
 
 var DateTime = luxon.DateTime;
 addEventListener("DOMContentLoaded", (event) => {
@@ -255,6 +255,26 @@ addEventListener("DOMContentLoaded", (event) => {
                 edit_vote(i, new_value_yes, new_value_no, null);
               }
             }
+          }
+        }
+      }
+    } else if (JSON.parse(e.data)[0] === "bookmark_on") {
+      for (let i = 0; i < get_variables()[3].length; i++) {
+        if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
+          if (get_variables()[2] > 9 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+            document.getElementsByClassName("parent_of_bookmark")[i].children[0].className = "fa-solid fa-bookmark";
+            document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = "#98d9ff";
+            edit_bookmark(i, 1);
+          }
+        }
+      }
+    } else if (JSON.parse(e.data)[0] === "bookmark_off") {
+      for (let i = 0; i < get_variables()[3].length; i++) {
+        if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
+          if (get_variables()[2] > 9 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+            document.getElementsByClassName("parent_of_bookmark")[i].children[0].className = "fa-regular fa-bookmark";
+            document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = null;
+            edit_bookmark(i, 0);
           }
         }
       }

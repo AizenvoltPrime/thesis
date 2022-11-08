@@ -973,6 +973,7 @@ postContainer.addEventListener(
                 document.getElementsByClassName("parent_of_bookmark")[postIndexBookmark].children[0].className = "fa-regular fa-bookmark";
                 document.getElementsByClassName("parent_of_bookmark")[postIndexBookmark].children[0].style.color = null;
                 post_data[postIndexBookmark][10] = 0;
+                conn.send(JSON.stringify(["bookmark_off", post_data[postIndexBookmark][0], post_data[0][16]]));
               }
             });
         } else if (post_data[postIndexBookmark][10] == 0) {
@@ -991,6 +992,7 @@ postContainer.addEventListener(
                 document.getElementsByClassName("parent_of_bookmark")[postIndexBookmark].children[0].className = "fa-solid fa-bookmark";
                 document.getElementsByClassName("parent_of_bookmark")[postIndexBookmark].children[0].style.color = "#98d9ff";
                 post_data[postIndexBookmark][10] = 1;
+                conn.send(JSON.stringify(["bookmark_on", post_data[postIndexBookmark][0], post_data[0][16]]));
               }
             });
         }
@@ -1252,4 +1254,8 @@ export function edit_vote(position, value_yes, value_no, vote_bool) {
     user_yes_no_vote[position][0] = vote_bool[0];
     user_yes_no_vote[position][1] = vote_bool[1];
   }
+}
+
+export function edit_bookmark(position, value) {
+  post_data[position][10] = value;
 }
