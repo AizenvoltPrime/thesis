@@ -150,11 +150,13 @@ addEventListener("DOMContentLoaded", (event) => {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
             document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
-            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
-              document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
-              edit_vote(i, new_value_yes, new_value_no, [false, false]);
-            } else {
-              edit_vote(i, new_value_yes, new_value_no, null);
+            if (get_variables()[2] > 9) {
+              if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+                document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
+                edit_vote(i, new_value_yes, new_value_no, [false, false]);
+              } else {
+                edit_vote(i, new_value_yes, new_value_no, null);
+              }
             }
           }
         }
@@ -167,12 +169,14 @@ addEventListener("DOMContentLoaded", (event) => {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
             document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
-            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
-              document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
-              document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
-              edit_vote(i, new_value_yes, new_value_no, [true, false]);
-            } else {
-              edit_vote(i, new_value_yes, new_value_no, null);
+            if (get_variables()[2] > 9) {
+              if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+                document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
+                document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
+                edit_vote(i, new_value_yes, new_value_no, [true, false]);
+              } else {
+                edit_vote(i, new_value_yes, new_value_no, null);
+              }
             }
           }
         }
@@ -185,11 +189,13 @@ addEventListener("DOMContentLoaded", (event) => {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
             document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
-            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
-              document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
-              edit_vote(i, new_value_yes, new_value_no, [true, false]);
-            } else {
-              edit_vote(i, new_value_yes, new_value_no, null);
+            if (get_variables()[2] > 9) {
+              if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+                document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
+                edit_vote(i, new_value_yes, new_value_no, [true, false]);
+              } else {
+                edit_vote(i, new_value_yes, new_value_no, null);
+              }
             }
           }
         }
@@ -202,11 +208,13 @@ addEventListener("DOMContentLoaded", (event) => {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
             document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
-            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
-              document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
-              edit_vote(i, new_value_yes, new_value_no, [false, false]);
-            } else {
-              edit_vote(i, new_value_yes, new_value_no, null);
+            if (get_variables()[2] > 9) {
+              if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+                document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
+                edit_vote(i, new_value_yes, new_value_no, [false, false]);
+              } else {
+                edit_vote(i, new_value_yes, new_value_no, null);
+              }
             }
           }
         }
@@ -219,12 +227,14 @@ addEventListener("DOMContentLoaded", (event) => {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
             document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
-            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
-              document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
-              document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
-              edit_vote(i, new_value_yes, new_value_no, [false, true]);
-            } else {
-              edit_vote(i, new_value_yes, new_value_no, null);
+            if (get_variables()[2] > 9) {
+              if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+                document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
+                document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
+                edit_vote(i, new_value_yes, new_value_no, [false, true]);
+              } else {
+                edit_vote(i, new_value_yes, new_value_no, null);
+              }
             }
           }
         }
@@ -237,11 +247,13 @@ addEventListener("DOMContentLoaded", (event) => {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
             document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
-            if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
-              document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
-              edit_vote(i, new_value_yes, new_value_no, [false, true]);
-            } else {
-              edit_vote(i, new_value_yes, new_value_no, null);
+            if (get_variables()[2] > 9) {
+              if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
+                document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
+                edit_vote(i, new_value_yes, new_value_no, [false, true]);
+              } else {
+                edit_vote(i, new_value_yes, new_value_no, null);
+              }
             }
           }
         }
