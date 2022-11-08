@@ -115,6 +115,15 @@ require_once "new_config.php";
           <button class="poll-status" name="2">Show Closed</button>
         </div>
       </div>
+      <div id="radius-filter-container">
+        <div class="filter-instruction">Radius Filter</div>
+        <div id="radius-filter">
+          <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
       <button id="filter-button" type="button">Filter</button>
     </div>
   </div>

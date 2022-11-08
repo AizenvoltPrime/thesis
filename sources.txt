@@ -9,6 +9,7 @@ for radius text input filter emkey08:https://stackoverflow.com/questions/469357/
 css transition autocomplete Hannes Schneidermayer:https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete
 greece geojson:https://github.com/codeforgermany/click_that_hood/commit/91e31e6a70f57009b80c152d4c0268ecae011080
 d3.geoContains:https://stackoverflow.com/questions/59864895/point-in-polygon-using-leaflet-pip-and-d3-geocontains
+switch for radius filter css:https://www.w3schools.com/howto/howto_css_switch.asp
 
 //posts_info
 CREATE VIEW posts_info AS SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name 
@@ -57,7 +58,6 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 ΕΠΟΜΕΝΑ TASK:
 
 - ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
-- Να βρω ένα τρόπο να ανανεώνονται τα post με το που γίνεται προσθήκη νέου
 - filter για το radius
 - Να φτιάξω χάρτη στο admin analytics ώστε να βλέπει ο admin τις τοποθεσίες των loggen-in users live
 
