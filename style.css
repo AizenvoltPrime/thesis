@@ -15,7 +15,7 @@ body {
   color: #b5b5b5;
   overflow-x: hidden;
   overflow-y: overlay;
-  padding-bottom: 5.3em;
+  padding-bottom: 3.5em;
 }
 
 #content {
@@ -1396,12 +1396,12 @@ input:checked + .slider:before {
   display: flex;
   position: fixed;
   justify-content: center;
-  padding: 0.3em;
+  padding: 0.2em;
   z-index: 1;
   bottom: 0;
   right: 0;
   left: 0;
-  font-size: 3em;
+  font-size: 2em;
   background-color: #1a1a1b;
   text-align: center;
   border-top: 0.001em solid #363636;
@@ -1411,7 +1411,7 @@ input:checked + .slider:before {
   position: absolute;
   font-size: 0.4em;
   color: #f3f3f3;
-  bottom: 1.65em;
+  bottom: 1.4em;
   z-index: 1;
   background-color: #cc0000;
   padding: 0.15em;
@@ -1428,9 +1428,9 @@ input:checked + .slider:before {
   display: flex;
   flex-wrap: wrap;
   position: absolute;
-  font-size: 0.4em;
+  font-size: 0.55em;
   color: #f3f3f3;
-  bottom: 3.8em;
+  bottom: 3em;
   z-index: 1;
   background-color: #1a1a1b;
   padding: 0.4em;
@@ -1448,6 +1448,6 @@ input:checked + .slider:before {
   align-self: center;
   border-radius: 1em;
   padding: 0.4em;
-  font-size: 0.7em;
+  font-size: 0.75em;
   cursor: pointer;
 }
