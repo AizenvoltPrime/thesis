@@ -140,6 +140,17 @@ require_once "new_config.php";
       <button id="notification-button" type="button">OK</button>
     </div>
   </div>
+  <!--This div is for notifications when new post is added.-->
+  <div id="bell-notification-container">
+    <i class="fa-solid fa-bell">
+      <div id="bell-inner-container" style="display:none;"></div>
+    </i>
+    <div id="bell-notification-details" style="display:none;">
+      <div class="bell-notification-title"></div>
+      <button class="bell-actions" style="display:none;">Check them out</button>
+      <button class="bell-actions" style="display:none;">Clear notifications</button>
+    </div>
+  </div>
   <!--This div is for choosing a poll type to create.-->
   <div id="poll-selection">
     <div class="template-instructions-container">

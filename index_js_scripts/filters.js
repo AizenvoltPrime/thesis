@@ -12,6 +12,9 @@ document.getElementById("hot").addEventListener("click", function () {
       search_text: null,
     };
     let filter = filter_check(filter_obj);
+    if (preferred_categories !== null && preferred_categories.length === 0) {
+      preferred_categories = null;
+    }
     if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
       null_style("fa-fire-flame-curved");
       $(".post").fadeOut(300, function () {});
@@ -46,6 +49,9 @@ document.getElementById("recent").addEventListener("click", function () {
       search_text: null,
     };
     let filter = filter_check(filter_obj);
+    if (preferred_categories !== null && preferred_categories.length === 0) {
+      preferred_categories = null;
+    }
     if (window.getComputedStyle(document.getElementsByClassName("fa-sun")[0]).backgroundClip === "text") {
       null_style("fa-sun");
     } else {
@@ -115,6 +121,9 @@ document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("
     search_text: null,
   };
   let filter = filter_check(filter_obj);
+  if (preferred_categories !== null && preferred_categories.length === 0) {
+    preferred_categories = null;
+  }
   $(".post").fadeOut(300, function () {});
   $(".post")
     .promise()
@@ -340,6 +349,9 @@ document.getElementById("filter-button").addEventListener("click", function () {
       search_text = null;
     }
     let filter = filter_query();
+    if (preferred_categories !== null && preferred_categories.length === 0) {
+      preferred_categories = null;
+    }
     $(".post").fadeOut(300, function () {});
     $(".post")
       .promise()

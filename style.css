@@ -14,6 +14,8 @@ body {
   background-color: #030303;
   color: #b5b5b5;
   overflow-x: hidden;
+  overflow-y: overlay;
+  padding-bottom: 5.3em;
 }
 
 #content {
@@ -562,10 +564,10 @@ html {
   height: 0.1em;
 }
 ::-webkit-scrollbar-track {
-  background-color: #030303;
+  background: transparent;
 }
 ::-webkit-scrollbar-track-piece {
-  background-color: #030303;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   height: 3.125em;
@@ -573,10 +575,10 @@ html {
   border-radius: 1em;
 }
 ::-webkit-scrollbar-corner {
-  background-color: #646464;
+  background: transparent;
 }
 ::-webkit-resizer {
-  background-color: #666;
+  background: transparent;
 }
 
 /*Placeholder color*/
@@ -817,7 +819,7 @@ a:active {
   align-items: center;
   max-width: 50em;
   margin: 2em auto 0;
-  padding: 1em;
+  padding: 0 1em 0;
 }
 
 .post {
@@ -881,7 +883,8 @@ a:active {
   align-items: center;
 }
 
-.post-time {
+.post-time,
+.fa-bell {
   cursor: pointer;
 }
 
@@ -1214,7 +1217,7 @@ a:active {
   margin: 0 auto;
   left: 0;
   right: 0;
-  top: 25%;
+  top: 14%;
 }
 
 .close-map {
@@ -1387,4 +1390,64 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+#bell-notification-container {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  padding: 0.3em;
+  z-index: 1;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  font-size: 3em;
+  background-color: #1a1a1b;
+  text-align: center;
+  border-top: 0.001em solid #363636;
+}
+
+#bell-inner-container {
+  position: absolute;
+  font-size: 0.4em;
+  color: #f3f3f3;
+  bottom: 1.65em;
+  z-index: 1;
+  background-color: #cc0000;
+  padding: 0.15em;
+  border-radius: 50%;
+  border: 0.15em solid #f3f3f3;
+  font-weight: normal;
+  margin-left: 1em;
+  width: 1em;
+  height: 1em;
+  justify-content: center;
+}
+
+#bell-notification-details {
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  font-size: 0.4em;
+  color: #f3f3f3;
+  bottom: 3.8em;
+  z-index: 1;
+  background-color: #1a1a1b;
+  padding: 0.4em;
+  border-radius: 1em;
+  border: 0.01em solid #363636;
+  font-weight: bold;
+  max-width: 15.5em;
+  gap: 0.3em;
+  justify-content: center;
+}
+
+.bell-actions {
+  display: block;
+  background: #2c3134;
+  align-self: center;
+  border-radius: 1em;
+  padding: 0.4em;
+  font-size: 0.7em;
+  cursor: pointer;
 }

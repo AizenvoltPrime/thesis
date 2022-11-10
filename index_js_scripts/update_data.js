@@ -1,6 +1,24 @@
-import { conn, add_new_post, get_variables, edit_chevron, make_yes_no_chart, edit_vote, edit_bookmark } from "./index.js";
+import {
+  conn,
+  add_new_post,
+  get_variables,
+  edit_chevron,
+  make_yes_no_chart,
+  edit_vote,
+  edit_bookmark,
+  generate_posts,
+  reset_poll_data,
+  null_all_styles,
+} from "./index.js";
+import { null_style, clear_filters } from "./filters.js";
 
 var DateTime = luxon.DateTime;
+let new_post_counter = 1;
+
+export function clear_bell_counter() {
+  new_post_counter = 1;
+}
+
 addEventListener("DOMContentLoaded", (event) => {
   conn.onmessage = function (e) {
     if (
@@ -73,6 +91,19 @@ addEventListener("DOMContentLoaded", (event) => {
           JSON.parse(e.data)[1][15],
         ]);
       }
+    } else if (
+      JSON.parse(e.data)[0] === "new_post_added" &&
+      (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text" ||
+        window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip === "text" ||
+        (document.forms["search-box-container"]["search-text"].value !== "" &&
+          document.forms["search-box-container"]["search-text"].value !== undefined) ||
+        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip === "text")
+    ) {
+      $("#bell-notification-details").fadeOut(300, function () {
+        document.getElementById("bell-inner-container").style.display = "block";
+        document.getElementById("bell-inner-container").innerText = new_post_counter;
+        new_post_counter++;
+      });
     } else if (JSON.parse(e.data)[0] === "chevron_vote_up_up") {
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
@@ -287,4 +318,72 @@ addEventListener("DOMContentLoaded", (event) => {
       }
     }
   };
+});
+
+document.getElementsByClassName("fa-bell")[0].addEventListener("click", function () {
+  if (
+    window.getComputedStyle(document.getElementById("bell-inner-container")).display === "none" &&
+    window.getComputedStyle(document.getElementById("bell-notification-details")).display === "none"
+  ) {
+    document.getElementsByClassName("bell-notification-title")[0].innerText = "No new polls have been added";
+    $("#bell-notification-details").fadeIn(300, function () {});
+  } else if (
+    window.getComputedStyle(document.getElementById("bell-inner-container")).display !== "none" &&
+    window.getComputedStyle(document.getElementById("bell-notification-details")).display === "none"
+  ) {
+    document.getElementsByClassName("bell-notification-title")[0].innerText = "New polls have been added";
+    document.getElementsByClassName("bell-actions")[0].style.display = "block";
+    document.getElementsByClassName("bell-actions")[1].style.display = "block";
+    $("#bell-notification-details").fadeIn(300, function () {});
+  } else if (
+    window.getComputedStyle(document.getElementById("bell-inner-container")).display === "none" &&
+    window.getComputedStyle(document.getElementById("bell-notification-details")).display !== "none"
+  ) {
+    $("#bell-notification-details").fadeOut(300, function () {});
+  } else if (
+    window.getComputedStyle(document.getElementById("bell-inner-container")).display !== "none" &&
+    window.getComputedStyle(document.getElementById("bell-notification-details")).display !== "none"
+  ) {
+    $("#bell-notification-details").fadeOut(300, function () {
+      document.getElementsByClassName("bell-actions")[0].style.display = "none";
+      document.getElementsByClassName("bell-actions")[1].style.display = "none";
+    });
+  }
+});
+
+document.getElementsByClassName("bell-actions")[0].addEventListener("click", function () {
+  $("#bell-notification-details").fadeOut(300, function () {
+    document.getElementById("bell-inner-container").style.display = "none";
+    document.getElementsByClassName("bell-actions")[0].style.display = "none";
+    document.getElementsByClassName("bell-actions")[1].style.display = "none";
+    new_post_counter = 1;
+  });
+  clear_filters();
+  null_all_styles();
+  $(".post").fadeOut(300, function () {});
+  $(".post")
+    .promise()
+    .done(function () {
+      $(".post").not(":first").remove();
+      reset_poll_data();
+      generate_posts(false);
+    });
+});
+
+document.getElementsByClassName("bell-actions")[1].addEventListener("click", function () {
+  document.getElementById("bell-inner-container").style.display = "none";
+  new_post_counter = 1;
+});
+
+$(window).click(function (e) {
+  if (
+    window.getComputedStyle(document.getElementById("bell-notification-details")).display !== "none" &&
+    window.getComputedStyle(document.getElementById("bell-notification-details")).opacity === "1" &&
+    !e.target.closest("#bell-notification-details")
+  ) {
+    $("#bell-notification-details").fadeOut(300, function () {
+      document.getElementsByClassName("bell-actions")[0].style.display = "none";
+      document.getElementsByClassName("bell-actions")[1].style.display = "none";
+    });
+  }
 });
