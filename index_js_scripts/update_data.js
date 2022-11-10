@@ -41,7 +41,7 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
       clone.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
       clone.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
-      clone.querySelectorAll(".parent_of_fa_check").forEach((main_class) => (main_class.innerHTML = ""));
+      clone.querySelectorAll(".parent_of_check_yes_no").forEach((main_class) => (main_class.innerHTML = ""));
       clone.querySelectorAll(".poll-timer-container").forEach((main_class) => (main_class.style.display = null));
       clone.querySelectorAll(".fa-clock").forEach((main_class) => (main_class.style.color = null));
       clone.querySelectorAll(".poll-remaining-time").forEach((main_class) => (main_class.innerText = ""));
@@ -72,9 +72,9 @@ addEventListener("DOMContentLoaded", (event) => {
 
       if (JSON.parse(e.data)[1][15] == 0 && JSON.parse(e.data)[1][2] == 1) {
         let new_check = document.createElement("i");
-        new_check.className = "fa-solid fa-check";
-        clone.getElementsByClassName("parent_of_fa_check")[0].appendChild(new_check);
-        clone.getElementsByClassName("parent_of_fa_check")[0].children[0].style.color = "#b5b5b5";
+        new_check.className = "fa-solid fa-question";
+        clone.getElementsByClassName("parent_of_check_yes_no")[0].appendChild(new_check);
+        clone.getElementsByClassName("parent_of_check_yes_no")[0].children[0].style.color = "#b5b5b5";
       }
 
       if (get_variables()[2] > 9) {
@@ -188,7 +188,8 @@ addEventListener("DOMContentLoaded", (event) => {
             if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
-            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
             if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
@@ -207,7 +208,8 @@ addEventListener("DOMContentLoaded", (event) => {
             if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
-            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
             if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
@@ -227,7 +229,8 @@ addEventListener("DOMContentLoaded", (event) => {
             if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
-            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
             if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
@@ -246,7 +249,8 @@ addEventListener("DOMContentLoaded", (event) => {
             if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
-            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
             if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
@@ -265,7 +269,8 @@ addEventListener("DOMContentLoaded", (event) => {
             if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
-            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
             if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
@@ -285,7 +290,8 @@ addEventListener("DOMContentLoaded", (event) => {
             if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
               make_yes_no_chart(i, [new_value_yes, new_value_no]);
             }
-            document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
+            document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
             if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";

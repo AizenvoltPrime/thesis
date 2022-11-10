@@ -450,19 +450,19 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
             }
             if (post_data[i][15] > 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
-              new_check.className = "fa-solid fa-check";
-              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
-              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#00ffd0";
+              new_check.className = "fa-solid fa-thumbs-up";
+              document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#00ffd0";
             } else if (post_data[i][15] < 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
-              new_check.className = "fa-solid fa-check";
-              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
-              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#cc0000";
+              new_check.className = "fa-solid fa-thumbs-down";
+              document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#cc0000";
             } else if (post_data[i][15] == 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
-              new_check.className = "fa-solid fa-check";
-              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
-              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#b5b5b5";
+              new_check.className = "fa-solid fa-question";
+              document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#b5b5b5";
             }
             let new_canvas = document.createElement("canvas");
             new_canvas.className = "myChart";
@@ -489,19 +489,19 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
             }
             if (post_data[i][8] > 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
-              new_check.className = "fa-solid fa-check";
-              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
-              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#00ffd0";
+              new_check.className = "fa-solid fa-thumbs-up";
+              document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#00ffd0";
             } else if (post_data[i][8] < 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
-              new_check.className = "fa-solid fa-check";
-              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
-              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#cc0000";
+              new_check.className = "fa-solid fa-thumbs-down";
+              document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#cc0000";
             } else if (post_data[i][8] == 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
-              new_check.className = "fa-solid fa-check";
-              document.getElementsByClassName("parent_of_fa_check")[i].appendChild(new_check);
-              document.getElementsByClassName("parent_of_fa_check")[i].children[0].style.color = "#b5b5b5";
+              new_check.className = "fa-solid fa-question";
+              document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
+              document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#b5b5b5";
             }
           }
         }
@@ -728,22 +728,26 @@ postContainer.addEventListener(
                   user_yes_no_vote[postIndexYes][0] = false;
                   if (post_data[postIndexYes][2] == 1) {
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-up";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-down";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-question";
                     }
                   }
                   conn.send(
                     JSON.stringify([
                       "yes_no_vote",
                       "yes_yes",
-                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0]).color,
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0]).color,
                       post_data[postIndexYes][0],
                       post_data[0][16],
                       post_data[postIndexYes][8],
                       post_data[postIndexYes][9],
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className,
                     ])
                   );
                 }
@@ -767,22 +771,26 @@ postContainer.addEventListener(
                   user_yes_no_vote[postIndexYes][1] = false;
                   if (post_data[postIndexYes][2] == 1) {
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-up";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-down";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-question";
                     }
                   }
                   conn.send(
                     JSON.stringify([
                       "yes_no_vote",
                       "yes_no",
-                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0]).color,
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0]).color,
                       post_data[postIndexYes][0],
                       post_data[0][16],
                       post_data[postIndexYes][8],
                       post_data[postIndexYes][9],
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className,
                     ])
                   );
                 }
@@ -804,22 +812,26 @@ postContainer.addEventListener(
                   user_yes_no_vote[postIndexYes][0] = true;
                   if (post_data[postIndexYes][2] == 1) {
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-up";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-down";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-question";
                     }
                   }
                   conn.send(
                     JSON.stringify([
                       "yes_no_vote",
                       "yes_nothing",
-                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexYes].children[0]).color,
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0]).color,
                       post_data[postIndexYes][0],
                       post_data[0][16],
                       post_data[postIndexYes][8],
                       post_data[postIndexYes][9],
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className,
                     ])
                   );
                 }
@@ -861,22 +873,26 @@ postContainer.addEventListener(
                   user_yes_no_vote[postIndexNo][1] = false;
                   if (post_data[postIndexNo][2] == 1) {
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-up";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-down";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-question";
                     }
                   }
                   conn.send(
                     JSON.stringify([
                       "yes_no_vote",
                       "no_no",
-                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0]).color,
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0]).color,
                       post_data[postIndexNo][0],
                       post_data[0][16],
                       post_data[postIndexNo][8],
                       post_data[postIndexNo][9],
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className,
                     ])
                   );
                 }
@@ -900,22 +916,26 @@ postContainer.addEventListener(
                   user_yes_no_vote[postIndexNo][1] = true;
                   if (post_data[postIndexNo][2] == 1) {
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-up";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-down";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-question";
                     }
                   }
                   conn.send(
                     JSON.stringify([
                       "yes_no_vote",
                       "no_yes",
-                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0]).color,
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0]).color,
                       post_data[postIndexNo][0],
                       post_data[0][16],
                       post_data[postIndexNo][8],
                       post_data[postIndexNo][9],
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className,
                     ])
                   );
                 }
@@ -937,22 +957,26 @@ postContainer.addEventListener(
                   user_yes_no_vote[postIndexNo][1] = true;
                   if (post_data[postIndexNo][2] == 1) {
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#00ffd0";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-up";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#cc0000";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-down";
                     } else {
-                      document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#b5b5b5";
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-question";
                     }
                   }
                   conn.send(
                     JSON.stringify([
                       "yes_no_vote",
                       "no_nothing",
-                      window.getComputedStyle(document.getElementsByClassName("parent_of_fa_check")[postIndexNo].children[0]).color,
+                      window.getComputedStyle(document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0]).color,
                       post_data[postIndexNo][0],
                       post_data[0][16],
                       post_data[postIndexNo][8],
                       post_data[postIndexNo][9],
+                      document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className,
                     ])
                   );
                 }
@@ -1123,7 +1147,7 @@ export function reset_poll_data() {
   document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
   document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
   document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
-  document.querySelectorAll(".parent_of_fa_check").forEach((main_class) => (main_class.innerHTML = ""));
+  document.querySelectorAll(".parent_of_check_yes_no").forEach((main_class) => (main_class.innerHTML = ""));
   document.querySelectorAll(".poll-timer-container").forEach((main_class) => (main_class.style.display = null));
   document.querySelectorAll(".fa-clock").forEach((main_class) => (main_class.style.color = null));
   document.querySelectorAll(".poll-remaining-time").forEach((main_class) => (main_class.innerText = ""));

@@ -923,7 +923,9 @@ a:active {
   cursor: pointer;
 }
 
-.fa-check {
+.fa-question,
+.fa-thumbs-up,
+.fa-thumbs-down {
   font-size: 1.5em;
   cursor: pointer;
 }
