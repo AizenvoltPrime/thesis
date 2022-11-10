@@ -1,4 +1,5 @@
 import { generate_posts, reset_poll_data, get_variables } from "./index.js";
+import { clear_bell_counter } from "./update_data.js";
 import { greece_regions, update_region_posts, clear_region_posts } from "../geojson/greece_regions.js";
 
 let preferred_categories = null;
@@ -17,6 +18,15 @@ document.getElementById("hot").addEventListener("click", function () {
     }
     if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
       null_style("fa-fire-flame-curved");
+      if (
+        window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip !== "text" &&
+        window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip !== "text" &&
+        (document.forms["search-box-container"]["search-text"].value === "" ||
+          document.forms["search-box-container"]["search-text"].value === undefined) &&
+        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text"
+      ) {
+        clear_bell_counter();
+      }
       $(".post").fadeOut(300, function () {});
       $(".post")
         .promise()
@@ -42,6 +52,15 @@ document.getElementById("hot").addEventListener("click", function () {
 
 document.getElementById("recent").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementsByClassName("post")[0]).opacity === "1") {
+    if (
+      window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip !== "text" &&
+      window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip !== "text" &&
+      (document.forms["search-box-container"]["search-text"].value === "" ||
+        document.forms["search-box-container"]["search-text"].value === undefined) &&
+      window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text"
+    ) {
+      clear_bell_counter();
+    }
     if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
       return false;
     }
@@ -84,6 +103,23 @@ document.getElementById("filter").addEventListener("click", function () {
   } else {
     $("#filters-outside-container").fadeOut(300, function () {
       null_style("fa-filter");
+      if (
+        window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip !== "text" &&
+        window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip !== "text" &&
+        (document.forms["search-box-container"]["search-text"].value === "" ||
+          document.forms["search-box-container"]["search-text"].value === undefined) &&
+        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text"
+      ) {
+        $(".post").fadeOut(300, function () {});
+        $(".post")
+          .promise()
+          .done(function () {
+            $(".post").not(":first").remove();
+            reset_poll_data();
+            generate_posts(false);
+          });
+        clear_bell_counter();
+      }
       $("#warning-time-filter-choice").fadeOut(300, function () {});
       document.forms["user-filter"]["user-filter-choice"].value = "";
       document.forms["time-filter"]["time-filter-choice"].value = "";
@@ -110,6 +146,15 @@ document.getElementById("search").addEventListener("click", function () {
     document.forms["search-box-container"]["search-text"].value = "";
     null_style("fa-magnifying-glass");
     $("#search-box-container").fadeOut(300, function () {});
+    if (
+      window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip !== "text" &&
+      window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip !== "text" &&
+      (document.forms["search-box-container"]["search-text"].value === "" ||
+        document.forms["search-box-container"]["search-text"].value === undefined) &&
+      window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text"
+    ) {
+      clear_bell_counter();
+    }
   }
 });
 
@@ -189,6 +234,7 @@ setInputFilter(
 
 document.getElementsByClassName("nav-element")[0].addEventListener("click", function (e) {
   clear_filters();
+  clear_bell_counter();
 });
 
 document.getElementsByClassName("nav-element")[3].addEventListener("click", function (e) {
@@ -252,6 +298,15 @@ document.getElementById("category-button").addEventListener("click", function ()
     if (categories_counter === 0) {
       preferred_categories = null;
       null_style("fa-table-list");
+      if (
+        window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip !== "text" &&
+        window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip !== "text" &&
+        (document.forms["search-box-container"]["search-text"].value === "" ||
+          document.forms["search-box-container"]["search-text"].value === undefined) &&
+        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text"
+      ) {
+        clear_bell_counter();
+      }
     }
     $(".post").fadeOut(300, function () {});
     $(".post")

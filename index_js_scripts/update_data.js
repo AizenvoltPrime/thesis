@@ -16,6 +16,7 @@ var DateTime = luxon.DateTime;
 let new_post_counter = 1;
 
 export function clear_bell_counter() {
+  document.getElementById("bell-inner-container").style.display = "none";
   new_post_counter = 1;
 }
 

@@ -1,4 +1,5 @@
 import { null_style, highlight_filter, clear_filters } from "./filters.js";
+import { clear_bell_counter } from "./update_data.js";
 import { greece_regions } from "../geojson/greece_regions.js";
 
 let user_choice = "none"; //poll choice
@@ -503,10 +504,17 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
             }
           }
         }
-        if (bookmark_filter == true || bookmark_filter == false) {
-          $("#add-post-icon").fadeIn(300, function () {});
-          $("#all-filters").fadeIn(300, function () {});
-          $(".post").fadeIn(300, function () {});
+        $("#add-post-icon").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
+        $(".post").fadeIn(300, function () {});
+        if (
+          window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip !== "text" &&
+          window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip !== "text" &&
+          (document.forms["search-box-container"]["search-text"].value === "" ||
+            document.forms["search-box-container"]["search-text"].value === undefined) &&
+          window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text"
+        ) {
+          clear_bell_counter();
         }
       } else {
         $("#add-post-icon").fadeIn(300, function () {});
