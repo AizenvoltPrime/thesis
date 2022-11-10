@@ -119,10 +119,11 @@ require_once "new_config.php";
         <div class="filter-instruction">Radius Filter</div>
         <div id="radius-filter">
           <label class="switch">
-            <input type="checkbox" checked>
+            <input type="checkbox" name="radius-filter-checkbox">
             <span class="slider round"></span>
           </label>
         </div>
+        <div id="radius-filter-info">Enable Radius Filter to only see polls that you can participate in</div>
       </div>
       <button id="filter-button" type="button">Filter</button>
     </div>

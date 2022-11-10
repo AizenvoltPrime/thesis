@@ -3,6 +3,7 @@ import { clear_bell_counter } from "./update_data.js";
 import { greece_regions, update_region_posts, clear_region_posts } from "../geojson/greece_regions.js";
 
 let preferred_categories = null;
+let radius_filter = null;
 
 document.getElementById("hot").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementsByClassName("post")[0]).opacity === "1") {
@@ -33,7 +34,7 @@ document.getElementById("hot").addEventListener("click", function () {
         .done(function () {
           $(".post").not(":first").remove();
           reset_poll_data();
-          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
         });
     } else {
       highlight_filter("fa-fire-flame-curved");
@@ -44,7 +45,7 @@ document.getElementById("hot").addEventListener("click", function () {
         .done(function () {
           $(".post").not(":first").remove();
           reset_poll_data();
-          generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
         });
     }
   }
@@ -82,7 +83,7 @@ document.getElementById("recent").addEventListener("click", function () {
         .done(function () {
           $(".post").not(":first").remove();
           reset_poll_data();
-          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
         });
     }
   }
@@ -131,6 +132,8 @@ document.getElementById("filter").addEventListener("click", function () {
         status_filter.style.color = null;
         status_filter.style.border = null;
       });
+      radius_filter = null;
+      document.querySelector("input[name=radius-filter-checkbox").checked = false;
     });
   }
 });
@@ -176,9 +179,9 @@ document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("
       $(".post").not(":first").remove();
       reset_poll_data();
       if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
-        generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+        generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
       } else {
-        generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+        generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
       }
     });
 });
@@ -315,9 +318,9 @@ document.getElementById("category-button").addEventListener("click", function ()
         $(".post").not(":first").remove();
         reset_poll_data();
         if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
-          generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
         } else {
-          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1]);
+          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
         }
       });
   });
@@ -380,6 +383,8 @@ export function clear_filters() {
       status_filter.style.color = null;
       status_filter.style.border = null;
     });
+    radius_filter = null;
+    document.querySelector("input[name=radius-filter-checkbox").checked = false;
   });
   $("#warning-time-filter-choice").fadeOut(300, function () {});
   if (preferred_categories !== null) {
@@ -414,9 +419,9 @@ document.getElementById("filter-button").addEventListener("click", function () {
         $(".post").not(":first").remove();
         reset_poll_data();
         if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
-          generate_posts(get_variables()[0], "hot", preferred_categories, filter, search_text, get_variables()[1]);
+          generate_posts(get_variables()[0], "hot", preferred_categories, filter, search_text, get_variables()[1], radius_filter);
         } else {
-          generate_posts(get_variables()[0], null, preferred_categories, filter, search_text, get_variables()[1]);
+          generate_posts(get_variables()[0], null, preferred_categories, filter, search_text, get_variables()[1], radius_filter);
         }
       });
   }
@@ -490,6 +495,22 @@ document.querySelector("#user-filter-select").addEventListener("keypress", funct
     e.preventDefault();
     document.getElementById("filter-button").click();
   }
+});
+
+document.querySelector("input[name=radius-filter-checkbox").addEventListener("change", function () {
+  if (this.checked) {
+    radius_filter = get_variables()[4];
+  } else {
+    radius_filter = null;
+  }
+});
+
+document.getElementsByClassName("filter-instruction")[4].addEventListener("mouseover", function () {
+  document.getElementById("radius-filter-info").style.display = "block";
+});
+
+document.getElementsByClassName("filter-instruction")[4].addEventListener("mouseout", function () {
+  document.getElementById("radius-filter-info").style.display = "none";
 });
 
 var app_analytics_map = L.map("post-locations-map").setView([38.5, 25.5], 6);

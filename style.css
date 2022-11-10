@@ -372,7 +372,7 @@ input.logged-form-control {
   font-size: 1.5em;
   margin-top: 0.75em;
   background-image: linear-gradient(to right, #000, #c00);
-  border: 0em solid #74797d;
+  border: 0em solid #363636;
   color: #ccc;
   border-radius: 0.5em;
   font-weight: 900;
@@ -692,7 +692,7 @@ a:active {
   text-align: center;
   font-size: 2em;
   width: 9.5em;
-  border: 0.01em solid #5e5e5e;
+  border: 0.01em solid #363636;
 }
 
 #yes-time-limit,
@@ -897,23 +897,25 @@ a:active {
   display: block;
   position: absolute;
   margin-bottom: 2em;
-  background-color: #000000;
+  background-color: #1a1a1b;
   border-radius: 1em;
   color: #f3f3f3;
   padding: 0.5em;
   margin-right: 0.21em;
   margin-left: 0.21em;
+  border: 0.01em solid #363636;
 }
 
 .fa-clock:hover + .poll-remaining-time {
   display: block;
   position: absolute;
   margin-bottom: 2.5em;
-  background-color: #000000;
+  background-color: #1a1a1b;
   border-radius: 1em;
   color: #f3f3f3;
   padding: 0.5em;
   margin-right: 0.21em;
+  border: 0.01em solid #363636;
 }
 
 .fa-bookmark {
@@ -1005,7 +1007,7 @@ a:active {
   color: #f3f3f3;
   gap: 2em;
   border-radius: 1em;
-  border: 0.01em solid #5e5e5e;
+  border: 0.01em solid #363636;
 }
 
 #notification-text {
@@ -1078,7 +1080,7 @@ a:active {
   font-size: 1.2em;
   color: #cc0000;
   padding: 0.5em 1em;
-  border: 0.01em solid #5e5e5e;
+  border: 0.01em solid #363636;
 }
 
 #filters-outside-container {
@@ -1332,6 +1334,19 @@ input[data-autocompleted] {
   align-items: center;
 }
 
+#radius-filter-info {
+  display: none;
+  position: absolute;
+  margin-bottom: 10em;
+  background-color: #1a1a1b;
+  border-radius: 1em;
+  color: #f3f3f3;
+  padding: 0.5em;
+  margin-right: 0.21em;
+  border: 0.01em solid #363636;
+  font-size: 0.65em;
+}
+
 .switch {
   position: relative;
   display: inline-block;
@@ -1404,7 +1419,7 @@ input:checked + .slider:before {
   font-size: 2em;
   background-color: #1a1a1b;
   text-align: center;
-  border-top: 0.001em solid #363636;
+  border-top: 0.01em solid #363636;
 }
 
 #bell-inner-container {
