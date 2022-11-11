@@ -1090,6 +1090,7 @@ function get_yes_no_data(post_number) {
     });
 }
 
+//Makes yes_no post chart.
 export function make_yes_no_chart(post_number, chart_data) {
   if (myChart[post_number]) {
     myChart[post_number].destroy();
@@ -1224,7 +1225,7 @@ function calcCrow(lat1, lon1, lat2, lon2) {
   return parseInt(d);
 }
 
-//Converts numeric degrees to radians
+//Converts numeric degrees to radians.
 function toRad(Value) {
   return (Value * Math.PI) / 180;
 }
@@ -1239,7 +1240,7 @@ document.getElementById("chart-analytics").addEventListener("click", function ()
   null_style("fa-solid fa-map");
 });
 
-//exports variables to other js files
+//exports variables to other js files.
 export function get_variables() {
   if (post_data.length === undefined || post_data.length === 0) {
     return [bookmarks_active, specific_user_posts];
@@ -1248,7 +1249,7 @@ export function get_variables() {
   }
 }
 
-//clears filter styles
+//Clears filter styles.
 export function null_all_styles() {
   null_style("fa-fire-flame-curved");
   null_style("fa-sun");
@@ -1257,6 +1258,7 @@ export function null_all_styles() {
   null_style("fa-magnifying-glass");
 }
 
+//Adds new post data that was received from websocket.
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
   if (new_post.length > 9) {
@@ -1268,6 +1270,7 @@ export function add_new_post(new_post) {
   myChart.unshift(null);
 }
 
+//Adds new chevron data that was received from websocket.
 export function edit_chevron(position, value, vote_bool) {
   $(document.querySelectorAll(".post")[position].querySelectorAll(".score")[0]).fadeOut(300, function () {
     document.querySelectorAll(".post")[position].querySelectorAll(".score")[0].innerText = value;
@@ -1280,6 +1283,7 @@ export function edit_chevron(position, value, vote_bool) {
   }
 }
 
+//Adds new vote data that was received from websocket.
 export function edit_vote(position, value_yes, value_no, vote_bool) {
   post_data[position][8] = value_yes;
   post_data[position][9] = value_no;
@@ -1289,6 +1293,7 @@ export function edit_vote(position, value_yes, value_no, vote_bool) {
   }
 }
 
+//Adds new bookmark data that was received from websocket.
 export function edit_bookmark(position, value) {
   post_data[position][10] = value;
 }

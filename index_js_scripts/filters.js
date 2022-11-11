@@ -5,6 +5,7 @@ import { greece_regions, update_region_posts, clear_region_posts } from "../geoj
 let preferred_categories = null;
 let radius_filter = null;
 
+//This is for hot filter functionality.
 document.getElementById("hot").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementsByClassName("post")[0]).opacity === "1") {
     if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
@@ -51,6 +52,7 @@ document.getElementById("hot").addEventListener("click", function () {
   }
 });
 
+//This is for the recent filter functionality.
 document.getElementById("recent").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementsByClassName("post")[0]).opacity === "1") {
     if (
@@ -94,6 +96,7 @@ document.getElementById("preferred-categories").addEventListener("click", functi
   $("#preferred-categories-container").fadeIn(300, function () {});
 });
 
+//This is for the filter functionality.
 document.getElementById("filter").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
     return false;
@@ -138,6 +141,7 @@ document.getElementById("filter").addEventListener("click", function () {
   }
 });
 
+//This is for the search filter functionality.
 document.getElementById("search").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
     return false;
@@ -161,6 +165,7 @@ document.getElementById("search").addEventListener("click", function () {
   }
 });
 
+//This is for the search filter functionality.
 document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
     return false;
@@ -200,6 +205,7 @@ export function highlight_filter(class_name) {
   document.getElementsByClassName(class_name)[0].style.webkitTextFillColor = "transparent";
 }
 
+//This is for filtering inputs on radius input box when users create posts.
 function setInputFilter(textbox, inputFilter, errMsg) {
   ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop", "focusout"].forEach(function (event) {
     textbox.addEventListener(event, function (e) {
@@ -260,6 +266,7 @@ document.getElementById("add-post-icon").addEventListener("click", function (e) 
   clear_filters();
 });
 
+//This is for preferred categories filter functionality.
 document.getElementById("categories-container").addEventListener(
   "click",
   (e) => {
@@ -280,6 +287,7 @@ document.getElementById("categories-container").addEventListener(
   { passive: true }
 );
 
+//This is for preferred categories filter functionality.
 document.getElementById("category-button").addEventListener("click", function () {
   const filter_obj = {
     search_text: null,
@@ -365,6 +373,7 @@ document.getElementById("poll-status-filter").addEventListener(
   { passive: true }
 );
 
+//This clears all poll filters.
 export function clear_filters() {
   $("#search-box-container").fadeOut(300, function () {});
   $("#preferred-categories-container").fadeOut(300, function () {
@@ -399,6 +408,7 @@ export function clear_filters() {
   }
 }
 
+//This is for filter functionality.
 document.getElementById("filter-button").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementsByClassName("post")[0]).opacity === "1") {
     if (window.getComputedStyle(document.getElementById("preferred-categories-container")).display !== "none") {
@@ -434,6 +444,7 @@ flatpickr("#time-filter-selector", {
   mode: "range",
 });
 
+//This is for search filter functionality.
 function filter_check(obj) {
   obj.search_text = document.forms["search-box-container"]["search-text"].value;
   if (obj.search_text.replace(/\s/g, "") === "") {
@@ -442,6 +453,7 @@ function filter_check(obj) {
   return filter_query();
 }
 
+//This is for filter functionality.
 function filter_query() {
   let filter = document.forms["time-filter"]["time-filter-choice"].value;
   let user_filter = document.forms["user-filter"]["user-filter-choice"].value;
@@ -667,6 +679,7 @@ function clear_map() {
   }
 }
 
+//This is for Post Locations map functionality.
 document.getElementById("post-locations-filter").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("post-locations-container")).display !== "none") {
     $("#post-locations-container").fadeOut(300, function () {
@@ -682,6 +695,7 @@ document.getElementById("post-locations-filter").addEventListener("click", funct
   }
 });
 
+//This is for Post Locations map functionality.
 document.getElementsByClassName("close-map")[0].addEventListener("click", function () {
   $("#post-locations-container").fadeOut(300, function () {
     clear_map();

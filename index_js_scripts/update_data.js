@@ -10,11 +10,12 @@ import {
   reset_poll_data,
   null_all_styles,
 } from "./index.js";
-import { null_style, clear_filters } from "./filters.js";
+import { clear_filters } from "./filters.js";
 
 var DateTime = luxon.DateTime;
 let new_post_counter = 1;
 
+//This function clears notification counter.
 export function clear_bell_counter() {
   document.getElementById("bell-inner-container").style.display = "none";
   new_post_counter = 1;
@@ -327,6 +328,7 @@ addEventListener("DOMContentLoaded", (event) => {
   };
 });
 
+//This is for notification bell functionality.
 document.getElementsByClassName("fa-bell")[0].addEventListener("click", function () {
   if (
     window.getComputedStyle(document.getElementById("bell-inner-container")).display === "none" &&
@@ -358,6 +360,7 @@ document.getElementsByClassName("fa-bell")[0].addEventListener("click", function
   }
 });
 
+//This is for the functionality of the pop-up window that appears when user clicks the bell icon and there are notifications.
 document.getElementsByClassName("bell-actions")[0].addEventListener("click", function () {
   $("#bell-notification-details").fadeOut(300, function () {
     document.getElementById("bell-inner-container").style.display = "none";
@@ -377,6 +380,7 @@ document.getElementsByClassName("bell-actions")[0].addEventListener("click", fun
     });
 });
 
+//This is for the functionality of the pop-up window that appears when user clicks the bell icon and there are notifications.
 document.getElementsByClassName("bell-actions")[1].addEventListener("click", function () {
   document.getElementById("bell-inner-container").style.display = "none";
   new_post_counter = 1;
