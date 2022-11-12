@@ -76,7 +76,7 @@ document.getElementById("sum").addEventListener("click", function () {
           document.getElementById("user-help").innerText = "";
           document.getElementById("pass-help").innerText = "Something went wrong! Please try again later!";
         } else if (response.trim() === "Success") {
-          window.location = "http://localhost/project/login/login.php";
+          window.location = "../login/login.php";
         }
       });
   }
