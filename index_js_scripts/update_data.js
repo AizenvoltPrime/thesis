@@ -29,7 +29,9 @@ addEventListener("DOMContentLoaded", (event) => {
       window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip !== "text" &&
       (document.forms["search-box-container"]["search-text"].value === "" ||
         document.forms["search-box-container"]["search-text"].value === undefined) &&
-      window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text"
+      window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text" &&
+      window.getComputedStyle(document.getElementById("all-filters")).display === "flex" &&
+      get_variables()[0] === false
     ) {
       let post_time_relative = DateTime.fromFormat(JSON.parse(e.data)[1][6], "yyyy-MM-dd HH:mm:ss").toRelative();
       let post_time_detailed = DateTime.fromFormat(JSON.parse(e.data)[1][6], "yyyy-MM-dd HH:mm:ss").toFormat("cccc, dd MMMM, yyyy, TTTT");
@@ -99,7 +101,9 @@ addEventListener("DOMContentLoaded", (event) => {
         window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip === "text" ||
         (document.forms["search-box-container"]["search-text"].value !== "" &&
           document.forms["search-box-container"]["search-text"].value !== undefined) ||
-        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip === "text")
+        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip === "text" ||
+        window.getComputedStyle(document.getElementById("all-filters")).display !== "flex" ||
+        get_variables()[0] === true)
     ) {
       $("#bell-notification-details").fadeOut(300, function () {
         document.getElementById("bell-inner-container").style.display = "block";
@@ -334,13 +338,17 @@ document.getElementsByClassName("fa-bell")[0].addEventListener("click", function
     window.getComputedStyle(document.getElementById("bell-inner-container")).display === "none" &&
     window.getComputedStyle(document.getElementById("bell-notification-details")).display === "none"
   ) {
-    document.getElementsByClassName("bell-notification-title")[0].innerText = "No new polls have been added";
+    document.getElementsByClassName("bell-notification-title")[0].innerText = "0 new polls have been added";
     $("#bell-notification-details").fadeIn(300, function () {});
   } else if (
     window.getComputedStyle(document.getElementById("bell-inner-container")).display !== "none" &&
     window.getComputedStyle(document.getElementById("bell-notification-details")).display === "none"
   ) {
-    document.getElementsByClassName("bell-notification-title")[0].innerText = "New polls have been added";
+    if (new_post_counter - 1 === 1) {
+      document.getElementsByClassName("bell-notification-title")[0].innerText = new_post_counter - 1 + " new poll has been added";
+    } else {
+      document.getElementsByClassName("bell-notification-title")[0].innerText = new_post_counter - 1 + " new polls have been added";
+    }
     document.getElementsByClassName("bell-actions")[0].style.display = "block";
     document.getElementsByClassName("bell-actions")[1].style.display = "block";
     $("#bell-notification-details").fadeIn(300, function () {});
@@ -368,22 +376,17 @@ document.getElementsByClassName("bell-actions")[0].addEventListener("click", fun
     document.getElementsByClassName("bell-actions")[1].style.display = "none";
     new_post_counter = 1;
   });
-  clear_filters();
-  null_all_styles();
-  $(".post").fadeOut(300, function () {});
-  $(".post")
-    .promise()
-    .done(function () {
-      $(".post").not(":first").remove();
-      reset_poll_data();
-      generate_posts(false);
-    });
+  document.getElementsByClassName("nav-element")[0].click();
 });
 
 //This is for the functionality of the pop-up window that appears when user clicks the bell icon and there are notifications.
 document.getElementsByClassName("bell-actions")[1].addEventListener("click", function () {
-  document.getElementById("bell-inner-container").style.display = "none";
-  new_post_counter = 1;
+  $("#bell-notification-details").fadeOut(300, function () {
+    document.getElementById("bell-inner-container").style.display = "none";
+    document.getElementsByClassName("bell-actions")[0].style.display = "none";
+    document.getElementsByClassName("bell-actions")[1].style.display = "none";
+    new_post_counter = 1;
+  });
 });
 
 $(window).click(function (e) {

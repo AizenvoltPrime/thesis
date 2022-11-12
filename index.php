@@ -28,6 +28,7 @@ require_once "new_config.php";
   <script type="module" src="index_js_scripts/navbar.js"></script>
   <script type="module" src="index_js_scripts/filters.js"></script>
   <script type="module" src="index_js_scripts/update_data.js"></script>
+  <script type="module" src="index_js_scripts/admin_analytics.js"></script>
   <script type="module" src="geojson/greece_regions.js"></script>
 </head>
 
@@ -275,7 +276,7 @@ require_once "new_config.php";
       <button id="map-analytics"><i class="fa-solid fa-map"></i>Map Analytics</button>
       <button id="chart-analytics"><i class="fa-solid fa-chart-column"></i>Chart Analytics</button>
     </div>
-    <div id="app-analytics-map"></div>
+    <div id="admin-analytics-map"></div>
   </div>
   <!--This div contains all the posts.-->
   <div id="posts-container">

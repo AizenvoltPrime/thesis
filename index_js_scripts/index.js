@@ -1,4 +1,4 @@
-import { null_style, highlight_filter, clear_filters } from "./filters.js";
+import { null_style, clear_filters } from "./filters.js";
 import { clear_bell_counter } from "./update_data.js";
 import { greece_regions } from "../geojson/greece_regions.js";
 
@@ -1229,16 +1229,6 @@ function calcCrow(lat1, lon1, lat2, lon2) {
 function toRad(Value) {
   return (Value * Math.PI) / 180;
 }
-
-document.getElementById("map-analytics").addEventListener("click", function () {
-  highlight_filter("fa-solid fa-map");
-  null_style("fa-solid fa-chart-column");
-});
-
-document.getElementById("chart-analytics").addEventListener("click", function () {
-  highlight_filter("fa-solid fa-chart-column");
-  null_style("fa-solid fa-map");
-});
 
 //exports variables to other js files.
 export function get_variables() {

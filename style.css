@@ -1204,7 +1204,8 @@ a:active {
 }
 
 #event-location-map,
-#post-locations-map {
+#post-locations-map,
+#admin-analytics-map {
   width: 100%;
   max-width: 70em;
   height: 40em;

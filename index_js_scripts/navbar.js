@@ -1,5 +1,12 @@
 import { generate_posts, reset_poll_data, null_all_styles } from "./index.js";
-import { null_style, highlight_filter } from "./filters.js";
+import { null_style, highlight_filter, clear_map } from "./filters.js";
+import {
+  admin_analytics_map,
+  make_admin_analytics_map,
+  admin_layerControl,
+  admin_all_geojson,
+  admin_analytics_all_markers,
+} from "./admin_analytics.js";
 
 //This is for when the user clicks the left navbar icon for it to appear.
 document.getElementById("sidenav-icon").addEventListener("click", function () {
@@ -94,6 +101,7 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
+        clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(true);
@@ -155,6 +163,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
+        clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(false);
@@ -205,6 +214,7 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
+        clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         $("#username-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
@@ -295,6 +305,7 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
+        clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         $("#password-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
@@ -385,7 +396,11 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       $("#username-change-form").fadeOut(300, function () {
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
-        $("#analytics-container").fadeIn(300, function () {});
+        $("#analytics-container").fadeIn(300, function () {
+          clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+          admin_analytics_map.invalidateSize();
+          make_admin_analytics_map();
+        });
       });
     } else if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
@@ -393,7 +408,11 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       $("#password-change-form").fadeOut(300, function () {
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
-        $("#analytics-container").fadeIn(300, function () {});
+        $("#analytics-container").fadeIn(300, function () {
+          clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+          admin_analytics_map.invalidateSize();
+          make_admin_analytics_map();
+        });
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
@@ -401,7 +420,11 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       $("#next-step").fadeOut(300, function () {
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
-        $("#analytics-container").fadeIn(300, function () {});
+        $("#analytics-container").fadeIn(300, function () {
+          clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+          admin_analytics_map.invalidateSize();
+          make_admin_analytics_map();
+        });
       });
     }
   } else {
@@ -418,7 +441,11 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         reset_poll_data();
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
-        $("#analytics-container").fadeIn(300, function () {});
+        $("#analytics-container").fadeIn(300, function () {
+          clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+          admin_analytics_map.invalidateSize();
+          make_admin_analytics_map();
+        });
       });
   }
 });

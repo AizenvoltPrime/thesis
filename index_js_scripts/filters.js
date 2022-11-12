@@ -402,7 +402,7 @@ export function clear_filters() {
   document.forms["search-box-container"]["search-text"].value = "";
   if (window.getComputedStyle(document.getElementById("post-locations-container")).display !== "none") {
     $("#post-locations-container").fadeOut(300, function () {
-      clear_map();
+      clear_map(app_analytics_map, layerControl, all_geojson, app_analytics_all_markers);
       null_style("fa-map-location-dot");
     });
   }
@@ -535,7 +535,7 @@ var base_of_map = L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
 
 var geojson_layer = L.geoJson(greece_regions, { style: style });
 
-function getColor(d) {
+export function getColor(d) {
   return d > 100
     ? "#800026"
     : d > 50
@@ -553,7 +553,7 @@ function getColor(d) {
     : "#FFEDA0";
 }
 
-function style(feature) {
+export function style(feature) {
   return {
     fillColor: getColor(feature.properties.number_of_posts),
     weight: 2,
@@ -566,7 +566,6 @@ function style(feature) {
 
 function highlightFeature(e) {
   var layer = e.target;
-
   layer.setStyle({
     weight: 5,
     color: "#666",
@@ -663,6 +662,7 @@ function make_app_analytics_map() {
         });
         update_region_posts(geo_out[0], parseInt(response[i][2]));
       }
+      resetHighlight(geojson_layer);
       layerControl = L.control.layers(null, overlayMaps).addTo(app_analytics_map);
       layerControl.addOverlay(all_geojson, "Choropleth");
       layerControl.addOverlay(app_analytics_all_markers, "Markers");
@@ -670,11 +670,11 @@ function make_app_analytics_map() {
 }
 
 //This function clears map layers.
-function clear_map() {
-  if (layerControl !== undefined) {
-    app_analytics_map.removeControl(layerControl);
-    app_analytics_map.removeLayer(all_geojson);
-    app_analytics_map.removeLayer(app_analytics_all_markers);
+export function clear_map(map_name, layer_control, geogjson, markers) {
+  if (layer_control !== undefined) {
+    map_name.removeControl(layer_control);
+    map_name.removeLayer(geogjson);
+    map_name.removeLayer(markers);
     clear_region_posts();
   }
 }
@@ -683,7 +683,7 @@ function clear_map() {
 document.getElementById("post-locations-filter").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("post-locations-container")).display !== "none") {
     $("#post-locations-container").fadeOut(300, function () {
-      clear_map();
+      clear_map(app_analytics_map, layerControl, all_geojson, app_analytics_all_markers);
       null_style("fa-map-location-dot");
     });
   } else {
@@ -698,7 +698,7 @@ document.getElementById("post-locations-filter").addEventListener("click", funct
 //This is for Post Locations map functionality.
 document.getElementsByClassName("close-map")[0].addEventListener("click", function () {
   $("#post-locations-container").fadeOut(300, function () {
-    clear_map();
+    clear_map(app_analytics_map, layerControl, all_geojson, app_analytics_all_markers);
     null_style("fa-map-location-dot");
   });
 });
