@@ -30,15 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if ($insertionCheck) {
-        $sql = "INSERT INTO user (username, email, password, status) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO user (username, email, password) VALUES (?, ?, ?)";
 
         if ($stmt = mysqli_prepare($conn, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_email, $param_password, $param_status);
+            mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_email, $param_password);
             $param_username = $username;
             $param_email = $email;
             $param_password = password_hash($password, PASSWORD_DEFAULT);
-            $param_status = "offline";
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
                 // Redirect to login page

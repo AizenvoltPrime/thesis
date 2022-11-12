@@ -41,7 +41,7 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
                     } else {
                         $_SESSION["role"] = "user";
                     }
-                    $sql = "UPDATE user SET city_latitude = '$data[latitude]', city_longitude = '$data[longitude]', status = 'online', connected_devices = connected_devices + 1 WHERE id='$_SESSION[id]'";
+                    $sql = "UPDATE user SET city_latitude = '$data[latitude]', city_longitude = '$data[longitude]' WHERE id='$_SESSION[id]'";
                     mysqli_query($conn, $sql);
                     echo "Success";
                 } else {
