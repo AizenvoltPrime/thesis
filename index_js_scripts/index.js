@@ -109,6 +109,12 @@ fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
     user_coordinates[1] = loc[1];
   });
 
+addEventListener("DOMContentLoaded", (event) => {
+  setTimeout(() => {
+    conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
+  }, 2000);
+});
+
 //This is for when the user clicks the "Plus" icon.
 document.getElementById("add-post-icon").addEventListener("click", function () {
   bookmarks_active = false;
@@ -1287,3 +1293,7 @@ export function edit_vote(position, value_yes, value_no, vote_bool) {
 export function edit_bookmark(position, value) {
   post_data[position][10] = value;
 }
+
+window.onbeforeunload = () => {
+  conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
+};

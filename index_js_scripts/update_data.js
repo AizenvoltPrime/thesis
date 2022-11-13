@@ -1,16 +1,5 @@
-import {
-  conn,
-  add_new_post,
-  get_variables,
-  edit_chevron,
-  make_yes_no_chart,
-  edit_vote,
-  edit_bookmark,
-  generate_posts,
-  reset_poll_data,
-  null_all_styles,
-} from "./index.js";
-import { clear_filters } from "./filters.js";
+import { conn, add_new_post, get_variables, edit_chevron, make_yes_no_chart, edit_vote, edit_bookmark } from "./index.js";
+import { make_admin_analytics_map, admin_map_remove_marker } from "./admin_analytics.js";
 
 var DateTime = luxon.DateTime;
 let new_post_counter = 1;
@@ -328,6 +317,28 @@ addEventListener("DOMContentLoaded", (event) => {
           }
         }
       }
+    } else if (JSON.parse(e.data)[0] === "admin_analytics_map") {
+      if (get_variables()[2] > 9) {
+        if (JSON.parse(e.data)[1] !== get_variables()[3][0][16]) {
+          conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
+        }
+      } else {
+        conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
+      }
+    } else if (JSON.parse(e.data)[0] === "admin_map_coordinates") {
+      if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip === "text") {
+        if (JSON.parse(e.data)[1] === get_variables()[3][0][16]) {
+          make_admin_analytics_map(JSON.parse(e.data)[2], JSON.parse(e.data)[3]);
+        }
+      }
+    } else if (JSON.parse(e.data)[0] === "new_online_user") {
+      if (get_variables()[2] > 9) {
+        if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip === "text") {
+          make_admin_analytics_map(JSON.parse(e.data)[1], JSON.parse(e.data)[2]);
+        }
+      }
+    } else if (JSON.parse(e.data)[0] === "admin_map_delete_marker") {
+      admin_map_remove_marker(JSON.parse(e.data)[1], JSON.parse(e.data)[2]);
     }
   };
 });
