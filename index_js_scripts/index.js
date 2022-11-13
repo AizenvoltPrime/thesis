@@ -1298,4 +1298,11 @@ document.onvisibilitychange = () => {
   if (document.visibilityState === "hidden") {
     conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
   }
+  if (document.visibilityState === "visible") {
+    conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
+  }
+};
+
+window.onbeforeunload = () => {
+  conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
 };
