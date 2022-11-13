@@ -96,6 +96,7 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+        null_style("fa-solid fa-map");
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(true);
@@ -158,6 +159,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
       document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+        null_style("fa-solid fa-map");
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(false);
@@ -209,6 +211,7 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+        null_style("fa-solid fa-map");
         $("#username-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
@@ -300,6 +303,7 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+        null_style("fa-solid fa-map");
         $("#password-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {

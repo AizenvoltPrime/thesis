@@ -326,12 +326,14 @@ addEventListener("DOMContentLoaded", (event) => {
         conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
       }
     } else if (JSON.parse(e.data)[0] === "admin_map_coordinates") {
-      if (JSON.parse(e.data)[1] === get_variables()[3][0][16]) {
-        make_admin_analytics_map(JSON.parse(e.data)[2], JSON.parse(e.data)[3]);
+      if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip === "text") {
+        if (JSON.parse(e.data)[1] === get_variables()[3][0][16]) {
+          make_admin_analytics_map(JSON.parse(e.data)[2], JSON.parse(e.data)[3]);
+        }
       }
     } else if (JSON.parse(e.data)[0] === "new_online_user") {
       if (get_variables()[2] > 9) {
-        if (window.getComputedStyle(document.getElementById("admin-analytics-map")).display === "block") {
+        if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip === "text") {
           make_admin_analytics_map(JSON.parse(e.data)[1], JSON.parse(e.data)[2]);
         }
       }
