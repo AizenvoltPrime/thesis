@@ -3,6 +3,11 @@ import { make_admin_analytics_map, admin_map_remove_marker } from "./admin_analy
 
 var DateTime = luxon.DateTime;
 let new_post_counter = 1;
+let admin_map_bool = false;
+
+export function set_admin_map_bool(map_bool) {
+  admin_map_bool = map_bool;
+}
 
 //This function clears notification counter.
 export function clear_bell_counter() {
@@ -318,6 +323,7 @@ addEventListener("DOMContentLoaded", (event) => {
         }
       }
     } else if (JSON.parse(e.data)[0] === "admin_analytics_map") {
+      admin_map_bool = JSON.parse(e.data)[2];
       if (get_variables()[2] > 9) {
         if (JSON.parse(e.data)[1] !== get_variables()[3][0][16]) {
           conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
@@ -326,19 +332,23 @@ addEventListener("DOMContentLoaded", (event) => {
         conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
       }
     } else if (JSON.parse(e.data)[0] === "admin_map_coordinates") {
-      if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip === "text") {
+      if (admin_map_bool === true) {
         if (JSON.parse(e.data)[1] === get_variables()[3][0][16]) {
           make_admin_analytics_map(JSON.parse(e.data)[2], JSON.parse(e.data)[3]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "new_online_user") {
       if (get_variables()[2] > 9) {
-        if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip === "text") {
+        if (admin_map_bool === true) {
           make_admin_analytics_map(JSON.parse(e.data)[1], JSON.parse(e.data)[2]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "admin_map_delete_marker") {
-      admin_map_remove_marker(JSON.parse(e.data)[1], JSON.parse(e.data)[2]);
+      if (admin_map_bool === true) {
+        admin_map_remove_marker(JSON.parse(e.data)[1], JSON.parse(e.data)[2]);
+      }
+    } else if (JSON.parse(e.data)[0] === "admin_map_status") {
+      admin_map_bool = JSON.parse(e.data)[1];
     }
   };
 });

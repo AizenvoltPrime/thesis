@@ -1,6 +1,7 @@
 import { generate_posts, reset_poll_data, null_all_styles, conn, get_variables } from "./index.js";
 import { null_style, highlight_filter, clear_map } from "./filters.js";
 import { admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers, clear_admin_map } from "./admin_analytics.js";
+import { set_admin_map_bool } from "./update_data.js";
 
 //This is for when the user clicks the left navbar icon for it to appear.
 document.getElementById("sidenav-icon").addEventListener("click", function () {
@@ -97,6 +98,8 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
+        conn.send(JSON.stringify(["admin_map_status", false]));
+        set_admin_map_bool(false);
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(true);
@@ -160,6 +163,8 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
+        conn.send(JSON.stringify(["admin_map_status", false]));
+        set_admin_map_bool(false);
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(false);
@@ -212,6 +217,8 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
+        conn.send(JSON.stringify(["admin_map_status", false]));
+        set_admin_map_bool(false);
         $("#username-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
@@ -304,6 +311,8 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
+        conn.send(JSON.stringify(["admin_map_status", false]));
+        set_admin_map_bool(false);
         $("#password-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
@@ -395,8 +404,9 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16]]));
           clear_admin_map();
+          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          set_admin_map_bool(true);
           admin_analytics_map.invalidateSize();
         });
       });
@@ -407,8 +417,9 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16]]));
           clear_admin_map();
+          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          set_admin_map_bool(true);
           admin_analytics_map.invalidateSize();
         });
       });
@@ -419,8 +430,9 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16]]));
           clear_admin_map();
+          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          set_admin_map_bool(true);
           admin_analytics_map.invalidateSize();
         });
       });
@@ -440,8 +452,9 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
         $("#analytics-container").fadeIn(300, function () {
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16]]));
           clear_admin_map();
+          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          set_admin_map_bool(true);
           admin_analytics_map.invalidateSize();
         });
       });

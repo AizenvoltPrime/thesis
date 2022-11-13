@@ -112,7 +112,7 @@ fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
 addEventListener("DOMContentLoaded", (event) => {
   setTimeout(() => {
     conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
-  }, 2000);
+  }, 1000);
 });
 
 //This is for when the user clicks the "Plus" icon.

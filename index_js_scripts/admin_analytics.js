@@ -1,6 +1,7 @@
 import { conn, get_variables } from "./index.js";
 import { style, getColor, highlight_filter, null_style, clear_map } from "./filters.js";
 import { greece_regions, update_region_posts } from "../geojson/greece_regions.js";
+import { set_admin_map_bool } from "./update_data.js";
 
 document.getElementById("map-analytics").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("admin-analytics-map")).display === "none") {
@@ -8,7 +9,8 @@ document.getElementById("map-analytics").addEventListener("click", function () {
     null_style("fa-solid fa-chart-column");
     $("#admin-analytics-map").fadeIn(300, function () {
       admin_analytics_map.invalidateSize();
-      conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16]]));
+      conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+      set_admin_map_bool(true);
     });
   }
 });
@@ -20,6 +22,8 @@ document.getElementById("chart-analytics").addEventListener("click", function ()
     $("#admin-analytics-map").fadeOut(300, function () {
       clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
       clear_admin_map();
+      conn.send(JSON.stringify(["admin_map_status", false]));
+      set_admin_map_bool(false);
     });
   }
 });
