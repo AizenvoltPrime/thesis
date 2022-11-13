@@ -325,11 +325,13 @@ addEventListener("DOMContentLoaded", (event) => {
     } else if (JSON.parse(e.data)[0] === "admin_analytics_map") {
       admin_map_bool = JSON.parse(e.data)[2];
       if (get_variables()[2] > 9) {
-        if (JSON.parse(e.data)[1] !== get_variables()[3][0][16]) {
+        if (JSON.parse(e.data)[1] !== get_variables()[3][0][16] && get_variables()[4][1] !== undefined) {
           conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
         }
       } else {
-        conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
+        if (get_variables()[4][1] !== undefined) {
+          conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
+        }
       }
     } else if (JSON.parse(e.data)[0] === "admin_map_coordinates") {
       if (admin_map_bool === true) {

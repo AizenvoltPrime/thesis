@@ -8849,7 +8849,9 @@ export var greece_regions = {
 };
 
 export function update_region_posts(region, posts_number) {
-  region.properties.number_of_posts += posts_number;
+  if (region !== undefined) {
+    region.properties.number_of_posts += posts_number;
+  }
 }
 
 export function clear_region_posts() {

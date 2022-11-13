@@ -111,7 +111,9 @@ fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
 
 addEventListener("DOMContentLoaded", (event) => {
   setTimeout(() => {
-    conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
+    if (user_coordinates[0] !== undefined) {
+      conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
+    }
   }, 1000);
 });
 
@@ -1295,14 +1297,16 @@ export function edit_bookmark(position, value) {
 }
 
 document.onvisibilitychange = () => {
-  if (document.visibilityState === "hidden") {
+  if (document.visibilityState === "hidden" && user_coordinates[0] !== undefined) {
     conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
   }
-  if (document.visibilityState === "visible") {
+  if (document.visibilityState === "visible" && user_coordinates[0] !== undefined) {
     conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
   }
 };
 
 window.onbeforeunload = () => {
-  conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
+  if (user_coordinates[0] !== undefined) {
+    conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
+  }
 };
