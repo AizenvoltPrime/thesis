@@ -1294,6 +1294,8 @@ export function edit_bookmark(position, value) {
   post_data[position][10] = value;
 }
 
-window.onbeforeunload = () => {
-  conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
+document.onvisibilitychange = () => {
+  if (document.visibilityState === "hidden") {
+    conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
+  }
 };
