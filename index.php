@@ -278,6 +278,15 @@ require_once "new_config.php";
     </div>
     <div id="admin-analytics-map"></div>
   </div>
+  <div id="admin-analytics-chart-filters-container" style="display:none;">
+    <div id="admin-analytics-chart-filters-inside-container">
+      <form id="admin-chart-time-filter-container">
+        <label class="filter-instruction">Time Filter</label>
+        <input id="admin-time-filter-selector" type="datetime-local" name="admin-time-filter-choice" placeholder=""></input>
+      </form>
+      <button id="admin-filter-button" type="button">Filter</button>
+    </div>
+  </div>
   <!--This div contains all the posts.-->
   <div id="posts-container">
     <div class="post">

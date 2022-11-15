@@ -549,4 +549,28 @@ if ($data['request'] == "request_username") {
         }
     }
     echo json_encode($location_responses_data);
+} else if ($data['request'] == "get_admin_analytics_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+    require_once "new_config.php";
+
+    $admin_chart_data = array();
+
+    if (!isset($data["admin_time_filter"])) {
+        $admin_time_filter = array("2020-01-01 00:00", "2090-01-01 00:00");
+    } else if (strpos($data["admin_time_filter"], ",") == true) {
+        $admin_time_filter = explode(",", $data["admin_time_filter"]);
+        $stmt = $conn->prepare("SELECT COUNT(post_number) AS number_of_posts, CAST(post_date AS DATE) AS date_only FROM posts 
+        WHERE post_date BETWEEN :first_date AND :second_date GROUP BY date_only");
+        $stmt->execute([":first_date" => $admin_time_filter[0], ":second_date" => $admin_time_filter[1]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $tmp = array($row["number_of_posts"], $row["date_only"]);
+                array_push($admin_chart_data, $tmp);
+            }
+        }
+        echo json_encode($admin_chart_data);
+    } else {
+        $stmt = $conn->prepare("SELECT COUNT(post_number) AS number_of_posts, CAST(post_date AS DATE) AS date_only WHERE post_date=:post_date FROM posts GROUP BY date_only");
+        $stmt->execute([":post_date" => $data["post_id"]]);
+        $admin_time_filter = $data["admin_time_filter"];
+    }
 }

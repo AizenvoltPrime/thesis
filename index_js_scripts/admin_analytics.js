@@ -3,14 +3,18 @@ import { style, getColor, highlight_filter, null_style, clear_map } from "./filt
 import { greece_regions, update_region_posts } from "../geojson/greece_regions.js";
 import { set_admin_map_bool } from "./update_data.js";
 
+let DateTime = luxon.DateTime;
+
 document.getElementById("map-analytics").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("admin-analytics-map")).display === "none") {
-    highlight_filter("fa-solid fa-map");
-    null_style("fa-solid fa-chart-column");
-    $("#admin-analytics-map").fadeIn(300, function () {
-      admin_analytics_map.invalidateSize();
-      conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
-      set_admin_map_bool(true);
+    $("#admin-analytics-chart-filters-container").fadeOut(300, function () {
+      highlight_filter("fa-solid fa-map");
+      null_style("fa-solid fa-chart-column");
+      $("#admin-analytics-map").fadeIn(300, function () {
+        admin_analytics_map.invalidateSize();
+        conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+        set_admin_map_bool(true);
+      });
     });
   }
 });
@@ -25,7 +29,16 @@ document.getElementById("chart-analytics").addEventListener("click", function ()
       conn.send(JSON.stringify(["admin_map_status", false]));
       set_admin_map_bool(false);
     });
+    document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value = "";
+    $("#admin-analytics-chart-filters-container").fadeIn(300, function () {});
   }
+});
+
+flatpickr("#admin-time-filter-selector", {
+  enableTime: true,
+  dateFormat: "Y-m-d H:i",
+  time_24hr: true,
+  mode: "range",
 });
 
 export var admin_analytics_map = L.map("admin-analytics-map").setView([38.5, 25.5], 6);
@@ -164,3 +177,39 @@ export function clear_admin_map() {
   admin_analytics_marker.length = 0;
   admin_layerControl = undefined;
 }
+
+function get_admin_analytics_data(time_filter, filter_type) {
+  fetch("process_data.php", {
+    method: "POST",
+    body: JSON.stringify({ request: "get_admin_analytics_data", admin_time_filter: time_filter, filter_type: filter_type }),
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      console.log(response);
+    });
+}
+
+document.getElementById("admin-filter-button").addEventListener("click", function () {
+  let admin_time_filter = document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value;
+  if (admin_time_filter.search("to") > -1) {
+    $("#warning-time-filter-choice").fadeOut(300, function () {});
+    admin_time_filter = admin_time_filter.replace(" to ", ",");
+    const date_filter_array = admin_time_filter.split(",");
+    let d1 = DateTime.fromFormat(date_filter_array[0], "yyyy-MM-dd HH:mm").toFormat("yyyy-MM-dd");
+    let d2 = DateTime.fromFormat(date_filter_array[1], "yyyy-MM-dd HH:mm").toFormat("yyyy-MM-dd");
+    d1 = DateTime.fromISO(d1);
+    d2 = DateTime.fromISO(d2);
+    if (d1.hasSame(d2, "day")) {
+      //get_admin_analytics_data(admin_time_filter, "same_day_with_range");
+      console.log("same_day_with_range");
+    } else {
+      //get_admin_analytics_data(admin_time_filter, "different_days_with_range");
+      console.log("different_days_with_range");
+    }
+  } else if (admin_time_filter !== "") {
+    //get_admin_analytics_data(admin_time_filter, "one_date");
+    console.log("one_date");
+  } else {
+    console.log("all");
+  }
+});
