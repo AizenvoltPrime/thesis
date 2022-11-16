@@ -283,7 +283,7 @@ require_once "new_config.php";
       <form id="admin-chart-time-filter-container">
         <label class="filter-instruction">Time Filter</label>
         <input id="admin-time-filter-selector" type="datetime-local" name="admin-time-filter-choice" placeholder=""></input>
-        <div id="admin-warning-time-filter-choice" style="display:none;">You must select a date range!</div>
+        <div id="admin-warning-time-filter-choice" style="display:none;"></div>
       </form>
       <button id="admin-filter-button" type="button">Filter</button>
     </div>

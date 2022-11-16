@@ -229,6 +229,10 @@ function get_admin_analytics_data(time_filter, filter_type) {
           }
           make_admin_posts_chart((() => chart_data.map((x) => x[0]))(), (() => chart_data.map((x) => x[1]))(), "Posts Per Hour");
         }
+      } else {
+        document.getElementById("admin-warning-time-filter-choice").innerText = "There are no posts in these dates!";
+        $("#admin-warning-time-filter-choice").fadeIn(300, function () {});
+        $("#admin-chart-container").fadeOut(300, function () {});
       }
     });
 }
@@ -249,6 +253,7 @@ document.getElementById("admin-filter-button").addEventListener("click", functio
       get_admin_analytics_data(admin_time_filter, "different_days_with_range");
     }
   } else if (admin_time_filter !== "") {
+    document.getElementById("admin-warning-time-filter-choice").innerText = "You must select a date range!";
     $("#admin-warning-time-filter-choice").fadeIn(300, function () {});
   }
 });
