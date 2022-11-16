@@ -95,6 +95,7 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
     } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
+      $("#admin-analytics-chart-filters-container").fadeOut(300, function () {});
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
@@ -160,6 +161,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
     } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
+      $("#admin-analytics-chart-filters-container").fadeOut(300, function () {});
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
@@ -214,6 +216,7 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
     } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
+      $("#admin-analytics-chart-filters-container").fadeOut(300, function () {});
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
@@ -308,6 +311,7 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
     } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
+      $("#admin-analytics-chart-filters-container").fadeOut(300, function () {});
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
@@ -403,6 +407,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       $("#username-change-form").fadeOut(300, function () {
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
+        document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
           clear_admin_map();
           conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
@@ -416,6 +421,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       $("#password-change-form").fadeOut(300, function () {
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
+        document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
           clear_admin_map();
           conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
@@ -429,6 +435,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       $("#next-step").fadeOut(300, function () {
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
+        document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
           clear_admin_map();
           conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
@@ -451,6 +458,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         reset_poll_data();
         null_style("fa-chart-column");
         highlight_filter("fa-solid fa-map");
+        document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
           clear_admin_map();
           conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
