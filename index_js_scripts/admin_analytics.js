@@ -192,8 +192,20 @@ function get_admin_analytics_data(time_filter, filter_type) {
       let chart_data = [];
       if (response.length > 0) {
         if (response[0][0].trim() === "different_days_with_range") {
+          const date_filter_array = time_filter.split(",");
+          let d1 = DateTime.fromFormat(date_filter_array[0], "yyyy-MM-dd HH:mm").toFormat("yyyy-MM-dd");
+          let d2 = DateTime.fromFormat(date_filter_array[1], "yyyy-MM-dd HH:mm").toFormat("yyyy-MM-dd");
+          d1 = new Date(d1);
+          d2 = new Date(d2);
+          getDatesInRange(d1, d2).forEach((date) => {
+            date = DateTime.fromFormat(date.toString().slice(0, 15), "ccc LLL dd yyyy").toFormat("dd/MM/yyyy");
+            chart_data.push([0, date]);
+          });
           for (let i = 0; i < response.length; i++) {
-            chart_data.push([response[i][1], DateTime.fromFormat(response[i][2], "yyyy-MM-dd").toFormat("dd/MM/yyyy")]);
+            let index = (() => chart_data.map((x) => x[1]))().indexOf(DateTime.fromFormat(response[i][2], "yyyy-MM-dd").toFormat("dd/MM/yyyy"));
+            if (index > -1) {
+              chart_data[index][0] = parseInt(response[i][1]);
+            }
           }
           make_admin_posts_chart((() => chart_data.map((x) => x[0]))(), (() => chart_data.map((x) => x[1]))(), "Posts Per Day");
         } else if (response[0][0].trim() === "same_day_with_range") {
@@ -270,7 +282,7 @@ function make_admin_posts_chart(chart_data, labels, title) {
           labels: {
             color: "#f3f3f3",
             boxWidth: 0,
-            fontSize: 2,
+            fontSize: 1,
           },
         },
       },
@@ -278,6 +290,7 @@ function make_admin_posts_chart(chart_data, labels, title) {
         y: {
           ticks: {
             color: "#f3f3f3",
+            precision: 0,
           },
         },
         x: {
@@ -288,4 +301,17 @@ function make_admin_posts_chart(chart_data, labels, title) {
       },
     },
   });
+}
+
+function getDatesInRange(startDate, endDate) {
+  const date = new Date(startDate.getTime());
+
+  const dates = [];
+
+  while (date <= endDate) {
+    dates.push(new Date(date));
+    date.setDate(date.getDate() + 1);
+  }
+
+  return dates;
 }

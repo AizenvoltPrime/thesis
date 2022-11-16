@@ -1136,6 +1136,7 @@ export function make_yes_no_chart(post_number, chart_data) {
         y: {
           ticks: {
             color: "#f3f3f3",
+            precision: 0,
           },
         },
         x: {
