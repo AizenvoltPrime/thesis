@@ -4,10 +4,14 @@ import { greece_regions, update_region_posts } from "../geojson/greece_regions.j
 import { set_admin_map_bool } from "./update_data.js";
 
 let DateTime = luxon.DateTime;
+let ctx; //used for charts
+let admin_chart; //the chart
 
 document.getElementById("map-analytics").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("admin-analytics-map")).display === "none") {
+    $("#admin-chart-container").fadeOut(300, function () {});
     $("#admin-analytics-chart-filters-container").fadeOut(300, function () {
+      $("#admin-warning-time-filter-choice").fadeOut(300, function () {});
       highlight_filter("fa-solid fa-map");
       null_style("fa-solid fa-chart-column");
       $("#admin-analytics-map").fadeIn(300, function () {
@@ -185,14 +189,42 @@ function get_admin_analytics_data(time_filter, filter_type) {
   })
     .then((res) => res.json())
     .then((response) => {
-      console.log(response);
+      let chart_data = [];
+      if (response.length > 0) {
+        if (response[0][0].trim() === "different_days_with_range") {
+          for (let i = 0; i < response.length; i++) {
+            chart_data.push([response[i][1], DateTime.fromFormat(response[i][2], "yyyy-MM-dd").toFormat("dd/MM/yyyy")]);
+          }
+          make_admin_posts_chart((() => chart_data.map((x) => x[0]))(), (() => chart_data.map((x) => x[1]))(), "Posts Per Day");
+        } else if (response[0][0].trim() === "same_day_with_range") {
+          for (let i = 0; i < 24; i++) {
+            if (i < 10) {
+              chart_data.push([0, "0" + i + ":00"]);
+            } else {
+              chart_data.push([0, i + ":00"]);
+            }
+            for (let j = 0; j < response.length; j++) {
+              if (i < 10) {
+                if (response[j][1] >= "0" + i + ":00:00" && response[j][1] <= "0" + i + ":59:59") {
+                  chart_data[i][0]++;
+                }
+              } else {
+                if (response[j][1] >= i + ":00:00" && response[j][1] <= i + ":59:59") {
+                  chart_data[i][0]++;
+                }
+              }
+            }
+          }
+          make_admin_posts_chart((() => chart_data.map((x) => x[0]))(), (() => chart_data.map((x) => x[1]))(), "Posts Per Hour");
+        }
+      }
     });
 }
 
 document.getElementById("admin-filter-button").addEventListener("click", function () {
   let admin_time_filter = document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value;
   if (admin_time_filter.search("to") > -1) {
-    $("#warning-time-filter-choice").fadeOut(300, function () {});
+    $("#admin-warning-time-filter-choice").fadeOut(300, function () {});
     admin_time_filter = admin_time_filter.replace(" to ", ",");
     const date_filter_array = admin_time_filter.split(",");
     let d1 = DateTime.fromFormat(date_filter_array[0], "yyyy-MM-dd HH:mm").toFormat("yyyy-MM-dd");
@@ -200,16 +232,60 @@ document.getElementById("admin-filter-button").addEventListener("click", functio
     d1 = DateTime.fromISO(d1);
     d2 = DateTime.fromISO(d2);
     if (d1.hasSame(d2, "day")) {
-      //get_admin_analytics_data(admin_time_filter, "same_day_with_range");
-      console.log("same_day_with_range");
+      get_admin_analytics_data(admin_time_filter, "same_day_with_range");
     } else {
-      //get_admin_analytics_data(admin_time_filter, "different_days_with_range");
-      console.log("different_days_with_range");
+      get_admin_analytics_data(admin_time_filter, "different_days_with_range");
     }
   } else if (admin_time_filter !== "") {
-    //get_admin_analytics_data(admin_time_filter, "one_date");
-    console.log("one_date");
-  } else {
-    console.log("all");
+    $("#admin-warning-time-filter-choice").fadeIn(300, function () {});
   }
 });
+
+function make_admin_posts_chart(chart_data, labels, title) {
+  if (admin_chart) {
+    admin_chart.destroy();
+  }
+  $("#admin-chart-container").fadeIn(300, function () {});
+  ctx = document.getElementById("admin-chart").getContext("2d");
+  admin_chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: title,
+          data: chart_data,
+          backgroundColor: [],
+          borderColor: "#00ffffbb",
+          borderWidth: 1,
+          hoverBackgroundColor: "#00ffffbb",
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      hover: { mode: null },
+      plugins: {
+        legend: {
+          labels: {
+            color: "#f3f3f3",
+            boxWidth: 0,
+            fontSize: 2,
+          },
+        },
+      },
+      scales: {
+        y: {
+          ticks: {
+            color: "#f3f3f3",
+          },
+        },
+        x: {
+          ticks: {
+            color: "#f3f3f3",
+          },
+        },
+      },
+    },
+  });
+}

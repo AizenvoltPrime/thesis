@@ -556,8 +556,6 @@ if ($data['request'] == "request_username") {
 
     if (!isset($data["admin_time_filter"])) {
         $admin_time_filter = array("2020-01-01 00:00", "2090-01-01 00:00");
-    } else if (strpos($data["admin_time_filter"], ",") == true) {
-        $admin_time_filter = explode(",", $data["admin_time_filter"]);
         $stmt = $conn->prepare("SELECT COUNT(post_number) AS number_of_posts, CAST(post_date AS DATE) AS date_only FROM posts 
         WHERE post_date BETWEEN :first_date AND :second_date GROUP BY date_only");
         $stmt->execute([":first_date" => $admin_time_filter[0], ":second_date" => $admin_time_filter[1]]);
@@ -568,9 +566,28 @@ if ($data['request'] == "request_username") {
             }
         }
         echo json_encode($admin_chart_data);
-    } else {
-        $stmt = $conn->prepare("SELECT COUNT(post_number) AS number_of_posts, CAST(post_date AS DATE) AS date_only WHERE post_date=:post_date FROM posts GROUP BY date_only");
-        $stmt->execute([":post_date" => $data["post_id"]]);
-        $admin_time_filter = $data["admin_time_filter"];
+    } else if (strpos($data["admin_time_filter"], ",") == true && $data["filter_type"] == "different_days_with_range") {
+        $admin_time_filter = explode(",", $data["admin_time_filter"]);
+        $stmt = $conn->prepare("SELECT COUNT(post_number) AS number_of_posts, CAST(post_date AS DATE) AS date_only FROM posts 
+        WHERE post_date BETWEEN :first_date AND :second_date GROUP BY date_only");
+        $stmt->execute([":first_date" => $admin_time_filter[0], ":second_date" => $admin_time_filter[1]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $tmp = array("different_days_with_range", $row["number_of_posts"], $row["date_only"]);
+                array_push($admin_chart_data, $tmp);
+            }
+        }
+        echo json_encode($admin_chart_data);
+    } else if (strpos($data["admin_time_filter"], ",") == true && $data["filter_type"] == "same_day_with_range") {
+        $admin_time_filter = explode(",", $data["admin_time_filter"]);
+        $stmt = $conn->prepare("SELECT CAST(post_date AS TIME) AS time_only FROM posts WHERE post_date BETWEEN :first_date AND :second_date");
+        $stmt->execute([":first_date" => $admin_time_filter[0], ":second_date" => $admin_time_filter[1]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $tmp = array("same_day_with_range", $row["time_only"]);
+                array_push($admin_chart_data, $tmp);
+            }
+        }
+        echo json_encode($admin_chart_data);
     }
 }

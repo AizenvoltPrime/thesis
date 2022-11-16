@@ -376,6 +376,8 @@ document.getElementById("poll-status-filter").addEventListener(
 //This clears all poll filters.
 export function clear_filters() {
   $("#search-box-container").fadeOut(300, function () {});
+  $("#admin-warning-time-filter-choice").fadeOut(300, function () {});
+  $("#admin-chart-container").fadeOut(300, function () {});
   $("#preferred-categories-container").fadeOut(300, function () {
     document.querySelectorAll(".category").forEach((category) => {
       null_style(category.getElementsByTagName("i")[0].classList[1]);
