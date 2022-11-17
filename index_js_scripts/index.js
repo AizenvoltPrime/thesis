@@ -100,6 +100,8 @@ document.getElementsByClassName("fa-circle-chevron-right")[1].addEventListener("
   e.addEventListener("mouseover", addAnim);
 })();
 
+generate_posts(false);
+
 //Get user coordinates
 fetch("process_data.php", {
   method: "POST",
@@ -532,8 +534,6 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
       console.log(post_data);
     });
 }
-
-generate_posts(false);
 
 const postContainer = document.querySelector("#posts-container");
 
