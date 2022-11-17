@@ -9,10 +9,15 @@ document.getElementById("sum").addEventListener("click", function () {
     document.getElementById("pass-help").innerText = "Password field is empty!";
     document.getElementById("user-help").innerText = "";
   } else {
-    fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
-      .then((response) => response.json())
-      .then((jsonResponse) => {
-        const loc = jsonResponse.loc.split(",");
+    fetch("../process_data.php", {
+      method: "POST",
+      body: JSON.stringify({
+        request: "get_geolocation_data",
+      }),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        const loc = JSON.parse(response).loc.split(",");
         const coords = {
           latitude: loc[0],
           longitude: loc[1],
