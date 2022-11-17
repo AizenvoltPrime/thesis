@@ -25,7 +25,8 @@ addEventListener("DOMContentLoaded", (event) => {
         document.forms["search-box-container"]["search-text"].value === undefined) &&
       window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text" &&
       window.getComputedStyle(document.getElementById("all-filters")).display === "flex" &&
-      get_variables()[0] === false
+      get_variables()[0] === false &&
+      get_variables()[5] === null
     ) {
       let post_time_relative = DateTime.fromFormat(JSON.parse(e.data)[1][6], "yyyy-MM-dd HH:mm:ss").toRelative();
       let post_time_detailed = DateTime.fromFormat(JSON.parse(e.data)[1][6], "yyyy-MM-dd HH:mm:ss").toFormat("cccc, dd MMMM, yyyy, TTTT");
@@ -97,7 +98,8 @@ addEventListener("DOMContentLoaded", (event) => {
           document.forms["search-box-container"]["search-text"].value !== undefined) ||
         window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip === "text" ||
         window.getComputedStyle(document.getElementById("all-filters")).display !== "flex" ||
-        get_variables()[0] === true)
+        get_variables()[0] === true ||
+        get_variables()[5] !== null)
     ) {
       $("#bell-notification-details").fadeOut(300, function () {
         document.getElementById("bell-inner-container").style.display = "block";

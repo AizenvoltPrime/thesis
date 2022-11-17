@@ -1244,7 +1244,7 @@ export function get_variables() {
   if (post_data.length === undefined || post_data.length === 0) {
     return [bookmarks_active, specific_user_posts];
   } else {
-    return [bookmarks_active, specific_user_posts, post_data[0].length, post_data, [user_coordinates[1], user_coordinates[0]]];
+    return [bookmarks_active, specific_user_posts, post_data[0].length, post_data, [user_coordinates[1], user_coordinates[0]], specific_user_posts];
   }
 }
 
