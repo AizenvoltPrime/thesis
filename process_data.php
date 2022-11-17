@@ -175,7 +175,6 @@ if ($data['request'] == "request_username") {
         $user_search = "%";
     } else {
         $user_search = str_replace(["=", "%", "_"], ["==", "=%", "=_"], $data["user_search"]);
-        $user_search = "%" . $user_search . "%";
     }
 
     if (!isset($data["filter_preferred_categories"])) {
