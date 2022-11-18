@@ -61,7 +61,6 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 ΕΠΟΜΕΝΑ TASK:
 
 - ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
-- Να φτιάξω το notification border ώστε να ξεχωρίζει από το background
-- Bug με τις ώρες στην ίδια μέρα admin_chart_analytics
+- Να μπορώ να αντιγράψω τις συντεταγμένες από το marker
 
 "wss://crowdsource.gamerwelfare.com"

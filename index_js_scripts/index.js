@@ -49,7 +49,9 @@ event_location_map.on("click", function (e) {
   if (allowed_vote_radius !== null) {
     event_location_map.removeLayer(allowed_vote_radius);
   }
-  event_marker = L.marker([event_coordinates[0], event_coordinates[1]]).addTo(event_location_map);
+  event_marker = L.marker([event_coordinates[0], event_coordinates[1]])
+    .bindTooltip("Location Coordinates: " + "<br>" + event_coordinates[0] + "<br>" + event_coordinates[1])
+    .addTo(event_location_map);
   if (document.forms["location-choice"]["radius"].value !== "" && document.forms["location-choice"]["radius"].value >= 5000) {
     allowed_vote_radius = L.circle([event_coordinates[0], event_coordinates[1]], { radius: document.forms["location-choice"]["radius"].value }).addTo(
       event_location_map
