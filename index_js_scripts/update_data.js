@@ -371,8 +371,10 @@ document.getElementsByClassName("fa-bell")[0].addEventListener("click", function
   ) {
     if (new_post_counter - 1 === 1) {
       document.getElementsByClassName("bell-notification-title")[0].innerText = new_post_counter - 1 + " new poll has been added";
+      document.getElementsByClassName("bell-actions")[0].innerText = "Check it out";
     } else {
       document.getElementsByClassName("bell-notification-title")[0].innerText = new_post_counter - 1 + " new polls have been added";
+      document.getElementsByClassName("bell-actions")[0].innerText = "Check them out";
     }
     document.getElementsByClassName("bell-actions")[0].style.display = "block";
     document.getElementsByClassName("bell-actions")[1].style.display = "block";
