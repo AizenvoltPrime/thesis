@@ -209,22 +209,20 @@ function get_admin_analytics_data(time_filter, filter_type) {
           }
           make_admin_posts_chart((() => chart_data.map((x) => x[0]))(), (() => chart_data.map((x) => x[1]))(), "Posts Per Day");
         } else if (response[0][0].trim() === "same_day_with_range") {
-          for (let i = 0; i < 24; i++) {
+          const date_filter_array = time_filter.split(",");
+          let d1 = parseInt(DateTime.fromFormat(date_filter_array[0], "yyyy-MM-dd HH:mm").toFormat("HH"));
+          let d2 = parseInt(DateTime.fromFormat(date_filter_array[1], "yyyy-MM-dd HH:mm").toFormat("HH"));
+          for (let i = d1; i < d2 + 1; i++) {
             if (i < 10) {
               chart_data.push([0, "0" + i + ":00"]);
             } else {
               chart_data.push([0, i + ":00"]);
             }
-            for (let j = 0; j < response.length; j++) {
-              if (i < 10) {
-                if (response[j][1] >= "0" + i + ":00:00" && response[j][1] <= "0" + i + ":59:59") {
-                  chart_data[i][0]++;
-                }
-              } else {
-                if (response[j][1] >= i + ":00:00" && response[j][1] <= i + ":59:59") {
-                  chart_data[i][0]++;
-                }
-              }
+          }
+          for (let i = 0; i < response.length; i++) {
+            let index = (() => chart_data.map((x) => x[1].slice(0, 2)))().indexOf(response[i][1].slice(0, 2));
+            if (index > -1) {
+              chart_data[index][0]++;
             }
           }
           make_admin_posts_chart((() => chart_data.map((x) => x[0]))(), (() => chart_data.map((x) => x[1]))(), "Posts Per Hour");
