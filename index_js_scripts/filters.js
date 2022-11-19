@@ -644,11 +644,12 @@ var overlayMaps = {};
 var layerControl;
 
 //This function creates the map for location/responses analytics
-function make_app_analytics_map() {
+function make_app_analytics_map(post_ids) {
   fetch("process_data.php", {
     method: "POST",
     body: JSON.stringify({
       request: "location_responses_data",
+      post_ids: post_ids,
     }),
   })
     .then((res) => res.json())
@@ -689,10 +690,12 @@ document.getElementById("post-locations-filter").addEventListener("click", funct
       null_style("fa-map-location-dot");
     });
   } else {
+    let post_ids_data = [];
+    (() => get_variables()[3].map((x) => post_ids_data.push(x[0])))();
     highlight_filter("fa-map-location-dot");
     $("#post-locations-container").fadeIn(300, function () {
       app_analytics_map.invalidateSize();
-      make_app_analytics_map();
+      make_app_analytics_map(post_ids_data);
     });
   }
 });

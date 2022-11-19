@@ -534,13 +534,21 @@ if ($data['request'] == "request_username") {
     require_once "new_config.php";
 
     $location_responses_data = array();
+    $post_ids_string = "";
+
+    foreach ($data["post_ids"] as $value) {
+        $post_ids_string .=
+            "[[:<:]]" . $value . "[[:>:]]|";
+    }
+
+    $post_ids_string = substr($post_ids_string, 0, -1);
 
     $stmt = $conn->prepare("SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitude, (SELECT COUNT(post_number) FROM posts WHERE posts.post_loc_lat=post_latitude 
-    AND post_loc_long=post_longitude GROUP BY post_loc_lat,post_loc_long) AS number_of_posts_in_location,(SELECT COUNT(yes_no.post_id) FROM yes_no 
+    AND post_loc_long=post_longitude AND posts.post_number RLIKE :post_ids GROUP BY post_loc_lat,post_loc_long) AS number_of_posts_in_location,(SELECT COUNT(yes_no.post_id) FROM yes_no 
     INNER JOIN posts ON yes_no.post_id=posts.post_number WHERE (yes_no.answer_yes=1 OR yes_no.answer_no=1) AND posts.post_loc_lat=post_latitude 
-    AND posts.post_loc_long=post_longitude) AS number_of_responses_in_location 
-    FROM posts INNER JOIN yes_no ON posts.post_number=yes_no.post_id GROUP BY post_loc_lat,post_loc_long");
-    $stmt->execute();
+    AND posts.post_loc_long=post_longitude AND posts.post_number RLIKE :post_ids) AS number_of_responses_in_location 
+    FROM posts INNER JOIN yes_no ON posts.post_number=yes_no.post_id WHERE posts.post_number RLIKE :post_ids GROUP BY post_loc_lat,post_loc_long");
+    $stmt->execute([":post_ids" => $post_ids_string]);
     if ($stmt->rowCount() > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $tmp = array($row["post_latitude"], $row["post_longitude"], $row["number_of_posts_in_location"], $row["number_of_responses_in_location"]);
