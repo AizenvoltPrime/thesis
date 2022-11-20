@@ -477,6 +477,7 @@ function clear_screen() {
   $("#warning-no-location-selected").fadeOut(300, function () {});
   $("#warning-radius-too-small").fadeOut(300, function () {});
   $("#warning-no-category-selected").fadeOut(300, function () {});
+  $("#warning-no-poll-choice-number-selected").fadeOut(300, function () {});
   $("#poll-selection").fadeOut(300, function () {});
   $("#poll-question").fadeOut(300, function () {});
   $("#poll-template-time-choice").fadeOut(300, function () {});
@@ -484,4 +485,5 @@ function clear_screen() {
   $("#poll-template-location-restriction").fadeOut(300, function () {});
   $("#location-choice").fadeOut(300, function () {});
   $("#post-category-container").fadeOut(300, function () {});
+  $("#poll-choices-number-container").fadeOut(300, function () {});
 }

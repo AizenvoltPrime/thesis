@@ -661,6 +661,7 @@ a:active {
 #first-quetion,
 .time-limit,
 .location-restriction,
+#poll-choices-number-instruction,
 #event-radius {
   max-width: 27em;
   color: #f3f3f3;
@@ -802,6 +803,7 @@ a:active {
 #warning-radius-too-small,
 #warning-no-category-selected,
 #warning-time-filter-choice,
+#warning-no-poll-choice-number-selected,
 #admin-warning-time-filter-choice {
   display: none;
   padding: 0.4em;
@@ -1264,12 +1266,27 @@ a:active {
   margin-top: 11em;
 }
 
-#categories {
+#poll-choices-number-container {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2em auto 0;
+  margin-top: 11em;
+  gap: 1em;
+}
+
+#categories,
+#poll-choices {
   color: #f3f3f3;
   font-size: 2.51em;
   text-align: center;
   background: #1a1a1b;
   border-radius: 1em;
+}
+
+#poll-choices {
+  font-size: 1.875em;
 }
 
 #search-box-container {

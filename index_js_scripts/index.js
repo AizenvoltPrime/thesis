@@ -1,6 +1,5 @@
 import { null_style, clear_filters } from "./filters.js";
 import { clear_bell_counter } from "./update_data.js";
-import { greece_regions } from "../geojson/greece_regions.js";
 
 let user_choice = "none"; //poll choice
 let specific_user_posts = null; //this is for showing posts of a specified user
@@ -15,6 +14,7 @@ let ctx = []; //used for charts
 let myChart = []; //the chart
 let time_limit; //stores the time when the poll will close
 let post_category; //stores post category
+let poll_choices_number;
 let bookmarks_active = false; //helps decide whether to use filters on all posts or on bookmakred posts only
 let user_coordinates = []; //stores user coordinates
 let event_coordinates = []; //stores coordinates of the event when location restricted voting is used
@@ -175,6 +175,7 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
 document.getElementById("next-step").addEventListener("click", function () {
   time_limit = document.forms["time-choice"]["time-limit-choice"].value;
   post_category = document.getElementById("categories").value;
+  poll_choices_number = document.getElementById("poll-choices").value;
   if (template_status === "0000001") {
     if (user_choice === "none") {
       $("#warning-nothing-selected").fadeIn(300, function () {});
@@ -185,11 +186,32 @@ document.getElementById("next-step").addEventListener("click", function () {
       $("#next-step")
         .promise()
         .done(function () {
-          $("#poll-template-time-choice").fadeIn(300, function () {});
-          $("#next-step").fadeIn(300, function () {});
-          template_status = "0000010";
+          if (user_choice === "rating" || user_choice === "approval" || user_choice === "ranking") {
+            $("#poll-choices-number-container").fadeIn(300, function () {});
+            $("#next-step").fadeIn(300, function () {});
+            template_status = "special-1";
+          } else {
+            $("#poll-template-time-choice").fadeIn(300, function () {});
+            $("#next-step").fadeIn(300, function () {});
+            template_status = "0000010";
+          }
         });
     }
+  } else if (template_status === "special-1") {
+    if (poll_choices_number === "0") {
+      $("#warning-no-poll-choice-number-selected").fadeIn(300, function () {});
+    } else {
+      $("#warning-no-poll-choice-number-selected").fadeOut(300, function () {});
+      $("#poll-choices-number-container").fadeOut(300, function () {});
+      $("#next-step").fadeOut(300, function () {});
+      $("#next-step")
+        .promise()
+        .done(function () {
+          $("#next-step").fadeIn(300, function () {});
+          template_status = "special-2";
+        });
+    }
+  } else if (template_status === "special-2") {
   } else if (template_status === "0000010") {
     if (question_choice !== "yes-time-limit" && question_choice !== "no-time-limit") {
       $("#warning-no-time-limit-choice").fadeIn(300, function () {});
@@ -1177,6 +1199,7 @@ export function reset_poll_data() {
   document.forms["time-choice"]["time-limit-choice"].value = "";
   document.forms["location-choice"]["radius"].value = "";
   document.getElementById("categories").value = "0";
+  document.getElementById("poll-choices").value = "0";
   document.getElementById("next-step").innerText = "Next";
 
   min_time = DateTime.now().plus({ minutes: 30 }).toFormat("HH:mm");
