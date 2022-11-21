@@ -63,3 +63,7 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 - ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
 
 "wss://crowdsource.gamerwelfare.com"
+
+IF NEW.poll_type LIKE 2 THEN
+INSERT INTO rating VALUES (NEW.post_number,NEW.user_id,NEW.poll_type);
+END IF

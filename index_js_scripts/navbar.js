@@ -478,6 +478,7 @@ function clear_screen() {
   $("#warning-radius-too-small").fadeOut(300, function () {});
   $("#warning-no-category-selected").fadeOut(300, function () {});
   $("#warning-no-poll-choice-number-selected").fadeOut(300, function () {});
+  $("#warning-no-input-poll-choices").fadeOut(300, function () {});
   $("#poll-selection").fadeOut(300, function () {});
   $("#poll-question").fadeOut(300, function () {});
   $("#poll-template-time-choice").fadeOut(300, function () {});
@@ -486,4 +487,7 @@ function clear_screen() {
   $("#location-choice").fadeOut(300, function () {});
   $("#post-category-container").fadeOut(300, function () {});
   $("#poll-choices-number-container").fadeOut(300, function () {});
+  $("#input-poll-choices").fadeOut(300, function () {
+    document.getElementById("input-poll-choices").innerHTML = "";
+  });
 }
