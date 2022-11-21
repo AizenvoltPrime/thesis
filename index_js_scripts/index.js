@@ -608,23 +608,23 @@ postContainer.addEventListener(
     const btn_down = e.target.closest('button[data-dir="down"]');
     const btn_yes = e.target.closest('button[data-dir="yes"]');
     const btn_no = e.target.closest('button[data-dir="no"]');
-    const btn_show_graph = e.target.closest('button[data-dir="show-graph"]');
+    const btn_show_results = e.target.closest('button[data-dir="show-results"]');
     const btn_bookmark = e.target.closest('button[data-dir="bookmark"]');
     const btn_user_name = e.target.closest(".post-user-name");
 
-    if (btn_show_graph) {
-      const post_show_graph = btn_show_graph.closest(".post");
-      const postIndexShowGraph = [...postContainer.children].indexOf(post_show_graph);
+    if (btn_show_results) {
+      const post_show_results = btn_show_results.closest(".post");
+      const postIndexShowResults = [...postContainer.children].indexOf(post_show_results);
 
-      if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexShowGraph]).display === "block") {
-        document.querySelectorAll(".show-graph")[postIndexShowGraph].style.backgroundColor = "#00a1ff80";
-        document.querySelectorAll(".chartCard")[postIndexShowGraph].style.display = "none";
-        if (myChart[postIndexShowGraph]) {
-          myChart[postIndexShowGraph].destroy();
+      if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexShowResults]).display === "block") {
+        document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
+        document.querySelectorAll(".chartCard")[postIndexShowResults].style.display = "none";
+        if (myChart[postIndexShowResults]) {
+          myChart[postIndexShowResults].destroy();
         }
       } else {
-        document.querySelectorAll(".show-graph")[postIndexShowGraph].style.backgroundColor = "#00a1ff";
-        get_yes_no_data(postIndexShowGraph);
+        document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff";
+        get_yes_no_data(postIndexShowResults);
       }
     }
     if (btn_user_name) {
@@ -1218,7 +1218,7 @@ export function reset_poll_data() {
   document.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
   document.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
   document.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
-  document.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
+  document.querySelectorAll(".show-results").forEach((icon) => (icon.style.background = null));
   document.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
   document.querySelectorAll(".parent_of_check_yes_no").forEach((main_class) => (main_class.innerHTML = ""));
   document.querySelectorAll(".poll-timer-container").forEach((main_class) => (main_class.style.display = null));

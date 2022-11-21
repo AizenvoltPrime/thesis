@@ -175,6 +175,7 @@ require_once "new_config.php";
     </select>
   </div>
   <div id="warning-no-poll-choice-number-selected" style="display:none;">You must select a number!</div>
+  <!--This div is for users to fill the choices for the polls.-->
   <form id="input-poll-choices" style="display:none;"></form>
   <div id="warning-no-input-poll-choices" style="display:none;">You must fill all boxes!</div>
   <!--This div is for users to decide if they want a time limit to their polls.-->
@@ -324,7 +325,7 @@ require_once "new_config.php";
           <div class="post-question"></div>
           <button data-dir="yes" class="answer-yes">Yes</button>
           <button data-dir="no" class="answer-no" style="margin-right:0.5em;">No</button>
-          <button data-dir="show-graph" class="show-graph">Show Graph</button>
+          <button data-dir="show-results" class="show-results">Show Results</button>
         </div>
       </div>
       <div class="post-critic">

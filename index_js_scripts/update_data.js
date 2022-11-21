@@ -180,7 +180,7 @@ addEventListener("DOMContentLoaded", (event) => {
           }
         }
       }
-    } else if (JSON.parse(e.data)[0] === "yes_no_vote") {
+    } else if (JSON.parse(e.data)[0] === "yes_no_vote" && window.getComputedStyle(document.getElementById("all-filters")).display !== "none") {
       if (JSON.parse(e.data)[1] === "yes_yes") {
         for (let i = 0; i < get_variables()[3].length; i++) {
           if (get_variables()[3][i][0] === JSON.parse(e.data)[3]) {
@@ -304,7 +304,7 @@ addEventListener("DOMContentLoaded", (event) => {
           }
         }
       }
-    } else if (JSON.parse(e.data)[0] === "bookmark_on") {
+    } else if (JSON.parse(e.data)[0] === "bookmark_on" && window.getComputedStyle(document.getElementById("all-filters")).display !== "none") {
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           if (get_variables()[2] > 9 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
@@ -314,7 +314,7 @@ addEventListener("DOMContentLoaded", (event) => {
           }
         }
       }
-    } else if (JSON.parse(e.data)[0] === "bookmark_off") {
+    } else if (JSON.parse(e.data)[0] === "bookmark_off" && window.getComputedStyle(document.getElementById("all-filters")).display !== "none") {
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           if (get_variables()[2] > 9 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
