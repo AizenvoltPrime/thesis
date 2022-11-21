@@ -164,6 +164,19 @@ require_once "new_config.php";
     <button id="ranking">Ranking</button>
   </div>
   <div id="warning-nothing-selected">You must choose a poll type!</div>
+  <!--This div is for users to decide how many choiced their poll will have.-->
+  <div id="poll-choices-number-container" style="display:none;">
+    <div id="poll-choices-number-instruction">Select Number of Poll Choices.</div>
+    <select id="poll-choices">
+      <option value="0">Poll Choices:</option>
+      <option value="1">3</option>
+      <option value="2">4</option>
+      <option value="3">5</option>
+    </select>
+  </div>
+  <div id="warning-no-poll-choice-number-selected" style="display:none;">You must select a number!</div>
+  <form id="input-poll-choices" style="display:none;"></form>
+  <div id="warning-no-input-poll-choices" style="display:none;">You must fill all boxes!</div>
   <!--This div is for users to decide if they want a time limit to their polls.-->
   <div id="poll-template-time-choice" style="display:none;">
     <div class="template-instructions-container">

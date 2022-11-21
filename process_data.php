@@ -136,13 +136,32 @@ if ($data['request'] == "request_username") {
         $data['event_long'] = null;
     }
 
-    $stmt = $conn->prepare("INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date, event_lat, event_long, event_radius) 
-    VALUES (:users_id, :poll_type, :post_category, :post_text, :post_date, :post_expiration_date, :event_lat, :event_long, :event_radius)");
-    $stmt->execute([
-        ":users_id" => $_SESSION["id"], ":poll_type" => $param_poll_type, ":post_category" => $data['post_category'], ":post_text" => $post_text,
-        ":post_date" => $param_date, ":post_expiration_date" => $data['time_limiter'], ":event_lat" => $data['event_lat'], ":event_long" => $data['event_long'],
-        ":event_radius" => $data['event_rad']
-    ]);
+    if (count($data['poll_choices_options']) > 0) {
+        $poll_choices_options = $data['poll_choices_options'];
+        if (count($data['poll_choices_options']) == 3) {
+            array_push($poll_choices_options, null, null);
+        } else if (count($data['poll_choices_options']) == 4) {
+            array_push($poll_choices_options, null);
+        }
+        $stmt = $conn->prepare("INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date, event_lat, event_long, event_radius,
+        choice_one_name, choice_two_name, choice_three_name, choice_four_name, choice_five_name) 
+        VALUES (:users_id, :poll_type, :post_category, :post_text, :post_date, :post_expiration_date, :event_lat, :event_long, :event_radius, :choice_one, :choice_two,
+        :choice_three, :choice_four, :choice_five)");
+        $stmt->execute([
+            ":users_id" => $_SESSION["id"], ":poll_type" => $param_poll_type, ":post_category" => $data['post_category'], ":post_text" => $post_text,
+            ":post_date" => $param_date, ":post_expiration_date" => $data['time_limiter'], ":event_lat" => $data['event_lat'], ":event_long" => $data['event_long'],
+            ":event_radius" => $data['event_rad'], ":choice_one" => $poll_choices_options[0], ":choice_two" => $poll_choices_options[1],
+            ":choice_three" => $poll_choices_options[2], ":choice_four" => $poll_choices_options[3], ":choice_five" => $poll_choices_options[4],
+        ]);
+    } else {
+        $stmt = $conn->prepare("INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date, event_lat, event_long, event_radius) 
+        VALUES (:users_id, :poll_type, :post_category, :post_text, :post_date, :post_expiration_date, :event_lat, :event_long, :event_radius)");
+        $stmt->execute([
+            ":users_id" => $_SESSION["id"], ":poll_type" => $param_poll_type, ":post_category" => $data['post_category'], ":post_text" => $post_text,
+            ":post_date" => $param_date, ":post_expiration_date" => $data['time_limiter'], ":event_lat" => $data['event_lat'], ":event_long" => $data['event_long'],
+            ":event_radius" => $data['event_rad']
+        ]);
+    }
 
     $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
                     posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 

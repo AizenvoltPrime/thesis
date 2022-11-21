@@ -1,6 +1,5 @@
 import { null_style, clear_filters } from "./filters.js";
 import { clear_bell_counter } from "./update_data.js";
-import { greece_regions } from "../geojson/greece_regions.js";
 
 let user_choice = "none"; //poll choice
 let specific_user_posts = null; //this is for showing posts of a specified user
@@ -14,7 +13,9 @@ let post_data = []; //used to store all posts data
 let ctx = []; //used for charts
 let myChart = []; //the chart
 let time_limit; //stores the time when the poll will close
+let poll_choices = []; //stores poll choices
 let post_category; //stores post category
+let poll_choices_number; //number of poll choices
 let bookmarks_active = false; //helps decide whether to use filters on all posts or on bookmakred posts only
 let user_coordinates = []; //stores user coordinates
 let event_coordinates = []; //stores coordinates of the event when location restricted voting is used
@@ -175,12 +176,71 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
 document.getElementById("next-step").addEventListener("click", function () {
   time_limit = document.forms["time-choice"]["time-limit-choice"].value;
   post_category = document.getElementById("categories").value;
+  poll_choices_number = document.getElementById("poll-choices").value;
   if (template_status === "0000001") {
     if (user_choice === "none") {
       $("#warning-nothing-selected").fadeIn(300, function () {});
     } else if (user_choice !== "none") {
       $("#warning-nothing-selected").fadeOut(300, function () {});
       $("#poll-selection").fadeOut(300, function () {});
+      $("#next-step").fadeOut(300, function () {});
+      $("#next-step")
+        .promise()
+        .done(function () {
+          if (user_choice === "rating" || user_choice === "approval" || user_choice === "ranking") {
+            $("#poll-choices-number-container").fadeIn(300, function () {});
+            $("#next-step").fadeIn(300, function () {});
+            template_status = "special-1";
+          } else {
+            $("#poll-template-time-choice").fadeIn(300, function () {});
+            $("#next-step").fadeIn(300, function () {});
+            template_status = "0000010";
+          }
+        });
+    }
+  } else if (template_status === "special-1") {
+    if (poll_choices_number === "0") {
+      $("#warning-no-poll-choice-number-selected").fadeIn(300, function () {});
+    } else {
+      $("#warning-no-poll-choice-number-selected").fadeOut(300, function () {});
+      $("#poll-choices-number-container").fadeOut(300, function () {});
+      $("#next-step").fadeOut(300, function () {});
+      $("#next-step")
+        .promise()
+        .done(function () {
+          let pos = 0;
+          for (let i = 0; i < parseInt(poll_choices_number) + 2; i++) {
+            let new_poll_choices_instruction = document.createElement("label");
+            new_poll_choices_instruction.className = "poll-choices-instruction";
+            document.getElementById("input-poll-choices").appendChild(new_poll_choices_instruction);
+            document.getElementById("input-poll-choices").children[i + pos].innerText = "Choice " + (i + 1);
+
+            let new_write_poll_choice = document.createElement("input");
+            new_write_poll_choice.className = "write-poll-choice";
+            document.getElementById("input-poll-choices").appendChild(new_write_poll_choice);
+            document.getElementById("input-poll-choices").children[i + pos + 1].setAttribute("type", "text");
+            document.getElementById("input-poll-choices").children[i + pos + 1].name = "poll-choice";
+            document.getElementById("input-poll-choices").children[i + pos + 1].maxLength = 20;
+            document.getElementById("input-poll-choices").children[i + pos + 1].placeholder = "Type Choice " + (i + 1);
+            pos++;
+          }
+          $("#input-poll-choices").fadeIn(300, function () {});
+          $("#next-step").fadeIn(300, function () {});
+          template_status = "special-2";
+        });
+    }
+  } else if (template_status === "special-2") {
+    let pass = true;
+    for (let i = 0; i < document.querySelectorAll("#input-poll-choices .write-poll-choice").length; i++) {
+      poll_choices[i] = document.forms["input-poll-choices"]["poll-choice"][i].value.trim();
+      if (poll_choices[i] === "") {
+        pass = false;
+        $("#warning-no-input-poll-choices").fadeIn(300, function () {});
+      }
+    }
+    if (pass === true) {
+      $("#warning-no-input-poll-choices").fadeOut(300, function () {});
+      $("#input-poll-choices").fadeOut(300, function () {});
       $("#next-step").fadeOut(300, function () {});
       $("#next-step")
         .promise()
@@ -298,6 +358,7 @@ document.getElementById("next-step").addEventListener("click", function () {
         body: JSON.stringify({
           request: "upload_post_data",
           question: question_text,
+          poll_choices_options: poll_choices,
           poll_choice: user_choice,
           time_limiter: time_limit,
           event_lat: event_coordinates[0],
@@ -1173,10 +1234,14 @@ export function reset_poll_data() {
   choice_dehighlight("no-location-restriction");
   user_choice = "none";
   question_choice = "none";
+  poll_choices.length = 0;
+  poll_choices_number = "";
   document.forms["poll-question"]["question-text"].value = "";
   document.forms["time-choice"]["time-limit-choice"].value = "";
   document.forms["location-choice"]["radius"].value = "";
   document.getElementById("categories").value = "0";
+  document.getElementById("poll-choices").value = "0";
+  document.getElementById("input-poll-choices").innerHTML = "";
   document.getElementById("next-step").innerText = "Next";
 
   min_time = DateTime.now().plus({ minutes: 30 }).toFormat("HH:mm");
