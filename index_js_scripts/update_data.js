@@ -46,13 +46,14 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
       clone.querySelectorAll(".answer-yes").forEach((main_class) => main_class.remove());
       clone.querySelectorAll(".answer-no").forEach((main_class) => main_class.remove());
+      clone.querySelectorAll(".vote").forEach((main_class) => main_class.remove());
 
       clone.querySelectorAll(".post-user-name")[0].innerText = JSON.parse(e.data)[1][1];
       clone.querySelectorAll(".post-question")[0].innerText = JSON.parse(e.data)[1][4];
       clone.querySelectorAll(".score")[0].innerText = JSON.parse(e.data)[1][5];
       clone.querySelectorAll(".post-time")[0].innerText = post_time_relative;
       clone.querySelectorAll(".post-time-detailed")[0].innerText = post_time_detailed;
-      document.getElementById("posts-container").prepend(clone);
+      clone.getElementById("posts-container").prepend(clone);
 
       if (JSON.parse(e.data)[1][2] == 1) {
         let new_yes_button = document.createElement("button");

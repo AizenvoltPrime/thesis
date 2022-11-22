@@ -13,6 +13,7 @@ switch for radius filter css:https://www.w3schools.com/howto/howto_css_switch.as
 all dates between:https://bobbyhadz.com/blog/javascript-get-all-dates-between-two-dates
 how to get ipadress:https://thirteenov.ciihuy.com/how-to-detect-users-ip-address-with-php/
 get location from ipadress:https://www.youtube.com/watch?v=--_acK_RaMU&t=148s
+stars css:https://codepen.io/ahmedbeheiry/pen/mRXxMj
 
 //posts_info
 CREATE VIEW posts_info AS SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name 

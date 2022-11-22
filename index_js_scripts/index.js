@@ -1282,6 +1282,8 @@ export function reset_poll_data() {
   document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
   document.querySelectorAll(".answer-yes").forEach((main_class) => main_class.remove());
   document.querySelectorAll(".answer-no").forEach((main_class) => main_class.remove());
+  document.querySelectorAll(".vote").forEach((main_class) => main_class.remove());
+
   if (user_choice !== "none") {
     choice_dehighlight(user_choice);
   }
