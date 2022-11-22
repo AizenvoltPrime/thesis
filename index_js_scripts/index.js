@@ -480,7 +480,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
         }
       }
       if (post_time !== undefined && post_time !== null) {
-        if (post_data[0].length > 9) {
+        if (post_data[0].length > 19) {
           for (let i = 0; i < post_data.length; i++) {
             if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
@@ -491,13 +491,32 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
             } else if (post_data[i][7] != 1 && post_data[i][7] != -1) {
               user_chevron_vote.push([false, false]);
             }
-            if (post_data[i][8] == 1) {
-              document.getElementsByClassName("answer-yes")[i].style.background = "#00ffd0";
-              user_yes_no_vote.push([true, false]);
-            } else if (post_data[i][9] == 1) {
-              document.getElementsByClassName("answer-no")[i].style.background = "#cc0000";
-              user_yes_no_vote.push([false, true]);
-            } else if (post_data[i][8] == 0 && post_data[i][9] == 0) {
+            if (post_data[i][2] == 1) {
+              let new_yes_button = document.createElement("button");
+              new_yes_button.className = "answer-yes";
+              document
+                .getElementsByClassName("user-question-answers")
+                [i].insertBefore(new_yes_button, document.getElementsByClassName("show-results")[i]);
+              new_yes_button.setAttribute("data-dir", "yes");
+              new_yes_button.innerText = "Yes";
+
+              let new_no_button = document.createElement("button");
+              new_no_button.className = "answer-no";
+              document
+                .getElementsByClassName("user-question-answers")
+                [i].insertBefore(new_no_button, document.getElementsByClassName("show-results")[i]);
+              new_no_button.setAttribute("data-dir", "no");
+              new_no_button.innerText = "No";
+              if (post_data[i][8] == 1) {
+                new_yes_button.style.background = "#00ffd0";
+                user_yes_no_vote.push([true, false]);
+              } else if (post_data[i][9] == 1) {
+                new_no_button.style.background = "#cc0000";
+                user_yes_no_vote.push([false, true]);
+              } else if (post_data[i][8] == 0 && post_data[i][9] == 0) {
+                user_yes_no_vote.push([false, false]);
+              }
+            } else if (post_data[i][2] == 2) {
               user_yes_no_vote.push([false, false]);
             }
             if (post_data[i][10] == 1) {
@@ -541,7 +560,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
             new_canvas.className = "myChart";
             document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
           }
-        } else if (post_data[0].length <= 9) {
+        } else if (post_data[0].length <= 19) {
           for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
@@ -549,6 +568,23 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
             let new_canvas = document.createElement("canvas");
             new_canvas.className = "myChart";
             document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
+            if (post_data[i][2] == 1) {
+              let new_yes_button = document.createElement("button");
+              new_yes_button.className = "answer-yes";
+              document
+                .getElementsByClassName("user-question-answers")
+                [i].insertBefore(new_yes_button, document.getElementsByClassName("show-results")[i]);
+              new_yes_button.setAttribute("data-dir", "yes");
+              new_yes_button.innerText = "Yes";
+
+              let new_no_button = document.createElement("button");
+              new_no_button.className = "answer-no";
+              document
+                .getElementsByClassName("user-question-answers")
+                [i].insertBefore(new_no_button, document.getElementsByClassName("show-results")[i]);
+              new_no_button.setAttribute("data-dir", "no");
+              new_no_button.innerText = "No";
+            }
             if (post_data[i][7] !== null && DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") === -1) {
               document.querySelectorAll(".poll-remaining-time")[i].innerText =
                 "Poll closes " + DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative();
@@ -644,7 +680,7 @@ postContainer.addEventListener(
           generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1], null);
         });
     }
-    if (post_data[0].length > 9) {
+    if (post_data[0].length > 19) {
       if (btn_up) {
         const post_up = btn_up.closest(".post");
         const postIndexUP = [...postContainer.children].indexOf(post_up);
@@ -1225,6 +1261,8 @@ export function reset_poll_data() {
   document.querySelectorAll(".fa-clock").forEach((main_class) => (main_class.style.color = null));
   document.querySelectorAll(".poll-remaining-time").forEach((main_class) => (main_class.innerText = ""));
   document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
+  document.querySelectorAll(".answer-yes").forEach((main_class) => main_class.remove());
+  document.querySelectorAll(".answer-no").forEach((main_class) => main_class.remove());
   if (user_choice !== "none") {
     choice_dehighlight(user_choice);
   }
@@ -1327,7 +1365,7 @@ export function null_all_styles() {
 //Adds new post data that was received from websocket.
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
-  if (new_post.length > 9) {
+  if (new_post.length > 19) {
     post_data[0][16] = post_data[1][16];
   }
   user_chevron_vote.unshift([false, false]);

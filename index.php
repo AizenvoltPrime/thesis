@@ -323,8 +323,6 @@ require_once "new_config.php";
         </div>
         <div class="user-question-answers">
           <div class="post-question"></div>
-          <button data-dir="yes" class="answer-yes">Yes</button>
-          <button data-dir="no" class="answer-no" style="margin-right:0.5em;">No</button>
           <button data-dir="show-results" class="show-results">Show Results</button>
         </div>
       </div>
