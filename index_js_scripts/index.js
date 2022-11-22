@@ -518,6 +518,13 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
               }
             } else if (post_data[i][2] == 2) {
               user_yes_no_vote.push([false, false]);
+              let new_vote_button = document.createElement("button");
+              new_vote_button.className = "vote";
+              document
+                .getElementsByClassName("user-question-answers")
+                [i].insertBefore(new_vote_button, document.getElementsByClassName("show-results")[i]);
+              new_vote_button.setAttribute("data-dir", "vote");
+              new_vote_button.innerText = "Vote";
             }
             if (post_data[i][10] == 1) {
               let new_bookmark = document.createElement("i");
@@ -647,7 +654,19 @@ postContainer.addEventListener(
     const btn_show_results = e.target.closest('button[data-dir="show-results"]');
     const btn_bookmark = e.target.closest('button[data-dir="bookmark"]');
     const btn_user_name = e.target.closest(".post-user-name");
+    const btn_vote = e.target.closest('button[data-dir="vote"]');
 
+    if (btn_vote) {
+      const post_vote = btn_vote.closest(".post");
+      const postIndexVote = [...postContainer.children].indexOf(post_vote);
+      if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexVote]).display === "block") {
+        document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = null;
+        document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "none";
+      } else {
+        document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
+        document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "block";
+      }
+    }
     if (btn_show_results) {
       const post_show_results = btn_show_results.closest(".post");
       const postIndexShowResults = [...postContainer.children].indexOf(post_show_results);

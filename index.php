@@ -334,6 +334,7 @@ require_once "new_config.php";
         <button class="parent_of_bookmark" data-dir="bookmark"></button>
       </div>
       <div class="chartCard" style="display:none;"></div>
+      <div class="rating-vote" style="display:none;"></div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

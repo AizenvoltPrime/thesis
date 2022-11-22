@@ -953,7 +953,8 @@ a:active {
 }
 
 .answer-yes,
-.answer-no {
+.answer-no,
+.vote {
   background-color: #007e7e;
   padding: 0.4em;
   border-radius: 1em;
