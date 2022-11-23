@@ -655,10 +655,12 @@ postContainer.addEventListener(
     const btn_bookmark = e.target.closest('button[data-dir="bookmark"]');
     const btn_user_name = e.target.closest(".post-user-name");
     const btn_vote = e.target.closest('button[data-dir="vote"]');
+    const btn_star = e.target.closest('label[data-dir="star"]');
 
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
       const postIndexVote = [...postContainer.children].indexOf(post_vote);
+
       if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexVote]).display === "block") {
         document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = null;
         document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "none";
@@ -666,6 +668,12 @@ postContainer.addEventListener(
         document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
         document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "block";
       }
+    }
+    if (btn_star) {
+      const post_star = btn_star.closest(".post");
+      const postIndexStar = [...postContainer.children].indexOf(post_star);
+
+      document.getElementsByClassName(btn_star.htmlFor)[postIndexStar].click();
     }
     if (btn_show_results) {
       const post_show_results = btn_show_results.closest(".post");

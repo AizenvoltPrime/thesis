@@ -966,6 +966,10 @@ a:active {
   margin-top: 0.5em;
 }
 
+.vote {
+  width: 3.1em;
+}
+
 .answer-no {
   margin-right: 0.5em;
 }
@@ -1552,4 +1556,47 @@ input:checked + .slider:before {
   align-items: center;
   gap: 1em;
   margin-top: 11em;
+}
+
+.star-rating {
+  border: none;
+  float: left;
+}
+
+.star-rating > input {
+  display: none;
+}
+
+.star-rating > label:before {
+  content: "\f005";
+  font-family: FontAwesome;
+  margin: 5px;
+  font-size: 1.5rem;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.star-rating > .half:before {
+  content: "\f089";
+  position: absolute;
+  cursor: pointer;
+}
+
+.star-rating > label {
+  color: #ddd;
+  float: right;
+  cursor: pointer;
+}
+
+.star-rating > input:checked ~ label,
+.star-rating:not(:checked) > label:hover,
+.star-rating:not(:checked) > label:hover ~ label {
+  color: #00ffd0;
+}
+
+.star-rating > input:checked + label:hover,
+.star-rating > input:checked ~ label:hover,
+.star-rating > label:hover ~ input:checked ~ label,
+.star-rating > input:checked ~ label:hover ~ label {
+  color: #00ffd0;
 }
