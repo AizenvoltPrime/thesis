@@ -335,18 +335,19 @@ require_once "new_config.php";
       </div>
       <div class="chartCard" style="display:none;"></div>
       <div class="rating-vote" style="display:none;">
-        <fieldset class="star-rating">
-          <input type="radio" class="star5" name="rating" value="5" /><label data-dir="star" for="star5" class="full"></label>
-          <input type="radio" class="star4.5" name="rating" value="4.5" /><label data-dir="star" for="star4.5" class="half"></label>
-          <input type="radio" class="star4" name="rating" value="4" /><label data-dir="star" for="star4" class="full"></label>
-          <input type="radio" class="star3.5" name="rating" value="3.5" /><label data-dir="star" for="star3.5" class="half"></label>
-          <input type="radio" class="star3" name="rating" value="3" /><label data-dir="star" for="star3" class="full"></label>
-          <input type="radio" class="star2.5" name="rating" value="2.5" /><label data-dir="star" for="star2.5" class="half"></label>
-          <input type="radio" class="star2" name="rating" value="2" /><label data-dir="star" for="star2" class="full"></label>
-          <input type="radio" class="star1.5" name="rating" value="1.5" /><label data-dir="star" for="star1.5" class="half"></label>
-          <input type="radio" class="star1" name="rating" value="1" /><label data-dir="star" for="star1" class="full"></label>
-          <input type="radio" class="star0.5" name="rating" value="0.5" /><label data-dir="star" for="star0.5" class="half"></label>
-        </fieldset>
+        <div class="rating-choices" data-value="1">
+          <div class="choice-name">New York</div>
+          <button data-dir="star" class="half-star-container" value="0.5"><i class="fa-solid fa-star-half"></i></button>
+          <button data-dir="star" class="half-star-container" value="1.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+          <button data-dir="star" class="half-star-container" value="1.5"><i class="fa-solid fa-star-half"></i></button>
+          <button data-dir="star" class="half-star-container" value="2.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+          <button data-dir="star" class="half-star-container" value="2.5"><i class="fa-solid fa-star-half"></i></button>
+          <button data-dir="star" class="half-star-container" value="3.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+          <button data-dir="star" class="half-star-container" value="3.5"><i class="fa-solid fa-star-half"></i></button>
+          <button data-dir="star" class="half-star-container" value="4.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+          <button data-dir="star" class="half-star-container" value="4.5"><i class="fa-solid fa-star-half"></i></button>
+          <button data-dir="star" class="half-star-container" value="5.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+        </div>
       </div>
     </div>
   </div>

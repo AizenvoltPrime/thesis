@@ -468,6 +468,17 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
           document.getElementsByClassName("score")[0].innerText = post_data[i][5];
           document.getElementsByClassName("post-time")[0].innerText = post_time;
           document.getElementsByClassName("post-time-detailed")[0].innerText = post_data[i][6];
+
+          for (let j = 17; j < 22; j++) {
+            if (post_data[i][j] !== null) {
+              if (j !== 17) {
+                let clone_rating_choices = document.getElementsByClassName("post")[0].getElementsByClassName("rating-choices")[0];
+                let clone = clone_rating_choices.cloneNode(true);
+                document.getElementsByClassName("post")[0].getElementsByClassName("rating-vote")[0].appendChild(clone);
+                clone.setAttribute("data-value", j - 16);
+              }
+            }
+          }
         } else if (i > 0) {
           node[i - 1] = document.getElementsByClassName("post")[0];
           clone[i - 1] = node[i - 1].cloneNode(true);
@@ -480,7 +491,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
         }
       }
       if (post_time !== undefined && post_time !== null) {
-        if (post_data[0].length > 19) {
+        if (post_data[0].length > 24) {
           for (let i = 0; i < post_data.length; i++) {
             if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
@@ -567,7 +578,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
             new_canvas.className = "myChart";
             document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
           }
-        } else if (post_data[0].length <= 19) {
+        } else if (post_data[0].length <= 24) {
           for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
@@ -641,6 +652,13 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
     });
 }
 
+let rating_passed = [
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+];
 const postContainer = document.querySelector("#posts-container");
 
 //This determines which post the user clicked to change its data.
@@ -655,25 +673,39 @@ postContainer.addEventListener(
     const btn_bookmark = e.target.closest('button[data-dir="bookmark"]');
     const btn_user_name = e.target.closest(".post-user-name");
     const btn_vote = e.target.closest('button[data-dir="vote"]');
-    const btn_star = e.target.closest('label[data-dir="star"]');
+    const btn_star = e.target.closest('button[data-dir="star"]');
 
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
       const postIndexVote = [...postContainer.children].indexOf(post_vote);
 
-      if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexVote]).display === "block") {
+      if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexVote]).display === "flex") {
         document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = null;
         document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "none";
       } else {
         document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
-        document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "block";
+        document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "flex";
       }
     }
+
     if (btn_star) {
       const post_star = btn_star.closest(".post");
       const postIndexStar = [...postContainer.children].indexOf(post_star);
 
-      document.getElementsByClassName(btn_star.htmlFor)[postIndexStar].click();
+      const rating_choice = btn_star.closest(".rating-choices").getAttribute("data-value");
+
+      let star_range = rating_choice * 10;
+      let max_star_position;
+      max_star_position = star_range - 10;
+
+      let post_index = document.querySelectorAll(".post")[postIndexStar];
+
+      for (let i = max_star_position; i < parseInt(parseFloat(btn_star.value) * 2.0) + max_star_position; i++) {
+        post_index.getElementsByClassName("half-star-container")[i].style.color = "#00ffd0";
+      }
+
+      rating_passed[postIndexStar][rating_choice - 1] = parseInt(parseFloat(btn_star.value) * 2.0);
+      console.log(rating_passed);
     }
     if (btn_show_results) {
       const post_show_results = btn_show_results.closest(".post");
@@ -707,7 +739,7 @@ postContainer.addEventListener(
           generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1], null);
         });
     }
-    if (post_data[0].length > 19) {
+    if (post_data[0].length > 24) {
       if (btn_up) {
         const post_up = btn_up.closest(".post");
         const postIndexUP = [...postContainer.children].indexOf(post_up);
@@ -1182,6 +1214,57 @@ postContainer.addEventListener(
   { passive: true }
 );
 
+postContainer.addEventListener("mouseover", (e) => {
+  const btn_star = e.target.closest('button[data-dir="star"]');
+
+  if (btn_star) {
+    const post_star = btn_star.closest(".post");
+    const postIndexStar = [...postContainer.children].indexOf(post_star);
+    const rating_choice = btn_star.closest(".rating-choices").getAttribute("data-value");
+
+    let star_range = rating_choice * 10;
+    let max_star_position;
+    max_star_position = star_range - 10;
+
+    let post_index = document.querySelectorAll(".post")[postIndexStar];
+
+    for (let i = star_range - 10; i < star_range; i++) {
+      post_index.getElementsByClassName("half-star-container")[i].style.color = null;
+    }
+
+    for (let i = max_star_position; i < parseInt(parseFloat(btn_star.value) * 2.0) + max_star_position; i++) {
+      post_index.getElementsByClassName("half-star-container")[i].style.color = "#00ffd0";
+    }
+  }
+});
+
+postContainer.addEventListener("mouseout", (e) => {
+  const btn_star = e.target.closest('button[data-dir="star"]');
+  if (btn_star) {
+    const post_star = btn_star.closest(".post");
+    const postIndexStar = [...postContainer.children].indexOf(post_star);
+    const rating_choice = btn_star.closest(".rating-choices").getAttribute("data-value");
+
+    let star_range = rating_choice * 10;
+    let max_star_position;
+    max_star_position = star_range - 10;
+
+    let post_index = document.querySelectorAll(".post")[postIndexStar];
+
+    for (let i = max_star_position; i < rating_passed[postIndexStar][rating_choice - 1] + max_star_position; i++) {
+      post_index.getElementsByClassName("half-star-container")[i].style.color = "#00ffd0";
+    }
+
+    for (
+      let i = rating_passed[postIndexStar][rating_choice - 1] + max_star_position;
+      i < parseInt(parseFloat(btn_star.value) * 2.0) + max_star_position;
+      i++
+    ) {
+      post_index.getElementsByClassName("half-star-container")[i].style.color = null;
+    }
+  }
+});
+
 //This is for when the user clicks "Bookmarks" on the user navabar.
 document.getElementsByClassName("nav-element")[3].addEventListener("click", function () {
   bookmarks_active = true;
@@ -1394,7 +1477,7 @@ export function null_all_styles() {
 //Adds new post data that was received from websocket.
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
-  if (new_post.length > 19) {
+  if (new_post.length > 24) {
     post_data[0][16] = post_data[1][16];
   }
   user_chevron_vote.unshift([false, false]);

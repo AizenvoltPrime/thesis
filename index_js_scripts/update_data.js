@@ -53,7 +53,7 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".score")[0].innerText = JSON.parse(e.data)[1][5];
       clone.querySelectorAll(".post-time")[0].innerText = post_time_relative;
       clone.querySelectorAll(".post-time-detailed")[0].innerText = post_time_detailed;
-      clone.getElementById("posts-container").prepend(clone);
+      document.getElementById("posts-container").prepend(clone);
 
       if (JSON.parse(e.data)[1][2] == 1) {
         let new_yes_button = document.createElement("button");
@@ -92,9 +92,9 @@ addEventListener("DOMContentLoaded", (event) => {
         clone.getElementsByClassName("parent_of_check_yes_no")[0].children[0].style.color = "#b5b5b5";
       }
 
-      if (get_variables()[2] > 19) {
+      if (get_variables()[2] > 24) {
         add_new_post(JSON.parse(e.data)[1]);
-      } else if (get_variables()[2] <= 19) {
+      } else if (get_variables()[2] <= 24) {
         add_new_post([
           JSON.parse(e.data)[1][0],
           JSON.parse(e.data)[1][1],
@@ -115,6 +115,11 @@ addEventListener("DOMContentLoaded", (event) => {
           JSON.parse(e.data)[1][24],
           JSON.parse(e.data)[1][25],
           JSON.parse(e.data)[1][26],
+          JSON.parse(e.data)[1][27],
+          JSON.parse(e.data)[1][28],
+          JSON.parse(e.data)[1][29],
+          JSON.parse(e.data)[1][30],
+          JSON.parse(e.data)[1][31],
         ]);
       }
     } else if (

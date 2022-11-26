@@ -1558,45 +1558,43 @@ input:checked + .slider:before {
   margin-top: 11em;
 }
 
-.star-rating {
-  border: none;
-  float: left;
+.rating-vote {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  background: #2c3134;
+  width: 20em;
+  padding: 0.8em;
+  border-radius: 1em;
+  gap: 0.7em;
+  margin-top: 1em;
 }
 
-.star-rating > input {
-  display: none;
+.rating-choices {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.star-rating > label:before {
-  content: "\f005";
-  font-family: FontAwesome;
-  margin: 5px;
-  font-size: 1.5rem;
+.choice-name {
+  font-size: 1em;
+  width: 100%;
+  color: #f3f3f3;
+  text-align: center;
+  margin-bottom: 0.4em;
+}
+
+.half-star-container {
+  display: flex;
+  width: 0.55em;
+  justify-content: flex-start;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.fa-star-half {
   display: inline-block;
-  cursor: pointer;
-}
-
-.star-rating > .half:before {
-  content: "\f089";
-  position: absolute;
-  cursor: pointer;
-}
-
-.star-rating > label {
-  color: #ddd;
-  float: right;
-  cursor: pointer;
-}
-
-.star-rating > input:checked ~ label,
-.star-rating:not(:checked) > label:hover,
-.star-rating:not(:checked) > label:hover ~ label {
-  color: #00ffd0;
-}
-
-.star-rating > input:checked + label:hover,
-.star-rating > input:checked ~ label:hover,
-.star-rating > label:hover ~ input:checked ~ label,
-.star-rating > input:checked ~ label:hover ~ label {
-  color: #00ffd0;
+  pointer-events: none;
 }
