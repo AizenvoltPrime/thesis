@@ -92,9 +92,9 @@ addEventListener("DOMContentLoaded", (event) => {
         clone.getElementsByClassName("parent_of_check_yes_no")[0].children[0].style.color = "#b5b5b5";
       }
 
-      if (get_variables()[2] > 24) {
+      if (get_variables()[2] > 19) {
         add_new_post(JSON.parse(e.data)[1]);
-      } else if (get_variables()[2] <= 24) {
+      } else if (get_variables()[2] <= 19) {
         add_new_post([
           JSON.parse(e.data)[1][0],
           JSON.parse(e.data)[1][1],
@@ -115,11 +115,6 @@ addEventListener("DOMContentLoaded", (event) => {
           JSON.parse(e.data)[1][24],
           JSON.parse(e.data)[1][25],
           JSON.parse(e.data)[1][26],
-          JSON.parse(e.data)[1][27],
-          JSON.parse(e.data)[1][28],
-          JSON.parse(e.data)[1][29],
-          JSON.parse(e.data)[1][30],
-          JSON.parse(e.data)[1][31],
         ]);
       }
     } else if (

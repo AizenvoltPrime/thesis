@@ -469,13 +469,24 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
           document.getElementsByClassName("post-time")[0].innerText = post_time;
           document.getElementsByClassName("post-time-detailed")[0].innerText = post_data[i][6];
 
-          for (let j = 17; j < 22; j++) {
-            if (post_data[i][j] !== null) {
-              if (j !== 17) {
-                let clone_rating_choices = document.getElementsByClassName("post")[0].getElementsByClassName("rating-choices")[0];
-                let clone = clone_rating_choices.cloneNode(true);
-                document.getElementsByClassName("post")[0].getElementsByClassName("rating-vote")[0].appendChild(clone);
-                clone.setAttribute("data-value", j - 16);
+          if (post_data[i][2] == 2 && post_data[0].length > 19) {
+            for (let j = 17; j < 22; j++) {
+              if (post_data[i][j] !== null) {
+                if (j !== 17) {
+                  let clone_rating_choices = document.getElementsByClassName("post")[0].getElementsByClassName("rating-choices")[0];
+                  let clone = clone_rating_choices.cloneNode(true);
+                  clone.setAttribute("data-value", j - 16);
+                  document.getElementsByClassName("post")[0].getElementsByClassName("rating-vote")[0].appendChild(clone);
+                  document
+                    .getElementsByClassName("post")[0]
+                    .querySelectorAll(".rating-choices")
+                    [j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
+                } else {
+                  document
+                    .getElementsByClassName("post")[0]
+                    .querySelectorAll(".rating-choices")
+                    [j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
+                }
               }
             }
           }
@@ -488,10 +499,31 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
           clone[i - 1].querySelectorAll(".post-time")[0].innerText = post_time;
           clone[i - 1].querySelectorAll(".post-time-detailed")[0].innerText = post_data[i][6];
           document.getElementById("posts-container").appendChild(clone[i - 1]);
+
+          if (post_data[i][2] == 2 && post_data[0].length > 19) {
+            clone[i - 1].querySelectorAll(".rating-choices").forEach((child) => {
+              if (child.getAttribute("data-value") !== "1") {
+                child.remove();
+              }
+            });
+            for (let j = 17; j < 22; j++) {
+              if (post_data[i][j] !== null) {
+                if (j !== 17) {
+                  let clone_rating_choices = clone[i - 1].getElementsByClassName("rating-choices")[0];
+                  let clone_choices = clone_rating_choices.cloneNode(true);
+                  clone_choices.setAttribute("data-value", j - 16);
+                  clone[i - 1].getElementsByClassName("rating-vote")[0].appendChild(clone_choices);
+                  clone[i - 1].querySelectorAll(".rating-choices")[j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
+                } else {
+                  clone[i - 1].querySelectorAll(".rating-choices")[j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
+                }
+              }
+            }
+          }
         }
       }
       if (post_time !== undefined && post_time !== null) {
-        if (post_data[0].length > 24) {
+        if (post_data[0].length > 19) {
           for (let i = 0; i < post_data.length; i++) {
             if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
@@ -578,7 +610,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
             new_canvas.className = "myChart";
             document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
           }
-        } else if (post_data[0].length <= 24) {
+        } else if (post_data[0].length <= 19) {
           for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
@@ -739,7 +771,7 @@ postContainer.addEventListener(
           generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1], null);
         });
     }
-    if (post_data[0].length > 24) {
+    if (post_data[0].length > 19) {
       if (btn_up) {
         const post_up = btn_up.closest(".post");
         const postIndexUP = [...postContainer.children].indexOf(post_up);
@@ -1374,6 +1406,14 @@ export function reset_poll_data() {
   document.querySelectorAll(".answer-yes").forEach((main_class) => main_class.remove());
   document.querySelectorAll(".answer-no").forEach((main_class) => main_class.remove());
   document.querySelectorAll(".vote").forEach((main_class) => main_class.remove());
+  document.querySelectorAll(".rating-vote").forEach((main_class) => {
+    main_class.style.display = "none";
+  });
+  document.querySelectorAll(".rating-choices").forEach((main_class) => {
+    if (main_class.getAttribute("data-value") !== "1") {
+      main_class.remove();
+    }
+  });
 
   if (user_choice !== "none") {
     choice_dehighlight(user_choice);
@@ -1477,7 +1517,7 @@ export function null_all_styles() {
 //Adds new post data that was received from websocket.
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
-  if (new_post.length > 24) {
+  if (new_post.length > 19) {
     post_data[0][16] = post_data[1][16];
   }
   user_chevron_vote.unshift([false, false]);

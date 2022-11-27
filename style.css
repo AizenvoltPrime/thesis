@@ -1565,7 +1565,8 @@ input:checked + .slider:before {
   align-items: center;
   flex-flow: column;
   background: #2c3134;
-  width: 20em;
+  width: 100%;
+  max-width: 20em;
   padding: 0.8em;
   border-radius: 1em;
   gap: 0.7em;

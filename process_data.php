@@ -295,8 +295,8 @@ if ($data['request'] == "request_username") {
                     rating_choice_four_avg, rating_choice_five_avg
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
-                    join posts_rating_info ON posts.post_number=posts_rating_info.rating_post_id
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number join rating on posts.post_number = rating.post_id
+                    join posts_rating_info ON posts.post_number=posts_rating_info.rating_post_id
                     WHERE user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
                     AND $filter_filter_poll_status AND $filter_radius_filter
@@ -378,23 +378,19 @@ if ($data['request'] == "request_username") {
             $stmt = $conn->prepare("SELECT posts_info.post_number AS post_number,posts_info.username AS username,poll_id,posts_info.category_name AS category_name,
             posts_info.post_text AS post_text,chevron_result,posts_info.post_date AS post_date,posts_info.post_expiration_date, 
             (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result, choice_one_name, choice_two_name, choice_three_name, choice_four_name, 
-            choice_five_name, rating.choice_one AS rating_choice_one, rating.choice_two AS rating_choice_two, rating.choice_three AS rating_choice_three, 
-            rating.choice_four AS rating_choice_four, rating.choice_five AS rating_choice_five, rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg,
-            rating_choice_four_avg, rating_choice_five_avg 
+            choice_five_name, rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg, rating_choice_four_avg, rating_choice_five_avg 
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
-            INNER JOIN rating ON posts.post_number = rating.post_id INNER JOIN posts_rating_info ON posts_info.post_number=posts_rating_info.rating_post_id
+            INNER JOIN posts_rating_info ON posts_info.post_number=posts_rating_info.rating_post_id
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
-            AND $filter_filter_poll_status AND $filter_radius_filter ORDER BY chevron_result DESC, ORDER BY posts.post_date DESC");
+            AND $filter_filter_poll_status AND $filter_radius_filter ORDER BY chevron_result DESC, posts.post_date DESC");
         } else {
             $stmt = $conn->prepare("SELECT posts_info.post_number AS post_number,posts_info.username AS username,poll_id,posts_info.category_name AS category_name,
             posts_info.post_text AS post_text,chevron_result,posts_info.post_date AS post_date,posts_info.post_expiration_date, 
             (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result, choice_one_name, choice_two_name, choice_three_name, choice_four_name, 
-            choice_five_name, rating.choice_one AS rating_choice_one, rating.choice_two AS rating_choice_two, rating.choice_three AS rating_choice_three, 
-            rating.choice_four AS rating_choice_four, rating.choice_five AS rating_choice_five, rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg,
-            rating_choice_four_avg, rating_choice_five_avg 
+            choice_five_name, rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg, rating_choice_four_avg, rating_choice_five_avg 
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
-            INNER JOIN rating ON posts.post_number = rating.post_id INNER JOIN posts_rating_info ON posts_info.post_number=posts_rating_info.rating_post_id
+            INNER JOIN posts_rating_info ON posts_info.post_number=posts_rating_info.rating_post_id
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
             AND $filter_filter_poll_status AND $filter_radius_filter ORDER BY posts.post_date DESC");
@@ -416,7 +412,6 @@ if ($data['request'] == "request_username") {
             $tmp = array(
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"], $row["post_date"], $row["post_expiration_date"],
                 $row["post_vote_result"], $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"], $row["choice_five_name"],
-                $row["rating_choice_one"], $row["rating_choice_two"], $row["rating_choice_three"], $row["rating_choice_four"], $row["rating_choice_five"],
                 $row["rating_choice_one_avg"], $row["rating_choice_two_avg"], $row["rating_choice_three_avg"], $row["rating_choice_four_avg"], $row["rating_choice_five_avg"]
             );
             array_push($post_data, $tmp);
