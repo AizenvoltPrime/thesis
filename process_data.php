@@ -613,6 +613,9 @@ if ($data['request'] == "request_username") {
     $stmt = $conn->prepare("SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitude, (SELECT COUNT(post_number) FROM posts WHERE posts.post_loc_lat=post_latitude 
     AND post_loc_long=post_longitude AND posts.post_number RLIKE :post_ids GROUP BY post_loc_lat,post_loc_long) AS number_of_posts_in_location,(SELECT COUNT(yes_no.post_id) FROM yes_no 
     INNER JOIN posts ON yes_no.post_id=posts.post_number WHERE (yes_no.answer_yes=1 OR yes_no.answer_no=1) AND posts.post_loc_lat=post_latitude 
+    AND posts.post_loc_long=post_longitude AND posts.post_number RLIKE :post_ids) + (SELECT COUNT(rating.post_id) FROM rating 
+    INNER JOIN posts ON rating.post_id=posts.post_number WHERE (rating.choice_one IS NOT NULL OR rating.choice_two IS NOT NULL OR rating.choice_three IS NOT NULL 
+    OR rating.choice_four IS NOT NULL OR rating.choice_five IS NOT NULL) AND posts.post_loc_lat=post_latitude 
     AND posts.post_loc_long=post_longitude AND posts.post_number RLIKE :post_ids) AS number_of_responses_in_location 
     FROM posts INNER JOIN yes_no ON posts.post_number=yes_no.post_id WHERE posts.post_number RLIKE :post_ids GROUP BY post_loc_lat,post_loc_long");
     $stmt->execute([":post_ids" => $post_ids_string]);
