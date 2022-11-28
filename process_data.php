@@ -263,7 +263,8 @@ if ($data['request'] == "request_username") {
         if ($data["bookmarks_only"] == false) {
             if (isset($data["filter_hot"]) && $data["filter_hot"] == "hot") {
                 $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
-                    posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
+                    posts.post_text AS post_text, (SELECT sum(chevron_vote.chevron_result) FROM chevron_vote WHERE chevron_vote.post_id=posts.post_number) AS chevron_result,
+                    posts.post_date AS post_date, 
                     COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=posts.post_number),0) AS user_chevron_result,
                     COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_yes_answer,
                     COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_no_answer,
@@ -287,7 +288,8 @@ if ($data['request'] == "request_username") {
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC");
             } else {
                 $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
-                    posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
+                    posts.post_text AS post_text, (SELECT sum(chevron_vote.chevron_result) FROM chevron_vote WHERE chevron_vote.post_id=posts.post_number) AS chevron_result, 
+                    posts.post_date AS post_date, 
                     COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=posts.post_number),0) AS user_chevron_result,
                     COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_yes_answer,
                     COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_no_answer,
@@ -313,7 +315,8 @@ if ($data['request'] == "request_username") {
         } else if ($data["bookmarks_only"] == true) {
             if (isset($data["filter_hot"]) && $data["filter_hot"] == "hot") {
                 $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
-                    posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
+                    posts.post_text AS post_text, (SELECT sum(chevron_vote.chevron_result) FROM chevron_vote WHERE chevron_vote.post_id=posts.post_number) AS chevron_result,
+                    posts.post_date AS post_date, 
                     COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=posts.post_number),0) AS user_chevron_result,
                     COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_yes_answer,
                     COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_no_answer,
@@ -338,7 +341,8 @@ if ($data['request'] == "request_username") {
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC");
             } else {
                 $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
-                    posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 
+                    posts.post_text AS post_text, (SELECT sum(chevron_vote.chevron_result) FROM chevron_vote WHERE chevron_vote.post_id=posts.post_number) AS chevron_result,
+                    posts.post_date AS post_date, 
                     COALESCE((SELECT chevron_vote.chevron_result FROM chevron_vote WHERE chevron_vote.user_id=:id AND chevron_vote.post_id=posts.post_number),0) AS user_chevron_result,
                     COALESCE((SELECT yes_no.answer_yes FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_yes_answer,
                     COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_no_answer,
@@ -705,14 +709,16 @@ if ($data['request'] == "request_username") {
             ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
             ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
         ]);
+        $pass = true;
         echo "Success";
-    } else if ($stmt->rowCount() == 0) {
-        $stmt = $conn->prepare("INSERT INTO rating(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five) 
+    }
+    $stmt = $conn->prepare("INSERT IGNORE INTO rating(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five) 
             VALUES(:post_id,:id,2,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five)");
-        $stmt->execute([
-            ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
-            ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
-        ]);
+    $stmt->execute([
+        ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+        ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
+    ]);
+    if ($pass == false) {
         echo "Success";
     }
 }
