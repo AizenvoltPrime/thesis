@@ -751,36 +751,29 @@ postContainer.addEventListener(
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
       const postIndexVote = [...postContainer.children].indexOf(post_vote);
-
-      if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexVote]).display === "flex") {
-        document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = null;
-        document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "none";
+      if (
+        post_data[postIndexVote][11] !== null &&
+        DateTime.fromFormat(post_data[postIndexVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
+      ) {
+        $("#notification-container").fadeIn(300, function () {});
+        document.getElementById("notification-text").innerText = "Poll is closed!";
+      } else if (
+        post_data[postIndexVote][12] !== null &&
+        calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexVote][12]), parseFloat(post_data[postIndexVote][13])) >
+          parseInt(post_data[postIndexVote][14])
+      ) {
+        $("#notification-container").fadeIn(300, function () {});
+        document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius!";
       } else {
-        document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
-        document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "flex";
+        if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexVote]).display === "flex") {
+          document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = null;
+          document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "none";
+        } else {
+          document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
+          document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "flex";
+        }
       }
-    }
-
-    if (btn_star) {
-      const post_star = btn_star.closest(".post");
-      const postIndexStar = [...postContainer.children].indexOf(post_star);
-
-      const rating_choice = btn_star.closest(".rating-choices").getAttribute("data-value");
-
-      let star_range = rating_choice * 10;
-      let max_star_position;
-      max_star_position = star_range - 10;
-
-      let post_index = document.querySelectorAll(".post")[postIndexStar];
-
-      for (let i = max_star_position; i < parseInt(parseFloat(btn_star.value) * 2.0) + max_star_position; i++) {
-        post_index.getElementsByClassName("half-star-container")[i].style.color = "#00ffd0";
-      }
-
-      let temp_pos = parseInt(rating_choice) + 21;
-      post_data[postIndexStar][temp_pos] = parseFloat(btn_star.value);
-    }
-    if (btn_show_results) {
+    } else if (btn_show_results) {
       const post_show_results = btn_show_results.closest(".post");
       const postIndexShowResults = [...postContainer.children].indexOf(post_show_results);
 
@@ -794,8 +787,7 @@ postContainer.addEventListener(
         document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff";
         get_yes_no_data(postIndexShowResults);
       }
-    }
-    if (btn_user_name) {
+    } else if (btn_user_name) {
       const post_user_name = btn_user_name.closest(".post");
       const postIndexPostUserName = [...postContainer.children].indexOf(post_user_name);
 
@@ -813,7 +805,40 @@ postContainer.addEventListener(
         });
     }
     if (post_data[0].length > 19) {
-      if (btn_star_vote) {
+      if (btn_star) {
+        const post_star = btn_star.closest(".post");
+        const postIndexStar = [...postContainer.children].indexOf(post_star);
+        if (
+          post_data[postIndexStar][11] !== null &&
+          DateTime.fromFormat(post_data[postIndexStar][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText = "Poll is closed!";
+        } else if (
+          post_data[postIndexStar][12] !== null &&
+          calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexStar][12]), parseFloat(post_data[postIndexStar][13])) >
+            parseInt(post_data[postIndexStar][14])
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText =
+            "You aren't allowed to vote in this post because you are outside the event radius!";
+        } else {
+          const rating_choice = btn_star.closest(".rating-choices").getAttribute("data-value");
+
+          let star_range = rating_choice * 10;
+          let max_star_position;
+          max_star_position = star_range - 10;
+
+          let post_index = document.querySelectorAll(".post")[postIndexStar];
+
+          for (let i = max_star_position; i < parseInt(parseFloat(btn_star.value) * 2.0) + max_star_position; i++) {
+            post_index.getElementsByClassName("half-star-container")[i].style.color = "#00ffd0";
+          }
+
+          let temp_pos = parseInt(rating_choice) + 21;
+          post_data[postIndexStar][temp_pos] = parseFloat(btn_star.value);
+        }
+      } else if (btn_star_vote) {
         const post_star_vote = btn_star_vote.closest(".post");
         const postIndexPostStarVote = [...postContainer.children].indexOf(post_star_vote);
 
@@ -855,8 +880,7 @@ postContainer.addEventListener(
               }
             });
         }
-      }
-      if (btn_up) {
+      } else if (btn_up) {
         const post_up = btn_up.closest(".post");
         const postIndexUP = [...postContainer.children].indexOf(post_up);
 
