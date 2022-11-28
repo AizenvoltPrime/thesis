@@ -876,7 +876,8 @@ postContainer.addEventListener(
             .then((res) => res.text())
             .then((response) => {
               if (response.trim() == "Success") {
-                console.log("Vote Passed");
+                $("#notification-container").fadeIn(300, function () {});
+                document.getElementById("notification-text").innerText = "Vote Accepted!";
               }
             });
         }
