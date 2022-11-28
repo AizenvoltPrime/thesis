@@ -270,9 +270,13 @@ if ($data['request'] == "request_username") {
                     COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) AS user_bookmark,
                     posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius,
                     (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result, choice_one_name, choice_two_name, choice_three_name, choice_four_name, 
-                    choice_five_name, rating.choice_one AS rating_choice_one, rating.choice_two AS rating_choice_two, rating.choice_three AS rating_choice_three, 
-                    rating.choice_four AS rating_choice_four, rating.choice_five AS rating_choice_five, rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg,
-                    rating_choice_four_avg, rating_choice_five_avg
+                    choice_five_name,
+                    COALESCE((SELECT rating.choice_one FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_one,
+                    COALESCE((SELECT rating.choice_two FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_two,
+                    COALESCE((SELECT rating.choice_three FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_three,
+                    COALESCE((SELECT rating.choice_four FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_four,
+                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five,
+                    rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg, rating_choice_four_avg, rating_choice_five_avg
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number join rating on posts.post_number = rating.post_id
@@ -290,9 +294,13 @@ if ($data['request'] == "request_username") {
                     COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) AS user_bookmark,
                     posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius,
                     (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result, choice_one_name, choice_two_name, choice_three_name, choice_four_name, 
-                    choice_five_name, rating.choice_one AS rating_choice_one, rating.choice_two AS rating_choice_two, rating.choice_three AS rating_choice_three, 
-                    rating.choice_four AS rating_choice_four, rating.choice_five AS rating_choice_five, rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg,
-                    rating_choice_four_avg, rating_choice_five_avg
+                    choice_five_name, 
+                    COALESCE((SELECT rating.choice_one FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_one,
+                    COALESCE((SELECT rating.choice_two FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_two,
+                    COALESCE((SELECT rating.choice_three FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_three,
+                    COALESCE((SELECT rating.choice_four FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_four,
+                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five,
+                    rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg, rating_choice_four_avg, rating_choice_five_avg
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number join rating on posts.post_number = rating.post_id
@@ -312,9 +320,13 @@ if ($data['request'] == "request_username") {
                     COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) AS user_bookmark,
                     posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius,
                     (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result, choice_one_name, choice_two_name, choice_three_name, choice_four_name, 
-                    choice_five_name, rating.choice_one AS rating_choice_one, rating.choice_two AS rating_choice_two, rating.choice_three AS rating_choice_three, 
-                    rating.choice_four AS rating_choice_four, rating.choice_five AS rating_choice_five, rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg,
-                    rating_choice_four_avg, rating_choice_five_avg
+                    choice_five_name, 
+                    COALESCE((SELECT rating.choice_one FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_one,
+                    COALESCE((SELECT rating.choice_two FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_two,
+                    COALESCE((SELECT rating.choice_three FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_three,
+                    COALESCE((SELECT rating.choice_four FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_four,
+                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five,
+                    rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg, rating_choice_four_avg, rating_choice_five_avg
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number join rating on posts.post_number = rating.post_id
@@ -333,9 +345,13 @@ if ($data['request'] == "request_username") {
                     COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) AS user_bookmark,
                     posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius,
                     (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result, choice_one_name, choice_two_name, choice_three_name, choice_four_name, 
-                    choice_five_name, rating.choice_one AS rating_choice_one, rating.choice_two AS rating_choice_two, rating.choice_three AS rating_choice_three, 
-                    rating.choice_four AS rating_choice_four, rating.choice_five AS rating_choice_five, rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg,
-                    rating_choice_four_avg, rating_choice_five_avg
+                    choice_five_name,
+                    COALESCE((SELECT rating.choice_one FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_one,
+                    COALESCE((SELECT rating.choice_two FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_two,
+                    COALESCE((SELECT rating.choice_three FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_three,
+                    COALESCE((SELECT rating.choice_four FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_four,
+                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five,
+                    rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg, rating_choice_four_avg, rating_choice_five_avg
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number join rating on posts.post_number = rating.post_id
@@ -676,4 +692,27 @@ if ($data['request'] == "request_username") {
     curl_close($ch);
 
     echo json_encode($data);
+} else if ($data['request'] == "rating_vote" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+    require_once "new_config.php";
+
+    $stmt = $conn->prepare("SELECT user_id FROM rating WHERE user_id=:id");
+    $stmt->execute([":id" => $_SESSION["id"]]);
+    $pass = false;
+    if ($stmt->rowCount() > 0) {
+        $stmt = $conn->prepare("UPDATE rating SET choice_one = :choice_one, choice_two = :choice_two, choice_three = :choice_three,
+        choice_four = :choice_four, choice_five = :choice_five WHERE post_id=:post_id AND user_id=:id");
+        $stmt->execute([
+            ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+            ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
+        ]);
+        echo "Success";
+    } else if ($stmt->rowCount() == 0) {
+        $stmt = $conn->prepare("INSERT INTO rating(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five) 
+            VALUES(:post_id,:id,2,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five)");
+        $stmt->execute([
+            ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+            ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
+        ]);
+        echo "Success";
+    }
 }

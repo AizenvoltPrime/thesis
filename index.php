@@ -348,6 +348,7 @@ require_once "new_config.php";
           <button data-dir="star" class="half-star-container" value="4.5"><i class="fa-solid fa-star-half"></i></button>
           <button data-dir="star" class="half-star-container" value="5.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
         </div>
+        <button data-dir="star-vote" class="send-rating-button">Send Vote</button>
       </div>
     </div>
   </div>

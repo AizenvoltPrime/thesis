@@ -67,6 +67,9 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 ΕΠΟΜΕΝΑ TASK:
 
 - ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
-- Να τσεκαρω τα sql statements με το rating.user_id που εβγαλα. Ουσιαστικα για τα ατομικα rating θέλει ξεχωριστή select για το καθένα
+- Bug με τα stars όταν δημιουργώ νεο post και το insert δεν λειτουργει στο rating
+
 
 "wss://crowdsource.gamerwelfare.com"
+
+DELETE FROM rating WHERE user_id=14 AND post_id=85;

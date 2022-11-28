@@ -1094,7 +1094,8 @@ a:active {
 
 #category-button,
 #filter-button,
-#admin-filter-button {
+#admin-filter-button,
+.send-rating-button {
   background-color: #000;
   border-radius: 0.5em;
   font-weight: bold;
@@ -1593,6 +1594,7 @@ input:checked + .slider:before {
   justify-content: flex-start;
   align-items: center;
   pointer-events: auto;
+  color: #f3f3f3;
 }
 
 .fa-star-half {

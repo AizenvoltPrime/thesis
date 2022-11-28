@@ -1,3 +1,4 @@
+import { clear_region_posts } from "../geojson/greece_regions.js";
 import { null_style, clear_filters } from "./filters.js";
 import { clear_bell_counter } from "./update_data.js";
 
@@ -471,12 +472,32 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
 
           if (post_data[i][2] == 2 && post_data[0].length > 19) {
             for (let j = 17; j < 22; j++) {
+              let star_range = (j - 16) * 10;
+              let max_star_position = star_range - 10;
+              let star_limit;
+              if (post_data[i][j + 5] !== null) {
+                star_limit = parseInt(post_data[i][j + 5] * 2.0) + max_star_position;
+              }
               if (post_data[i][j] !== null) {
                 if (j !== 17) {
                   let clone_rating_choices = document.getElementsByClassName("post")[0].getElementsByClassName("rating-choices")[0];
                   let clone = clone_rating_choices.cloneNode(true);
                   clone.setAttribute("data-value", j - 16);
-                  document.getElementsByClassName("post")[0].getElementsByClassName("rating-vote")[0].appendChild(clone);
+                  document
+                    .getElementsByClassName("post")[0]
+                    .getElementsByClassName("rating-vote")[0]
+                    .insertBefore(
+                      clone,
+                      document
+                        .getElementsByClassName("post")[0]
+                        .getElementsByClassName("rating-vote")[0]
+                        .getElementsByClassName("send-rating-button")[0]
+                    );
+                  document
+                    .getElementsByClassName("post")[0]
+                    .querySelectorAll(".rating-choices")
+                    [j - 17].querySelectorAll(".half-star-container")
+                    .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
                   document
                     .getElementsByClassName("post")[0]
                     .querySelectorAll(".rating-choices")
@@ -486,6 +507,11 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
                     .getElementsByClassName("post")[0]
                     .querySelectorAll(".rating-choices")
                     [j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
+                }
+                if (post_data[i][j + 5] !== null) {
+                  for (let k = max_star_position; k < star_limit; k++) {
+                    document.getElementsByClassName("post")[0].getElementsByClassName("half-star-container")[k].style.color = "#00ffd0";
+                  }
                 }
               }
             }
@@ -507,15 +533,36 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
               }
             });
             for (let j = 17; j < 22; j++) {
+              let star_range = (j - 16) * 10;
+              let max_star_position = star_range - 10;
+              let star_limit;
+              if (post_data[i][j + 5] !== null) {
+                star_limit = parseInt(post_data[i][j + 5] * 2.0) + max_star_position;
+              }
+
               if (post_data[i][j] !== null) {
                 if (j !== 17) {
                   let clone_rating_choices = clone[i - 1].getElementsByClassName("rating-choices")[0];
                   let clone_choices = clone_rating_choices.cloneNode(true);
                   clone_choices.setAttribute("data-value", j - 16);
-                  clone[i - 1].getElementsByClassName("rating-vote")[0].appendChild(clone_choices);
+                  clone[i - 1]
+                    .getElementsByClassName("rating-vote")[0]
+                    .insertBefore(
+                      clone_choices,
+                      clone[i - 1].getElementsByClassName("rating-vote")[0].getElementsByClassName("send-rating-button")[0]
+                    );
+                  clone[i - 1]
+                    .querySelectorAll(".rating-choices")
+                    [j - 17].querySelectorAll(".half-star-container")
+                    .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
                   clone[i - 1].querySelectorAll(".rating-choices")[j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
                 } else {
                   clone[i - 1].querySelectorAll(".rating-choices")[j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
+                }
+                if (post_data[i][j + 5] !== null) {
+                  for (let k = max_star_position; k < star_limit; k++) {
+                    clone[i - 1].getElementsByClassName("half-star-container")[k].style.color = "#00ffd0";
+                  }
                 }
               }
             }
@@ -684,13 +731,6 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
     });
 }
 
-let rating_passed = [
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-];
 const postContainer = document.querySelector("#posts-container");
 
 //This determines which post the user clicked to change its data.
@@ -706,6 +746,7 @@ postContainer.addEventListener(
     const btn_user_name = e.target.closest(".post-user-name");
     const btn_vote = e.target.closest('button[data-dir="vote"]');
     const btn_star = e.target.closest('button[data-dir="star"]');
+    const btn_star_vote = e.target.closest('button[data-dir="star-vote"]');
 
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
@@ -736,8 +777,8 @@ postContainer.addEventListener(
         post_index.getElementsByClassName("half-star-container")[i].style.color = "#00ffd0";
       }
 
-      rating_passed[postIndexStar][rating_choice - 1] = parseInt(parseFloat(btn_star.value) * 2.0);
-      console.log(rating_passed);
+      let temp_pos = parseInt(rating_choice) + 21;
+      post_data[postIndexStar][temp_pos] = parseFloat(btn_star.value);
     }
     if (btn_show_results) {
       const post_show_results = btn_show_results.closest(".post");
@@ -772,6 +813,49 @@ postContainer.addEventListener(
         });
     }
     if (post_data[0].length > 19) {
+      if (btn_star_vote) {
+        const post_star_vote = btn_star_vote.closest(".post");
+        const postIndexPostStarVote = [...postContainer.children].indexOf(post_star_vote);
+
+        if (
+          post_data[postIndexPostStarVote][11] !== null &&
+          DateTime.fromFormat(post_data[postIndexPostStarVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText = "Poll is closed!";
+        } else if (
+          post_data[postIndexPostStarVote][12] !== null &&
+          calcCrow(
+            user_coordinates[0],
+            user_coordinates[1],
+            parseFloat(post_data[postIndexPostStarVote][12]),
+            parseFloat(post_data[postIndexPostStarVote][13])
+          ) > parseInt(post_data[postIndexPostStarVote][14])
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText =
+            "You aren't allowed to vote in this post because you are outside the event radius!";
+        } else {
+          let votes = [];
+          for (let i = 17; i < 22; i++) {
+            if (post_data[postIndexPostStarVote][i] !== null) {
+              votes.push(post_data[postIndexPostStarVote][i + 5]);
+            } else {
+              votes.push(null);
+            }
+          }
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "rating_vote", votes: votes, post_id: post_data[postIndexPostStarVote][0] }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                console.log("Vote Passed");
+              }
+            });
+        }
+      }
       if (btn_up) {
         const post_up = btn_up.closest(".post");
         const postIndexUP = [...postContainer.children].indexOf(post_up);
@@ -1278,20 +1362,28 @@ postContainer.addEventListener("mouseout", (e) => {
     const rating_choice = btn_star.closest(".rating-choices").getAttribute("data-value");
 
     let star_range = rating_choice * 10;
-    let max_star_position;
-    max_star_position = star_range - 10;
-
+    let max_star_position = star_range - 10;
+    let star_limit;
+    let temp_pos = parseInt(rating_choice) + 21;
     let post_index = document.querySelectorAll(".post")[postIndexStar];
 
-    for (let i = max_star_position; i < rating_passed[postIndexStar][rating_choice - 1] + max_star_position; i++) {
+    if (post_data[postIndexStar][temp_pos] === undefined) {
+      star_limit = 0 + max_star_position;
+    } else {
+      star_limit = parseInt(post_data[postIndexStar][temp_pos] * 2.0) + max_star_position;
+    }
+
+    if (post_data[postIndexStar][temp_pos] === undefined) {
+      star_limit = 0 + max_star_position;
+    } else {
+      star_limit = parseInt(post_data[postIndexStar][temp_pos] * 2.0) + max_star_position;
+    }
+
+    for (let i = max_star_position; i < star_limit; i++) {
       post_index.getElementsByClassName("half-star-container")[i].style.color = "#00ffd0";
     }
 
-    for (
-      let i = rating_passed[postIndexStar][rating_choice - 1] + max_star_position;
-      i < parseInt(parseFloat(btn_star.value) * 2.0) + max_star_position;
-      i++
-    ) {
+    for (let i = star_limit; i < parseInt(parseFloat(btn_star.value) * 2.0) + max_star_position; i++) {
       post_index.getElementsByClassName("half-star-container")[i].style.color = null;
     }
   }
