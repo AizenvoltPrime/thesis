@@ -774,6 +774,10 @@ postContainer.addEventListener(
           document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = null;
           document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "none";
         } else {
+          if (window.getComputedStyle(document.getElementsByClassName("rating-vote-results")[postIndexVote]).display === "flex") {
+            document.querySelectorAll(".show-results")[postIndexVote].style.backgroundColor = "#00a1ff80";
+            document.querySelectorAll(".rating-vote-results")[postIndexVote].style.display = "none";
+          }
           document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
           document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "flex";
         }
@@ -798,6 +802,10 @@ postContainer.addEventListener(
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
           document.querySelectorAll(".rating-vote-results")[postIndexShowResults].style.display = "none";
         } else {
+          if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexShowResults]).display === "flex") {
+            document.querySelectorAll(".post")[postIndexShowResults].getElementsByClassName("vote")[0].style.backgroundColor = null;
+            document.querySelectorAll(".rating-vote")[postIndexShowResults].style.display = "none";
+          }
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff";
           document.querySelectorAll(".rating-vote-results")[postIndexShowResults].style.display = "flex";
           get_rating_data(postIndexShowResults);
@@ -1481,7 +1489,65 @@ function get_yes_no_data(post_number) {
     });
 }
 
-function get_rating_data(post_number) {}
+function get_rating_data(post_number) {
+  fetch("process_data.php", {
+    method: "POST",
+    body: JSON.stringify({ request: "average_rating_data", post_id: post_data[post_number][0] }),
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      let post_element = document.getElementsByClassName("post")[post_number];
+      post_element.querySelectorAll(".rating-choices-results").forEach((child) => {
+        if (child.getAttribute("data-value") !== "1") {
+          child.remove();
+        }
+      });
+      for (let i = 0; i < response.length; i++) {
+        let max_star_position = i * 10;
+        let star_limit;
+        if (response[i] !== null) {
+          let first_digit = parseFloat(response[i][0]);
+          let average_rating = parseFloat(response[i]).toFixed(3);
+          if (average_rating < first_digit + 0.25) {
+            average_rating = parseFloat(response[i][0]);
+          } else if (average_rating >= first_digit + 0.25 && average_rating <= first_digit + 0.5) {
+            average_rating = parseFloat(response[i][0]) + 0.5;
+          } else if (average_rating >= first_digit + 0.5 && average_rating < first_digit + 0.75) {
+            average_rating = parseFloat(response[i][0]) + 0.5;
+          } else if (average_rating >= first_digit + 0.75) {
+            average_rating = parseFloat(response[i][0]) + 1.0;
+          }
+          star_limit = parseInt(average_rating * 2.0) + max_star_position;
+        }
+        if (post_data[post_number][i + 17] !== null) {
+          if (i + 17 !== 17) {
+            let clone_rating_choices = post_element.getElementsByClassName("rating-choices-results")[0];
+            let clone = clone_rating_choices.cloneNode(true);
+            clone.setAttribute("data-value", i + 1);
+            post_element.getElementsByClassName("rating-vote-results")[0].appendChild(clone);
+            post_element
+              .querySelectorAll(".rating-choices-results")
+              [i].querySelectorAll(".half-star-container-results")
+              .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
+            post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText =
+              post_data[post_number][i + 17];
+          } else {
+            post_element
+              .querySelectorAll(".rating-choices-results")
+              [i].querySelectorAll(".half-star-container-results")
+              .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
+            post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText =
+              post_data[post_number][i + 17];
+          }
+          if (response[i] !== undefined) {
+            for (let k = max_star_position; k < star_limit; k++) {
+              post_element.getElementsByClassName("half-star-container-results")[k].style.color = "#00ffd0";
+            }
+          }
+        }
+      }
+    });
+}
 
 //Makes yes_no post chart.
 export function make_yes_no_chart(post_number, chart_data) {
@@ -1554,6 +1620,14 @@ export function reset_poll_data() {
     main_class.style.display = "none";
   });
   document.querySelectorAll(".rating-choices").forEach((main_class) => {
+    if (main_class.getAttribute("data-value") !== "1") {
+      main_class.remove();
+    }
+  });
+  document.querySelectorAll(".rating-vote-results").forEach((main_class) => {
+    main_class.style.display = "none";
+  });
+  document.querySelectorAll(".rating-choices-results").forEach((main_class) => {
     if (main_class.getAttribute("data-value") !== "1") {
       main_class.remove();
     }

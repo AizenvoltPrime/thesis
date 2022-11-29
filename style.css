@@ -1591,7 +1591,8 @@ input:checked + .slider:before {
   font-weight: bold;
 }
 
-.half-star-container {
+.half-star-container,
+.half-star-container-results {
   display: flex;
   width: 1.11em;
   justify-content: flex-start;

@@ -718,4 +718,19 @@ if ($data['request'] == "request_username") {
     if ($pass == false) {
         echo "Success";
     }
+} else if ($data['request'] == "average_rating_data") {
+    require_once "new_config.php";
+
+    $stmt = $conn->prepare("SELECT rating_choice_one_avg,rating_choice_two_avg,rating_choice_three_avg,rating_choice_four_avg,rating_choice_five_avg 
+    FROM posts_rating_info WHERE rating_post_id=:post_id");
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $tmp = array(
+                $row["rating_choice_one_avg"], $row["rating_choice_two_avg"], $row["rating_choice_three_avg"], $row["rating_choice_four_avg"],
+                $row["rating_choice_five_avg"]
+            );
+        }
+    }
+    echo json_encode($tmp);
 }
