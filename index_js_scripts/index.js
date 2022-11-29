@@ -470,7 +470,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
           document.getElementsByClassName("post-time")[0].innerText = post_time;
           document.getElementsByClassName("post-time-detailed")[0].innerText = post_data[i][6];
 
-          if (post_data[i][2] == 2 && post_data[0].length > 19) {
+          if (post_data[i][2] == 2 && post_data[0].length > 14) {
             for (let j = 17; j < 22; j++) {
               let star_range = (j - 16) * 10;
               let max_star_position = star_range - 10;
@@ -506,6 +506,11 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
                   document
                     .getElementsByClassName("post")[0]
                     .querySelectorAll(".rating-choices")
+                    [j - 17].querySelectorAll(".half-star-container")
+                    .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
+                  document
+                    .getElementsByClassName("post")[0]
+                    .querySelectorAll(".rating-choices")
                     [j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
                 }
                 if (post_data[i][j + 5] !== null) {
@@ -526,7 +531,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
           clone[i - 1].querySelectorAll(".post-time-detailed")[0].innerText = post_data[i][6];
           document.getElementById("posts-container").appendChild(clone[i - 1]);
 
-          if (post_data[i][2] == 2 && post_data[0].length > 19) {
+          if (post_data[i][2] == 2 && post_data[0].length > 14) {
             clone[i - 1].querySelectorAll(".rating-choices").forEach((child) => {
               if (child.getAttribute("data-value") !== "1") {
                 child.remove();
@@ -570,7 +575,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
         }
       }
       if (post_time !== undefined && post_time !== null) {
-        if (post_data[0].length > 19) {
+        if (post_data[0].length > 14) {
           for (let i = 0; i < post_data.length; i++) {
             if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
@@ -657,7 +662,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
             new_canvas.className = "myChart";
             document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
           }
-        } else if (post_data[0].length <= 19) {
+        } else if (post_data[0].length <= 14) {
           for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
@@ -777,15 +782,26 @@ postContainer.addEventListener(
       const post_show_results = btn_show_results.closest(".post");
       const postIndexShowResults = [...postContainer.children].indexOf(post_show_results);
 
-      if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexShowResults]).display === "block") {
-        document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
-        document.querySelectorAll(".chartCard")[postIndexShowResults].style.display = "none";
-        if (myChart[postIndexShowResults]) {
-          myChart[postIndexShowResults].destroy();
+      if (post_data[postIndexShowResults][2] == 1)
+        if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexShowResults]).display === "block") {
+          document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
+          document.querySelectorAll(".chartCard")[postIndexShowResults].style.display = "none";
+          if (myChart[postIndexShowResults]) {
+            myChart[postIndexShowResults].destroy();
+          }
+        } else {
+          document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff";
+          get_yes_no_data(postIndexShowResults);
         }
-      } else {
-        document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff";
-        get_yes_no_data(postIndexShowResults);
+      else if (post_data[postIndexShowResults][2] == 2) {
+        if (window.getComputedStyle(document.getElementsByClassName("rating-vote-results")[postIndexShowResults]).display === "flex") {
+          document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
+          document.querySelectorAll(".rating-vote-results")[postIndexShowResults].style.display = "none";
+        } else {
+          document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff";
+          document.querySelectorAll(".rating-vote-results")[postIndexShowResults].style.display = "flex";
+          get_rating_data(postIndexShowResults);
+        }
       }
     } else if (btn_user_name) {
       const post_user_name = btn_user_name.closest(".post");
@@ -804,7 +820,7 @@ postContainer.addEventListener(
           generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1], null);
         });
     }
-    if (post_data[0].length > 19) {
+    if (post_data[0].length > 14) {
       if (btn_star) {
         const post_star = btn_star.closest(".post");
         const postIndexStar = [...postContainer.children].indexOf(post_star);
@@ -862,24 +878,33 @@ postContainer.addEventListener(
             "You aren't allowed to vote in this post because you are outside the event radius!";
         } else {
           let votes = [];
+          let accept_votes = true;
           for (let i = 17; i < 22; i++) {
             if (post_data[postIndexPostStarVote][i] !== null) {
               votes.push(post_data[postIndexPostStarVote][i + 5]);
+              if (post_data[postIndexPostStarVote][i + 5] === null) {
+                accept_votes = false;
+              }
             } else {
               votes.push(null);
             }
           }
-          fetch("process_data.php", {
-            method: "POST",
-            body: JSON.stringify({ request: "rating_vote", votes: votes, post_id: post_data[postIndexPostStarVote][0] }),
-          })
-            .then((res) => res.text())
-            .then((response) => {
-              if (response.trim() == "Success") {
-                $("#notification-container").fadeIn(300, function () {});
-                document.getElementById("notification-text").innerText = "Vote Accepted!";
-              }
-            });
+          if (accept_votes === true) {
+            fetch("process_data.php", {
+              method: "POST",
+              body: JSON.stringify({ request: "rating_vote", votes: votes, post_id: post_data[postIndexPostStarVote][0] }),
+            })
+              .then((res) => res.text())
+              .then((response) => {
+                if (response.trim() == "Success") {
+                  $("#notification-container").fadeIn(300, function () {});
+                  document.getElementById("notification-text").innerText = "Vote Accepted!";
+                }
+              });
+          } else {
+            $("#notification-container").fadeIn(300, function () {});
+            document.getElementById("notification-text").innerText = "You have to rate every choice in order for your vote to be accepted!";
+          }
         }
       } else if (btn_up) {
         const post_up = btn_up.closest(".post");
@@ -1456,6 +1481,8 @@ function get_yes_no_data(post_number) {
     });
 }
 
+function get_rating_data(post_number) {}
+
 //Makes yes_no post chart.
 export function make_yes_no_chart(post_number, chart_data) {
   if (myChart[post_number]) {
@@ -1634,7 +1661,7 @@ export function null_all_styles() {
 //Adds new post data that was received from websocket.
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
-  if (new_post.length > 19) {
+  if (new_post.length > 14) {
     post_data[0][16] = post_data[1][16];
   }
   user_chevron_vote.unshift([false, false]);

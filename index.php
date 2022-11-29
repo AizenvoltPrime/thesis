@@ -336,7 +336,7 @@ require_once "new_config.php";
       <div class="chartCard" style="display:none;"></div>
       <div class="rating-vote" style="display:none;">
         <div class="rating-choices" data-value="1">
-          <div class="choice-name">New York</div>
+          <div class="choice-name"></div>
           <button data-dir="star" class="half-star-container" value="0.5"><i class="fa-solid fa-star-half"></i></button>
           <button data-dir="star" class="half-star-container" value="1.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
           <button data-dir="star" class="half-star-container" value="1.5"><i class="fa-solid fa-star-half"></i></button>
@@ -349,6 +349,21 @@ require_once "new_config.php";
           <button data-dir="star" class="half-star-container" value="5.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
         </div>
         <button data-dir="star-vote" class="send-rating-button">Send Vote</button>
+      </div>
+      <div class="rating-vote-results" style="display:none;">
+        <div class="rating-choices-results" data-value="1">
+          <div class="choice-name"></div>
+          <button class="half-star-container" value="0.5"><i class="fa-solid fa-star-half"></i></button>
+          <button class="half-star-container" value="1.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+          <button class="half-star-container" value="1.5"><i class="fa-solid fa-star-half"></i></button>
+          <button class="half-star-container" value="2.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+          <button class="half-star-container" value="2.5"><i class="fa-solid fa-star-half"></i></button>
+          <button class="half-star-container" value="3.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+          <button class="half-star-container" value="3.5"><i class="fa-solid fa-star-half"></i></button>
+          <button class="half-star-container" value="4.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+          <button class="half-star-container" value="4.5"><i class="fa-solid fa-star-half"></i></button>
+          <button class="half-star-container" value="5.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+        </div>
       </div>
     </div>
   </div>
