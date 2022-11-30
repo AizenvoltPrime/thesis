@@ -687,6 +687,15 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
                 [i].insertBefore(new_no_button, document.getElementsByClassName("show-results")[i]);
               new_no_button.setAttribute("data-dir", "no");
               new_no_button.innerText = "No";
+            } else if (post_data[i][2] == 2) {
+              user_yes_no_vote.push([false, false]);
+              let new_vote_button = document.createElement("button");
+              new_vote_button.className = "vote";
+              document
+                .getElementsByClassName("user-question-answers")
+                [i].insertBefore(new_vote_button, document.getElementsByClassName("show-results")[i]);
+              new_vote_button.setAttribute("data-dir", "vote");
+              new_vote_button.innerText = "Vote";
             }
             if (post_data[i][7] !== null && DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") === -1) {
               document.querySelectorAll(".poll-remaining-time")[i].innerText =
@@ -757,31 +766,37 @@ postContainer.addEventListener(
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
       const postIndexVote = [...postContainer.children].indexOf(post_vote);
-      if (
-        post_data[postIndexVote][11] !== null &&
-        DateTime.fromFormat(post_data[postIndexVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
-      ) {
-        $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "Poll is closed!";
-      } else if (
-        post_data[postIndexVote][12] !== null &&
-        calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexVote][12]), parseFloat(post_data[postIndexVote][13])) >
-          parseInt(post_data[postIndexVote][14])
-      ) {
-        $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius!";
-      } else {
-        if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexVote]).display === "flex") {
-          document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = null;
-          document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "none";
+      if (post_data[0].length > 14) {
+        if (
+          post_data[postIndexVote][11] !== null &&
+          DateTime.fromFormat(post_data[postIndexVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText = "Poll is closed!";
+        } else if (
+          post_data[postIndexVote][12] !== null &&
+          calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexVote][12]), parseFloat(post_data[postIndexVote][13])) >
+            parseInt(post_data[postIndexVote][14])
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText =
+            "You aren't allowed to vote in this post because you are outside the event radius!";
         } else {
-          if (window.getComputedStyle(document.getElementsByClassName("rating-vote-results")[postIndexVote]).display === "flex") {
-            document.querySelectorAll(".show-results")[postIndexVote].style.backgroundColor = "#00a1ff80";
-            document.querySelectorAll(".rating-vote-results")[postIndexVote].style.display = "none";
+          if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexVote]).display === "flex") {
+            document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = null;
+            document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "none";
+          } else {
+            if (window.getComputedStyle(document.getElementsByClassName("rating-vote-results")[postIndexVote]).display === "flex") {
+              document.querySelectorAll(".show-results")[postIndexVote].style.backgroundColor = "#00a1ff80";
+              document.querySelectorAll(".rating-vote-results")[postIndexVote].style.display = "none";
+            }
+            document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
+            document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "flex";
           }
-          document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
-          document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "flex";
         }
+      } else {
+        $("#notification-container").fadeIn(300, function () {});
+        document.getElementById("notification-text").innerText = "You have to be logged-in to vote!";
       }
     } else if (btn_show_results) {
       const post_show_results = btn_show_results.closest(".post");
