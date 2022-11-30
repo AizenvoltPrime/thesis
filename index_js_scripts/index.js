@@ -139,6 +139,7 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
         if (post_data[0] !== undefined) {
           $("#add-post-icon").fadeOut(300, function () {});
           $("#all-filters").fadeOut(300, function () {});
+          $("#notification-container").fadeOut(300, function () {});
           if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
             $("#username-change-form").fadeOut(300, function () {});
           }

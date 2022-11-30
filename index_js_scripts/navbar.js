@@ -126,6 +126,7 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
       $("#password-change-form").fadeOut(300, function () {});
     }
     $(".post").fadeOut(300, function () {});
+    $("#notification-container").fadeOut(300, function () {});
     $(".post")
       .promise()
       .done(function () {
@@ -192,6 +193,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
       $("#password-change-form").fadeOut(300, function () {});
     }
     $(".post").fadeOut(300, function () {});
+    $("#notification-container").fadeOut(300, function () {});
     $(".post")
       .promise()
       .done(function () {
@@ -237,6 +239,7 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
     $("#add-post-icon").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
+    $("#notification-container").fadeOut(300, function () {});
     $(".post")
       .promise()
       .done(function () {
@@ -332,6 +335,7 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
     $("#add-post-icon").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
+    $("#notification-container").fadeOut(300, function () {});
     $(".post")
       .promise()
       .done(function () {
@@ -401,6 +405,7 @@ document.getElementById("password-change").addEventListener("click", function ()
 //This is for when the user clicks "Analytics" on the user navbar.
 document.getElementsByClassName("nav-element")[6].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
+    clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
@@ -450,6 +455,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
     $("#add-post-icon").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
+    $("#notification-container").fadeOut(300, function () {});
     $(".post")
       .promise()
       .done(function () {
