@@ -1,4 +1,4 @@
-import { conn, add_new_post, get_variables, edit_chevron, make_yes_no_chart, edit_vote, edit_bookmark } from "./index.js";
+import { conn, add_new_post, get_variables, edit_chevron, make_yes_no_chart, edit_vote, edit_bookmark, edit_rating_vote } from "./index.js";
 import { make_admin_analytics_map, admin_map_remove_marker } from "./admin_analytics.js";
 
 var DateTime = luxon.DateTime;
@@ -375,6 +375,123 @@ addEventListener("DOMContentLoaded", (event) => {
       }
     } else if (JSON.parse(e.data)[0] === "admin_map_status") {
       admin_map_bool = JSON.parse(e.data)[1];
+    } else if (JSON.parse(e.data)[0] === "rating_vote") {
+      let average_ratings_array = [
+        JSON.parse(e.data)[8],
+        JSON.parse(e.data)[9],
+        JSON.parse(e.data)[10],
+        JSON.parse(e.data)[11],
+        JSON.parse(e.data)[12],
+      ];
+      let ratings_array = [JSON.parse(e.data)[3], JSON.parse(e.data)[4], JSON.parse(e.data)[5], JSON.parse(e.data)[6], JSON.parse(e.data)[7]];
+      for (let i = 0; i < get_variables()[3].length; i++) {
+        if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
+          if (window.getComputedStyle(document.getElementsByClassName("rating-vote-results")[i]).display === "flex") {
+            let post_element = document.getElementsByClassName("post")[i];
+            let choice_names_index;
+            post_element.querySelectorAll(".rating-choices-results").forEach((child) => {
+              if (child.getAttribute("data-value") !== "1") {
+                child.remove();
+              }
+            });
+            for (let j = 0; j < 5; j++) {
+              if (get_variables()[2] > 14) {
+                choice_names_index = j + 17;
+              } else {
+                choice_names_index = j + 9;
+              }
+              let max_star_position = j * 10;
+              let star_limit;
+              if (average_ratings_array[j] !== null) {
+                let first_digit = parseFloat(average_ratings_array[j][0]);
+                let average_rating = parseFloat(average_ratings_array[j]).toFixed(3);
+                if (average_rating < first_digit + 0.25) {
+                  average_rating = parseFloat(average_ratings_array[j][0]);
+                } else if (average_rating >= first_digit + 0.25 && average_rating <= first_digit + 0.5) {
+                  average_rating = parseFloat(average_ratings_array[j][0]) + 0.5;
+                } else if (average_rating >= first_digit + 0.5 && average_rating < first_digit + 0.75) {
+                  average_rating = parseFloat(average_ratings_array[j][0]) + 0.5;
+                } else if (average_rating >= first_digit + 0.75) {
+                  average_rating = parseFloat(average_ratings_array[j][0]) + 1.0;
+                }
+                star_limit = parseInt(average_rating * 2.0) + max_star_position;
+              }
+              if (get_variables()[3][i][choice_names_index] !== null) {
+                if (choice_names_index !== choice_names_index - j) {
+                  let clone_rating_choices = post_element.getElementsByClassName("rating-choices-results")[0];
+                  let clone = clone_rating_choices.cloneNode(true);
+                  clone.setAttribute("data-value", j + 1);
+                  post_element.getElementsByClassName("rating-vote-results")[0].appendChild(clone);
+                  post_element
+                    .querySelectorAll(".rating-choices-results")
+                    [j].querySelectorAll(".half-star-container-results")
+                    .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
+                  post_element.querySelectorAll(".rating-choices-results")[j].getElementsByClassName("choice-name")[0].innerText =
+                    get_variables()[3][i][choice_names_index];
+                } else {
+                  post_element
+                    .querySelectorAll(".rating-choices-results")
+                    [j].querySelectorAll(".half-star-container-results")
+                    .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
+                  post_element.querySelectorAll(".rating-choices-results")[j].getElementsByClassName("choice-name")[0].innerText =
+                    get_variables()[3][i][choice_names_index];
+                }
+                if (average_ratings_array[j] !== undefined) {
+                  for (let k = max_star_position; k < star_limit; k++) {
+                    post_element.getElementsByClassName("half-star-container-results")[k].style.color = "#00ffd0";
+                  }
+                }
+              }
+            }
+          }
+          if (get_variables()[2] > 14) {
+            if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+              let post_element = document.getElementsByClassName("post")[i];
+              post_element.querySelectorAll(".rating-choices").forEach((child) => {
+                if (child.getAttribute("data-value") !== "1") {
+                  child.remove();
+                }
+              });
+              for (let j = 0; j < 5; j++) {
+                let max_star_position = j * 10;
+                let star_limit;
+                if (ratings_array[j] !== null) {
+                  star_limit = parseInt(parseFloat(ratings_array[j]) * 2.0) + max_star_position;
+                }
+                if (get_variables()[3][i][j + 17] !== null) {
+                  if (j + 17 !== 17) {
+                    let clone_rating_choices = post_element.getElementsByClassName("rating-choices")[0];
+                    let clone = clone_rating_choices.cloneNode(true);
+                    clone.setAttribute("data-value", j + 1);
+                    post_element
+                      .getElementsByClassName("rating-vote")[0]
+                      .insertBefore(clone, post_element.getElementsByClassName("rating-vote")[0].getElementsByClassName("send-rating-button")[0]);
+                    post_element
+                      .querySelectorAll(".rating-choices")
+                      [j].querySelectorAll(".half-star-container")
+                      .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
+                    post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText =
+                      get_variables()[3][i][j + 17];
+                  } else {
+                    post_element
+                      .querySelectorAll(".rating-choices")
+                      [j].querySelectorAll(".half-star-container")
+                      .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
+                    post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText =
+                      get_variables()[3][i][j + 17];
+                  }
+                  if (ratings_array[j] !== undefined) {
+                    for (let k = max_star_position; k < star_limit; k++) {
+                      post_element.getElementsByClassName("half-star-container")[k].style.color = "#00ffd0";
+                    }
+                  }
+                }
+              }
+              edit_rating_vote(i, ratings_array);
+            }
+          }
+        }
+      }
     }
   };
 });

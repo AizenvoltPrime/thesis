@@ -903,9 +903,26 @@ postContainer.addEventListener(
               method: "POST",
               body: JSON.stringify({ request: "rating_vote", votes: votes, post_id: post_data[postIndexPostStarVote][0] }),
             })
-              .then((res) => res.text())
+              .then((res) => res.json())
               .then((response) => {
-                if (response.trim() == "Success") {
+                if (response[10].trim() == "Success") {
+                  conn.send(
+                    JSON.stringify([
+                      "rating_vote",
+                      post_data[postIndexPostStarVote][0],
+                      post_data[0][16],
+                      response[0],
+                      response[1],
+                      response[2],
+                      response[3],
+                      response[4],
+                      response[5],
+                      response[6],
+                      response[7],
+                      response[8],
+                      response[9],
+                    ])
+                  );
                   $("#notification-container").fadeIn(300, function () {});
                   document.getElementById("notification-text").innerText = "Vote Accepted!";
                 }
@@ -1497,6 +1514,7 @@ function get_rating_data(post_number) {
   })
     .then((res) => res.json())
     .then((response) => {
+      let choice_names_index;
       let post_element = document.getElementsByClassName("post")[post_number];
       post_element.querySelectorAll(".rating-choices-results").forEach((child) => {
         if (child.getAttribute("data-value") !== "1") {
@@ -1506,6 +1524,11 @@ function get_rating_data(post_number) {
       for (let i = 0; i < response.length; i++) {
         let max_star_position = i * 10;
         let star_limit;
+        if (post_data[0].length > 14) {
+          choice_names_index = i + 17;
+        } else {
+          choice_names_index = i + 9;
+        }
         if (response[i] !== null) {
           let first_digit = parseFloat(response[i][0]);
           let average_rating = parseFloat(response[i]).toFixed(3);
@@ -1520,8 +1543,8 @@ function get_rating_data(post_number) {
           }
           star_limit = parseInt(average_rating * 2.0) + max_star_position;
         }
-        if (post_data[post_number][i + 17] !== null) {
-          if (i + 17 !== 17) {
+        if (post_data[post_number][choice_names_index] !== null) {
+          if (choice_names_index !== choice_names_index - i) {
             let clone_rating_choices = post_element.getElementsByClassName("rating-choices-results")[0];
             let clone = clone_rating_choices.cloneNode(true);
             clone.setAttribute("data-value", i + 1);
@@ -1531,14 +1554,14 @@ function get_rating_data(post_number) {
               [i].querySelectorAll(".half-star-container-results")
               .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
             post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText =
-              post_data[post_number][i + 17];
+              post_data[post_number][choice_names_index];
           } else {
             post_element
               .querySelectorAll(".rating-choices-results")
               [i].querySelectorAll(".half-star-container-results")
               .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
             post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText =
-              post_data[post_number][i + 17];
+              post_data[post_number][choice_names_index];
           }
           if (response[i] !== undefined) {
             for (let k = max_star_position; k < star_limit; k++) {
@@ -1765,6 +1788,13 @@ export function edit_vote(position, value_yes, value_no, vote_bool) {
   if (vote_bool !== null) {
     user_yes_no_vote[position][0] = vote_bool[0];
     user_yes_no_vote[position][1] = vote_bool[1];
+  }
+}
+
+//Adds new vote data that was received from websocket.
+export function edit_rating_vote(position, votes) {
+  for (let i = 0; i < votes.length; i++) {
+    post_data[position][i + 22] = votes[i];
   }
 }
 

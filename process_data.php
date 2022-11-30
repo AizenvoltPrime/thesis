@@ -698,7 +698,6 @@ if ($data['request'] == "request_username") {
 
     $stmt = $conn->prepare("SELECT user_id FROM rating WHERE user_id=:id");
     $stmt->execute([":id" => $_SESSION["id"]]);
-    $pass = false;
     if ($stmt->rowCount() > 0) {
         $stmt = $conn->prepare("UPDATE rating SET choice_one = :choice_one, choice_two = :choice_two, choice_three = :choice_three,
         choice_four = :choice_four, choice_five = :choice_five WHERE post_id=:post_id AND user_id=:id");
@@ -706,8 +705,6 @@ if ($data['request'] == "request_username") {
             ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
             ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
         ]);
-        $pass = true;
-        echo "Success";
     }
     $stmt = $conn->prepare("INSERT IGNORE INTO rating(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five) 
             VALUES(:post_id,:id,2,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five)");
@@ -715,9 +712,20 @@ if ($data['request'] == "request_username") {
         ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
         ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
     ]);
-    if ($pass == false) {
-        echo "Success";
+
+    $stmt = $conn->prepare("SELECT rating_choice_one_avg,rating_choice_two_avg,rating_choice_three_avg,rating_choice_four_avg,rating_choice_five_avg 
+        FROM posts_rating_info WHERE rating_post_id=:post_id");
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $tmp = array(
+                $data["votes"][0], $data["votes"][1], $data["votes"][2], $data["votes"][3], $data["votes"][4], $row["rating_choice_one_avg"],
+                $row["rating_choice_two_avg"], $row["rating_choice_three_avg"], $row["rating_choice_four_avg"],
+                $row["rating_choice_five_avg"], "Success"
+            );
+        }
     }
+    echo json_encode($tmp);
 } else if ($data['request'] == "average_rating_data") {
     require_once "new_config.php";
 
