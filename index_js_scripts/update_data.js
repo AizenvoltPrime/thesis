@@ -436,7 +436,7 @@ addEventListener("DOMContentLoaded", (event) => {
                   post_element.querySelectorAll(".rating-choices-results")[j].getElementsByClassName("choice-name")[0].innerText =
                     get_variables()[3][i][choice_names_index];
                 }
-                if (average_ratings_array[j] !== undefined) {
+                if (average_ratings_array[j] !== null) {
                   for (let k = max_star_position; k < star_limit; k++) {
                     post_element.getElementsByClassName("half-star-container-results")[k].style.color = "#00ffd0";
                   }
@@ -480,7 +480,7 @@ addEventListener("DOMContentLoaded", (event) => {
                     post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText =
                       get_variables()[3][i][j + 17];
                   }
-                  if (ratings_array[j] !== undefined) {
+                  if (ratings_array[j] !== null) {
                     for (let k = max_star_position; k < star_limit; k++) {
                       post_element.getElementsByClassName("half-star-container")[k].style.color = "#00ffd0";
                     }

@@ -1535,6 +1535,9 @@ function get_rating_data(post_number) {
         } else {
           choice_names_index = i + 9;
         }
+        if (response[i] === undefined) {
+          console.log(response[i]);
+        }
         if (response[i] !== null) {
           let first_digit = parseFloat(response[i][0]);
           let average_rating = parseFloat(response[i]).toFixed(3);
@@ -1569,7 +1572,7 @@ function get_rating_data(post_number) {
             post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText =
               post_data[post_number][choice_names_index];
           }
-          if (response[i] !== undefined) {
+          if (response[i] !== null) {
             for (let k = max_star_position; k < star_limit; k++) {
               post_element.getElementsByClassName("half-star-container-results")[k].style.color = "#00ffd0";
             }
