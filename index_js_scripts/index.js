@@ -902,50 +902,41 @@ postContainer.addEventListener(
             "You aren't allowed to vote in this post because you are outside the event radius!";
         } else {
           let votes = [];
-          let accept_votes = true;
           for (let i = 17; i < 22; i++) {
             if (post_data[postIndexPostStarVote][i] !== null) {
               votes.push(post_data[postIndexPostStarVote][i + 5]);
-              if (post_data[postIndexPostStarVote][i + 5] === null) {
-                accept_votes = false;
-              }
             } else {
               votes.push(null);
             }
           }
-          if (accept_votes === true) {
-            fetch("process_data.php", {
-              method: "POST",
-              body: JSON.stringify({ request: "rating_vote", votes: votes, post_id: post_data[postIndexPostStarVote][0] }),
-            })
-              .then((res) => res.json())
-              .then((response) => {
-                if (response[10].trim() == "Success") {
-                  conn.send(
-                    JSON.stringify([
-                      "rating_vote",
-                      post_data[postIndexPostStarVote][0],
-                      post_data[0][16],
-                      response[0],
-                      response[1],
-                      response[2],
-                      response[3],
-                      response[4],
-                      response[5],
-                      response[6],
-                      response[7],
-                      response[8],
-                      response[9],
-                    ])
-                  );
-                  $("#notification-container").fadeIn(300, function () {});
-                  document.getElementById("notification-text").innerText = "Vote Accepted!";
-                }
-              });
-          } else {
-            $("#notification-container").fadeIn(300, function () {});
-            document.getElementById("notification-text").innerText = "You have to rate every choice in order for your vote to be accepted!";
-          }
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({ request: "rating_vote", votes: votes, post_id: post_data[postIndexPostStarVote][0] }),
+          })
+            .then((res) => res.json())
+            .then((response) => {
+              if (response[10].trim() == "Success") {
+                conn.send(
+                  JSON.stringify([
+                    "rating_vote",
+                    post_data[postIndexPostStarVote][0],
+                    post_data[0][16],
+                    response[0],
+                    response[1],
+                    response[2],
+                    response[3],
+                    response[4],
+                    response[5],
+                    response[6],
+                    response[7],
+                    response[8],
+                    response[9],
+                  ])
+                );
+                $("#notification-container").fadeIn(300, function () {});
+                document.getElementById("notification-text").innerText = "Vote Accepted!";
+              }
+            });
         }
       } else if (btn_up) {
         const post_up = btn_up.closest(".post");
