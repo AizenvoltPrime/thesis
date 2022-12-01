@@ -37,7 +37,7 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".fa-chevron-down").forEach((icon) => (icon.style.color = null));
       clone.querySelectorAll(".answer-yes").forEach((icon) => (icon.style.background = null));
       clone.querySelectorAll(".answer-no").forEach((icon) => (icon.style.background = null));
-      clone.querySelectorAll(".show-graph").forEach((icon) => (icon.style.background = null));
+      clone.querySelectorAll(".show-results").forEach((icon) => (icon.style.background = null));
       clone.querySelectorAll(".parent_of_bookmark").forEach((main_class) => (main_class.innerHTML = ""));
       clone.querySelectorAll(".parent_of_check_yes_no").forEach((main_class) => (main_class.innerHTML = ""));
       clone.querySelectorAll(".poll-timer-container").forEach((main_class) => (main_class.style.display = null));
@@ -47,6 +47,22 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".answer-yes").forEach((main_class) => main_class.remove());
       clone.querySelectorAll(".answer-no").forEach((main_class) => main_class.remove());
       clone.querySelectorAll(".vote").forEach((main_class) => main_class.remove());
+      clone.querySelectorAll(".rating-vote").forEach((main_class) => {
+        main_class.style.display = "none";
+      });
+      clone.querySelectorAll(".rating-choices").forEach((main_class) => {
+        if (main_class.getAttribute("data-value") !== "1") {
+          main_class.remove();
+        }
+      });
+      clone.querySelectorAll(".rating-vote-results").forEach((main_class) => {
+        main_class.style.display = "none";
+      });
+      clone.querySelectorAll(".rating-choices-results").forEach((main_class) => {
+        if (main_class.getAttribute("data-value") !== "1") {
+          main_class.remove();
+        }
+      });
 
       clone.querySelectorAll(".post-user-name")[0].innerText = JSON.parse(e.data)[1][1];
       clone.querySelectorAll(".post-question")[0].innerText = JSON.parse(e.data)[1][4];
@@ -67,8 +83,49 @@ addEventListener("DOMContentLoaded", (event) => {
         clone.getElementsByClassName("user-question-answers")[0].insertBefore(new_no_button, clone.getElementsByClassName("show-results")[0]);
         new_no_button.setAttribute("data-dir", "no");
         new_no_button.innerText = "No";
-      }
+      } else if (JSON.parse(e.data)[1][2] == 2) {
+        let new_vote_button = document.createElement("button");
+        new_vote_button.className = "vote";
+        document.getElementsByClassName("user-question-answers")[0].insertBefore(new_vote_button, document.getElementsByClassName("show-results")[0]);
+        new_vote_button.setAttribute("data-dir", "vote");
+        new_vote_button.innerText = "Vote";
 
+        if (get_variables()[2] > 14) {
+          let post_element = document.getElementsByClassName("post")[0];
+          post_element.querySelectorAll(".rating-choices").forEach((child) => {
+            if (child.getAttribute("data-value") !== "1") {
+              child.remove();
+            }
+          });
+          for (let j = 0; j < 5; j++) {
+            if (JSON.parse(e.data)[1][j + 17] !== null) {
+              if (j + 17 !== 17) {
+                let clone_rating_choices = post_element.getElementsByClassName("rating-choices")[0];
+                let clone = clone_rating_choices.cloneNode(true);
+                clone.setAttribute("data-value", j + 1);
+                post_element
+                  .getElementsByClassName("rating-vote")[0]
+                  .insertBefore(clone, post_element.getElementsByClassName("rating-vote")[0].getElementsByClassName("send-rating-button")[0]);
+                post_element
+                  .querySelectorAll(".rating-choices")
+                  [j].querySelectorAll(".half-star-container")
+                  .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
+                post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText = JSON.parse(e.data)[1][
+                  j + 17
+                ];
+              } else {
+                post_element
+                  .querySelectorAll(".rating-choices")
+                  [j].querySelectorAll(".half-star-container")
+                  .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
+                post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText = JSON.parse(e.data)[1][
+                  j + 17
+                ];
+              }
+            }
+          }
+        }
+      }
       let new_bookmark = document.createElement("i");
       new_bookmark.className = "fa-regular fa-bookmark";
       clone.getElementsByClassName("parent_of_bookmark")[0].appendChild(new_bookmark);
