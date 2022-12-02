@@ -365,6 +365,14 @@ require_once "new_config.php";
           <button class="half-star-container-results" value="5.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
         </div>
       </div>
+      <div class="approval-vote-container">
+        <div class="approval-choices-container">
+          <div class="approval-choice">One</div>
+          <div class="approval-choice">Two</div>
+          <div class="approval-choice">Three</div>
+        </div>
+        <button data-dir="approval-vote" class="send-approval-button">Send Vote</button>
+      </div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

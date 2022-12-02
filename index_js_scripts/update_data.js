@@ -83,14 +83,14 @@ addEventListener("DOMContentLoaded", (event) => {
         clone.getElementsByClassName("user-question-answers")[0].insertBefore(new_no_button, clone.getElementsByClassName("show-results")[0]);
         new_no_button.setAttribute("data-dir", "no");
         new_no_button.innerText = "No";
-      } else if (JSON.parse(e.data)[1][2] == 2) {
+      } else if (JSON.parse(e.data)[1][2] == 2 || JSON.parse(e.data)[1][2] == 3 || JSON.parse(e.data)[1][2] == 4) {
         let new_vote_button = document.createElement("button");
         new_vote_button.className = "vote";
         document.getElementsByClassName("user-question-answers")[0].insertBefore(new_vote_button, document.getElementsByClassName("show-results")[0]);
         new_vote_button.setAttribute("data-dir", "vote");
         new_vote_button.innerText = "Vote";
 
-        if (get_variables()[2] > 14) {
+        if (JSON.parse(e.data)[1][2] == 2 && get_variables()[2] > 14) {
           let post_element = document.getElementsByClassName("post")[0];
           post_element.querySelectorAll(".rating-choices").forEach((child) => {
             if (child.getAttribute("data-value") !== "1") {

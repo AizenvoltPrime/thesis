@@ -521,6 +521,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
                 }
               }
             }
+          } else if (post_data[i][2] == 3 && post_data[0].length > 14) {
           }
         } else if (i > 0) {
           node[i - 1] = document.getElementsByClassName("post")[0];
@@ -572,6 +573,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
                 }
               }
             }
+          } else if (post_data[i][2] == 3 && post_data[0].length > 14) {
           }
         }
       }
@@ -612,7 +614,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
               } else if (post_data[i][8] == 0 && post_data[i][9] == 0) {
                 user_yes_no_vote.push([false, false]);
               }
-            } else if (post_data[i][2] == 2) {
+            } else if (post_data[i][2] == 2 || post_data[i][2] == 3 || post_data[i][2] == 4) {
               user_yes_no_vote.push([false, false]);
               let new_vote_button = document.createElement("button");
               new_vote_button.className = "vote";
@@ -687,7 +689,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
                 [i].insertBefore(new_no_button, document.getElementsByClassName("show-results")[i]);
               new_no_button.setAttribute("data-dir", "no");
               new_no_button.innerText = "No";
-            } else if (post_data[i][2] == 2) {
+            } else if (post_data[i][2] == 2 || post_data[i][2] == 3 || post_data[i][2] == 4) {
               user_yes_no_vote.push([false, false]);
               let new_vote_button = document.createElement("button");
               new_vote_button.className = "vote";
