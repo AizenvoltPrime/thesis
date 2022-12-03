@@ -1773,32 +1773,31 @@ function get_approval_data(post_number) {
       }
       for (let i = 0; i < response.length; i++) {
         if (i < 3) {
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[0].innerText =
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText =
             post_data[post_number][i + choice_names_index];
           if (response[i] !== null) {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[1].innerText = response[i];
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = response[i];
           } else {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[1].innerText = "0";
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
           }
         } else if (i >= 3 && post_data[post_number][i + choice_names_index] !== null) {
-          if (document.querySelectorAll(".approval-results-table")[post_number].rows[i]) {
-            document.querySelectorAll(".approval-results-table")[post_number].rows[i].remove();
+          if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
+            document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
           }
-          let top_row = post_element.getElementsByClassName("approval-results-table")[0].rows[0];
+          let top_row = post_element.getElementsByClassName("approval-results-table")[0].rows[1];
           let clone = top_row.cloneNode(true);
           post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(clone);
-          document.querySelectorAll(".approval-results-table")[post_number].rows[i].setAttribute("data-value", i + 1);
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[0].innerText =
+          document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].setAttribute("data-value", i + 1);
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText =
             post_data[post_number][i + choice_names_index];
           if (response[i] !== null) {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[1].innerText = response[i];
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = response[i];
           } else {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[1].innerText = "0";
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
           }
         } else if (i >= 3 && post_data[post_number][i + choice_names_index] === null) {
-          if (document.querySelectorAll(".approval-results-table")[post_number].rows[i]) {
-            document.querySelectorAll(".approval-results-table")[post_number].rows[i].remove();
-            console.log("yes");
+          if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
+            document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
           }
         }
       }
@@ -1905,6 +1904,7 @@ export function reset_poll_data() {
   document.querySelectorAll(".approval-results-table").forEach((main_class) => {
     for (let i = 0; i < main_class.rows.length; i++)
       if (
+        main_class.rows[i].getAttribute("data-value") !== "0" &&
         main_class.rows[i].getAttribute("data-value") !== "1" &&
         main_class.rows[i].getAttribute("data-value") !== "2" &&
         main_class.rows[i].getAttribute("data-value") !== "3"

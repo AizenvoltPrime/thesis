@@ -63,6 +63,31 @@ addEventListener("DOMContentLoaded", (event) => {
           main_class.remove();
         }
       });
+      document.querySelectorAll(".approval-vote-container").forEach((main_class) => {
+        main_class.style.display = "none";
+      });
+      document.querySelectorAll(".approval-choice").forEach((main_class) => {
+        if (main_class.getAttribute("value") !== "1" && main_class.getAttribute("value") !== "2" && main_class.getAttribute("value") !== "3") {
+          main_class.remove();
+        } else {
+          main_class.style.border = null;
+          main_class.style.color = null;
+        }
+      });
+      document.querySelectorAll(".approval-vote-results").forEach((main_class) => {
+        main_class.style.display = "none";
+      });
+      document.querySelectorAll(".approval-results-table").forEach((main_class) => {
+        for (let i = 0; i < main_class.rows.length; i++)
+          if (
+            main_class.rows[i].getAttribute("data-value") !== "0" &&
+            main_class.rows[i].getAttribute("data-value") !== "1" &&
+            main_class.rows[i].getAttribute("data-value") !== "2" &&
+            main_class.rows[i].getAttribute("data-value") !== "3"
+          ) {
+            main_class.rows[i].remove();
+          }
+      });
 
       clone.querySelectorAll(".post-user-name")[0].innerText = JSON.parse(e.data)[1][1];
       clone.querySelectorAll(".post-question")[0].innerText = JSON.parse(e.data)[1][4];

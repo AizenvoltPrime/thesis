@@ -376,19 +376,23 @@ require_once "new_config.php";
       <div class="approval-vote-results" style="display:none;">
         <table class="approval-results-table">
           <tbody>
+            <tr data-value="0">
+              <th>Choices</th>
+              <th>Votes</th>
+            </tr>
             <tr data-value="1">
-              <th></th>
+              <td></td>
               <td>
-                </th>
+              </td>
             </tr>
             <tr data-value="2">
-              <th>
-                </td>
+              <td>
+              </td>
               <td></td>
             </tr>
             <tr data-value="3">
-              <th>
-                </td>
+              <td>
+              </td>
               <td></td>
             </tr>
           </tbody>
