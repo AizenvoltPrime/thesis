@@ -2054,6 +2054,12 @@ export function edit_rating_vote(position, votes) {
   }
 }
 
+export function edit_approval_vote(position, votes) {
+  for (let i = 0; i < votes.length; i++) {
+    post_data[position][i + 27] = votes[i];
+  }
+}
+
 //Adds new bookmark data that was received from websocket.
 export function edit_bookmark(position, value) {
   post_data[position][10] = value;

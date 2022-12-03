@@ -1,4 +1,14 @@
-import { conn, add_new_post, get_variables, edit_chevron, make_yes_no_chart, edit_vote, edit_bookmark, edit_rating_vote } from "./index.js";
+import {
+  conn,
+  add_new_post,
+  get_variables,
+  edit_chevron,
+  make_yes_no_chart,
+  edit_vote,
+  edit_bookmark,
+  edit_rating_vote,
+  edit_approval_vote,
+} from "./index.js";
 import { make_admin_analytics_map, admin_map_remove_marker } from "./admin_analytics.js";
 
 var DateTime = luxon.DateTime;
@@ -634,6 +644,20 @@ addEventListener("DOMContentLoaded", (event) => {
             }
           }
           if (get_variables()[2] > 14) {
+            if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+              for (let j = 0; j < 5; j++) {
+                if (get_variables()[3][i][j + 17] !== null) {
+                  if (user_approval_array[j] === 1) {
+                    document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.border = "0.1em solid #cc0000";
+                    document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.color = "#cc0000";
+                  } else if (user_approval_array[j] === 0) {
+                    document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.border = "0.1em solid #1a1a1b";
+                    document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.color = "#f3f3f3";
+                  }
+                }
+              }
+              edit_approval_vote(i, user_approval_array);
+            }
           }
         }
       }
