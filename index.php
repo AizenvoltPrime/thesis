@@ -377,16 +377,19 @@ require_once "new_config.php";
         <table class="approval-results-table">
           <tbody>
             <tr data-value="1">
-              <th>Ferrari</th>
-              <td>1</th>
+              <th></th>
+              <td>
+                </th>
             </tr>
             <tr data-value="2">
-              <th>Ford</td>
-              <td>2</td>
+              <th>
+                </td>
+              <td></td>
             </tr>
             <tr data-value="3">
-              <th>Fiat</td>
-              <td>3</td>
+              <th>
+                </td>
+              <td></td>
             </tr>
           </tbody>
         </table>
