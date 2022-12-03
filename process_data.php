@@ -176,10 +176,16 @@ if ($data['request'] == "request_username") {
                     COALESCE((SELECT rating.choice_two FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_two,
                     COALESCE((SELECT rating.choice_three FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_three,
                     COALESCE((SELECT rating.choice_four FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_four,
-                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five
+                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five,
+                    COALESCE((SELECT approval.choice_one FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_one,
+                    COALESCE((SELECT approval.choice_two FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_two,
+                    COALESCE((SELECT approval.choice_three FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_three,
+                    COALESCE((SELECT approval.choice_four FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_four,
+                    COALESCE((SELECT approval.choice_five FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_five
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number join rating on posts.post_number = rating.post_id
+                    join approval on posts.post_number = approval.post_id
                     WHERE posts.user_id = :id AND posts.post_date = :post_date");
 
     $stmt->execute([":id" => $_SESSION["id"], "post_date" => $param_date]);
@@ -190,7 +196,8 @@ if ($data['request'] == "request_username") {
                 $row["post_date"], $row["user_chevron_result"], $row["user_yes_answer"], $row["user_no_answer"], $row["user_bookmark"], $row["post_expiration_date"],
                 $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"],
                 $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"], $row["choice_five_name"],
-                $row["rating_choice_one"], $row["rating_choice_two"], $row["rating_choice_three"], $row["rating_choice_four"], $row["rating_choice_five"]
+                $row["rating_choice_one"], $row["rating_choice_two"], $row["rating_choice_three"], $row["rating_choice_four"], $row["rating_choice_five"],
+                $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"], $row["approval_choice_five"]
             );
     }
     echo json_encode($new_data);
@@ -280,10 +287,16 @@ if ($data['request'] == "request_username") {
                     COALESCE((SELECT rating.choice_two FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_two,
                     COALESCE((SELECT rating.choice_three FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_three,
                     COALESCE((SELECT rating.choice_four FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_four,
-                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five
+                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five,
+                    COALESCE((SELECT approval.choice_one FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_one,
+                    COALESCE((SELECT approval.choice_two FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_two,
+                    COALESCE((SELECT approval.choice_three FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_three,
+                    COALESCE((SELECT approval.choice_four FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_four,
+                    COALESCE((SELECT approval.choice_five FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_five
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number join rating on posts.post_number = rating.post_id
+                    join approval on posts.post_number = approval.post_id
                     WHERE user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
                     AND $filter_filter_poll_status AND $filter_radius_filter
@@ -303,10 +316,16 @@ if ($data['request'] == "request_username") {
                     COALESCE((SELECT rating.choice_two FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_two,
                     COALESCE((SELECT rating.choice_three FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_three,
                     COALESCE((SELECT rating.choice_four FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_four,
-                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five
+                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five,
+                    COALESCE((SELECT approval.choice_one FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_one,
+                    COALESCE((SELECT approval.choice_two FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_two,
+                    COALESCE((SELECT approval.choice_three FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_three,
+                    COALESCE((SELECT approval.choice_four FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_four,
+                    COALESCE((SELECT approval.choice_five FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_five
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number join rating on posts.post_number = rating.post_id
+                    join approval on posts.post_number = approval.post_id
                     WHERE user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
                     AND $filter_filter_poll_status AND $filter_radius_filter
@@ -328,10 +347,16 @@ if ($data['request'] == "request_username") {
                     COALESCE((SELECT rating.choice_two FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_two,
                     COALESCE((SELECT rating.choice_three FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_three,
                     COALESCE((SELECT rating.choice_four FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_four,
-                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five
+                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five,
+                    COALESCE((SELECT approval.choice_one FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_one,
+                    COALESCE((SELECT approval.choice_two FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_two,
+                    COALESCE((SELECT approval.choice_three FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_three,
+                    COALESCE((SELECT approval.choice_four FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_four,
+                    COALESCE((SELECT approval.choice_five FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_five
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number join rating on posts.post_number = rating.post_id
+                    join approval on posts.post_number = approval.post_id
                     WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) = 1 
                     AND user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
@@ -352,10 +377,16 @@ if ($data['request'] == "request_username") {
                     COALESCE((SELECT rating.choice_two FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_two,
                     COALESCE((SELECT rating.choice_three FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_three,
                     COALESCE((SELECT rating.choice_four FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_four,
-                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five
+                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five,
+                    COALESCE((SELECT approval.choice_one FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_one,
+                    COALESCE((SELECT approval.choice_two FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_two,
+                    COALESCE((SELECT approval.choice_three FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_three,
+                    COALESCE((SELECT approval.choice_four FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_four,
+                    COALESCE((SELECT approval.choice_five FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_five
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number join rating on posts.post_number = rating.post_id
+                    join approval on posts.post_number = approval.post_id
                     WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) = 1 
                     AND user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
@@ -383,7 +414,8 @@ if ($data['request'] == "request_username") {
                 $row["post_date"], $row["user_chevron_result"], $row["user_yes_answer"], $row["user_no_answer"], $row["user_bookmark"], $row["post_expiration_date"],
                 $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"], $row["choice_one_name"], $row["choice_two_name"],
                 $row["choice_three_name"], $row["choice_four_name"], $row["choice_five_name"], $row["rating_choice_one"], $row["rating_choice_two"], $row["rating_choice_three"],
-                $row["rating_choice_four"], $row["rating_choice_five"]
+                $row["rating_choice_four"], $row["rating_choice_five"],
+                $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"], $row["approval_choice_five"]
             );
             array_push($post_data, $tmp);
         }
@@ -735,6 +767,54 @@ if ($data['request'] == "request_username") {
             $tmp = array(
                 $row["rating_choice_one_avg"], $row["rating_choice_two_avg"], $row["rating_choice_three_avg"], $row["rating_choice_four_avg"],
                 $row["rating_choice_five_avg"]
+            );
+        }
+    }
+    echo json_encode($tmp);
+} else if ($data['request'] == "approval_vote" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+    require_once "new_config.php";
+
+    $stmt = $conn->prepare("SELECT user_id FROM approval WHERE user_id=:id");
+    $stmt->execute([":id" => $_SESSION["id"]]);
+    if ($stmt->rowCount() > 0) {
+        $stmt = $conn->prepare("UPDATE approval SET choice_one = :choice_one, choice_two = :choice_two, choice_three = :choice_three,
+        choice_four = :choice_four, choice_five = :choice_five WHERE post_id=:post_id AND user_id=:id");
+        $stmt->execute([
+            ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+            ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
+        ]);
+    }
+    $stmt = $conn->prepare("INSERT IGNORE INTO approval(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five) 
+            VALUES(:post_id,:id,3,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five)");
+    $stmt->execute([
+        ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+        ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
+    ]);
+
+    $stmt = $conn->prepare("SELECT approval_choice_one,approval_choice_two,approval_choice_three,approval_choice_four,approval_choice_five
+        FROM posts_approval_info WHERE approval_post_id=:post_id");
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $tmp = array(
+                $data["votes"][0], $data["votes"][1], $data["votes"][2], $data["votes"][3], $data["votes"][4], $row["approval_choice_one"],
+                $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"],
+                $row["approval_choice_five"], "Success"
+            );
+        }
+    }
+    echo json_encode($tmp);
+} else if ($data['request'] == "approval_data") {
+    require_once "new_config.php";
+
+    $stmt = $conn->prepare("SELECT approval_choice_one,approval_choice_two,approval_choice_three,approval_choice_four,approval_choice_five 
+    FROM posts_approval_info WHERE approval_post_id=:post_id");
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $tmp = array(
+                $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"],
+                $row["approval_choice_five"]
             );
         }
     }

@@ -365,13 +365,31 @@ require_once "new_config.php";
           <button class="half-star-container-results" value="5.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
         </div>
       </div>
-      <div class="approval-vote-container">
+      <div class="approval-vote-container" style="display:none;">
         <div class="approval-choices-container">
-          <div class="approval-choice">One</div>
-          <div class="approval-choice">Two</div>
-          <div class="approval-choice">Three</div>
+          <div data-dir="approval-vote" class="approval-choice" value="1"></div>
+          <div data-dir="approval-vote" class="approval-choice" value="2"></div>
+          <div data-dir="approval-vote" class="approval-choice" value="3"></div>
         </div>
-        <button data-dir="approval-vote" class="send-approval-button">Send Vote</button>
+        <button data-dir="approval-vote-send" class="send-approval-button">Send Vote</button>
+      </div>
+      <div class="approval-vote-results" style="display:none;">
+        <table class="approval-results-table">
+          <tbody>
+            <tr data-value="1">
+              <th>Ferrari</th>
+              <td>1</th>
+            </tr>
+            <tr data-value="2">
+              <th>Ford</td>
+              <td>2</td>
+            </tr>
+            <tr data-value="3">
+              <th>Fiat</td>
+              <td>3</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
