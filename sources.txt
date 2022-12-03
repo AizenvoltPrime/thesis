@@ -33,7 +33,7 @@ AVG(rating.choice_three) AS rating_choice_three_avg, AVG(rating.choice_four) AS 
 FROM rating GROUP BY rating_post_id;
 
 //posts_approval_info
-ALTER VIEW posts_approval_info_info AS SELECT approval.post_id AS approval_post_id, SUM(approval.choice_one) AS approval_choice_one,SUM(approval.choice_two) AS approval_choice_two, 
+CREATE VIEW posts_approval_info AS SELECT approval.post_id AS approval_post_id, SUM(approval.choice_one) AS approval_choice_one,SUM(approval.choice_two) AS approval_choice_two, 
 SUM(approval.choice_three) AS approval_choice_three, SUM(approval.choice_four) AS approval_choice_four,SUM(approval.choice_five) AS approval_choice_five 
 FROM approval GROUP BY approval_post_id;
 
@@ -72,7 +72,6 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 ΕΠΟΜΕΝΑ TASK:
 
 - ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
-
 "wss://crowdsource.gamerwelfare.com"
 
 DELETE FROM rating WHERE user_id=14 AND post_id=85;

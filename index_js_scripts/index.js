@@ -539,6 +539,13 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
                     .querySelectorAll(".approval-choices-container")[0]
                     .getElementsByClassName("approval-choice")[j - 17].innerText = post_data[i][j];
                 }
+                if (post_data[i][j + 10] === "1") {
+                  document.getElementsByClassName("post")[0].getElementsByClassName("approval-choice")[j - 17].style.border = "0.1em solid #cc0000";
+                  document.getElementsByClassName("post")[0].getElementsByClassName("approval-choice")[j - 17].style.color = "#cc0000";
+                } else if (post_data[i][j + 10] === "0") {
+                  document.getElementsByClassName("post")[0].getElementsByClassName("approval-choice")[j - 17].style.border = "0.1em solid #1a1a1b";
+                  document.getElementsByClassName("post")[0].getElementsByClassName("approval-choice")[j - 17].style.color = "#f3f3f3";
+                }
               }
             }
           }
@@ -614,6 +621,13 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
                     .getElementsByClassName("post")
                     [i].querySelectorAll(".approval-choices-container")[0]
                     .getElementsByClassName("approval-choice")[j - 17].innerText = post_data[i][j];
+                }
+                if (post_data[i][j + 10] === "1") {
+                  document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j - 17].style.border = "0.1em solid #cc0000";
+                  document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j - 17].style.color = "#cc0000";
+                } else if (post_data[i][j + 10] === "0") {
+                  document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j - 17].style.border = "0.1em solid #1a1a1b";
+                  document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j - 17].style.color = "#f3f3f3";
                 }
               }
             }
@@ -852,6 +866,21 @@ postContainer.addEventListener(
               }
               document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
               document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("approval-vote-container")[0].style.display = "flex";
+              for (
+                let i = 0;
+                i < document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("approval-choices-container")[0].children.length;
+                i++
+              ) {
+                if (post_data[postIndexVote][i + 27] === "0") {
+                  document.getElementsByClassName("post")[postIndexVote].getElementsByClassName("approval-choice")[i].style.border =
+                    "0.1em solid #1a1a1b";
+                  document.getElementsByClassName("post")[postIndexVote].getElementsByClassName("approval-choice")[i].style.color = "#f3f3f3";
+                } else if (post_data[postIndexVote][i + 27] === "1") {
+                  document.getElementsByClassName("post")[postIndexVote].getElementsByClassName("approval-choice")[i].style.border =
+                    "0.1em solid #cc0000";
+                  document.getElementsByClassName("post")[postIndexVote].getElementsByClassName("approval-choice")[i].style.color = "#cc0000";
+                }
+              }
             }
           }
         }
@@ -958,6 +987,10 @@ postContainer.addEventListener(
             ).color === "rgb(204, 0, 0)"
           ) {
             votes.push(1);
+            post_data[postIndexApprovalSend][i + 10] = "1";
+          } else if (post_data[postIndexApprovalSend][i] !== null) {
+            votes.push(0);
+            post_data[postIndexApprovalSend][i + 10] = "0";
           } else {
             votes.push(null);
           }
@@ -1732,15 +1765,22 @@ function get_approval_data(post_number) {
     .then((res) => res.json())
     .then((response) => {
       let post_element = document.getElementsByClassName("post")[post_number];
+      let choice_names_index;
+      if (post_data[0].length > 14) {
+        choice_names_index = 17;
+      } else {
+        choice_names_index = 9;
+      }
       for (let i = 0; i < response.length; i++) {
         if (i < 3) {
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[0].innerText = post_data[post_number][i + 17];
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[0].innerText =
+            post_data[post_number][i + choice_names_index];
           if (response[i] !== null) {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[1].innerText = response[i];
           } else {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[1].innerText = "-";
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[1].innerText = "0";
           }
-        } else if (i >= 3 && post_data[post_number][i + 17] !== null) {
+        } else if (i >= 3 && post_data[post_number][i + choice_names_index] !== null) {
           if (document.querySelectorAll(".approval-results-table")[post_number].rows[i]) {
             document.querySelectorAll(".approval-results-table")[post_number].rows[i].remove();
           }
@@ -1748,11 +1788,17 @@ function get_approval_data(post_number) {
           let clone = top_row.cloneNode(true);
           post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(clone);
           document.querySelectorAll(".approval-results-table")[post_number].rows[i].setAttribute("data-value", i + 1);
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[0].innerText = post_data[post_number][i + 17];
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[0].innerText =
+            post_data[post_number][i + choice_names_index];
           if (response[i] !== null) {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[1].innerText = response[i];
           } else {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[1].innerText = "-";
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[1].innerText = "0";
+          }
+        } else if (i >= 3 && post_data[post_number][i + choice_names_index] === null) {
+          if (document.querySelectorAll(".approval-results-table")[post_number].rows[i]) {
+            document.querySelectorAll(".approval-results-table")[post_number].rows[i].remove();
+            console.log("yes");
           }
         }
       }
@@ -1848,6 +1894,9 @@ export function reset_poll_data() {
   document.querySelectorAll(".approval-choice").forEach((main_class) => {
     if (main_class.getAttribute("value") !== "1" && main_class.getAttribute("value") !== "2" && main_class.getAttribute("value") !== "3") {
       main_class.remove();
+    } else {
+      main_class.style.border = null;
+      main_class.style.color = null;
     }
   });
   document.querySelectorAll(".approval-vote-results").forEach((main_class) => {
