@@ -63,10 +63,10 @@ addEventListener("DOMContentLoaded", (event) => {
           main_class.remove();
         }
       });
-      document.querySelectorAll(".approval-vote-container").forEach((main_class) => {
+      clone.querySelectorAll(".approval-vote-container").forEach((main_class) => {
         main_class.style.display = "none";
       });
-      document.querySelectorAll(".approval-choice").forEach((main_class) => {
+      clone.querySelectorAll(".approval-choice").forEach((main_class) => {
         if (main_class.getAttribute("value") !== "1" && main_class.getAttribute("value") !== "2" && main_class.getAttribute("value") !== "3") {
           main_class.remove();
         } else {
@@ -74,10 +74,10 @@ addEventListener("DOMContentLoaded", (event) => {
           main_class.style.color = null;
         }
       });
-      document.querySelectorAll(".approval-vote-results").forEach((main_class) => {
+      clone.querySelectorAll(".approval-vote-results").forEach((main_class) => {
         main_class.style.display = "none";
       });
-      document.querySelectorAll(".approval-results-table").forEach((main_class) => {
+      clone.querySelectorAll(".approval-results-table").forEach((main_class) => {
         for (let i = 0; i < main_class.rows.length; i++)
           if (
             main_class.rows[i].getAttribute("data-value") !== "0" &&
@@ -117,11 +117,6 @@ addEventListener("DOMContentLoaded", (event) => {
 
         if (JSON.parse(e.data)[1][2] == 2 && get_variables()[2] > 14) {
           let post_element = document.getElementsByClassName("post")[0];
-          post_element.querySelectorAll(".rating-choices").forEach((child) => {
-            if (child.getAttribute("data-value") !== "1") {
-              child.remove();
-            }
-          });
           for (let j = 0; j < 5; j++) {
             if (JSON.parse(e.data)[1][j + 17] !== null) {
               if (j + 17 !== 17) {
@@ -146,6 +141,25 @@ addEventListener("DOMContentLoaded", (event) => {
                 post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText = JSON.parse(e.data)[1][
                   j + 17
                 ];
+              }
+            }
+          }
+        } else if (JSON.parse(e.data)[1][2] == 3 && get_variables()[2] > 14) {
+          let post_element = document.getElementsByClassName("post")[0];
+          for (let j = 0; j < 5; j++) {
+            if (JSON.parse(e.data)[1][j + 17] !== null) {
+              if (j + 17 > 19) {
+                let clone_approval_choices = post_element.getElementsByClassName("approval-choice")[0];
+                let clone = clone_approval_choices.cloneNode(true);
+                clone.setAttribute("value", j + 1);
+                post_element.getElementsByClassName("approval-choices-container")[0].appendChild(clone);
+                post_element.querySelectorAll(".approval-choices-container")[0].getElementsByClassName("approval-choice")[j].innerText = JSON.parse(
+                  e.data
+                )[1][j + 17];
+              } else if (j + 17 <= 19) {
+                post_element.querySelectorAll(".approval-choices-container")[0].getElementsByClassName("approval-choice")[j].innerText = JSON.parse(
+                  e.data
+                )[1][j + 17];
               }
             }
           }
@@ -571,6 +585,55 @@ addEventListener("DOMContentLoaded", (event) => {
               }
               edit_rating_vote(i, ratings_array);
             }
+          }
+        }
+      }
+    } else if (JSON.parse(e.data)[0] === "approval_vote") {
+      let results_array = [JSON.parse(e.data)[8], JSON.parse(e.data)[9], JSON.parse(e.data)[10], JSON.parse(e.data)[11], JSON.parse(e.data)[12]];
+      let user_approval_array = [JSON.parse(e.data)[3], JSON.parse(e.data)[4], JSON.parse(e.data)[5], JSON.parse(e.data)[6], JSON.parse(e.data)[7]];
+
+      for (let i = 0; i < get_variables()[3].length; i++) {
+        if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
+          if (window.getComputedStyle(document.getElementsByClassName("approval-vote-results")[i]).display === "flex") {
+            let post_element = document.getElementsByClassName("post")[i];
+            let choice_names_index;
+            if (get_variables()[2] > 14) {
+              choice_names_index = 17;
+            } else {
+              choice_names_index = 9;
+            }
+            for (let j = 0; j < results_array.length; j++) {
+              if (j < 3) {
+                post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[0].innerText =
+                  get_variables()[3][i][j + choice_names_index];
+                if (results_array[j] !== null) {
+                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = results_array[j];
+                } else {
+                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = "0";
+                }
+              } else if (j >= 3 && get_variables()[3][i][j + choice_names_index] !== null) {
+                if (document.querySelectorAll(".approval-results-table")[i].rows[j + 1]) {
+                  document.querySelectorAll(".approval-results-table")[i].rows[j + 1].remove();
+                }
+                let top_row = post_element.getElementsByClassName("approval-results-table")[0].rows[1];
+                let clone = top_row.cloneNode(true);
+                post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(clone);
+                document.querySelectorAll(".approval-results-table")[i].rows[j + 1].setAttribute("data-value", j + 1);
+                post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[0].innerText =
+                  get_variables()[3][i][j + choice_names_index];
+                if (results_array[j] !== null) {
+                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = results_array[j];
+                } else {
+                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = "0";
+                }
+              } else if (j >= 3 && get_variables()[3][i][j + choice_names_index] === null) {
+                if (document.querySelectorAll(".approval-results-table")[i].rows[j + 1]) {
+                  document.querySelectorAll(".approval-results-table")[i].rows[j + 1].remove();
+                }
+              }
+            }
+          }
+          if (get_variables()[2] > 14) {
           }
         }
       }
