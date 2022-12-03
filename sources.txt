@@ -32,6 +32,11 @@ CREATE VIEW posts_rating_info AS SELECT rating.post_id AS rating_post_id, AVG(ra
 AVG(rating.choice_three) AS rating_choice_three_avg, AVG(rating.choice_four) AS rating_choice_four_avg,AVG(rating.choice_five) AS rating_choice_five_avg 
 FROM rating GROUP BY rating_post_id;
 
+//posts_approval_info
+ALTER VIEW posts_approval_info_info AS SELECT approval.post_id AS approval_post_id, SUM(approval.choice_one) AS approval_choice_one,SUM(approval.choice_two) AS approval_choice_two, 
+SUM(approval.choice_three) AS approval_choice_three, SUM(approval.choice_four) AS approval_choice_four,SUM(approval.choice_five) AS approval_choice_five 
+FROM approval GROUP BY approval_post_id;
+
 //user sql request
 SELECT posts.post_number AS post_number, user.username AS username, polls.poll_name AS poll_name, categories.category_name AS category_name,
             posts.post_text AS post_text, sum(chevron_vote.chevron_result) AS chevron_result, posts.post_date AS post_date, 

@@ -365,6 +365,35 @@ require_once "new_config.php";
           <button class="half-star-container-results" value="5.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
         </div>
       </div>
+      <div class="approval-vote-container" style="display:none;">
+        <div class="approval-choices-container">
+          <div data-dir="approval-vote" class="approval-choice" value="1"></div>
+          <div data-dir="approval-vote" class="approval-choice" value="2"></div>
+          <div data-dir="approval-vote" class="approval-choice" value="3"></div>
+        </div>
+        <button data-dir="approval-vote-send" class="send-approval-button">Send Vote</button>
+      </div>
+      <div class="approval-vote-results" style="display:none;">
+        <table class="approval-results-table">
+          <tbody>
+            <tr data-value="1">
+              <th></th>
+              <td>
+                </th>
+            </tr>
+            <tr data-value="2">
+              <th>
+                </td>
+              <td></td>
+            </tr>
+            <tr data-value="3">
+              <th>
+                </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
