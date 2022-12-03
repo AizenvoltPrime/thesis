@@ -127,6 +127,7 @@ fetch("process_data.php", {
 document.getElementById("add-post-icon").addEventListener("click", function () {
   bookmarks_active = false;
   specific_user_posts = null;
+  document.getElementById("next-step").disabled = false;
   fetch("process_data.php", {
     method: "POST",
     body: JSON.stringify({ request: "user_status" }),
@@ -352,6 +353,7 @@ document.getElementById("next-step").addEventListener("click", function () {
     if ($("#question").val().trim().length < 15) {
       $("#warning-empty-text-area").fadeIn(300, function () {});
     } else if (user_choice !== "none" && $("#question").val().trim().length >= 1) {
+      document.getElementById("next-step").disabled = true;
       if (time_limit !== "") {
         time_limit = time_limit + ":00";
       }
