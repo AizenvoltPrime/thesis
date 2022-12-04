@@ -94,7 +94,7 @@ require_once "new_config.php";
       <form id="time-filter">
         <label class="filter-instruction">Time Filter</label>
         <input id="time-filter-selector" type="datetime-local" name="time-filter-choice"></input>
-        <div id="warning-time-filter-choice" style="display:none;">You must select a date range!</div>
+        <div id="warning-time-filter-choice" style="display:none;">You must select a date range</div>
       </form>
       <div id="poll-filters-containter">
         <div class="filter-instruction">Poll Type Filter</div>
@@ -156,28 +156,28 @@ require_once "new_config.php";
   <!--This div is for choosing a poll type to create.-->
   <div id="poll-selection">
     <div class="template-instructions-container">
-      <div id="first-quetion">Choose one of the following poll types.</div>
+      <div id="first-quetion">Choose one of the following poll types</div>
     </div>
     <button id="yes-no">Yes/No</button>
     <button id="rating">Rating</button>
     <button id="approval">Approval</button>
     <button id="ranking">Ranking</button>
   </div>
-  <div id="warning-nothing-selected">You must choose a poll type!</div>
+  <div id="warning-nothing-selected">You must choose a poll type</div>
   <!--This div is for users to decide how many choiced their poll will have.-->
   <div id="poll-choices-number-container" style="display:none;">
-    <div id="poll-choices-number-instruction">Select Number of Poll Choices.</div>
+    <div id="poll-choices-number-instruction">Select number of poll choices</div>
     <select id="poll-choices">
-      <option value="0">Poll Choices:</option>
+      <option value="0">Poll Choices</option>
       <option value="1">3</option>
       <option value="2">4</option>
       <option value="3">5</option>
     </select>
   </div>
-  <div id="warning-no-poll-choice-number-selected" style="display:none;">You must select a number!</div>
+  <div id="warning-no-poll-choice-number-selected" style="display:none;">You must select a number</div>
   <!--This div is for users to fill the choices for the polls.-->
   <form id="input-poll-choices" style="display:none;"></form>
-  <div id="warning-no-input-poll-choices" style="display:none;">You must fill all boxes!</div>
+  <div id="warning-no-input-poll-choices" style="display:none;">You must fill all boxes</div>
   <!--This div is for users to decide if they want a time limit to their polls.-->
   <div id="poll-template-time-choice" style="display:none;">
     <div class="template-instructions-container">
@@ -186,14 +186,14 @@ require_once "new_config.php";
     <button id="yes-time-limit">Yes</button>
     <button id="no-time-limit">No</button>
   </div>
-  <div id="warning-no-time-limit-choice" style="display:none;">You must choose to continue!</div>
+  <div id="warning-no-time-limit-choice" style="display:none;">You must choose to continue</div>
   <!--This form is for setting the time limit.-->
   <form id="time-choice" style="display:none;">
     <div class="template-instructions-container">
-      <label class="time-limit">Select time limit:</label>
+      <label class="time-limit">Select time limit</label>
     </div>
     <input id="time-limit-selector" type="datetime-local" name="time-limit-choice"></input>
-    <div id="warning-no-time-limit" style="display:none;">You must set a time limit!</div>
+    <div id="warning-no-time-limit" style="display:none;">You must set a time limit</div>
   </form>
   <!--This div is for users to decide if they want to restrict votes based on location.-->
   <div id="poll-template-location-restriction" style="display:none;">
@@ -203,27 +203,27 @@ require_once "new_config.php";
     <button id="yes-location-restriction">Yes</button>
     <button id="no-location-restriction">No</button>
   </div>
-  <div id="warning-no-location-restriction-choice" style="display:none;">You must choose to continue!</div>
+  <div id="warning-no-location-restriction-choice" style="display:none;">You must choose to continue</div>
   <!--This form is for users to select the event location and the radius in which votes are allowed.-->
   <form id="location-choice" style="display:none;">
     <div class="template-instructions-container">
-      <label class="location-restriction">Click on the map to select event location:</label>
+      <label class="location-restriction">Click on the map to select event location</label>
     </div>
     <div id="event-location-map"></div>
-    <div id="warning-no-location-selected" style="display:none;">You must select a location!</div>
+    <div id="warning-no-location-selected" style="display:none;">You must select a location</div>
     <div class="template-instructions-container">
-      <label id="event-radius">Only users inside this radius will be allowed to vote (Default Radius is 5000 meters):</label>
+      <label id="event-radius">Only users inside this radius will be allowed to vote (Default Radius is 5000 meters)</label>
     </div>
     <div id="radius-container">
       <input id="radius-number" type="text" name="radius" placeholder="Set Radius in Meters">
       <i class="fa-solid fa-circle-chevron-right fa-3x"></i>
     </div>
-    <div id="warning-radius-too-small" style="display:none;">Radius must be at least 5000 meters!</div>
+    <div id="warning-radius-too-small" style="display:none;">Radius must be at least 5000 meters</div>
   </form>
   <!--This div is for users to select the post category.-->
   <div id="post-category-container" style="display:none;">
     <select id="categories">
-      <option value="0">Select category:</option>
+      <option value="0">Select category</option>
       <option value="1">Sports</option>
       <option value="2">Business</option>
       <option value="3">Cars</option>
@@ -237,14 +237,14 @@ require_once "new_config.php";
       <option value="11">Travel</option>
     </select>
   </div>
-  <div id="warning-no-category-selected" style="display:none;">You must select a category!</div>
+  <div id="warning-no-category-selected" style="display:none;">You must select a category</div>
   <!--This form is for users to type the poll question.-->
   <form id="poll-question" style="display:none;">
-    <div id="question-instruction">Type your question.</div>
+    <div id="question-instruction">Type your question</div>
     <textarea id="question" type="text" name="question-text" maxlength="150"></textarea>
   </form>
   <!--This button is used to navigate inside poll creation template.-->
-  <div id="warning-empty-text-area">Textarea needs to have at least 15 characters and at most 150 characters!</div>
+  <div id="warning-empty-text-area">Textarea needs to have at least 15 characters and at most 150 characters</div>
   <button id="next-step" type="button">Next</button>
   <!--This form is for users to change their username.-->
   <form id="username-change-form" style="display:none;" name="username-change-form">

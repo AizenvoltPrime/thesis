@@ -835,15 +835,14 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postIndexVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed!";
+          document.getElementById("notification-text").innerText = "Poll is closed";
         } else if (
           post_data[postIndexVote][12] !== null &&
           calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexVote][12]), parseFloat(post_data[postIndexVote][13])) >
             parseInt(post_data[postIndexVote][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText =
-            "You aren't allowed to vote in this post because you are outside the event radius!";
+          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
         } else {
           if (post_data[postIndexVote][2] == "2") {
             if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexVote]).display === "flex") {
@@ -888,7 +887,7 @@ postContainer.addEventListener(
         }
       } else {
         $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "You have to be logged-in to vote!";
+        document.getElementById("notification-text").innerText = "You have to be logged-in to vote";
       }
     } else if (btn_show_results) {
       const post_show_results = btn_show_results.closest(".post");
@@ -959,15 +958,14 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postAprovalVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed!";
+          document.getElementById("notification-text").innerText = "Poll is closed";
         } else if (
           post_data[postAprovalVote][12] !== null &&
           calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postAprovalVote][12]), parseFloat(post_data[postAprovalVote][13])) >
             parseInt(post_data[postAprovalVote][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText =
-            "You aren't allowed to vote in this post because you are outside the event radius!";
+          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
         } else {
           if (window.getComputedStyle(btn_approval_vote).color === "rgb(204, 0, 0)") {
             btn_approval_vote.style.border = null;
@@ -1022,7 +1020,7 @@ postContainer.addEventListener(
                 ])
               );
               $("#notification-container").fadeIn(300, function () {});
-              document.getElementById("notification-text").innerText = "Vote Accepted!";
+              document.getElementById("notification-text").innerText = "Vote Accepted";
             }
           });
       } else if (btn_star) {
@@ -1033,15 +1031,14 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postIndexStar][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed!";
+          document.getElementById("notification-text").innerText = "Poll is closed";
         } else if (
           post_data[postIndexStar][12] !== null &&
           calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexStar][12]), parseFloat(post_data[postIndexStar][13])) >
             parseInt(post_data[postIndexStar][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText =
-            "You aren't allowed to vote in this post because you are outside the event radius!";
+          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
         } else {
           const rating_choice = btn_star.closest(".rating-choices").getAttribute("data-value");
 
@@ -1067,7 +1064,7 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postIndexPostStarVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed!";
+          document.getElementById("notification-text").innerText = "Poll is closed";
         } else if (
           post_data[postIndexPostStarVote][12] !== null &&
           calcCrow(
@@ -1078,8 +1075,7 @@ postContainer.addEventListener(
           ) > parseInt(post_data[postIndexPostStarVote][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText =
-            "You aren't allowed to vote in this post because you are outside the event radius!";
+          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
         } else {
           let votes = [];
           for (let i = 17; i < 22; i++) {
@@ -1114,7 +1110,7 @@ postContainer.addEventListener(
                   ])
                 );
                 $("#notification-container").fadeIn(300, function () {});
-                document.getElementById("notification-text").innerText = "Vote Accepted!";
+                document.getElementById("notification-text").innerText = "Vote Accepted";
               }
             });
         }
@@ -1248,15 +1244,14 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postIndexYes][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed!";
+          document.getElementById("notification-text").innerText = "Poll is closed";
         } else if (
           post_data[postIndexYes][12] !== null &&
           calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexYes][12]), parseFloat(post_data[postIndexYes][13])) >
             parseInt(post_data[postIndexYes][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText =
-            "You aren't allowed to vote in this post because you are outside the event radius!";
+          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
         } else {
           if (user_yes_no_vote[postIndexYes][0] == true && user_yes_no_vote[postIndexYes][1] == false) {
             fetch("process_data.php", {
@@ -1393,15 +1388,14 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postIndexNo][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed!";
+          document.getElementById("notification-text").innerText = "Poll is closed";
         } else if (
           post_data[postIndexNo][12] !== null &&
           calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexNo][12]), parseFloat(post_data[postIndexNo][13])) >
             parseInt(post_data[postIndexNo][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText =
-            "You aren't allowed to vote in this post because you are outside the event radius!";
+          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
         } else {
           if (user_yes_no_vote[postIndexNo][0] == false && user_yes_no_vote[postIndexNo][1] == true) {
             fetch("process_data.php", {
@@ -1579,13 +1573,13 @@ postContainer.addEventListener(
     } else {
       if (btn_up || btn_down) {
         $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "You have to be logged-in to like or dislike a post!";
+        document.getElementById("notification-text").innerText = "You have to be logged-in to like or dislike a post";
       } else if (btn_yes || btn_no) {
         $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "You have to be logged-in to vote!";
+        document.getElementById("notification-text").innerText = "You have to be logged-in to vote";
       } else if (btn_bookmark) {
         $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "You have to be logged-in to bookmark a post!";
+        document.getElementById("notification-text").innerText = "You have to be logged-in to bookmark a post";
       }
     }
   },

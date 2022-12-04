@@ -3,10 +3,10 @@ document.getElementById("sum").addEventListener("click", function () {
   let upass = document.forms["login-form"]["password"].value;
 
   if (uname === "") {
-    document.getElementById("user-help").innerText = "Username field is empty!";
+    document.getElementById("user-help").innerText = "Username field is empty";
     document.getElementById("pass-help").innerText = "";
   } else if (upass === "") {
-    document.getElementById("pass-help").innerText = "Password field is empty!";
+    document.getElementById("pass-help").innerText = "Password field is empty";
     document.getElementById("user-help").innerText = "";
   } else {
     fetch("../process_data.php", {
@@ -30,10 +30,10 @@ document.getElementById("sum").addEventListener("click", function () {
           .then((response) => {
             if (response.trim() === "Wrong Password") {
               document.getElementById("user-help").innerText = "";
-              document.getElementById("pass-help").innerText = "Incorrect Username or Password!";
+              document.getElementById("pass-help").innerText = "Incorrect Username or Password";
             } else if (response.trim() === "Wrong Username") {
               document.getElementById("user-help").innerText = "";
-              document.getElementById("pass-help").innerText = "Incorrect Username or Password!";
+              document.getElementById("pass-help").innerText = "Incorrect Username or Password";
             } else if (response.trim() === "Oops! Something went wrong! Please try again later!") {
               document.getElementById("user-help").innerText = "";
               document.getElementById("pass-help").innerText = "Oops! Something went wrong! Please try again later!";

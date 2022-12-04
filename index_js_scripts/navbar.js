@@ -257,17 +257,17 @@ document.getElementById("username-change").addEventListener("click", function ()
   let upass = document.forms["username-change-form"]["password"].value;
 
   if (new_username === "") {
-    document.getElementById("user-help").innerText = "Username must be filled!";
+    document.getElementById("user-help").innerText = "Username must be filled";
     document.getElementById("pass-help").innerText = "";
   } else if (new_username.length < 6 || new_username.length > 16) {
-    document.getElementById("user-help").innerText = "Username must be between 6 and 16 characters!";
+    document.getElementById("user-help").innerText = "Username must be between 6 and 16 characters";
     document.getElementById("pass-help").innerText = "";
   } else if (new_username.indexOf(" ") > 0) {
-    document.getElementById("user-help").innerText = "Username must not have spaces!";
+    document.getElementById("user-help").innerText = "Username must not have spaces";
     document.getElementById("pass-help").innerText = "";
   } else if (upass === "") {
     document.getElementById("user-help").innerText = "";
-    document.getElementById("pass-help").innerText = "Password must be filled!";
+    document.getElementById("pass-help").innerText = "Password must be filled";
   } else {
     document.getElementById("user-help").innerText = "";
     document.getElementById("pass-help").innerText = "";
@@ -278,11 +278,11 @@ document.getElementById("username-change").addEventListener("click", function ()
       .then((res) => res.text())
       .then((response) => {
         if (response.trim() == "Username Unavailable!") {
-          document.getElementById("user-help").innerText = "Username Unavailable!";
+          document.getElementById("user-help").innerText = "Username Unavailable";
           document.getElementById("pass-help").innerText = "";
         } else if (response.trim() == "Incorrect Password!") {
           document.getElementById("user-help").innerText = "";
-          document.getElementById("pass-help").innerText = "Incorrect Password!";
+          document.getElementById("pass-help").innerText = "Incorrect Password";
         } else if (response.trim() == "Success") {
           document.getElementById("user-help").innerText = "";
           document.getElementById("pass-help").innerText = "";
@@ -354,21 +354,21 @@ document.getElementById("password-change").addEventListener("click", function ()
   let conf_pass = document.forms["password-change-form"]["repeat-new-password"].value;
 
   if (new_pass === "" || conf_pass === "" || current_password === "") {
-    document.getElementById("password-help").innerText = "One of the password fields is empty!";
+    document.getElementById("password-help").innerText = "One of the password fields is empty";
     document.getElementById("passc-help").innerText = "";
   } else if (new_pass !== conf_pass) {
     document.getElementById("password-help").innerText = "";
-    document.getElementById("passc-help").innerText = "Passwords must match!";
+    document.getElementById("passc-help").innerText = "Passwords must match";
   } else if (new_pass.length < 8) {
     document.getElementById("password-help").innerText = "";
-    document.getElementById("passc-help").innerText = "Password must be at least 8 characters!";
+    document.getElementById("passc-help").innerText = "Password must be at least 8 characters";
   } else if (new_pass.indexOf(" ") > 0) {
     document.getElementById("password-help").innerText = "";
-    document.getElementById("passc-help").innerText = "Password must not have spaces!";
+    document.getElementById("passc-help").innerText = "Password must not have spaces";
   } else if (!/[A-Z]/g.test(new_pass) || !/[0-9]/g.test(new_pass) || !/[.!@#$&*]/g.test(new_pass)) {
     document.getElementById("password-help").innerText = "";
     document.getElementById("passc-help").innerText =
-      "Password must contain at least 8 character and must also contain, at least one capital letter, a digit and one of these symbols (e.g. .!#$*&@)!";
+      "Password must contain at least 8 character and must also contain, at least one capital letter, a digit and one of these symbols (e.g. .!#$*&@)";
   } else {
     fetch("process_data.php", {
       method: "POST",
@@ -381,7 +381,7 @@ document.getElementById("password-change").addEventListener("click", function ()
       .then((res) => res.text())
       .then((response) => {
         if (response.trim() == "Incorrect Password!") {
-          document.getElementById("password-help").innerText = "Incorrect Password!";
+          document.getElementById("password-help").innerText = "Incorrect Password";
           document.getElementById("passc-help").innerText = "";
         } else if (response.trim() == "Success") {
           document.getElementById("password-help").innerText = "";
