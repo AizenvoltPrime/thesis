@@ -240,7 +240,7 @@ require_once "new_config.php";
   <div id="warning-no-category-selected" style="display:none;">You must select a category</div>
   <!--This form is for users to type the poll question.-->
   <form id="poll-question" style="display:none;">
-    <div id="question-instruction">Type your question</div>
+    <div id="question-instruction">Please type your question and keep in mind that after submission, edit is not allowed</div>
     <textarea id="question" type="text" name="question-text" maxlength="150"></textarea>
   </form>
   <!--This button is used to navigate inside poll creation template.-->
