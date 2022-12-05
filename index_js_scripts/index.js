@@ -1020,7 +1020,7 @@ postContainer.addEventListener(
                 ])
               );
               $("#notification-container").fadeIn(300, function () {});
-              document.getElementById("notification-text").innerText = "Vote Accepted";
+              document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
             }
           });
       } else if (btn_star) {
@@ -1110,7 +1110,7 @@ postContainer.addEventListener(
                   ])
                 );
                 $("#notification-container").fadeIn(300, function () {});
-                document.getElementById("notification-text").innerText = "Vote Accepted";
+                document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
               }
             });
         }

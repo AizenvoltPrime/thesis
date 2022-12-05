@@ -72,6 +72,15 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 ΕΠΟΜΕΝΑ TASK:
 
 - ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
+- Εννοείτε ο χρήστης πχ να κάνει click σε ένα ένα region και σαν φίλτρο να εμφανίζονται πίσω από το χάρτη όλα τα polls που έχουν δημοσιευτεί από αυτό το region
+- 20 choices
+- Να δώσω τη δυνατότητα delete post.
+- Να κατεβάζει τα αποτελέσματα σαν xls
+- Να κάνω πρόταση για τα categories
+
+
+
+
 "wss://crowdsource.gamerwelfare.com"
 
 DELETE FROM rating WHERE user_id=14 AND post_id=85;
