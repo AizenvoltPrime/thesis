@@ -442,7 +442,16 @@ function choice_dehighlight(choice) {
 }
 
 //This generates the posts on the home page.
-export function generate_posts(bookmark_filter, filter_hot, filter_preferred_categories, filter_filter, filter_search, user_search, radius_filter) {
+export function generate_posts(
+  bookmark_filter,
+  filter_hot,
+  filter_preferred_categories,
+  filter_filter,
+  filter_search,
+  user_search,
+  radius_filter,
+  posts_in_region_filter
+) {
   fetch("process_data.php", {
     method: "POST",
     body: JSON.stringify({
@@ -454,6 +463,7 @@ export function generate_posts(bookmark_filter, filter_hot, filter_preferred_cat
       filter_search: filter_search,
       user_search: user_search,
       radius_filter: radius_filter,
+      posts_in_region_filter: posts_in_region_filter,
     }),
   })
     .then((res) => res.json())
@@ -945,7 +955,7 @@ postContainer.addEventListener(
           bookmarks_active = false;
           reset_poll_data();
           null_all_styles();
-          generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1], null);
+          generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1], null, null);
         });
     }
     if (post_data[0].length > 14) {

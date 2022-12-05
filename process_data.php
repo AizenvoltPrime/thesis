@@ -260,9 +260,9 @@ if ($data['request'] == "request_username") {
     if (!isset($data["filter_filter"][3])) {
         $filter_filter_poll_status = "1=1";
     } else if ($data["filter_filter"][3] == "1") {
-        $filter_filter_poll_status = "post_expiration_date IS NULL OR post_expiration_date > " . "'" . $current_datetime . "'";
+        $filter_filter_poll_status = "(posts.post_expiration_date IS NULL OR posts.post_expiration_date > " . "'" . $current_datetime . "')";
     } else if ($data["filter_filter"][3] == "2") {
-        $filter_filter_poll_status = "post_expiration_date < " . "'" . $current_datetime . "'";
+        $filter_filter_poll_status = "posts.post_expiration_date < " . "'" . $current_datetime . "'";
     }
 
     if (!isset($data["radius_filter"])) {
@@ -270,6 +270,26 @@ if ($data['request'] == "request_username") {
     } else {
         $filter_radius_filter = "(posts.event_radius IS NULL OR FLOOR(ST_Distance_Sphere(point(:user_long, :user_lat),point(posts.event_long, posts.event_lat)))<=posts.event_radius)";
     }
+
+    if (!isset($data["posts_in_region_filter"])) {
+        $posts_in_region_filter = ".";
+    } else {
+        if (count($data["posts_in_region_filter"]) == 0) {
+            $posts_in_region_filter = "zero";
+        } else if (count($data["posts_in_region_filter"]) > 0) {
+            $posts_in_region_filter = "";
+            for ($i = 0; $i < count($data["posts_in_region_filter"]); $i++) {
+                if (count($data["posts_in_region_filter"]) == 1) {
+                    $posts_in_region_filter .= "[[:<:]]" . $data["posts_in_region_filter"][$i] . "[[:>:]]";
+                } else if (count($data["posts_in_region_filter"]) > 1 && $i < count($data["posts_in_region_filter"]) - 1) {
+                    $posts_in_region_filter .= "[[:<:]]" . $data["posts_in_region_filter"][$i] . "[[:>:]]|";
+                } else if (count($data["posts_in_region_filter"]) > 1 && $i == count($data["posts_in_region_filter"]) - 1) {
+                    $posts_in_region_filter .= "[[:<:]]" . $data["posts_in_region_filter"][$i] . "[[:>:]]";
+                }
+            }
+        }
+    }
+
     if (isset($_SESSION['id'])) {
         if ($data["bookmarks_only"] == false) {
             if (isset($data["filter_hot"]) && $data["filter_hot"] == "hot") {
@@ -299,7 +319,7 @@ if ($data['request'] == "request_username") {
                     join approval on posts.post_number = approval.post_id
                     WHERE user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
-                    AND $filter_filter_poll_status AND $filter_radius_filter
+                    AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC");
             } else {
                 $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
@@ -328,7 +348,7 @@ if ($data['request'] == "request_username") {
                     join approval on posts.post_number = approval.post_id
                     WHERE user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
-                    AND $filter_filter_poll_status AND $filter_radius_filter
+                    AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter
                     GROUP BY posts.post_number ORDER BY posts.post_date DESC");
             }
         } else if ($data["bookmarks_only"] == true) {
@@ -360,7 +380,7 @@ if ($data['request'] == "request_username") {
                     WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) = 1 
                     AND user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
-                    AND $filter_filter_poll_status AND $filter_radius_filter
+                    AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC");
             } else {
                 $stmt = $conn->prepare("SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name AS category_name,
@@ -390,7 +410,7 @@ if ($data['request'] == "request_username") {
                     WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) = 1 
                     AND user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
-                    AND $filter_filter_poll_status AND $filter_radius_filter
+                    AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter
                     GROUP BY posts.post_number ORDER BY posts.post_date DESC");
             }
         }
@@ -399,13 +419,14 @@ if ($data['request'] == "request_username") {
             $stmt->execute([
                 ":id" => $_SESSION["id"], ":username" => $user_search, ":category_name" => $filter_preferred_categories, ":filter_search" => $filter_search,
                 ":first_date" => $filter_filter_time[0], ":second_date" => $filter_filter_time[1], ":filter_poll_type" => $filter_filter_poll_type,
-                ":filter_username" => $filter_filter_user
+                ":filter_username" => $filter_filter_user, ":posts_in_region_filter" => $posts_in_region_filter
             ]);
         } else {
             $stmt->execute([
                 ":id" => $_SESSION["id"], ":username" => $user_search, ":category_name" => $filter_preferred_categories, ":filter_search" => $filter_search,
                 ":first_date" => $filter_filter_time[0], ":second_date" => $filter_filter_time[1], ":filter_poll_type" => $filter_filter_poll_type,
-                ":filter_username" => $filter_filter_user, ":user_long" => $data["radius_filter"][0], ":user_lat" => $data["radius_filter"][1]
+                ":filter_username" => $filter_filter_user, ":user_long" => $data["radius_filter"][0], ":user_lat" => $data["radius_filter"][1],
+                ":posts_in_region_filter" => $posts_in_region_filter
             ]);
         }
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -429,7 +450,7 @@ if ($data['request'] == "request_username") {
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
-            AND $filter_filter_poll_status AND $filter_radius_filter ORDER BY chevron_result DESC, posts.post_date DESC");
+            AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter ORDER BY chevron_result DESC, posts.post_date DESC");
         } else {
             $stmt = $conn->prepare("SELECT posts_info.post_number AS post_number,posts_info.username AS username,poll_id,posts_info.category_name AS category_name,
             posts_info.post_text AS post_text,chevron_result,posts_info.post_date AS post_date,posts_info.post_expiration_date, 
@@ -438,19 +459,21 @@ if ($data['request'] == "request_username") {
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
-            AND $filter_filter_poll_status AND $filter_radius_filter ORDER BY posts.post_date DESC");
+            AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter ORDER BY posts.post_date DESC");
         }
 
         if (!isset($data["radius_filter"])) {
             $stmt->execute([
                 ":username" => $user_search, ":category_name" => $filter_preferred_categories, ":filter_search" => $filter_search,
-                ":first_date" => $filter_filter_time[0], ":second_date" => $filter_filter_time[1], ":filter_poll_type" => $filter_filter_poll_type, ":filter_username" => $filter_filter_user
+                ":first_date" => $filter_filter_time[0], ":second_date" => $filter_filter_time[1], ":filter_poll_type" => $filter_filter_poll_type,
+                ":filter_username" => $filter_filter_user, ":posts_in_region_filter" => $posts_in_region_filter
             ]);
         } else {
             $stmt->execute([
                 ":username" => $user_search, ":category_name" => $filter_preferred_categories, ":filter_search" => $filter_search,
                 ":first_date" => $filter_filter_time[0], ":second_date" => $filter_filter_time[1], ":filter_poll_type" => $filter_filter_poll_type,
-                ":filter_username" => $filter_filter_user, ":user_long" => $data["radius_filter"][0], ":user_lat" => $data["radius_filter"][1]
+                ":filter_username" => $filter_filter_user, ":user_long" => $data["radius_filter"][0], ":user_lat" => $data["radius_filter"][1],
+                ":posts_in_region_filter" => $posts_in_region_filter
             ]);
         }
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -627,12 +650,24 @@ if ($data['request'] == "request_username") {
     $location_responses_data = array();
     $post_ids_string = "";
 
-    foreach ($data["post_ids"] as $value) {
-        $post_ids_string .=
-            "[[:<:]]" . $value . "[[:>:]]|";
+    if (!isset($data["post_ids"])) {
+        $post_ids_string = ".";
+    } else {
+        if (count($data["post_ids"]) == 0) {
+            $post_ids_string = "zero";
+        } else if (count($data["post_ids"]) > 0) {
+            $post_ids_string = "";
+            for ($i = 0; $i < count($data["post_ids"]); $i++) {
+                if (count($data["post_ids"]) == 1) {
+                    $post_ids_string .= "[[:<:]]" . $data["post_ids"][$i] . "[[:>:]]";
+                } else if (count($data["post_ids"]) > 1 && $i < count($data["post_ids"]) - 1) {
+                    $post_ids_string .= "[[:<:]]" . $data["post_ids"][$i] . "[[:>:]]|";
+                } else if (count($data["post_ids"]) > 1 && $i == count($data["post_ids"]) - 1) {
+                    $post_ids_string .= "[[:<:]]" . $data["post_ids"][$i] . "[[:>:]]";
+                }
+            }
+        }
     }
-
-    $post_ids_string = substr($post_ids_string, 0, -1);
 
     $stmt = $conn->prepare("SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitude, (SELECT COUNT(post_number) FROM posts WHERE posts.post_loc_lat=post_latitude 
     AND post_loc_long=post_longitude AND posts.post_number RLIKE :post_ids GROUP BY post_loc_lat,post_loc_long) AS number_of_posts_in_location,(SELECT COUNT(yes_no.post_id) FROM yes_no 
@@ -822,4 +857,37 @@ if ($data['request'] == "request_username") {
         }
     }
     echo json_encode($tmp);
+} else if ($data['request'] == "posts_per_location_data") {
+    require_once "new_config.php";
+
+    $posts_per_location_data = array();
+
+    if (!isset($data["post_ids"])) {
+        $post_ids_string = ".";
+    } else {
+        if (count($data["post_ids"]) == 0) {
+            $post_ids_string = "zero";
+        } else if (count($data["post_ids"]) > 0) {
+            $post_ids_string = "";
+            for ($i = 0; $i < count($data["post_ids"]); $i++) {
+                if (count($data["post_ids"]) == 1) {
+                    $post_ids_string .= "[[:<:]]" . $data["post_ids"][$i] . "[[:>:]]";
+                } else if (count($data["post_ids"]) > 1 && $i < count($data["post_ids"]) - 1) {
+                    $post_ids_string .= "[[:<:]]" . $data["post_ids"][$i] . "[[:>:]]|";
+                } else if (count($data["post_ids"]) > 1 && $i == count($data["post_ids"]) - 1) {
+                    $post_ids_string .= "[[:<:]]" . $data["post_ids"][$i] . "[[:>:]]";
+                }
+            }
+        }
+    }
+
+    $stmt = $conn->prepare("SELECT post_number, posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitude FROM posts WHERE posts.post_number RLIKE :post_ids");
+    $stmt->execute([":post_ids" => $post_ids_string]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $tmp = array($row["post_number"], $row["post_latitude"], $row["post_longitude"]);
+            array_push($posts_per_location_data, $tmp);
+        }
+    }
+    echo json_encode($posts_per_location_data);
 }

@@ -10,6 +10,7 @@ import {
   edit_approval_vote,
 } from "./index.js";
 import { make_admin_analytics_map, admin_map_remove_marker } from "./admin_analytics.js";
+import { get_posts_ids_inside_region } from "./filters.js";
 
 var DateTime = luxon.DateTime;
 let new_post_counter = 1;
@@ -36,7 +37,8 @@ addEventListener("DOMContentLoaded", (event) => {
       window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text" &&
       window.getComputedStyle(document.getElementById("all-filters")).display === "flex" &&
       get_variables()[0] === false &&
-      get_variables()[5] === null
+      get_variables()[5] === null &&
+      get_posts_ids_inside_region() === null
     ) {
       let post_time_relative = DateTime.fromFormat(JSON.parse(e.data)[1][6], "yyyy-MM-dd HH:mm:ss").toRelative();
       let post_time_detailed = DateTime.fromFormat(JSON.parse(e.data)[1][6], "yyyy-MM-dd HH:mm:ss").toFormat("cccc, dd MMMM, yyyy, TTTT");
@@ -227,7 +229,8 @@ addEventListener("DOMContentLoaded", (event) => {
         window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip === "text" ||
         window.getComputedStyle(document.getElementById("all-filters")).display !== "flex" ||
         get_variables()[0] === true ||
-        get_variables()[5] !== null)
+        get_variables()[5] !== null ||
+        get_posts_ids_inside_region() !== null)
     ) {
       $("#bell-notification-details").fadeOut(300, function () {
         document.getElementById("bell-inner-container").style.display = "block";

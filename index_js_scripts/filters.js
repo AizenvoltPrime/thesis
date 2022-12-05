@@ -4,6 +4,42 @@ import { greece_regions, update_region_posts, clear_region_posts } from "../geoj
 
 let preferred_categories = null;
 let radius_filter = null;
+let post_locations = [];
+let posts_ids_inside_region = null;
+let posts_per_region = [
+  ["East Macedonia and Thrace"],
+  ["Central Macedonia"],
+  ["Thessaly"],
+  ["North Aegean"],
+  ["South Aegean"],
+  ["Central Greece"],
+  ["Western Greece"],
+  ["Peloponnese"],
+  ["Attica"],
+  ["West Macedonia"],
+  ["Epirus"],
+  ["Ionian Islands"],
+  ["Crete"],
+];
+let all_regions = [
+  "East Macedonia and Thrace",
+  "Central Macedonia",
+  "Thessaly",
+  "North Aegean",
+  "South Aegean",
+  "Central Greece",
+  "Western Greece",
+  "Peloponnese",
+  "Attica",
+  "West Macedonia",
+  "Epirus",
+  "Ionian Islands",
+  "Crete",
+];
+
+export function get_posts_ids_inside_region() {
+  return posts_ids_inside_region;
+}
 
 //This is for hot filter functionality.
 document.getElementById("hot").addEventListener("click", function () {
@@ -25,7 +61,8 @@ document.getElementById("hot").addEventListener("click", function () {
         window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip !== "text" &&
         (document.forms["search-box-container"]["search-text"].value === "" ||
           document.forms["search-box-container"]["search-text"].value === undefined) &&
-        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text"
+        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text" &&
+        posts_ids_inside_region === null
       ) {
         clear_bell_counter();
       }
@@ -35,7 +72,16 @@ document.getElementById("hot").addEventListener("click", function () {
         .done(function () {
           $(".post").not(":first").remove();
           reset_poll_data();
-          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
+          generate_posts(
+            get_variables()[0],
+            null,
+            preferred_categories,
+            filter,
+            filter_obj.search_text,
+            get_variables()[1],
+            radius_filter,
+            posts_ids_inside_region
+          );
         });
     } else {
       highlight_filter("fa-fire-flame-curved");
@@ -46,7 +92,16 @@ document.getElementById("hot").addEventListener("click", function () {
         .done(function () {
           $(".post").not(":first").remove();
           reset_poll_data();
-          generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
+          generate_posts(
+            get_variables()[0],
+            "hot",
+            preferred_categories,
+            filter,
+            filter_obj.search_text,
+            get_variables()[1],
+            radius_filter,
+            posts_ids_inside_region
+          );
         });
     }
   }
@@ -85,7 +140,16 @@ document.getElementById("recent").addEventListener("click", function () {
         .done(function () {
           $(".post").not(":first").remove();
           reset_poll_data();
-          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
+          generate_posts(
+            get_variables()[0],
+            null,
+            preferred_categories,
+            filter,
+            filter_obj.search_text,
+            get_variables()[1],
+            radius_filter,
+            posts_ids_inside_region
+          );
         });
     }
   }
@@ -112,7 +176,8 @@ document.getElementById("filter").addEventListener("click", function () {
         window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip !== "text" &&
         (document.forms["search-box-container"]["search-text"].value === "" ||
           document.forms["search-box-container"]["search-text"].value === undefined) &&
-        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text"
+        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text" &&
+        posts_ids_inside_region === null
       ) {
         $(".post").fadeOut(300, function () {});
         $(".post")
@@ -184,9 +249,27 @@ document.getElementsByClassName("fa-circle-chevron-right")[0].addEventListener("
       $(".post").not(":first").remove();
       reset_poll_data();
       if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
-        generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
+        generate_posts(
+          get_variables()[0],
+          "hot",
+          preferred_categories,
+          filter,
+          filter_obj.search_text,
+          get_variables()[1],
+          radius_filter,
+          posts_ids_inside_region
+        );
       } else {
-        generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
+        generate_posts(
+          get_variables()[0],
+          null,
+          preferred_categories,
+          filter,
+          filter_obj.search_text,
+          get_variables()[1],
+          radius_filter,
+          posts_ids_inside_region
+        );
       }
     });
 });
@@ -314,7 +397,8 @@ document.getElementById("category-button").addEventListener("click", function ()
         window.getComputedStyle(document.getElementsByClassName("fa-table-list")[0]).backgroundClip !== "text" &&
         (document.forms["search-box-container"]["search-text"].value === "" ||
           document.forms["search-box-container"]["search-text"].value === undefined) &&
-        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text"
+        window.getComputedStyle(document.getElementsByClassName("fa-filter")[0]).backgroundClip !== "text" &&
+        posts_ids_inside_region === null
       ) {
         clear_bell_counter();
       }
@@ -326,9 +410,27 @@ document.getElementById("category-button").addEventListener("click", function ()
         $(".post").not(":first").remove();
         reset_poll_data();
         if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
-          generate_posts(get_variables()[0], "hot", preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
+          generate_posts(
+            get_variables()[0],
+            "hot",
+            preferred_categories,
+            filter,
+            filter_obj.search_text,
+            get_variables()[1],
+            radius_filter,
+            posts_ids_inside_region
+          );
         } else {
-          generate_posts(get_variables()[0], null, preferred_categories, filter, filter_obj.search_text, get_variables()[1], radius_filter);
+          generate_posts(
+            get_variables()[0],
+            null,
+            preferred_categories,
+            filter,
+            filter_obj.search_text,
+            get_variables()[1],
+            radius_filter,
+            posts_ids_inside_region
+          );
         }
       });
   });
@@ -408,6 +510,26 @@ export function clear_filters() {
       null_style("fa-map-location-dot");
     });
   }
+  post_locations.length = 0;
+  if (posts_ids_inside_region !== null) {
+    posts_ids_inside_region = null;
+  }
+  posts_per_region.length = 0;
+  posts_per_region = [
+    ["East Macedonia and Thrace"],
+    ["Central Macedonia"],
+    ["Thessaly"],
+    ["North Aegean"],
+    ["South Aegean"],
+    ["Central Greece"],
+    ["Western Greece"],
+    ["Peloponnese"],
+    ["Attica"],
+    ["West Macedonia"],
+    ["Epirus"],
+    ["Ionian Islands"],
+    ["Crete"],
+  ];
 }
 
 //This is for filter functionality.
@@ -431,9 +553,27 @@ document.getElementById("filter-button").addEventListener("click", function () {
         $(".post").not(":first").remove();
         reset_poll_data();
         if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
-          generate_posts(get_variables()[0], "hot", preferred_categories, filter, search_text, get_variables()[1], radius_filter);
+          generate_posts(
+            get_variables()[0],
+            "hot",
+            preferred_categories,
+            filter,
+            search_text,
+            get_variables()[1],
+            radius_filter,
+            posts_ids_inside_region
+          );
         } else {
-          generate_posts(get_variables()[0], null, preferred_categories, filter, search_text, get_variables()[1], radius_filter);
+          generate_posts(
+            get_variables()[0],
+            null,
+            preferred_categories,
+            filter,
+            search_text,
+            get_variables()[1],
+            radius_filter,
+            posts_ids_inside_region
+          );
         }
       });
   }
@@ -590,6 +730,51 @@ geojson = L.geoJson(greece_regions);
 
 function zoomToFeature(e) {
   app_analytics_map.fitBounds(e.target.getBounds());
+  let index = all_regions.indexOf(e.sourceTarget.feature.properties.name);
+  if (posts_ids_inside_region === null || posts_ids_inside_region.length > 0) {
+    posts_ids_inside_region = [];
+    posts_ids_inside_region.length = 0;
+  }
+  for (let i = 1; i < posts_per_region[index].length; i++) {
+    posts_ids_inside_region.push(posts_per_region[index][i]);
+  }
+  const filter_obj = {
+    search_text: null,
+  };
+  let filter = filter_check(filter_obj);
+  if (preferred_categories !== null && preferred_categories.length === 0) {
+    preferred_categories = null;
+  }
+  $(".post").fadeOut(300, function () {});
+  $(".post")
+    .promise()
+    .done(function () {
+      $(".post").not(":first").remove();
+      reset_poll_data();
+      if (window.getComputedStyle(document.getElementsByClassName("fa-fire-flame-curved")[0]).backgroundClip === "text") {
+        generate_posts(
+          get_variables()[0],
+          "hot",
+          preferred_categories,
+          filter,
+          filter_obj.search_text,
+          get_variables()[1],
+          radius_filter,
+          posts_ids_inside_region
+        );
+      } else {
+        generate_posts(
+          get_variables()[0],
+          null,
+          preferred_categories,
+          filter,
+          filter_obj.search_text,
+          get_variables()[1],
+          radius_filter,
+          posts_ids_inside_region
+        );
+      }
+    });
 }
 
 function onEachFeature(feature, layer) {
@@ -645,6 +830,34 @@ var layerControl;
 
 //This function creates the map for location/responses analytics
 function make_app_analytics_map(post_ids) {
+  post_locations.length = 0;
+  posts_per_region.length = 0;
+  posts_per_region = [
+    ["East Macedonia and Thrace"],
+    ["Central Macedonia"],
+    ["Thessaly"],
+    ["North Aegean"],
+    ["South Aegean"],
+    ["Central Greece"],
+    ["Western Greece"],
+    ["Peloponnese"],
+    ["Attica"],
+    ["West Macedonia"],
+    ["Epirus"],
+    ["Ionian Islands"],
+    ["Crete"],
+  ];
+  fetch("process_data.php", {
+    method: "POST",
+    body: JSON.stringify({
+      request: "posts_per_location_data",
+      post_ids: post_ids,
+    }),
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      post_locations = response;
+    });
   fetch("process_data.php", {
     method: "POST",
     body: JSON.stringify({
@@ -663,6 +876,12 @@ function make_app_analytics_map(post_ids) {
         var geo_out = greece_regions.features.filter(function (d) {
           return d3.geoContains(d, [response[i][1], response[i][0]]);
         });
+        for (let j = 0; j < post_locations.length; j++) {
+          if (post_locations[j][1] === response[i][0] && post_locations[j][2] === response[i][1]) {
+            let index = all_regions.indexOf(geo_out[0].properties.name);
+            posts_per_region[index].push(post_locations[j][0]);
+          }
+        }
         update_region_posts(geo_out[0], parseInt(response[i][2]));
       }
       resetHighlight(geojson_layer);
@@ -677,7 +896,9 @@ export function clear_map(map_name, layer_control, geogjson, markers) {
   if (layer_control !== undefined) {
     map_name.removeControl(layer_control);
     map_name.removeLayer(geogjson);
-    map_name.removeLayer(markers);
+    for (let i = 0; i < app_analytics_marker.length; i++) {
+      markers.removeLayer(app_analytics_marker[i]);
+    }
     clear_region_posts();
   }
 }
@@ -690,13 +911,18 @@ document.getElementById("post-locations-filter").addEventListener("click", funct
       null_style("fa-map-location-dot");
     });
   } else {
-    let post_ids_data = [];
-    (() => get_variables()[3].map((x) => post_ids_data.push(x[0])))();
-    highlight_filter("fa-map-location-dot");
-    $("#post-locations-container").fadeIn(300, function () {
-      app_analytics_map.invalidateSize();
-      make_app_analytics_map(post_ids_data);
-    });
+    if (get_variables()[3]) {
+      let post_ids_data = [];
+      (() => get_variables()[3].map((x) => post_ids_data.push(x[0])))();
+      highlight_filter("fa-map-location-dot");
+      $("#post-locations-container").fadeIn(300, function () {
+        app_analytics_map.invalidateSize();
+        make_app_analytics_map(post_ids_data);
+      });
+    } else {
+      $("#notification-container").fadeIn(300, function () {});
+      document.getElementById("notification-text").innerText = "There are no posts to check their post locations";
+    }
   }
 });
 
