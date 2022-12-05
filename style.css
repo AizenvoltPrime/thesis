@@ -1680,3 +1680,12 @@ input:checked + .slider:before {
   background-color: #00ffd0;
   color: #000;
 }
+
+#post-locations-container-header {
+  cursor: move;
+  color: #f3f3f3;
+  background: #5e5e5e;
+  border-radius: 1em;
+  font-size: 2em;
+  padding: 0.2em;
+}

@@ -73,17 +73,16 @@ require_once "new_config.php";
   <div id="preferred-categories-container">
     <div id="categories-container">
       <div id="category-box">
-        <div class="category"><i class="fa-solid fa-basketball"></i>Sports</div>
+        <div class="category"><i class="fa-solid fa-people-group"></i>Society</div>
         <div class="category"><i class="fa-solid fa-briefcase"></i>Business</div>
-        <div class="category"><i class="fa-solid fa-car"></i>Cars</div>
-        <div class="category"><i class="fa-solid fa-people-roof"></i>Family</div>
-        <div class="category"><i class="fa-solid fa-briefcase-medical"></i>Health</div>
+        <div class="category"><i class="fa-solid fa-coins"></i>Economy</div>
+        <div class="category"><i class="fa-solid fa-people-roof"></i>Finance</div>
+        <div class="category"><i class="fa-solid fa-cart-shopping"></i>Commerce</div>
+        <div class="category"><i class="fa-solid fa-bus"></i>Transportation</div>
         <div class="category"><i class="fa-solid fa-landmark"></i>Politics</div>
         <div class="category"><i class="fa-solid fa-church"></i>Religion</div>
-        <div class="category"><i class="fa-solid fa-flask"></i>Science</div>
-        <div class="category"><i class="fa-solid fa-microchip"></i>Technology</div>
-        <div class="category"><i class="fa-solid fa-plane"></i>Travel</div>
-        <div class="category"><i class="fa-solid fa-film"></i>Entertainment</div>
+        <div class="category"><i class="fa-solid fa-graduation-cap"></i>Education</div>
+        <div class="category"><i class="fa-solid fa-masks-theater"></i>Culture</div>
       </div>
       <button id="category-button" type="button">OK</button>
     </div>
@@ -131,8 +130,9 @@ require_once "new_config.php";
   </div>
   <!--This div is for the Post Locations filter.-->
   <div id="post-locations-container" style="display:none;">
+    <button id="post-locations-container-header">Click here to drag</button>
     <div id="post-locations-map">
-      <button class="close-map"><i class="fa-solid fa-xmark"></i></i></button>
+      <button class="close-map"><i class="fa-solid fa-xmark"></i></button>
     </div>
   </div>
   <!--This div is for user notifications.-->
@@ -224,17 +224,16 @@ require_once "new_config.php";
   <div id="post-category-container" style="display:none;">
     <select id="categories">
       <option value="0">Select category</option>
-      <option value="1">Sports</option>
+      <option value="1">Society</option>
       <option value="2">Business</option>
-      <option value="3">Cars</option>
-      <option value="4">Entertainment</option>
-      <option value="5">Family</option>
-      <option value="6">Health</option>
+      <option value="3">Economy</option>
+      <option value="4">Finance</option>
+      <option value="5">Commerce</option>
+      <option value="6">Transportation</option>
       <option value="7">Politics</option>
       <option value="8">Religion</option>
-      <option value="9">Science</option>
-      <option value="10">Technology</option>
-      <option value="11">Travel</option>
+      <option value="9">Education</option>
+      <option value="10">Culture</option>
     </select>
   </div>
   <div id="warning-no-category-selected" style="display:none;">You must select a category</div>

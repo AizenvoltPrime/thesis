@@ -933,3 +933,81 @@ document.getElementsByClassName("close-map")[0].addEventListener("click", functi
     null_style("fa-map-location-dot");
   });
 });
+
+//This is for dragging post locations map
+dragElementTouch(document.getElementById("post-locations-container"));
+dragElementMouse(document.getElementById("post-locations-container"));
+
+function dragElementTouch(elmnt) {
+  let pos1 = 0,
+    pos2 = 0,
+    pos3 = 0,
+    pos4 = 0;
+
+  document.getElementById(elmnt.id + "-header").addEventListener("touchstart", function (e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onpointerup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onpointermove = elementDrag;
+  });
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = 2 * (pos3 - e.clientX);
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) / 16 + "em";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) / 16 + "em";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onpointerup = null;
+    document.onpointermove = null;
+  }
+}
+
+function dragElementMouse(elmnt) {
+  let pos1 = 0,
+    pos2 = 0,
+    pos3 = 0,
+    pos4 = 0;
+
+  document.getElementById(elmnt.id + "-header").addEventListener("mousedown", function (e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onpointerup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onpointermove = elementDrag;
+  });
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = 2 * (pos3 - e.clientX);
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) / 16 + "em";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) / 16 + "em";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onpointerup = null;
+    document.onpointermove = null;
+  }
+}

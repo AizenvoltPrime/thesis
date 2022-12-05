@@ -14,6 +14,7 @@ all dates between:https://bobbyhadz.com/blog/javascript-get-all-dates-between-tw
 how to get ipadress:https://thirteenov.ciihuy.com/how-to-detect-users-ip-address-with-php/
 get location from ipadress:https://www.youtube.com/watch?v=--_acK_RaMU&t=148s
 stars css,html:https://www.youtube.com/watch?v=zDHC4r5eCdY
+dragging map:https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_draggable
 
 //posts_info
 CREATE VIEW posts_info AS SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name 
@@ -76,9 +77,9 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 - Να δώσω τη δυνατότητα delete post.
 - 20 choices
 - Να κατεβάζει τα αποτελέσματα σαν xls
-- Να κάνω πρόταση για τα categories
-
-
+- Ταξινόμηση στο approval με βάση το πλήθος των ψήφων
+- Να μπορούν να επιλεγούν παραπάνω από μία κατηγορίες για κάθε post.
+- Map που να δείχνει το event location όπου υπάρχει.
 
 "wss://crowdsource.gamerwelfare.com"
 
