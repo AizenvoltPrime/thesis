@@ -1634,7 +1634,7 @@ input:checked + .slider:before {
 .half-star-container,
 .half-star-container-results {
   display: flex;
-  width: 1.11em;
+  width: 1.1em;
   justify-content: flex-start;
   align-items: center;
   pointer-events: auto;

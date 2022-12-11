@@ -213,18 +213,24 @@ document.getElementById("next-step").addEventListener("click", function () {
         .done(function () {
           let pos = 0;
           for (let i = 0; i < parseInt(poll_choices_number) + 2; i++) {
+            if (i === 0) {
+              let new_poll_choices_desc = document.createElement("div");
+              new_poll_choices_desc.className = "poll-choices-instruction";
+              document.getElementById("input-poll-choices").appendChild(new_poll_choices_desc);
+              document.getElementById("input-poll-choices").children[i + pos].innerText = "Your choices can have up to 50 characters";
+            }
             let new_poll_choices_instruction = document.createElement("label");
             new_poll_choices_instruction.className = "poll-choices-instruction";
             document.getElementById("input-poll-choices").appendChild(new_poll_choices_instruction);
-            document.getElementById("input-poll-choices").children[i + pos].innerText = "Choice " + (i + 1);
+            document.getElementById("input-poll-choices").children[i + pos + 1].innerText = "Choice " + (i + 1);
 
             let new_write_poll_choice = document.createElement("input");
             new_write_poll_choice.className = "write-poll-choice";
             document.getElementById("input-poll-choices").appendChild(new_write_poll_choice);
-            document.getElementById("input-poll-choices").children[i + pos + 1].setAttribute("type", "text");
-            document.getElementById("input-poll-choices").children[i + pos + 1].name = "poll-choice";
-            document.getElementById("input-poll-choices").children[i + pos + 1].maxLength = 20;
-            document.getElementById("input-poll-choices").children[i + pos + 1].placeholder = "Type Choice " + (i + 1);
+            document.getElementById("input-poll-choices").children[i + pos + 2].setAttribute("type", "text");
+            document.getElementById("input-poll-choices").children[i + pos + 2].name = "poll-choice";
+            document.getElementById("input-poll-choices").children[i + pos + 2].maxLength = 50;
+            document.getElementById("input-poll-choices").children[i + pos + 2].placeholder = "Type Choice " + (i + 1);
             pos++;
           }
           $("#input-poll-choices").fadeIn(300, function () {});
@@ -483,57 +489,7 @@ export function generate_posts(
           document.getElementsByClassName("post-time")[0].innerText = post_time;
           document.getElementsByClassName("post-time-detailed")[0].innerText = post_data[i][6];
 
-          if (post_data[i][2] == 2 && post_data[0].length > 14) {
-            for (let j = 17; j < 22; j++) {
-              let star_range = (j - 16) * 10;
-              let max_star_position = star_range - 10;
-              let star_limit;
-              if (post_data[i][j + 5] !== null) {
-                star_limit = parseInt(post_data[i][j + 5] * 2.0) + max_star_position;
-              }
-              if (post_data[i][j] !== null) {
-                if (j !== 17) {
-                  let clone_rating_choices = document.getElementsByClassName("post")[0].getElementsByClassName("rating-choices")[0];
-                  let clone = clone_rating_choices.cloneNode(true);
-                  clone.setAttribute("data-value", j - 16);
-                  document
-                    .getElementsByClassName("post")[0]
-                    .getElementsByClassName("rating-vote")[0]
-                    .insertBefore(
-                      clone,
-                      document
-                        .getElementsByClassName("post")[0]
-                        .getElementsByClassName("rating-vote")[0]
-                        .getElementsByClassName("send-rating-button")[0]
-                    );
-                  document
-                    .getElementsByClassName("post")[0]
-                    .querySelectorAll(".rating-choices")
-                    [j - 17].querySelectorAll(".half-star-container")
-                    .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
-                  document
-                    .getElementsByClassName("post")[0]
-                    .querySelectorAll(".rating-choices")
-                    [j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
-                } else {
-                  document
-                    .getElementsByClassName("post")[0]
-                    .querySelectorAll(".rating-choices")
-                    [j - 17].querySelectorAll(".half-star-container")
-                    .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
-                  document
-                    .getElementsByClassName("post")[0]
-                    .querySelectorAll(".rating-choices")
-                    [j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
-                }
-                if (post_data[i][j + 5] !== null) {
-                  for (let k = max_star_position; k < star_limit; k++) {
-                    document.getElementsByClassName("post")[0].getElementsByClassName("half-star-container")[k].style.color = "#00ffd0";
-                  }
-                }
-              }
-            }
-          } else if (post_data[i][2] == 3 && post_data[0].length > 14) {
+          if (post_data[i][2] == 3 && post_data[0].length > 9) {
             for (let j = 17; j < 22; j++) {
               if (post_data[i][j] !== null) {
                 if (j > 19) {
@@ -571,47 +527,7 @@ export function generate_posts(
           clone[i - 1].querySelectorAll(".post-time-detailed")[0].innerText = post_data[i][6];
           document.getElementById("posts-container").appendChild(clone[i - 1]);
 
-          if (post_data[i][2] == 2 && post_data[0].length > 14) {
-            clone[i - 1].querySelectorAll(".rating-choices").forEach((child) => {
-              if (child.getAttribute("data-value") !== "1") {
-                child.remove();
-              }
-            });
-            for (let j = 17; j < 22; j++) {
-              let star_range = (j - 16) * 10;
-              let max_star_position = star_range - 10;
-              let star_limit;
-              if (post_data[i][j + 5] !== null) {
-                star_limit = parseInt(post_data[i][j + 5] * 2.0) + max_star_position;
-              }
-
-              if (post_data[i][j] !== null) {
-                if (j !== 17) {
-                  let clone_rating_choices = clone[i - 1].getElementsByClassName("rating-choices")[0];
-                  let clone_choices = clone_rating_choices.cloneNode(true);
-                  clone_choices.setAttribute("data-value", j - 16);
-                  clone[i - 1]
-                    .getElementsByClassName("rating-vote")[0]
-                    .insertBefore(
-                      clone_choices,
-                      clone[i - 1].getElementsByClassName("rating-vote")[0].getElementsByClassName("send-rating-button")[0]
-                    );
-                  clone[i - 1]
-                    .querySelectorAll(".rating-choices")
-                    [j - 17].querySelectorAll(".half-star-container")
-                    .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
-                  clone[i - 1].querySelectorAll(".rating-choices")[j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
-                } else {
-                  clone[i - 1].querySelectorAll(".rating-choices")[j - 17].getElementsByClassName("choice-name")[0].innerText = post_data[i][j];
-                }
-                if (post_data[i][j + 5] !== null) {
-                  for (let k = max_star_position; k < star_limit; k++) {
-                    clone[i - 1].getElementsByClassName("half-star-container")[k].style.color = "#00ffd0";
-                  }
-                }
-              }
-            }
-          } else if (post_data[i][2] == 3 && post_data[0].length > 14) {
+          if (post_data[i][2] == 3 && post_data[0].length > 9) {
             clone[i - 1].querySelectorAll(".approval-choice").forEach((child) => {
               if (child.getAttribute("value") !== "1" && child.getAttribute("value") !== "2" && child.getAttribute("value") !== "3") {
                 child.remove();
@@ -647,7 +563,7 @@ export function generate_posts(
         }
       }
       if (post_time !== undefined && post_time !== null) {
-        if (post_data[0].length > 14) {
+        if (post_data[0].length > 9) {
           for (let i = 0; i < post_data.length; i++) {
             if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
@@ -734,7 +650,7 @@ export function generate_posts(
             new_canvas.className = "myChart";
             document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
           }
-        } else if (post_data[0].length <= 14) {
+        } else if (post_data[0].length <= 9) {
           for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
@@ -839,7 +755,7 @@ postContainer.addEventListener(
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
       const postIndexVote = [...postContainer.children].indexOf(post_vote);
-      if (post_data[0].length > 14) {
+      if (post_data[0].length > 9) {
         if (
           post_data[postIndexVote][11] !== null &&
           DateTime.fromFormat(post_data[postIndexVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
@@ -864,7 +780,58 @@ postContainer.addEventListener(
                 document.querySelectorAll(".rating-vote-results")[postIndexVote].style.display = "none";
               }
               document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
-              document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "flex";
+              fetch("process_data.php", {
+                method: "POST",
+                body: JSON.stringify({ request: "user_rating_vote_data", post_id: post_data[postIndexVote][0] }),
+              })
+                .then((res) => res.json())
+                .then((response) => {
+                  let post_element = document.getElementsByClassName("post")[postIndexVote];
+                  if (post_data[postIndexVote].length > 17) {
+                    post_data[postIndexVote].length = 17;
+                  }
+                  post_data[postIndexVote] = post_data[postIndexVote].concat(response);
+                  post_element.querySelectorAll(".rating-choices").forEach((child) => {
+                    if (child.getAttribute("data-value") !== "1") {
+                      child.remove();
+                    }
+                  });
+                  for (let j = 0; j < 20; j++) {
+                    let star_range = (j + 1) * 10;
+                    let max_star_position = star_range - 10;
+                    let star_limit;
+                    if (response[j + 20] !== null) {
+                      star_limit = parseInt(response[j + 20] * 2.0) + max_star_position;
+                    }
+                    if (response[j] !== null) {
+                      if (j !== 0) {
+                        let clone_rating_choices = post_element.getElementsByClassName("rating-choices")[0];
+                        let clone = clone_rating_choices.cloneNode(true);
+                        clone.setAttribute("data-value", j + 1);
+                        post_element
+                          .getElementsByClassName("rating-vote")[0]
+                          .insertBefore(clone, post_element.getElementsByClassName("rating-vote")[0].getElementsByClassName("send-rating-button")[0]);
+                        post_element
+                          .querySelectorAll(".rating-choices")
+                          [j].querySelectorAll(".half-star-container")
+                          .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
+                        post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText = response[j];
+                      } else {
+                        post_element
+                          .querySelectorAll(".rating-choices")
+                          [j].querySelectorAll(".half-star-container")
+                          .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
+                        post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText = response[j];
+                      }
+                      if (response[j + 20] !== null) {
+                        for (let k = max_star_position; k < star_limit; k++) {
+                          post_element.getElementsByClassName("half-star-container")[k].style.color = "#00ffd0";
+                        }
+                      }
+                    }
+                  }
+                  document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "flex";
+                });
             }
           } else if (post_data[postIndexVote][2] == "3") {
             if (window.getComputedStyle(document.getElementsByClassName("approval-vote-container")[postIndexVote]).display === "flex") {
@@ -958,7 +925,7 @@ postContainer.addEventListener(
           generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1], null, null);
         });
     }
-    if (post_data[0].length > 14) {
+    if (post_data[0].length > 9) {
       if (btn_approval_vote) {
         const post_approval_vote = btn_approval_vote.closest(".post");
         const postAprovalVote = [...postContainer.children].indexOf(post_approval_vote);
@@ -1062,7 +1029,7 @@ postContainer.addEventListener(
             post_index.getElementsByClassName("half-star-container")[i].style.color = "#00ffd0";
           }
 
-          let temp_pos = parseInt(rating_choice) + 21;
+          let temp_pos = parseInt(rating_choice) + 36;
           post_data[postIndexStar][temp_pos] = parseFloat(btn_star.value);
         }
       } else if (btn_star_vote) {
@@ -1088,20 +1055,21 @@ postContainer.addEventListener(
           document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
         } else {
           let votes = [];
-          for (let i = 17; i < 22; i++) {
+          for (let i = 17; i < 37; i++) {
             if (post_data[postIndexPostStarVote][i] !== null) {
-              votes.push(post_data[postIndexPostStarVote][i + 5]);
+              votes.push(post_data[postIndexPostStarVote][i + 20]);
             } else {
               votes.push(null);
             }
           }
+          console.log(votes);
           fetch("process_data.php", {
             method: "POST",
             body: JSON.stringify({ request: "rating_vote", votes: votes, post_id: post_data[postIndexPostStarVote][0] }),
           })
             .then((res) => res.json())
             .then((response) => {
-              if (response[10].trim() == "Success") {
+              if (response[40].trim() == "Success") {
                 conn.send(
                   JSON.stringify([
                     "rating_vote",
@@ -1117,6 +1085,36 @@ postContainer.addEventListener(
                     response[7],
                     response[8],
                     response[9],
+                    response[10],
+                    response[11],
+                    response[12],
+                    response[13],
+                    response[14],
+                    response[15],
+                    response[16],
+                    response[17],
+                    response[18],
+                    response[19],
+                    response[20],
+                    response[21],
+                    response[22],
+                    response[23],
+                    response[24],
+                    response[25],
+                    response[26],
+                    response[27],
+                    response[28],
+                    response[29],
+                    response[30],
+                    response[31],
+                    response[32],
+                    response[33],
+                    response[34],
+                    response[35],
+                    response[36],
+                    response[37],
+                    response[38],
+                    response[39],
                   ])
                 );
                 $("#notification-container").fadeIn(300, function () {});
@@ -1630,7 +1628,7 @@ postContainer.addEventListener("mouseout", (e) => {
     let star_range = rating_choice * 10;
     let max_star_position = star_range - 10;
     let star_limit;
-    let temp_pos = parseInt(rating_choice) + 21;
+    let temp_pos = parseInt(rating_choice) + 36;
     let post_index = document.querySelectorAll(".post")[postIndexStar];
 
     if (post_data[postIndexStar][temp_pos] === undefined) {
@@ -1706,15 +1704,21 @@ function get_rating_data(post_number) {
     .then((response) => {
       let choice_names_index;
       let post_element = document.getElementsByClassName("post")[post_number];
+      if (post_data[post_number].length > 17) {
+        post_data[post_number].length = 17;
+      }
+      for (let i = 20; i < 40; i++) {
+        post_data[post_number] = post_data[post_number].concat(response[i]);
+      }
       post_element.querySelectorAll(".rating-choices-results").forEach((child) => {
         if (child.getAttribute("data-value") !== "1") {
           child.remove();
         }
       });
-      for (let i = 0; i < response.length; i++) {
+      for (let i = 0; i < 20; i++) {
         let max_star_position = i * 10;
         let star_limit;
-        if (post_data[0].length > 14) {
+        if (post_data[0].length > 9) {
           choice_names_index = i + 17;
         } else {
           choice_names_index = i + 9;
@@ -1733,7 +1737,7 @@ function get_rating_data(post_number) {
           }
           star_limit = parseInt(average_rating * 2.0) + max_star_position;
         }
-        if (post_data[post_number][choice_names_index] !== null) {
+        if (response[i + 20] !== null) {
           if (choice_names_index !== choice_names_index - i) {
             let clone_rating_choices = post_element.getElementsByClassName("rating-choices-results")[0];
             let clone = clone_rating_choices.cloneNode(true);
@@ -1743,15 +1747,13 @@ function get_rating_data(post_number) {
               .querySelectorAll(".rating-choices-results")
               [i].querySelectorAll(".half-star-container-results")
               .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
-            post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText =
-              post_data[post_number][choice_names_index];
+            post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText = response[i + 20];
           } else {
             post_element
               .querySelectorAll(".rating-choices-results")
               [i].querySelectorAll(".half-star-container-results")
               .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
-            post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText =
-              post_data[post_number][choice_names_index];
+            post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText = response[i + 20];
           }
           if (response[i] !== null) {
             for (let k = max_star_position; k < star_limit; k++) {
@@ -1772,7 +1774,7 @@ function get_approval_data(post_number) {
     .then((response) => {
       let post_element = document.getElementsByClassName("post")[post_number];
       let choice_names_index;
-      if (post_data[0].length > 14) {
+      if (post_data[0].length > 9) {
         choice_names_index = 17;
       } else {
         choice_names_index = 9;
@@ -1880,18 +1882,8 @@ export function reset_poll_data() {
   document.querySelectorAll(".rating-vote").forEach((main_class) => {
     main_class.style.display = "none";
   });
-  document.querySelectorAll(".rating-choices").forEach((main_class) => {
-    if (main_class.getAttribute("data-value") !== "1") {
-      main_class.remove();
-    }
-  });
   document.querySelectorAll(".rating-vote-results").forEach((main_class) => {
     main_class.style.display = "none";
-  });
-  document.querySelectorAll(".rating-choices-results").forEach((main_class) => {
-    if (main_class.getAttribute("data-value") !== "1") {
-      main_class.remove();
-    }
   });
   document.querySelectorAll(".approval-vote-container").forEach((main_class) => {
     main_class.style.display = "none";
@@ -2021,7 +2013,7 @@ export function null_all_styles() {
 //Adds new post data that was received from websocket.
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
-  if (new_post.length > 14) {
+  if (new_post.length > 9) {
     post_data[0][16] = post_data[1][16];
   }
   user_chevron_vote.unshift([false, false]);
@@ -2056,7 +2048,7 @@ export function edit_vote(position, value_yes, value_no, vote_bool) {
 //Adds new vote data that was received from websocket.
 export function edit_rating_vote(position, votes) {
   for (let i = 0; i < votes.length; i++) {
-    post_data[position][i + 22] = votes[i];
+    post_data[position][i + 37] = votes[i];
   }
 }
 

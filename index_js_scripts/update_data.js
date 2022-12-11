@@ -62,18 +62,8 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".rating-vote").forEach((main_class) => {
         main_class.style.display = "none";
       });
-      clone.querySelectorAll(".rating-choices").forEach((main_class) => {
-        if (main_class.getAttribute("data-value") !== "1") {
-          main_class.remove();
-        }
-      });
       clone.querySelectorAll(".rating-vote-results").forEach((main_class) => {
         main_class.style.display = "none";
-      });
-      clone.querySelectorAll(".rating-choices-results").forEach((main_class) => {
-        if (main_class.getAttribute("data-value") !== "1") {
-          main_class.remove();
-        }
       });
       clone.querySelectorAll(".approval-vote-container").forEach((main_class) => {
         main_class.style.display = "none";
@@ -127,36 +117,7 @@ addEventListener("DOMContentLoaded", (event) => {
         new_vote_button.setAttribute("data-dir", "vote");
         new_vote_button.innerText = "Vote";
 
-        if (JSON.parse(e.data)[1][2] == 2 && get_variables()[2] > 14) {
-          let post_element = document.getElementsByClassName("post")[0];
-          for (let j = 0; j < 5; j++) {
-            if (JSON.parse(e.data)[1][j + 17] !== null) {
-              if (j + 17 !== 17) {
-                let clone_rating_choices = post_element.getElementsByClassName("rating-choices")[0];
-                let clone = clone_rating_choices.cloneNode(true);
-                clone.setAttribute("data-value", j + 1);
-                post_element
-                  .getElementsByClassName("rating-vote")[0]
-                  .insertBefore(clone, post_element.getElementsByClassName("rating-vote")[0].getElementsByClassName("send-rating-button")[0]);
-                post_element
-                  .querySelectorAll(".rating-choices")
-                  [j].querySelectorAll(".half-star-container")
-                  .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
-                post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText = JSON.parse(e.data)[1][
-                  j + 17
-                ];
-              } else {
-                post_element
-                  .querySelectorAll(".rating-choices")
-                  [j].querySelectorAll(".half-star-container")
-                  .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
-                post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText = JSON.parse(e.data)[1][
-                  j + 17
-                ];
-              }
-            }
-          }
-        } else if (JSON.parse(e.data)[1][2] == 3 && get_variables()[2] > 14) {
+        if (JSON.parse(e.data)[1][2] == 3 && get_variables()[2] > 9) {
           let post_element = document.getElementsByClassName("post")[0];
           for (let j = 0; j < 5; j++) {
             if (JSON.parse(e.data)[1][j + 17] !== null) {
@@ -200,9 +161,9 @@ addEventListener("DOMContentLoaded", (event) => {
         clone.getElementsByClassName("parent_of_check_yes_no")[0].children[0].style.color = "#b5b5b5";
       }
 
-      if (get_variables()[2] > 14) {
+      if (get_variables()[2] > 9) {
         add_new_post(JSON.parse(e.data)[1]);
-      } else if (get_variables()[2] <= 14) {
+      } else if (get_variables()[2] <= 9) {
         add_new_post([
           JSON.parse(e.data)[1][0],
           JSON.parse(e.data)[1][1],
@@ -322,7 +283,7 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
-            if (get_variables()[2] > 14) {
+            if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                 edit_vote(i, new_value_yes, new_value_no, [false, false]);
@@ -342,7 +303,7 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
-            if (get_variables()[2] > 14) {
+            if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
@@ -363,7 +324,7 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
-            if (get_variables()[2] > 14) {
+            if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
                 edit_vote(i, new_value_yes, new_value_no, [true, false]);
@@ -383,7 +344,7 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
-            if (get_variables()[2] > 14) {
+            if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
                 edit_vote(i, new_value_yes, new_value_no, [false, false]);
@@ -403,7 +364,7 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
-            if (get_variables()[2] > 14) {
+            if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
@@ -424,7 +385,7 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
-            if (get_variables()[2] > 14) {
+            if (get_variables()[2] > 9) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
                 edit_vote(i, new_value_yes, new_value_no, [false, true]);
@@ -438,7 +399,7 @@ addEventListener("DOMContentLoaded", (event) => {
     } else if (JSON.parse(e.data)[0] === "bookmark_on" && window.getComputedStyle(document.getElementById("all-filters")).display !== "none") {
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
-          if (get_variables()[2] > 14 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+          if (get_variables()[2] > 9 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].className = "fa-solid fa-bookmark";
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = "#98d9ff";
             edit_bookmark(i, 1);
@@ -448,7 +409,7 @@ addEventListener("DOMContentLoaded", (event) => {
     } else if (JSON.parse(e.data)[0] === "bookmark_off" && window.getComputedStyle(document.getElementById("all-filters")).display !== "none") {
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
-          if (get_variables()[2] > 14 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+          if (get_variables()[2] > 9 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].className = "fa-regular fa-bookmark";
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = null;
             edit_bookmark(i, 0);
@@ -457,7 +418,7 @@ addEventListener("DOMContentLoaded", (event) => {
       }
     } else if (JSON.parse(e.data)[0] === "admin_analytics_map") {
       admin_map_bool = JSON.parse(e.data)[2];
-      if (get_variables()[2] > 14) {
+      if (get_variables()[2] > 9) {
         if (JSON.parse(e.data)[1] !== get_variables()[3][0][16] && get_variables()[4][1] !== undefined) {
           conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
         }
@@ -473,7 +434,7 @@ addEventListener("DOMContentLoaded", (event) => {
         }
       }
     } else if (JSON.parse(e.data)[0] === "new_online_user") {
-      if (get_variables()[2] > 14) {
+      if (get_variables()[2] > 9) {
         if (admin_map_bool === true) {
           make_admin_analytics_map(JSON.parse(e.data)[1], JSON.parse(e.data)[2]);
         }
@@ -485,14 +446,15 @@ addEventListener("DOMContentLoaded", (event) => {
     } else if (JSON.parse(e.data)[0] === "admin_map_status") {
       admin_map_bool = JSON.parse(e.data)[1];
     } else if (JSON.parse(e.data)[0] === "rating_vote") {
-      let average_ratings_array = [
-        JSON.parse(e.data)[8],
-        JSON.parse(e.data)[9],
-        JSON.parse(e.data)[10],
-        JSON.parse(e.data)[11],
-        JSON.parse(e.data)[12],
-      ];
-      let ratings_array = [JSON.parse(e.data)[3], JSON.parse(e.data)[4], JSON.parse(e.data)[5], JSON.parse(e.data)[6], JSON.parse(e.data)[7]];
+      let average_ratings_array = [];
+      let ratings_array = [];
+      for (let i = 3; i < 43; i++) {
+        if (i < 23) {
+          ratings_array.push(JSON.parse(e.data)[i]);
+        } else if (i >= 23) {
+          average_ratings_array.push(JSON.parse(e.data)[i]);
+        }
+      }
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           if (window.getComputedStyle(document.getElementsByClassName("rating-vote-results")[i]).display === "flex") {
@@ -503,8 +465,8 @@ addEventListener("DOMContentLoaded", (event) => {
                 child.remove();
               }
             });
-            for (let j = 0; j < 5; j++) {
-              if (get_variables()[2] > 14) {
+            for (let j = 0; j < 20; j++) {
+              if (get_variables()[2] > 9) {
                 choice_names_index = j + 17;
               } else {
                 choice_names_index = j + 9;
@@ -553,7 +515,7 @@ addEventListener("DOMContentLoaded", (event) => {
               }
             }
           }
-          if (get_variables()[2] > 14) {
+          if (get_variables()[2] > 9) {
             if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
               let post_element = document.getElementsByClassName("post")[i];
               post_element.querySelectorAll(".rating-choices").forEach((child) => {
@@ -561,7 +523,7 @@ addEventListener("DOMContentLoaded", (event) => {
                   child.remove();
                 }
               });
-              for (let j = 0; j < 5; j++) {
+              for (let j = 0; j < 20; j++) {
                 let max_star_position = j * 10;
                 let star_limit;
                 if (ratings_array[j] !== null) {
@@ -610,7 +572,7 @@ addEventListener("DOMContentLoaded", (event) => {
           if (window.getComputedStyle(document.getElementsByClassName("approval-vote-results")[i]).display === "flex") {
             let post_element = document.getElementsByClassName("post")[i];
             let choice_names_index;
-            if (get_variables()[2] > 14) {
+            if (get_variables()[2] > 9) {
               choice_names_index = 17;
             } else {
               choice_names_index = 9;
@@ -646,7 +608,7 @@ addEventListener("DOMContentLoaded", (event) => {
               }
             }
           }
-          if (get_variables()[2] > 14) {
+          if (get_variables()[2] > 9) {
             if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
               for (let j = 0; j < 5; j++) {
                 if (get_variables()[3][i][j + 17] !== null) {
