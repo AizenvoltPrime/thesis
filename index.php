@@ -78,7 +78,7 @@ require_once "new_config.php";
         <div class="category"><i class="fa-solid fa-coins"></i>Economy</div>
         <div class="category"><i class="fa-solid fa-people-roof"></i>Finance</div>
         <div class="category"><i class="fa-solid fa-cart-shopping"></i>Commerce</div>
-        <div class="category"><i class="fa-solid fa-bus"></i>Transportation</div>
+        <div class="category"><i class="fa-solid fa-bus"></i>Transportation and Travel</div>
         <div class="category"><i class="fa-solid fa-landmark"></i>Politics</div>
         <div class="category"><i class="fa-solid fa-church"></i>Religion</div>
         <div class="category"><i class="fa-solid fa-graduation-cap"></i>Education</div>
@@ -172,6 +172,21 @@ require_once "new_config.php";
       <option value="1">3</option>
       <option value="2">4</option>
       <option value="3">5</option>
+      <option value="4">6</option>
+      <option value="5">7</option>
+      <option value="6">8</option>
+      <option value="7">9</option>
+      <option value="8">10</option>
+      <option value="9">11</option>
+      <option value="10">12</option>
+      <option value="11">13</option>
+      <option value="12">14</option>
+      <option value="13">15</option>
+      <option value="14">16</option>
+      <option value="15">17</option>
+      <option value="16">18</option>
+      <option value="17">19</option>
+      <option value="18">20</option>
     </select>
   </div>
   <div id="warning-no-poll-choice-number-selected" style="display:none;">You must select a number</div>
@@ -229,7 +244,7 @@ require_once "new_config.php";
       <option value="3">Economy</option>
       <option value="4">Finance</option>
       <option value="5">Commerce</option>
-      <option value="6">Transportation</option>
+      <option value="6">Transportation and Travel</option>
       <option value="7">Politics</option>
       <option value="8">Religion</option>
       <option value="9">Education</option>

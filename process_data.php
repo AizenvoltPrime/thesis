@@ -138,20 +138,28 @@ if ($data['request'] == "request_username") {
 
     if (count($data['poll_choices_options']) > 0) {
         $poll_choices_options = $data['poll_choices_options'];
-        if (count($data['poll_choices_options']) == 3) {
-            array_push($poll_choices_options, null, null);
-        } else if (count($data['poll_choices_options']) == 4) {
-            array_push($poll_choices_options, null);
+        for ($i = 0; $i < 20; $i++) {
+            if ($i + 1 > count($data['poll_choices_options'])) {
+                array_push($poll_choices_options, null);
+            }
         }
         $stmt = $conn->prepare("INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date, event_lat, event_long, event_radius,
-        choice_one_name, choice_two_name, choice_three_name, choice_four_name, choice_five_name) 
+        choice_one_name, choice_two_name, choice_three_name, choice_four_name, choice_five_name, choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,
+        choice_ten_name, choice_eleven_name, choice_twelve_name, choice_thirteen_name, choice_fourteen_name, choice_fifteen_name, choice_sixteen_name, 
+        choice_seventeen_name, choice_eighteen_name, choice_nineteen_name, choice_twenty_name) 
         VALUES (:users_id, :poll_type, :post_category, :post_text, :post_date, :post_expiration_date, :event_lat, :event_long, :event_radius, :choice_one, :choice_two,
-        :choice_three, :choice_four, :choice_five)");
+        :choice_three, :choice_four, :choice_five, :choice_six, :choice_seven, :choice_eight, :choice_nine, :choice_ten, :choice_eleven, :choice_twelve, :choice_thirteen,
+        :choice_fourteen, :choice_fifteen, :choice_sixteen, :choice_seventeen, :choice_eighteen, :choice_nineteen, :choice_twenty)");
         $stmt->execute([
             ":users_id" => $_SESSION["id"], ":poll_type" => $param_poll_type, ":post_category" => $data['post_category'], ":post_text" => $post_text,
             ":post_date" => $param_date, ":post_expiration_date" => $data['time_limiter'], ":event_lat" => $data['event_lat'], ":event_long" => $data['event_long'],
             ":event_radius" => $data['event_rad'], ":choice_one" => $poll_choices_options[0], ":choice_two" => $poll_choices_options[1],
             ":choice_three" => $poll_choices_options[2], ":choice_four" => $poll_choices_options[3], ":choice_five" => $poll_choices_options[4],
+            ":choice_six" => $poll_choices_options[5], ":choice_seven" => $poll_choices_options[6], ":choice_eight" => $poll_choices_options[7],
+            ":choice_nine" => $poll_choices_options[8], ":choice_ten" => $poll_choices_options[9], ":choice_eleven" => $poll_choices_options[10],
+            ":choice_twelve" => $poll_choices_options[11], ":choice_thirteen" => $poll_choices_options[12], ":choice_fourteen" => $poll_choices_options[13],
+            ":choice_fifteen" => $poll_choices_options[14], ":choice_sixteen" => $poll_choices_options[15], ":choice_seventeen" => $poll_choices_options[16],
+            ":choice_eighteen" => $poll_choices_options[17], ":choice_nineteen" => $poll_choices_options[18], ":choice_twenty" => $poll_choices_options[19]
         ]);
     } else {
         $stmt = $conn->prepare("INSERT INTO posts (user_id, poll_type, post_category, post_text, post_date, post_expiration_date, event_lat, event_long, event_radius) 
@@ -330,18 +338,7 @@ if ($data['request'] == "request_username") {
                     COALESCE((SELECT yes_no.answer_no FROM yes_no WHERE yes_no.user_id=:id AND yes_no.post_id=posts.post_number),0) AS user_no_answer,
                     COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) AS user_bookmark,
                     posts.post_expiration_date AS post_expiration_date, posts.event_lat AS event_lat, posts.event_long AS event_long, posts.event_radius AS event_radius,
-                    (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result, choice_one_name, choice_two_name, choice_three_name, choice_four_name, 
-                    choice_five_name, 
-                    COALESCE((SELECT rating.choice_one FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_one,
-                    COALESCE((SELECT rating.choice_two FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_two,
-                    COALESCE((SELECT rating.choice_three FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_three,
-                    COALESCE((SELECT rating.choice_four FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_four,
-                    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=posts.post_number),NULL) AS rating_choice_five,
-                    COALESCE((SELECT approval.choice_one FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_one,
-                    COALESCE((SELECT approval.choice_two FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_two,
-                    COALESCE((SELECT approval.choice_three FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_three,
-                    COALESCE((SELECT approval.choice_four FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_four,
-                    COALESCE((SELECT approval.choice_five FROM approval WHERE approval.user_id=:id AND approval.post_id=posts.post_number),NULL) AS approval_choice_five
+                    (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number join rating on posts.post_number = rating.post_id
@@ -433,10 +430,7 @@ if ($data['request'] == "request_username") {
             $tmp = array(
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"],
                 $row["post_date"], $row["user_chevron_result"], $row["user_yes_answer"], $row["user_no_answer"], $row["user_bookmark"], $row["post_expiration_date"],
-                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"], $row["choice_one_name"], $row["choice_two_name"],
-                $row["choice_three_name"], $row["choice_four_name"], $row["choice_five_name"], $row["rating_choice_one"], $row["rating_choice_two"], $row["rating_choice_three"],
-                $row["rating_choice_four"], $row["rating_choice_five"],
-                $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"], $row["approval_choice_five"]
+                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"]
             );
             array_push($post_data, $tmp);
         }
@@ -761,6 +755,52 @@ if ($data['request'] == "request_username") {
     curl_close($ch);
 
     echo json_encode($data);
+} else if ($data['request'] == "user_rating_vote_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+    require_once "new_config.php";
+
+    $stmt = $conn->prepare("SELECT choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
+    choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,choice_ten_name,
+    choice_eleven_name, choice_twelve_name, choice_thirteen_name, choice_fourteen_name,choice_fifteen_name,
+    choice_sixteen_name, choice_seventeen_name, choice_eighteen_name, choice_nineteen_name,choice_twenty_name,
+    COALESCE((SELECT rating.choice_one FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_one,
+    COALESCE((SELECT rating.choice_two FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_two,
+    COALESCE((SELECT rating.choice_three FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_three,
+    COALESCE((SELECT rating.choice_four FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_four,
+    COALESCE((SELECT rating.choice_five FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_five,
+    COALESCE((SELECT rating.choice_six FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_six,
+    COALESCE((SELECT rating.choice_seven FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_seven,
+    COALESCE((SELECT rating.choice_eight FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_eight,
+    COALESCE((SELECT rating.choice_nine FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_nine,
+    COALESCE((SELECT rating.choice_ten FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_ten,
+    COALESCE((SELECT rating.choice_eleven FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_eleven,
+    COALESCE((SELECT rating.choice_twelve FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_twelve,
+    COALESCE((SELECT rating.choice_thirteen FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_thirteen,
+    COALESCE((SELECT rating.choice_fourteen FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_fourteen,
+    COALESCE((SELECT rating.choice_fifteen FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_fifteen,
+    COALESCE((SELECT rating.choice_sixteen FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_sixteen,
+    COALESCE((SELECT rating.choice_seventeen FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_seventeen,
+    COALESCE((SELECT rating.choice_eighteen FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_eighteen,
+    COALESCE((SELECT rating.choice_nineteen FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_nineteen,
+    COALESCE((SELECT rating.choice_twenty FROM rating WHERE rating.user_id=:id AND rating.post_id=:post_id),NULL) AS rating_choice_twenty
+    FROM posts INNER JOIN rating ON posts.post_number=rating.post_id WHERE posts.post_number=:post_id");
+    $stmt->execute([":id" => $_SESSION["id"], ":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $tmp = array(
+                $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"],
+                $row["choice_five_name"], $row["choice_six_name"], $row["choice_seven_name"], $row["choice_eight_name"], $row["choice_nine_name"],
+                $row["choice_ten_name"], $row["choice_eleven_name"], $row["choice_twelve_name"], $row["choice_thirteen_name"], $row["choice_fourteen_name"],
+                $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
+                $row["choice_twenty_name"],
+                $row["rating_choice_one"], $row["rating_choice_two"], $row["rating_choice_three"], $row["rating_choice_four"],
+                $row["rating_choice_five"], $row["rating_choice_six"], $row["rating_choice_seven"], $row["rating_choice_eight"], $row["rating_choice_nine"],
+                $row["rating_choice_ten"], $row["rating_choice_eleven"], $row["rating_choice_twelve"], $row["rating_choice_thirteen"], $row["rating_choice_fourteen"],
+                $row["rating_choice_fifteen"], $row["rating_choice_sixteen"], $row["rating_choice_seventeen"], $row["rating_choice_eighteen"], $row["rating_choice_nineteen"],
+                $row["rating_choice_twenty"],
+            );
+        }
+    }
+    echo json_encode($tmp);
 } else if ($data['request'] == "rating_vote" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
     require_once "new_config.php";
 
@@ -768,28 +808,54 @@ if ($data['request'] == "request_username") {
     $stmt->execute([":id" => $_SESSION["id"]]);
     if ($stmt->rowCount() > 0) {
         $stmt = $conn->prepare("UPDATE rating SET choice_one = :choice_one, choice_two = :choice_two, choice_three = :choice_three,
-        choice_four = :choice_four, choice_five = :choice_five WHERE post_id=:post_id AND user_id=:id");
+        choice_four = :choice_four, choice_five = :choice_five, choice_six = :choice_six, choice_seven = :choice_seven, choice_eight = :choice_eight,
+        choice_nine = :choice_nine, choice_ten = :choice_ten, choice_eleven = :choice_eleven, choice_twelve = :choice_twelve, choice_thirteen = :choice_thirteen,
+        choice_fourteen = :choice_fourteen, choice_fifteen = :choice_fifteen, choice_sixteen = :choice_sixteen, choice_seventeen = :choice_seventeen, 
+        choice_eighteen = :choice_eighteen, choice_nineteen = :choice_nineteen, choice_twenty = :choice_twenty
+        WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([
             ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
-            ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
+            ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5],
+            ":choice_seven" => $data["votes"][6], ":choice_eight" => $data["votes"][7], ":choice_nine" => $data["votes"][8], ":choice_ten" => $data["votes"][9],
+            ":choice_eleven" => $data["votes"][10], ":choice_twelve" => $data["votes"][11], ":choice_thirteen" => $data["votes"][12], ":choice_fourteen" => $data["votes"][13],
+            ":choice_fifteen" => $data["votes"][14], ":choice_sixteen" => $data["votes"][15], ":choice_seventeen" => $data["votes"][16], ":choice_eighteen" => $data["votes"][17],
+            ":choice_nineteen" => $data["votes"][18], ":choice_twenty" => $data["votes"][19]
         ]);
     }
-    $stmt = $conn->prepare("INSERT IGNORE INTO rating(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five) 
-            VALUES(:post_id,:id,2,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five)");
+    $stmt = $conn->prepare("INSERT IGNORE INTO rating(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five,
+    choice_six,choice_seven,choice_eight,choice_nine,choice_ten,choice_eleven,choice_twelve,choice_thirteen,choice_fourteen,choice_fifteen,choice_sixteen,choice_seventeen,
+    choice_eighteen,choice_nineteen,choice_twenty) 
+            VALUES(:post_id,:id,2,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five,:choice_six,:choice_seven,:choice_eight,:choice_nine,:choice_ten,
+            :choice_eleven,:choice_twelve,:choice_thirteen,:choice_fourteen,:choice_fifteen,:choice_sixteen,:choice_seventeen,
+            :choice_eighteen,:choice_nineteen,:choice_twenty)");
     $stmt->execute([
         ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
-        ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
+        ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5],
+        ":choice_seven" => $data["votes"][6], ":choice_eight" => $data["votes"][7], ":choice_nine" => $data["votes"][8], ":choice_ten" => $data["votes"][9],
+        ":choice_eleven" => $data["votes"][10], ":choice_twelve" => $data["votes"][11], ":choice_thirteen" => $data["votes"][12], ":choice_fourteen" => $data["votes"][13],
+        ":choice_fifteen" => $data["votes"][14], ":choice_sixteen" => $data["votes"][15], ":choice_seventeen" => $data["votes"][16], ":choice_eighteen" => $data["votes"][17],
+        ":choice_nineteen" => $data["votes"][18], ":choice_twenty" => $data["votes"][19]
     ]);
 
-    $stmt = $conn->prepare("SELECT rating_choice_one_avg,rating_choice_two_avg,rating_choice_three_avg,rating_choice_four_avg,rating_choice_five_avg 
-        FROM posts_rating_info WHERE rating_post_id=:post_id");
+    $stmt = $conn->prepare("SELECT rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg, rating_choice_four_avg, rating_choice_five_avg,
+    rating_choice_six_avg, rating_choice_seven_avg, rating_choice_eight_avg, rating_choice_nine_avg, rating_choice_ten_avg, rating_choice_eleven_avg,
+    rating_choice_twelve_avg, rating_choice_thirteen_avg, rating_choice_fourteen_avg, rating_choice_fifteen_avg, rating_choice_sixteen_avg, rating_choice_seventeen_avg,
+    rating_choice_eighteen_avg, rating_choice_nineteen_avg, rating_choice_twenty_avg
+    FROM posts_rating_info WHERE rating_post_id=:post_id");
     $stmt->execute([":post_id" => $data["post_id"]]);
     if ($stmt->rowCount() > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $tmp = array(
-                $data["votes"][0], $data["votes"][1], $data["votes"][2], $data["votes"][3], $data["votes"][4], $row["rating_choice_one_avg"],
-                $row["rating_choice_two_avg"], $row["rating_choice_three_avg"], $row["rating_choice_four_avg"],
-                $row["rating_choice_five_avg"], "Success"
+                $data["votes"][0], $data["votes"][1], $data["votes"][2], $data["votes"][3], $data["votes"][4],
+                $data["votes"][5], $data["votes"][6], $data["votes"][7], $data["votes"][8], $data["votes"][9],
+                $data["votes"][10], $data["votes"][11], $data["votes"][12], $data["votes"][13], $data["votes"][14],
+                $data["votes"][15], $data["votes"][16], $data["votes"][17], $data["votes"][18], $data["votes"][19],
+                $row["rating_choice_one_avg"], $row["rating_choice_two_avg"], $row["rating_choice_three_avg"], $row["rating_choice_four_avg"],
+                $row["rating_choice_five_avg"], $row["rating_choice_six_avg"], $row["rating_choice_seven_avg"], $row["rating_choice_eight_avg"],
+                $row["rating_choice_nine_avg"], $row["rating_choice_ten_avg"], $row["rating_choice_eleven_avg"], $row["rating_choice_twelve_avg"],
+                $row["rating_choice_thirteen_avg"], $row["rating_choice_fourteen_avg"], $row["rating_choice_fifteen_avg"], $row["rating_choice_sixteen_avg"],
+                $row["rating_choice_seventeen_avg"], $row["rating_choice_eighteen_avg"], $row["rating_choice_nineteen_avg"], $row["rating_choice_twenty_avg"],
+                "Success"
             );
         }
     }
@@ -797,14 +863,28 @@ if ($data['request'] == "request_username") {
 } else if ($data['request'] == "average_rating_data") {
     require_once "new_config.php";
 
-    $stmt = $conn->prepare("SELECT rating_choice_one_avg,rating_choice_two_avg,rating_choice_three_avg,rating_choice_four_avg,rating_choice_five_avg 
-    FROM posts_rating_info WHERE rating_post_id=:post_id");
+    $stmt = $conn->prepare("SELECT rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg, rating_choice_four_avg, rating_choice_five_avg,
+    rating_choice_six_avg, rating_choice_seven_avg, rating_choice_eight_avg, rating_choice_nine_avg, rating_choice_ten_avg, rating_choice_eleven_avg,
+    rating_choice_twelve_avg, rating_choice_thirteen_avg, rating_choice_fourteen_avg, rating_choice_fifteen_avg, rating_choice_sixteen_avg, rating_choice_seventeen_avg,
+    rating_choice_eighteen_avg, rating_choice_nineteen_avg, rating_choice_twenty_avg,
+    choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name, choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,
+    choice_ten_name, choice_eleven_name, choice_twelve_name, choice_thirteen_name, choice_fourteen_name,choice_fifteen_name, choice_sixteen_name, choice_seventeen_name, 
+    choice_eighteen_name, choice_nineteen_name,choice_twenty_name
+    FROM posts_rating_info INNER JOIN posts ON posts_rating_info.rating_post_id=posts.post_number WHERE rating_post_id=:post_id");
     $stmt->execute([":post_id" => $data["post_id"]]);
     if ($stmt->rowCount() > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $tmp = array(
                 $row["rating_choice_one_avg"], $row["rating_choice_two_avg"], $row["rating_choice_three_avg"], $row["rating_choice_four_avg"],
-                $row["rating_choice_five_avg"]
+                $row["rating_choice_five_avg"], $row["rating_choice_six_avg"], $row["rating_choice_seven_avg"], $row["rating_choice_eight_avg"],
+                $row["rating_choice_nine_avg"], $row["rating_choice_ten_avg"], $row["rating_choice_eleven_avg"], $row["rating_choice_twelve_avg"],
+                $row["rating_choice_thirteen_avg"], $row["rating_choice_fourteen_avg"], $row["rating_choice_fifteen_avg"], $row["rating_choice_sixteen_avg"],
+                $row["rating_choice_seventeen_avg"], $row["rating_choice_eighteen_avg"], $row["rating_choice_nineteen_avg"], $row["rating_choice_twenty_avg"],
+                $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"],
+                $row["choice_five_name"], $row["choice_six_name"], $row["choice_seven_name"], $row["choice_eight_name"], $row["choice_nine_name"],
+                $row["choice_ten_name"], $row["choice_eleven_name"], $row["choice_twelve_name"], $row["choice_thirteen_name"], $row["choice_fourteen_name"],
+                $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
+                $row["choice_twenty_name"]
             );
         }
     }

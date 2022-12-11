@@ -30,12 +30,22 @@ join yes_no ON posts.post_number = yes_no.post_id GROUP BY posts.post_number ORD
 
 //posts_rating_info
 CREATE VIEW posts_rating_info AS SELECT rating.post_id AS rating_post_id, AVG(rating.choice_one) AS rating_choice_one_avg,AVG(rating.choice_two) AS rating_choice_two_avg, 
-AVG(rating.choice_three) AS rating_choice_three_avg, AVG(rating.choice_four) AS rating_choice_four_avg,AVG(rating.choice_five) AS rating_choice_five_avg 
+AVG(rating.choice_three) AS rating_choice_three_avg, AVG(rating.choice_four) AS rating_choice_four_avg,AVG(rating.choice_five) AS rating_choice_five_avg,
+AVG(rating.choice_six) AS rating_choice_six_avg, AVG(rating.choice_seven) AS rating_choice_seven_avg, AVG(rating.choice_eight) AS rating_choice_eight_avg,
+AVG(rating.choice_nine) AS rating_choice_nine_avg, AVG(rating.choice_ten) AS rating_choice_ten_avg, AVG(rating.choice_eleven) AS rating_choice_eleven_avg,
+AVG(rating.choice_twelve) AS rating_choice_twelve_avg, AVG(rating.choice_thirteen) AS rating_choice_thirteen_avg, AVG(rating.choice_fourteen) AS rating_choice_fourteen_avg,
+AVG(rating.choice_fifteen) AS rating_choice_fifteen_avg, AVG(rating.choice_sixteen) AS rating_choice_sixteen_avg, AVG(rating.choice_seventeen) AS rating_choice_seventeen_avg,
+AVG(rating.choice_eighteen) AS rating_choice_eighteen_avg, AVG(rating.choice_nineteen) AS rating_choice_nineteen_avg, AVG(rating.choice_twenty) AS rating_choice_twenty_avg
 FROM rating GROUP BY rating_post_id;
 
 //posts_approval_info
 CREATE VIEW posts_approval_info AS SELECT approval.post_id AS approval_post_id, SUM(approval.choice_one) AS approval_choice_one,SUM(approval.choice_two) AS approval_choice_two, 
-SUM(approval.choice_three) AS approval_choice_three, SUM(approval.choice_four) AS approval_choice_four,SUM(approval.choice_five) AS approval_choice_five 
+SUM(approval.choice_three) AS approval_choice_three, SUM(approval.choice_four) AS approval_choice_four,SUM(approval.choice_five) AS approval_choice_five,
+SUM(approval.choice_six) AS approval_choice_six, SUM(approval.choice_seven) AS approval_choice_seven,SUM(approval.choice_eight) AS approval_choice_eight,
+SUM(approval.choice_nine) AS approval_choice_nine, SUM(approval.choice_ten) AS approval_choice_ten,SUM(approval.choice_eleven) AS approval_choice_eleven,
+SUM(approval.choice_twelve) AS approval_choice_twelve, SUM(approval.choice_thirteen) AS approval_choice_thirteen, SUM(approval.choice_fourteen) AS approval_choice_fourteen,
+SUM(approval.choice_fifteen) AS approval_choice_fifteen,SUM(approval.choice_sixteen) AS approval_choice_sixteen, SUM(approval.choice_seventeen) AS approval_choice_seventeen,
+SUM(approval.choice_eighteen) AS approval_choice_eighteen, SUM(approval.choice_nineteen) AS approval_choice_nineteen, SUM(approval.choice_twenty) AS approval_choice_twenty
 FROM approval GROUP BY approval_post_id;
 
 //user sql request
@@ -73,12 +83,10 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 ΕΠΟΜΕΝΑ TASK:
 
 - ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
-- Να μεγαλώσω τα input boxes των inputs και χρειάζονται descriptions που να ενημερώνουν για το τι μπορεί να γράψει κανείς και μέχρι πόσα σύμβολα
 - Να δώσω τη δυνατότητα delete post.
 - 20 choices
 - Να κατεβάζει τα αποτελέσματα σαν xls
 - Ταξινόμηση στο approval με βάση το πλήθος των ψήφων
-- Να μπορούν να επιλεγούν παραπάνω από μία κατηγορίες για κάθε post.
 - Map που να δείχνει το event location όπου υπάρχει.
 
 "wss://crowdsource.gamerwelfare.com"
