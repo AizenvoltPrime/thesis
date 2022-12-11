@@ -488,35 +488,6 @@ export function generate_posts(
           document.getElementsByClassName("score")[0].innerText = post_data[i][5];
           document.getElementsByClassName("post-time")[0].innerText = post_time;
           document.getElementsByClassName("post-time-detailed")[0].innerText = post_data[i][6];
-
-          if (post_data[i][2] == 3 && post_data[0].length > 9) {
-            for (let j = 17; j < 22; j++) {
-              if (post_data[i][j] !== null) {
-                if (j > 19) {
-                  let clone_approval_choices = document.getElementsByClassName("post")[0].getElementsByClassName("approval-choice")[0];
-                  let clone = clone_approval_choices.cloneNode(true);
-                  clone.setAttribute("value", j - 16);
-                  document.getElementsByClassName("post")[0].getElementsByClassName("approval-choices-container")[0].appendChild(clone);
-                  document
-                    .getElementsByClassName("post")[0]
-                    .querySelectorAll(".approval-choices-container")[0]
-                    .getElementsByClassName("approval-choice")[j - 17].innerText = post_data[i][j];
-                } else if (j <= 19) {
-                  document
-                    .getElementsByClassName("post")[0]
-                    .querySelectorAll(".approval-choices-container")[0]
-                    .getElementsByClassName("approval-choice")[j - 17].innerText = post_data[i][j];
-                }
-                if (post_data[i][j + 10] === "1") {
-                  document.getElementsByClassName("post")[0].getElementsByClassName("approval-choice")[j - 17].style.border = "0.1em solid #cc0000";
-                  document.getElementsByClassName("post")[0].getElementsByClassName("approval-choice")[j - 17].style.color = "#cc0000";
-                } else if (post_data[i][j + 10] === "0") {
-                  document.getElementsByClassName("post")[0].getElementsByClassName("approval-choice")[j - 17].style.border = "0.1em solid #1a1a1b";
-                  document.getElementsByClassName("post")[0].getElementsByClassName("approval-choice")[j - 17].style.color = "#f3f3f3";
-                }
-              }
-            }
-          }
         } else if (i > 0) {
           node[i - 1] = document.getElementsByClassName("post")[0];
           clone[i - 1] = node[i - 1].cloneNode(true);
@@ -526,40 +497,6 @@ export function generate_posts(
           clone[i - 1].querySelectorAll(".post-time")[0].innerText = post_time;
           clone[i - 1].querySelectorAll(".post-time-detailed")[0].innerText = post_data[i][6];
           document.getElementById("posts-container").appendChild(clone[i - 1]);
-
-          if (post_data[i][2] == 3 && post_data[0].length > 9) {
-            clone[i - 1].querySelectorAll(".approval-choice").forEach((child) => {
-              if (child.getAttribute("value") !== "1" && child.getAttribute("value") !== "2" && child.getAttribute("value") !== "3") {
-                child.remove();
-              }
-            });
-            for (let j = 17; j < 22; j++) {
-              if (post_data[i][j] !== null) {
-                if (j > 19) {
-                  let clone_approval_choices = document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[0];
-                  let clone = clone_approval_choices.cloneNode(true);
-                  clone.setAttribute("value", j - 16);
-                  document.getElementsByClassName("post")[i].getElementsByClassName("approval-choices-container")[0].appendChild(clone);
-                  document
-                    .getElementsByClassName("post")
-                    [i].querySelectorAll(".approval-choices-container")[0]
-                    .getElementsByClassName("approval-choice")[j - 17].innerText = post_data[i][j];
-                } else if (j <= 19) {
-                  document
-                    .getElementsByClassName("post")
-                    [i].querySelectorAll(".approval-choices-container")[0]
-                    .getElementsByClassName("approval-choice")[j - 17].innerText = post_data[i][j];
-                }
-                if (post_data[i][j + 10] === "1") {
-                  document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j - 17].style.border = "0.1em solid #cc0000";
-                  document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j - 17].style.color = "#cc0000";
-                } else if (post_data[i][j + 10] === "0") {
-                  document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j - 17].style.border = "0.1em solid #1a1a1b";
-                  document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j - 17].style.color = "#f3f3f3";
-                }
-              }
-            }
-          }
         }
       }
       if (post_time !== undefined && post_time !== null) {
@@ -859,6 +796,45 @@ postContainer.addEventListener(
                   document.getElementsByClassName("post")[postIndexVote].getElementsByClassName("approval-choice")[i].style.color = "#cc0000";
                 }
               }
+              fetch("process_data.php", {
+                method: "POST",
+                body: JSON.stringify({ request: "user_approval_vote_data", post_id: post_data[postIndexVote][0] }),
+              })
+                .then((res) => res.json())
+                .then((response) => {
+                  let post_element = document.getElementsByClassName("post")[postIndexVote];
+                  if (post_data[postIndexVote].length > 17) {
+                    post_data[postIndexVote].length = 17;
+                  }
+                  post_data[postIndexVote] = post_data[postIndexVote].concat(response);
+                  post_element.querySelectorAll(".approval-choice").forEach((child) => {
+                    if (child.getAttribute("value") !== "1" && child.getAttribute("value") !== "2" && child.getAttribute("value") !== "3") {
+                      child.remove();
+                    }
+                  });
+                  for (let j = 0; j < 20; j++) {
+                    if (response[j] !== null) {
+                      if (j > 2) {
+                        let clone_approval_choices = post_element.getElementsByClassName("approval-choice")[0];
+                        let clone = clone_approval_choices.cloneNode(true);
+                        clone.setAttribute("value", j + 1);
+                        post_element.getElementsByClassName("approval-choices-container")[0].appendChild(clone);
+                        post_element.querySelectorAll(".approval-choices-container")[0].getElementsByClassName("approval-choice")[j].innerText =
+                          response[j];
+                      } else if (j <= 2) {
+                        post_element.querySelectorAll(".approval-choices-container")[0].getElementsByClassName("approval-choice")[j].innerText =
+                          response[j];
+                      }
+                      if (response[j + 20] === "1") {
+                        post_element.getElementsByClassName("approval-choice")[j].style.border = "0.1em solid #cc0000";
+                        post_element.getElementsByClassName("approval-choice")[j].style.color = "#cc0000";
+                      } else if (response[j + 20] === "0") {
+                        post_element.getElementsByClassName("approval-choice")[j].style.border = "0.1em solid #1a1a1b";
+                        post_element.getElementsByClassName("approval-choice")[j].style.color = "#f3f3f3";
+                      }
+                    }
+                  }
+                });
             }
           }
         }
@@ -956,7 +932,7 @@ postContainer.addEventListener(
         const post_approval_send = btn_approval_send.closest(".post");
         const postIndexApprovalSend = [...postContainer.children].indexOf(post_approval_send);
         let votes = [];
-        for (let i = 17; i < 22; i++) {
+        for (let i = 17; i < 37; i++) {
           if (
             post_data[postIndexApprovalSend][i] !== null &&
             window.getComputedStyle(
@@ -964,10 +940,10 @@ postContainer.addEventListener(
             ).color === "rgb(204, 0, 0)"
           ) {
             votes.push(1);
-            post_data[postIndexApprovalSend][i + 10] = "1";
+            post_data[postIndexApprovalSend][i + 20] = "1";
           } else if (post_data[postIndexApprovalSend][i] !== null) {
             votes.push(0);
-            post_data[postIndexApprovalSend][i + 10] = "0";
+            post_data[postIndexApprovalSend][i + 20] = "0";
           } else {
             votes.push(null);
           }
@@ -978,24 +954,10 @@ postContainer.addEventListener(
         })
           .then((res) => res.json())
           .then((response) => {
-            if (response[10].trim() == "Success") {
-              conn.send(
-                JSON.stringify([
-                  "approval_vote",
-                  post_data[postIndexApprovalSend][0],
-                  post_data[0][16],
-                  response[0],
-                  response[1],
-                  response[2],
-                  response[3],
-                  response[4],
-                  response[5],
-                  response[6],
-                  response[7],
-                  response[8],
-                  response[9],
-                ])
-              );
+            if (response[60].trim() == "Success") {
+              let vote_data = response;
+              vote_data.pop();
+              conn.send(JSON.stringify(["approval_vote", post_data[postIndexApprovalSend][0], post_data[0][16], vote_data]));
               $("#notification-container").fadeIn(300, function () {});
               document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
             }
@@ -1724,22 +1686,23 @@ function get_approval_data(post_number) {
     .then((res) => res.json())
     .then((response) => {
       let post_element = document.getElementsByClassName("post")[post_number];
-      let choice_names_index;
-      if (post_data[0].length > 9) {
-        choice_names_index = 17;
-      } else {
-        choice_names_index = 9;
+      if (post_data[post_number].length > 17) {
+        post_data[post_number].length = 17;
       }
-      for (let i = 0; i < response.length; i++) {
+      if (post_data[post_number].length === 17) {
+        for (let i = 20; i < 40; i++) {
+          post_data[post_number] = post_data[post_number].concat(response[i]);
+        }
+      }
+      for (let i = 0; i < 20; i++) {
         if (i < 3) {
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText =
-            post_data[post_number][i + choice_names_index];
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = response[i + 20];
           if (response[i] !== null) {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = response[i];
           } else {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
           }
-        } else if (i >= 3 && post_data[post_number][i + choice_names_index] !== null) {
+        } else if (i >= 3 && response[i + 20] !== null) {
           if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
             document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
           }
@@ -1747,14 +1710,13 @@ function get_approval_data(post_number) {
           let clone = top_row.cloneNode(true);
           post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(clone);
           document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].setAttribute("data-value", i + 1);
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText =
-            post_data[post_number][i + choice_names_index];
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = response[i + 20];
           if (response[i] !== null) {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = response[i];
           } else {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
           }
-        } else if (i >= 3 && post_data[post_number][i + choice_names_index] === null) {
+        } else if (i >= 3 && response[i + 20] === null) {
           if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
             document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
           }
@@ -2005,7 +1967,7 @@ export function edit_rating_vote(position, votes) {
 
 export function edit_approval_vote(position, votes) {
   for (let i = 0; i < votes.length; i++) {
-    post_data[position][i + 27] = votes[i];
+    post_data[position][i + 37] = votes[i];
   }
 }
 

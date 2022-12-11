@@ -786,7 +786,7 @@ if ($data['request'] == "request_username") {
     $stmt = $conn->prepare("SELECT rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg, rating_choice_four_avg, rating_choice_five_avg,
     rating_choice_six_avg, rating_choice_seven_avg, rating_choice_eight_avg, rating_choice_nine_avg, rating_choice_ten_avg, rating_choice_eleven_avg,
     rating_choice_twelve_avg, rating_choice_thirteen_avg, rating_choice_fourteen_avg, rating_choice_fifteen_avg, rating_choice_sixteen_avg, rating_choice_seventeen_avg,
-    rating_choice_eighteen_avg, rating_choice_nineteen_avg, rating_choice_twenty_avg,choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
+    rating_choice_eighteen_avg, rating_choice_nineteen_avg, rating_choice_twenty_avg, choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
     choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,choice_ten_name, choice_eleven_name, choice_twelve_name, choice_thirteen_name, 
     choice_fourteen_name,choice_fifteen_name, choice_sixteen_name, choice_seventeen_name, choice_eighteen_name, choice_nineteen_name,choice_twenty_name
     FROM posts_rating_info INNER JOIN posts ON posts_rating_info.rating_post_id=posts.post_number WHERE rating_post_id=:post_id");
@@ -809,6 +809,52 @@ if ($data['request'] == "request_username") {
                 $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
                 $row["choice_twenty_name"],
                 "Success"
+            );
+        }
+    }
+    echo json_encode($tmp);
+} else if ($data['request'] == "user_approval_vote_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+    require_once "new_config.php";
+
+    $stmt = $conn->prepare("SELECT choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
+    choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,choice_ten_name,
+    choice_eleven_name, choice_twelve_name, choice_thirteen_name, choice_fourteen_name,choice_fifteen_name,
+    choice_sixteen_name, choice_seventeen_name, choice_eighteen_name, choice_nineteen_name,choice_twenty_name,
+    COALESCE((SELECT approval.choice_one FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_one,
+    COALESCE((SELECT approval.choice_two FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_two,
+    COALESCE((SELECT approval.choice_three FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_three,
+    COALESCE((SELECT approval.choice_four FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_four,
+    COALESCE((SELECT approval.choice_five FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_five,
+    COALESCE((SELECT approval.choice_six FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_six,
+    COALESCE((SELECT approval.choice_seven FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_seven,
+    COALESCE((SELECT approval.choice_eight FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_eight,
+    COALESCE((SELECT approval.choice_nine FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_nine,
+    COALESCE((SELECT approval.choice_ten FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_ten,
+    COALESCE((SELECT approval.choice_eleven FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_eleven,
+    COALESCE((SELECT approval.choice_twelve FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_twelve,
+    COALESCE((SELECT approval.choice_thirteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_thirteen,
+    COALESCE((SELECT approval.choice_fourteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_fourteen,
+    COALESCE((SELECT approval.choice_fifteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_fifteen,
+    COALESCE((SELECT approval.choice_sixteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_sixteen,
+    COALESCE((SELECT approval.choice_seventeen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_seventeen,
+    COALESCE((SELECT approval.choice_eighteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_eighteen,
+    COALESCE((SELECT approval.choice_nineteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_nineteen,
+    COALESCE((SELECT approval.choice_twenty FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_twenty
+    FROM posts INNER JOIN approval ON posts.post_number=approval.post_id WHERE posts.post_number=:post_id");
+    $stmt->execute([":id" => $_SESSION["id"], ":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $tmp = array(
+                $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"],
+                $row["choice_five_name"], $row["choice_six_name"], $row["choice_seven_name"], $row["choice_eight_name"], $row["choice_nine_name"],
+                $row["choice_ten_name"], $row["choice_eleven_name"], $row["choice_twelve_name"], $row["choice_thirteen_name"], $row["choice_fourteen_name"],
+                $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
+                $row["choice_twenty_name"],
+                $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"],
+                $row["approval_choice_five"], $row["approval_choice_six"], $row["approval_choice_seven"], $row["approval_choice_eight"], $row["approval_choice_nine"],
+                $row["approval_choice_ten"], $row["approval_choice_eleven"], $row["approval_choice_twelve"], $row["approval_choice_thirteen"], $row["approval_choice_fourteen"],
+                $row["approval_choice_fifteen"], $row["approval_choice_sixteen"], $row["approval_choice_seventeen"], $row["approval_choice_eighteen"], $row["approval_choice_nineteen"],
+                $row["approval_choice_twenty"],
             );
         }
     }
@@ -849,28 +895,60 @@ if ($data['request'] == "request_username") {
     $stmt->execute([":id" => $_SESSION["id"]]);
     if ($stmt->rowCount() > 0) {
         $stmt = $conn->prepare("UPDATE approval SET choice_one = :choice_one, choice_two = :choice_two, choice_three = :choice_three,
-        choice_four = :choice_four, choice_five = :choice_five WHERE post_id=:post_id AND user_id=:id");
+        choice_four = :choice_four, choice_five = :choice_five, choice_six = :choice_six, choice_seven = :choice_seven, choice_eight = :choice_eight,
+        choice_nine = :choice_nine, choice_ten = :choice_ten, choice_eleven = :choice_eleven, choice_twelve = :choice_twelve, choice_thirteen = :choice_thirteen,
+        choice_fourteen = :choice_fourteen, choice_fifteen = :choice_fifteen, choice_sixteen = :choice_sixteen, choice_seventeen = :choice_seventeen, 
+        choice_eighteen = :choice_eighteen, choice_nineteen = :choice_nineteen, choice_twenty = :choice_twenty WHERE post_id=:post_id AND user_id=:id");
         $stmt->execute([
             ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
-            ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
+            ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5],
+            ":choice_seven" => $data["votes"][6], ":choice_eight" => $data["votes"][7], ":choice_nine" => $data["votes"][8], ":choice_ten" => $data["votes"][9],
+            ":choice_eleven" => $data["votes"][10], ":choice_twelve" => $data["votes"][11], ":choice_thirteen" => $data["votes"][12], ":choice_fourteen" => $data["votes"][13],
+            ":choice_fifteen" => $data["votes"][14], ":choice_sixteen" => $data["votes"][15], ":choice_seventeen" => $data["votes"][16], ":choice_eighteen" => $data["votes"][17],
+            ":choice_nineteen" => $data["votes"][18], ":choice_twenty" => $data["votes"][19]
         ]);
     }
-    $stmt = $conn->prepare("INSERT IGNORE INTO approval(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five) 
-            VALUES(:post_id,:id,3,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five)");
+    $stmt = $conn->prepare("INSERT IGNORE INTO approval(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five,
+    choice_six,choice_seven,choice_eight,choice_nine,choice_ten,choice_eleven,choice_twelve,choice_thirteen,choice_fourteen,choice_fifteen,choice_sixteen,choice_seventeen,
+    choice_eighteen,choice_nineteen,choice_twenty) 
+            VALUES(:post_id,:id,3,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five,:choice_six,:choice_seven,:choice_eight,:choice_nine,:choice_ten,
+            :choice_eleven,:choice_twelve,:choice_thirteen,:choice_fourteen,:choice_fifteen,:choice_sixteen,:choice_seventeen,
+            :choice_eighteen,:choice_nineteen,:choice_twenty)");
     $stmt->execute([
         ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
-        ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4]
+        ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5],
+        ":choice_seven" => $data["votes"][6], ":choice_eight" => $data["votes"][7], ":choice_nine" => $data["votes"][8], ":choice_ten" => $data["votes"][9],
+        ":choice_eleven" => $data["votes"][10], ":choice_twelve" => $data["votes"][11], ":choice_thirteen" => $data["votes"][12], ":choice_fourteen" => $data["votes"][13],
+        ":choice_fifteen" => $data["votes"][14], ":choice_sixteen" => $data["votes"][15], ":choice_seventeen" => $data["votes"][16], ":choice_eighteen" => $data["votes"][17],
+        ":choice_nineteen" => $data["votes"][18], ":choice_twenty" => $data["votes"][19]
     ]);
 
-    $stmt = $conn->prepare("SELECT approval_choice_one,approval_choice_two,approval_choice_three,approval_choice_four,approval_choice_five
-        FROM posts_approval_info WHERE approval_post_id=:post_id");
+    $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_three, approval_choice_four, approval_choice_five,
+    approval_choice_six, approval_choice_seven, approval_choice_eight, approval_choice_nine, approval_choice_ten, approval_choice_eleven, approval_choice_twelve,
+    approval_choice_thirteen, approval_choice_fourteen, approval_choice_fifteen, approval_choice_sixteen, approval_choice_seventeen, approval_choice_eighteen,
+    approval_choice_nineteen, approval_choice_twenty, choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
+    choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,choice_ten_name, choice_eleven_name, choice_twelve_name, choice_thirteen_name, 
+    choice_fourteen_name,choice_fifteen_name, choice_sixteen_name, choice_seventeen_name, choice_eighteen_name, choice_nineteen_name,choice_twenty_name
+    FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
     $stmt->execute([":post_id" => $data["post_id"]]);
     if ($stmt->rowCount() > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $tmp = array(
-                $data["votes"][0], $data["votes"][1], $data["votes"][2], $data["votes"][3], $data["votes"][4], $row["approval_choice_one"],
-                $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"],
-                $row["approval_choice_five"], "Success"
+                $data["votes"][0], $data["votes"][1], $data["votes"][2], $data["votes"][3], $data["votes"][4],
+                $data["votes"][5], $data["votes"][6], $data["votes"][7], $data["votes"][8], $data["votes"][9],
+                $data["votes"][10], $data["votes"][11], $data["votes"][12], $data["votes"][13], $data["votes"][14],
+                $data["votes"][15], $data["votes"][16], $data["votes"][17], $data["votes"][18], $data["votes"][19],
+                $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"],
+                $row["approval_choice_five"], $row["approval_choice_six"], $row["approval_choice_seven"], $row["approval_choice_eight"],
+                $row["approval_choice_nine"], $row["approval_choice_ten"], $row["approval_choice_eleven"], $row["approval_choice_twelve"],
+                $row["approval_choice_thirteen"], $row["approval_choice_fourteen"], $row["approval_choice_fifteen"], $row["approval_choice_sixteen"],
+                $row["approval_choice_seventeen"], $row["approval_choice_eighteen"], $row["approval_choice_nineteen"], $row["approval_choice_twenty"],
+                $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"],
+                $row["choice_five_name"], $row["choice_six_name"], $row["choice_seven_name"], $row["choice_eight_name"], $row["choice_nine_name"],
+                $row["choice_ten_name"], $row["choice_eleven_name"], $row["choice_twelve_name"], $row["choice_thirteen_name"], $row["choice_fourteen_name"],
+                $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
+                $row["choice_twenty_name"],
+                "Success"
             );
         }
     }
@@ -878,14 +956,28 @@ if ($data['request'] == "request_username") {
 } else if ($data['request'] == "approval_data") {
     require_once "new_config.php";
 
-    $stmt = $conn->prepare("SELECT approval_choice_one,approval_choice_two,approval_choice_three,approval_choice_four,approval_choice_five 
-    FROM posts_approval_info WHERE approval_post_id=:post_id");
+    $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_three, approval_choice_four, approval_choice_five,
+    approval_choice_six, approval_choice_seven, approval_choice_eight, approval_choice_nine, approval_choice_ten, approval_choice_eleven, approval_choice_twelve,
+    approval_choice_thirteen, approval_choice_fourteen, approval_choice_fifteen, approval_choice_sixteen, approval_choice_seventeen, approval_choice_eighteen,
+    approval_choice_nineteen, approval_choice_twenty,
+    choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name, choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,
+    choice_ten_name, choice_eleven_name, choice_twelve_name, choice_thirteen_name, choice_fourteen_name,choice_fifteen_name, choice_sixteen_name, choice_seventeen_name, 
+    choice_eighteen_name, choice_nineteen_name,choice_twenty_name
+    FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
     $stmt->execute([":post_id" => $data["post_id"]]);
     if ($stmt->rowCount() > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $tmp = array(
                 $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"],
-                $row["approval_choice_five"]
+                $row["approval_choice_five"], $row["approval_choice_six"], $row["approval_choice_seven"], $row["approval_choice_eight"],
+                $row["approval_choice_nine"], $row["approval_choice_ten"], $row["approval_choice_eleven"], $row["approval_choice_twelve"],
+                $row["approval_choice_thirteen"], $row["approval_choice_fourteen"], $row["approval_choice_fifteen"], $row["approval_choice_sixteen"],
+                $row["approval_choice_seventeen"], $row["approval_choice_eighteen"], $row["approval_choice_nineteen"], $row["approval_choice_twenty"],
+                $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"],
+                $row["choice_five_name"], $row["choice_six_name"], $row["choice_seven_name"], $row["choice_eight_name"], $row["choice_nine_name"],
+                $row["choice_ten_name"], $row["choice_eleven_name"], $row["choice_twelve_name"], $row["choice_thirteen_name"], $row["choice_fourteen_name"],
+                $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
+                $row["choice_twenty_name"]
             );
         }
     }
