@@ -786,8 +786,10 @@ if ($data['request'] == "request_username") {
     $stmt = $conn->prepare("SELECT rating_choice_one_avg, rating_choice_two_avg, rating_choice_three_avg, rating_choice_four_avg, rating_choice_five_avg,
     rating_choice_six_avg, rating_choice_seven_avg, rating_choice_eight_avg, rating_choice_nine_avg, rating_choice_ten_avg, rating_choice_eleven_avg,
     rating_choice_twelve_avg, rating_choice_thirteen_avg, rating_choice_fourteen_avg, rating_choice_fifteen_avg, rating_choice_sixteen_avg, rating_choice_seventeen_avg,
-    rating_choice_eighteen_avg, rating_choice_nineteen_avg, rating_choice_twenty_avg
-    FROM posts_rating_info WHERE rating_post_id=:post_id");
+    rating_choice_eighteen_avg, rating_choice_nineteen_avg, rating_choice_twenty_avg,choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
+    choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,choice_ten_name, choice_eleven_name, choice_twelve_name, choice_thirteen_name, 
+    choice_fourteen_name,choice_fifteen_name, choice_sixteen_name, choice_seventeen_name, choice_eighteen_name, choice_nineteen_name,choice_twenty_name
+    FROM posts_rating_info INNER JOIN posts ON posts_rating_info.rating_post_id=posts.post_number WHERE rating_post_id=:post_id");
     $stmt->execute([":post_id" => $data["post_id"]]);
     if ($stmt->rowCount() > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -801,6 +803,11 @@ if ($data['request'] == "request_username") {
                 $row["rating_choice_nine_avg"], $row["rating_choice_ten_avg"], $row["rating_choice_eleven_avg"], $row["rating_choice_twelve_avg"],
                 $row["rating_choice_thirteen_avg"], $row["rating_choice_fourteen_avg"], $row["rating_choice_fifteen_avg"], $row["rating_choice_sixteen_avg"],
                 $row["rating_choice_seventeen_avg"], $row["rating_choice_eighteen_avg"], $row["rating_choice_nineteen_avg"], $row["rating_choice_twenty_avg"],
+                $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"],
+                $row["choice_five_name"], $row["choice_six_name"], $row["choice_seven_name"], $row["choice_eight_name"], $row["choice_nine_name"],
+                $row["choice_ten_name"], $row["choice_eleven_name"], $row["choice_twelve_name"], $row["choice_thirteen_name"], $row["choice_fourteen_name"],
+                $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
+                $row["choice_twenty_name"],
                 "Success"
             );
         }

@@ -1062,61 +1062,16 @@ postContainer.addEventListener(
               votes.push(null);
             }
           }
-          console.log(votes);
           fetch("process_data.php", {
             method: "POST",
             body: JSON.stringify({ request: "rating_vote", votes: votes, post_id: post_data[postIndexPostStarVote][0] }),
           })
             .then((res) => res.json())
             .then((response) => {
-              if (response[40].trim() == "Success") {
-                conn.send(
-                  JSON.stringify([
-                    "rating_vote",
-                    post_data[postIndexPostStarVote][0],
-                    post_data[0][16],
-                    response[0],
-                    response[1],
-                    response[2],
-                    response[3],
-                    response[4],
-                    response[5],
-                    response[6],
-                    response[7],
-                    response[8],
-                    response[9],
-                    response[10],
-                    response[11],
-                    response[12],
-                    response[13],
-                    response[14],
-                    response[15],
-                    response[16],
-                    response[17],
-                    response[18],
-                    response[19],
-                    response[20],
-                    response[21],
-                    response[22],
-                    response[23],
-                    response[24],
-                    response[25],
-                    response[26],
-                    response[27],
-                    response[28],
-                    response[29],
-                    response[30],
-                    response[31],
-                    response[32],
-                    response[33],
-                    response[34],
-                    response[35],
-                    response[36],
-                    response[37],
-                    response[38],
-                    response[39],
-                  ])
-                );
+              if (response[60].trim() == "Success") {
+                let vote_data = response;
+                vote_data.pop();
+                conn.send(JSON.stringify(["rating_vote", post_data[postIndexPostStarVote][0], post_data[0][16], vote_data]));
                 $("#notification-container").fadeIn(300, function () {});
                 document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
               }
@@ -1702,13 +1657,14 @@ function get_rating_data(post_number) {
   })
     .then((res) => res.json())
     .then((response) => {
-      let choice_names_index;
       let post_element = document.getElementsByClassName("post")[post_number];
       if (post_data[post_number].length > 17) {
         post_data[post_number].length = 17;
       }
-      for (let i = 20; i < 40; i++) {
-        post_data[post_number] = post_data[post_number].concat(response[i]);
+      if (post_data[post_number].length === 17) {
+        for (let i = 20; i < 40; i++) {
+          post_data[post_number] = post_data[post_number].concat(response[i]);
+        }
       }
       post_element.querySelectorAll(".rating-choices-results").forEach((child) => {
         if (child.getAttribute("data-value") !== "1") {
@@ -1718,11 +1674,6 @@ function get_rating_data(post_number) {
       for (let i = 0; i < 20; i++) {
         let max_star_position = i * 10;
         let star_limit;
-        if (post_data[0].length > 9) {
-          choice_names_index = i + 17;
-        } else {
-          choice_names_index = i + 9;
-        }
         if (response[i] !== null) {
           let first_digit = parseFloat(response[i][0]);
           let average_rating = parseFloat(response[i]).toFixed(3);
@@ -1738,7 +1689,7 @@ function get_rating_data(post_number) {
           star_limit = parseInt(average_rating * 2.0) + max_star_position;
         }
         if (response[i + 20] !== null) {
-          if (choice_names_index !== choice_names_index - i) {
+          if (i !== 0) {
             let clone_rating_choices = post_element.getElementsByClassName("rating-choices-results")[0];
             let clone = clone_rating_choices.cloneNode(true);
             clone.setAttribute("data-value", i + 1);

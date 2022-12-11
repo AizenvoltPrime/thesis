@@ -174,11 +174,6 @@ addEventListener("DOMContentLoaded", (event) => {
           post_time_detailed,
           JSON.parse(e.data)[1][11],
           JSON.parse(e.data)[1][15],
-          JSON.parse(e.data)[1][17],
-          JSON.parse(e.data)[1][18],
-          JSON.parse(e.data)[1][19],
-          JSON.parse(e.data)[1][20],
-          JSON.parse(e.data)[1][21],
         ]);
       }
     } else if (
@@ -448,11 +443,14 @@ addEventListener("DOMContentLoaded", (event) => {
     } else if (JSON.parse(e.data)[0] === "rating_vote") {
       let average_ratings_array = [];
       let ratings_array = [];
-      for (let i = 3; i < 43; i++) {
-        if (i < 23) {
-          ratings_array.push(JSON.parse(e.data)[i]);
-        } else if (i >= 23) {
-          average_ratings_array.push(JSON.parse(e.data)[i]);
+      let rating_choice_names = [];
+      for (let i = 0; i < JSON.parse(e.data)[3].length; i++) {
+        if (i < 20) {
+          ratings_array.push(JSON.parse(e.data)[3][i]);
+        } else if (i >= 20 && i < 40) {
+          average_ratings_array.push(JSON.parse(e.data)[3][i]);
+        } else if (i >= 40) {
+          rating_choice_names.push(JSON.parse(e.data)[3][i]);
         }
       }
       for (let i = 0; i < get_variables()[3].length; i++) {
@@ -487,8 +485,8 @@ addEventListener("DOMContentLoaded", (event) => {
                 }
                 star_limit = parseInt(average_rating * 2.0) + max_star_position;
               }
-              if (get_variables()[3][i][choice_names_index] !== null) {
-                if (choice_names_index !== choice_names_index - j) {
+              if (rating_choice_names[j] !== null) {
+                if (j !== 0) {
                   let clone_rating_choices = post_element.getElementsByClassName("rating-choices-results")[0];
                   let clone = clone_rating_choices.cloneNode(true);
                   clone.setAttribute("data-value", j + 1);
@@ -498,14 +496,14 @@ addEventListener("DOMContentLoaded", (event) => {
                     [j].querySelectorAll(".half-star-container-results")
                     .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
                   post_element.querySelectorAll(".rating-choices-results")[j].getElementsByClassName("choice-name")[0].innerText =
-                    get_variables()[3][i][choice_names_index];
+                    rating_choice_names[j];
                 } else {
                   post_element
                     .querySelectorAll(".rating-choices-results")
                     [j].querySelectorAll(".half-star-container-results")
                     .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
                   post_element.querySelectorAll(".rating-choices-results")[j].getElementsByClassName("choice-name")[0].innerText =
-                    get_variables()[3][i][choice_names_index];
+                    rating_choice_names[j];
                 }
                 if (average_ratings_array[j] !== null) {
                   for (let k = max_star_position; k < star_limit; k++) {
