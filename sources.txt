@@ -84,7 +84,6 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 
 - ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
 - Να δώσω τη δυνατότητα delete post.
-- 20 choices
 - Να κατεβάζει τα αποτελέσματα σαν xls
 - Ταξινόμηση στο approval με βάση το πλήθος των ψήφων
 - Map που να δείχνει το event location όπου υπάρχει.

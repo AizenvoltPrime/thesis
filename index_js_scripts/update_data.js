@@ -591,10 +591,16 @@ addEventListener("DOMContentLoaded", (event) => {
             if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
               for (let j = 0; j < 20; j++) {
                 if (get_variables()[3][i][j + 17] !== null) {
-                  if (user_approval_array[j] === 1) {
+                  if (
+                    user_approval_array[j] === 1 &&
+                    window.getComputedStyle(document.getElementsByClassName("approval-vote-container")[i]).display === "flex"
+                  ) {
                     document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.border = "0.1em solid #cc0000";
                     document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.color = "#cc0000";
-                  } else if (user_approval_array[j] === 0) {
+                  } else if (
+                    user_approval_array[j] === 0 &&
+                    window.getComputedStyle(document.getElementsByClassName("approval-vote-container")[i]).display === "flex"
+                  ) {
                     document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.border = "0.1em solid #1a1a1b";
                     document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.color = "#f3f3f3";
                   }
