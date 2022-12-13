@@ -1686,6 +1686,9 @@ function get_approval_data(post_number) {
     .then((res) => res.json())
     .then((response) => {
       let post_element = document.getElementsByClassName("post")[post_number];
+      let results_array = [];
+      let rating_choice_names = [];
+      let zipped = [];
       if (post_data[post_number].length > 17) {
         post_data[post_number].length = 17;
       }
@@ -1694,15 +1697,42 @@ function get_approval_data(post_number) {
           post_data[post_number] = post_data[post_number].concat(response[i]);
         }
       }
+
+      for (let i = 0; i < 40; i++) {
+        if (i >= 20) {
+          rating_choice_names.push(response[i]);
+        } else {
+          results_array.push(response[i]);
+        }
+      }
+
+      for (let i = 0; i < rating_choice_names.length; i++) {
+        zipped.push({
+          array1elem: rating_choice_names[i],
+          array2elem: results_array[i],
+        });
+      }
+
+      zipped.sort(function (a, b) {
+        return b.array2elem - a.array2elem;
+      });
+
+      rating_choice_names = [];
+      results_array = [];
+      for (let i = 0; i < zipped.length; i++) {
+        rating_choice_names.push(zipped[i].array1elem);
+        results_array.push(zipped[i].array2elem);
+      }
+
       for (let i = 0; i < 20; i++) {
         if (i < 3) {
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = response[i + 20];
-          if (response[i] !== null) {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = response[i];
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = rating_choice_names[i];
+          if (results_array[i] !== null) {
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = results_array[i];
           } else {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
           }
-        } else if (i >= 3 && response[i + 20] !== null) {
+        } else if (i >= 3 && rating_choice_names[i] !== null) {
           if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
             document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
           }
@@ -1710,13 +1740,13 @@ function get_approval_data(post_number) {
           let clone = top_row.cloneNode(true);
           post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(clone);
           document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].setAttribute("data-value", i + 1);
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = response[i + 20];
-          if (response[i] !== null) {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = response[i];
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = rating_choice_names[i];
+          if (results_array[i] !== null) {
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = results_array[i];
           } else {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
           }
-        } else if (i >= 3 && response[i + 20] === null) {
+        } else if (i >= 3 && rating_choice_names[i] === null) {
           if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
             document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
           }
@@ -1990,27 +2020,3 @@ window.onbeforeunload = () => {
     conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
   }
 };
-
-document.getElementById("poll-choices").addEventListener("mousedown", function () {
-  this.size = 5;
-});
-
-document.getElementById("poll-choices").addEventListener("change", function () {
-  this.blur();
-});
-
-document.getElementById("poll-choices").addEventListener("blur", function () {
-  this.size = 0;
-});
-
-document.getElementById("categories").addEventListener("mousedown", function () {
-  this.size = 5;
-});
-
-document.getElementById("categories").addEventListener("change", function () {
-  this.blur();
-});
-
-document.getElementById("categories").addEventListener("blur", function () {
-  this.size = 0;
-});

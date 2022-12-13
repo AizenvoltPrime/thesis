@@ -538,6 +538,8 @@ addEventListener("DOMContentLoaded", (event) => {
       let user_approval_array = [];
       let results_array = [];
       let rating_choice_names = [];
+      let zipped = [];
+
       for (let i = 0; i < JSON.parse(e.data)[3].length; i++) {
         if (i < 20) {
           user_approval_array.push(JSON.parse(e.data)[3][i]);
@@ -546,6 +548,24 @@ addEventListener("DOMContentLoaded", (event) => {
         } else if (i >= 40) {
           rating_choice_names.push(JSON.parse(e.data)[3][i]);
         }
+      }
+
+      for (let i = 0; i < rating_choice_names.length; i++) {
+        zipped.push({
+          array1elem: rating_choice_names[i],
+          array2elem: results_array[i],
+        });
+      }
+
+      zipped.sort(function (a, b) {
+        return b.array2elem - a.array2elem;
+      });
+
+      rating_choice_names = [];
+      results_array = [];
+      for (let i = 0; i < zipped.length; i++) {
+        rating_choice_names.push(zipped[i].array1elem);
+        results_array.push(zipped[i].array2elem);
       }
 
       for (let i = 0; i < get_variables()[3].length; i++) {

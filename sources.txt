@@ -16,6 +16,7 @@ get location from ipadress:https://www.youtube.com/watch?v=--_acK_RaMU&t=148s
 stars css,html:https://www.youtube.com/watch?v=zDHC4r5eCdY
 dragging map:https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_draggable
 dropdown:https://jsfiddle.net/34adrsgu/
+sort array approval Ezekiel Victor:https://stackoverflow.com/questions/16888615/javascript-sort-2-array-dependently
 
 //posts_info
 CREATE VIEW posts_info AS SELECT posts.post_number AS post_number, user.username AS username, polls.poll_id AS poll_id, categories.category_name 
