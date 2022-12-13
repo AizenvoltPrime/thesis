@@ -1990,3 +1990,27 @@ window.onbeforeunload = () => {
     conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
   }
 };
+
+document.getElementById("poll-choices").addEventListener("mousedown", function () {
+  this.size = 5;
+});
+
+document.getElementById("poll-choices").addEventListener("change", function () {
+  this.blur();
+});
+
+document.getElementById("poll-choices").addEventListener("blur", function () {
+  this.size = 0;
+});
+
+document.getElementById("categories").addEventListener("mousedown", function () {
+  this.size = 5;
+});
+
+document.getElementById("categories").addEventListener("change", function () {
+  this.blur();
+});
+
+document.getElementById("categories").addEventListener("blur", function () {
+  this.size = 0;
+});
