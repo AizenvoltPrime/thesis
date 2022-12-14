@@ -688,6 +688,7 @@ postContainer.addEventListener(
     const btn_star_vote = e.target.closest('button[data-dir="star-vote"]');
     const btn_approval_send = e.target.closest('button[data-dir="approval-vote-send"]');
     const btn_approval_vote = e.target.closest('div[data-dir="approval-vote"]');
+    const btn_options = e.target.closest('div[data-dir="options"]');
 
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
@@ -900,6 +901,22 @@ postContainer.addEventListener(
           null_all_styles();
           generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1], null, null);
         });
+    } else if (btn_options) {
+      const post_options = btn_options.closest(".post");
+      const postOptionsIndex = [...postContainer.children].indexOf(post_options);
+      let element = document.getElementsByClassName("post-options-inside-container")[postOptionsIndex];
+      document.querySelectorAll(".post-options-inside-container").forEach((element) => {
+        if (window.getComputedStyle(element).display !== "none") {
+          if (element !== document.getElementsByClassName("post-options-inside-container")[postOptionsIndex]) {
+            element.style.display = "none";
+          }
+        }
+      });
+      if (window.getComputedStyle(element).display === "none") {
+        element.style.display = "flex";
+      } else if (window.getComputedStyle(element).display === "flex") {
+        element.style.display = "none";
+      }
     }
     if (post_data[0].length > 9) {
       if (btn_approval_vote) {
@@ -2020,3 +2037,11 @@ window.onbeforeunload = () => {
     conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
   }
 };
+
+window.addEventListener("click", function (e) {
+  document.querySelectorAll(".post-options-inside-container").forEach((element) => {
+    if (window.getComputedStyle(element).display !== "none" && !e.target.closest(".post-options-container")) {
+      element.style.display = "none";
+    }
+  });
+});

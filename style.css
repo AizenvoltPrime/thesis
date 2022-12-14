@@ -224,7 +224,10 @@ input {
 .user-nav a i,
 #map-analytics i,
 #chart-analytics i,
-.category i {
+.category i,
+.post-download-data i,
+.post-event-location i,
+.post-delete i {
   margin-right: 0.5em;
 }
 
@@ -841,7 +844,7 @@ a:active {
   font-size: 1.3em;
   font-weight: bold;
   border-radius: 1em;
-  padding: 1em 1em 1em 1em;
+  padding: 0.65em 1em 1em 1em;
   width: 100%;
   flex-direction: column;
 }
@@ -866,7 +869,7 @@ a:active {
 
 .user-who-posted {
   display: flex;
-  margin-bottom: 0.8em;
+  margin-bottom: 0.23em;
   font-size: 0.6em;
   align-items: center;
   flex-wrap: wrap;
@@ -1691,4 +1694,52 @@ input:checked + .slider:before {
   border-radius: 1em;
   font-size: 2em;
   padding: 0.2em;
+}
+
+.post-options-container {
+  margin-right: auto;
+  font-size: 2em;
+  margin-left: 0.2em;
+  cursor: pointer;
+}
+
+.post-download-data {
+  cursor: pointer;
+  border-top: 0.1em solid #858585;
+  border-left: 0.1em solid #858585;
+  border-right: 0.1em solid #858585;
+  border-radius: 0.5em 0.5em 0 0; /* top-left | top-right | bottom-right | bottom-left */
+  padding: 0.4em;
+}
+
+.post-event-location {
+  cursor: pointer;
+  border-top: 0.1em solid #858585;
+  border-left: 0.1em solid #858585;
+  border-right: 0.1em solid #858585;
+  padding: 0.4em;
+}
+
+.post-delete {
+  cursor: pointer;
+  border: 0.1em solid #858585;
+  border-radius: 0 0 0.5em 0.5em;
+  padding: 0.4em;
+}
+
+.post-options-inside-container {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  font-size: 0.6em;
+  background: #2c3134;
+  border-radius: 0.5em;
+  margin-left: -3.5em;
+  color: #f3f3f3;
+}
+
+.post-download-data:hover,
+.post-event-location:hover,
+.post-delete:hover {
+  background: #707070;
 }

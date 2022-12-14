@@ -694,7 +694,7 @@ document.getElementsByClassName("bell-actions")[1].addEventListener("click", fun
   });
 });
 
-$(window).click(function (e) {
+window.addEventListener("click", function (e) {
   if (
     window.getComputedStyle(document.getElementById("bell-notification-details")).display !== "none" &&
     window.getComputedStyle(document.getElementById("bell-notification-details")).opacity === "1" &&
