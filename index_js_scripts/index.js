@@ -689,6 +689,7 @@ postContainer.addEventListener(
     const btn_approval_send = e.target.closest('button[data-dir="approval-vote-send"]');
     const btn_approval_vote = e.target.closest('div[data-dir="approval-vote"]');
     const btn_options = e.target.closest('div[data-dir="options"]');
+    const btn_download = e.target.closest('div[data-dir="download-data"]');
 
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
@@ -901,6 +902,79 @@ postContainer.addEventListener(
           null_all_styles();
           generate_posts(false, null, null, null, null, post_data[postIndexPostUserName][1], null, null);
         });
+    } else if (btn_download) {
+      const post_download = btn_download.closest(".post");
+      const postDownloadIndex = [...postContainer.children].indexOf(post_download);
+      if (post_data[postDownloadIndex][2] == 1) {
+        fetch("process_data.php", {
+          method: "POST",
+          body: JSON.stringify({ request: "yes_no_data", post_id: post_data[postDownloadIndex][0] }),
+        })
+          .then((res) => res.json())
+          .then((response) => {
+            const wb = XLSX.utils.book_new();
+            let cell = [
+              ["Poll Text", post_data[postDownloadIndex][4]],
+              ["Yes", "No"],
+              [parseInt(response[0]), parseInt(response[1])],
+            ];
+            const ws = XLSX.utils.aoa_to_sheet(cell);
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            XLSX.writeFile(wb, "Yes_No_Poll_Type_Results.xlsx");
+          });
+      } else if (post_data[postDownloadIndex][2] == 2) {
+        fetch("process_data.php", {
+          method: "POST",
+          body: JSON.stringify({ request: "average_rating_data", post_id: post_data[postDownloadIndex][0] }),
+        })
+          .then((res) => res.json())
+          .then((response) => {
+            let rating_choice_names = [];
+            let rating_choice_results = [];
+            for (let i = 0; i < response.length; i++) {
+              if (i < 20 && response[i + 20] !== null) {
+                if (response[i] === null) {
+                  rating_choice_results.push("No Votes");
+                } else {
+                  rating_choice_results.push(response[i]);
+                }
+              } else if (i >= 20 && response[i] !== null) {
+                rating_choice_names.push(response[i]);
+              }
+            }
+            const wb = XLSX.utils.book_new();
+            let cell = [["Poll Text", post_data[postDownloadIndex][4]], rating_choice_names, rating_choice_results];
+            const ws = XLSX.utils.aoa_to_sheet(cell);
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            XLSX.writeFile(wb, "Rating_Poll_Type_Results.xlsx");
+          });
+      } else if (post_data[postDownloadIndex][2] == 3) {
+        fetch("process_data.php", {
+          method: "POST",
+          body: JSON.stringify({ request: "approval_data", post_id: post_data[postDownloadIndex][0] }),
+        })
+          .then((res) => res.json())
+          .then((response) => {
+            let approval_choice_names = [];
+            let approval_choice_results = [];
+            for (let i = 0; i < response.length; i++) {
+              if (i < 20 && response[i + 20] !== null) {
+                if (response[i] === null) {
+                  approval_choice_results.push("No Votes");
+                } else {
+                  approval_choice_results.push(response[i]);
+                }
+              } else if (i >= 20 && response[i] !== null) {
+                approval_choice_names.push(response[i]);
+              }
+            }
+            const wb = XLSX.utils.book_new();
+            let cell = [["Poll Text", post_data[postDownloadIndex][4]], approval_choice_names, approval_choice_results];
+            const ws = XLSX.utils.aoa_to_sheet(cell);
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            XLSX.writeFile(wb, "Approval_Poll_Type_Results.xlsx");
+          });
+      }
     } else if (btn_options) {
       const post_options = btn_options.closest(".post");
       const postOptionsIndex = [...postContainer.children].indexOf(post_options);

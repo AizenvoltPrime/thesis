@@ -24,6 +24,7 @@ require_once "new_config.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
   <script src=https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js></script>
+  <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
   <script type="module" src="index_js_scripts/index.js"></script>
   <script type="module" src="index_js_scripts/navbar.js"></script>
   <script type="module" src="index_js_scripts/filters.js"></script>
