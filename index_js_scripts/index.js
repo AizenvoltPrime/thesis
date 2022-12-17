@@ -981,7 +981,10 @@ postContainer.addEventListener(
       const post_event_map = btn_event_map.closest(".post");
       const postEventIndex = [...postContainer.children].indexOf(post_event_map);
       document.getElementsByClassName("post-options-inside-container")[postEventIndex].style.display = "none";
-
+      if (window.getComputedStyle(document.getElementById("post-locations-container")).display !== "none") {
+        $("#post-locations-container").fadeOut(300, function () {});
+        null_style("fa-map-location-dot");
+      }
       let data_index_lat;
       let data_index_long;
       let data_index_radius;

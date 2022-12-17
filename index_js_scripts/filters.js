@@ -908,6 +908,9 @@ export function clear_map(map_name, layer_control, geogjson, markers) {
 
 //This is for Post Locations map functionality.
 document.getElementById("post-locations-filter").addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("event-map-container")).display !== "none") {
+    $("#event-map-container").fadeOut(300, function () {});
+  }
   if (window.getComputedStyle(document.getElementById("post-locations-container")).display !== "none") {
     $("#post-locations-container").fadeOut(300, function () {
       clear_map(app_analytics_map, layerControl, all_geojson, app_analytics_all_markers);
