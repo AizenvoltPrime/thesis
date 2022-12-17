@@ -915,11 +915,7 @@ postContainer.addEventListener(
           .then((res) => res.json())
           .then((response) => {
             const wb = XLSX.utils.book_new();
-            let cell = [
-              ["Poll Text", post_data[postDownloadIndex][4]],
-              ["Yes", "No"],
-              [parseInt(response[0]), parseInt(response[1])],
-            ];
+            let cell = [["Poll Text: " + post_data[postDownloadIndex][4]], ["Yes", "No"], [parseInt(response[0]), parseInt(response[1])]];
             const ws = XLSX.utils.aoa_to_sheet(cell);
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
             XLSX.writeFile(wb, "Yes_No_Poll_Type_Results.xlsx");
@@ -945,7 +941,7 @@ postContainer.addEventListener(
               }
             }
             const wb = XLSX.utils.book_new();
-            let cell = [["Poll Text", post_data[postDownloadIndex][4]], rating_choice_names, rating_choice_results];
+            let cell = [["Poll Text: " + post_data[postDownloadIndex][4]], rating_choice_names, rating_choice_results];
             const ws = XLSX.utils.aoa_to_sheet(cell);
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
             XLSX.writeFile(wb, "Rating_Poll_Type_Results.xlsx");
@@ -971,7 +967,7 @@ postContainer.addEventListener(
               }
             }
             const wb = XLSX.utils.book_new();
-            let cell = [["Poll Text", post_data[postDownloadIndex][4]], approval_choice_names, approval_choice_results];
+            let cell = [["Poll Text: " + post_data[postDownloadIndex][4]], approval_choice_names, approval_choice_results];
             const ws = XLSX.utils.aoa_to_sheet(cell);
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
             XLSX.writeFile(wb, "Approval_Poll_Type_Results.xlsx");
