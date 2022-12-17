@@ -387,7 +387,8 @@ if ($data['request'] == "request_username") {
         if (isset($data["filter_hot"]) && $data["filter_hot"] == "hot") {
             $stmt = $conn->prepare("SELECT posts_info.post_number AS post_number,posts_info.username AS username,poll_id,posts_info.category_name AS category_name,
             posts_info.post_text AS post_text,chevron_result,posts_info.post_date AS post_date,posts_info.post_expiration_date, 
-            (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result
+            (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result, posts.event_lat AS event_lat, posts.event_long AS event_long, 
+            posts.event_radius AS event_radius
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
@@ -395,7 +396,8 @@ if ($data['request'] == "request_username") {
         } else {
             $stmt = $conn->prepare("SELECT posts_info.post_number AS post_number,posts_info.username AS username,poll_id,posts_info.category_name AS category_name,
             posts_info.post_text AS post_text,chevron_result,posts_info.post_date AS post_date,posts_info.post_expiration_date, 
-            (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result
+            (posts_yes_no_info.number_of_yes-posts_yes_no_info.number_of_no) AS post_vote_result, posts.event_lat AS event_lat, posts.event_long AS event_long, 
+            posts.event_radius AS event_radius
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
@@ -419,7 +421,7 @@ if ($data['request'] == "request_username") {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $tmp = array(
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"], $row["post_date"], $row["post_expiration_date"],
-                $row["post_vote_result"]
+                $row["post_vote_result"], $row["event_lat"], $row["event_long"], $row["event_radius"]
             );
             array_push($post_data, $tmp);
         }

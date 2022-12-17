@@ -320,6 +320,12 @@ require_once "new_config.php";
   <div id="admin-chart-container" style="display:none;">
     <canvas id="admin-chart" style="padding:0em 0.5em 0em"></canvas>
   </div>
+  <div id="event-map-container" style="display:none;">
+    <button id="event-map-container-header">Click here to drag</button>
+    <div id="post-event-location-map">
+      <button class="close-map"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+  </div>
   <!--This div contains all the posts.-->
   <div id="posts-container">
     <div class="post">

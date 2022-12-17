@@ -1236,14 +1236,16 @@ a:active {
 
 #event-location-map,
 #post-locations-map,
-#admin-analytics-map {
+#admin-analytics-map,
+#post-event-location-map {
   width: 100%;
   max-width: 70em;
   height: 40em;
   border-radius: 1em;
 }
 
-#post-locations-container {
+#post-locations-container,
+#event-map-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1687,7 +1689,8 @@ input:checked + .slider:before {
   color: #000;
 }
 
-#post-locations-container-header {
+#post-locations-container-header,
+#event-map-container-header {
   cursor: move;
   color: #f3f3f3;
   background: #5e5e5e;

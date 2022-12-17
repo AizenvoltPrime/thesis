@@ -20,6 +20,7 @@ let poll_choices_number; //number of poll choices
 let bookmarks_active = false; //helps decide whether to use filters on all posts or on bookmakred posts only
 let user_coordinates = []; //stores user coordinates
 let event_coordinates = []; //stores coordinates of the event when location restricted voting is used
+let event_map = null; //This is for the event map for each post
 var DateTime = luxon.DateTime; //used for time features
 Chart.defaults.font.size = 20;
 
@@ -500,7 +501,7 @@ export function generate_posts(
         }
       }
       if (post_time !== undefined && post_time !== null) {
-        if (post_data[0].length > 9) {
+        if (post_data[0].length > 12) {
           for (let i = 0; i < post_data.length; i++) {
             if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
@@ -587,7 +588,7 @@ export function generate_posts(
             new_canvas.className = "myChart";
             document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
           }
-        } else if (post_data[0].length <= 9) {
+        } else if (post_data[0].length <= 12) {
           for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
@@ -690,11 +691,12 @@ postContainer.addEventListener(
     const btn_approval_vote = e.target.closest('div[data-dir="approval-vote"]');
     const btn_options = e.target.closest('div[data-dir="options"]');
     const btn_download = e.target.closest('div[data-dir="download-data"]');
+    const btn_event_map = e.target.closest('div[data-dir="event-location"]');
 
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
       const postIndexVote = [...postContainer.children].indexOf(post_vote);
-      if (post_data[0].length > 9) {
+      if (post_data[0].length > 12) {
         if (
           post_data[postIndexVote][11] !== null &&
           DateTime.fromFormat(post_data[postIndexVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
@@ -975,6 +977,51 @@ postContainer.addEventListener(
             XLSX.writeFile(wb, "Approval_Poll_Type_Results.xlsx");
           });
       }
+    } else if (btn_event_map) {
+      const post_event_map = btn_event_map.closest(".post");
+      const postEventIndex = [...postContainer.children].indexOf(post_event_map);
+      document.getElementsByClassName("post-options-inside-container")[postEventIndex].style.display = "none";
+
+      let data_index_lat;
+      let data_index_long;
+      let data_index_radius;
+      if (post_data[0].length > 12) {
+        data_index_lat = 12;
+        data_index_long = 13;
+        data_index_radius = 14;
+      } else if (post_data[0].length <= 12) {
+        data_index_lat = 9;
+        data_index_long = 10;
+        data_index_radius = 11;
+      }
+
+      if (post_data[postEventIndex][data_index_lat] !== null) {
+        if (event_map !== null) {
+          event_map.remove();
+        }
+        document.getElementById("event-map-container").style.display = "flex";
+        event_map = L.map(document.getElementById("post-event-location-map")).setView(
+          [post_data[postEventIndex][data_index_lat], post_data[postEventIndex][data_index_long]],
+          10
+        );
+
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(event_map);
+
+        L.marker([post_data[postEventIndex][data_index_lat], post_data[postEventIndex][data_index_long]])
+          .bindPopup(
+            "Location Coordinates: " + "<br>" + post_data[postEventIndex][data_index_lat] + "<br>" + post_data[postEventIndex][data_index_long]
+          )
+          .addTo(event_map);
+
+        L.circle([post_data[postEventIndex][data_index_lat], post_data[postEventIndex][data_index_long]], {
+          radius: post_data[postEventIndex][data_index_radius],
+        }).addTo(event_map);
+      } else {
+        $("#notification-container").fadeIn(300, function () {});
+        document.getElementById("notification-text").innerText = "This poll's event location hasn't been set";
+      }
     } else if (btn_options) {
       const post_options = btn_options.closest(".post");
       const postOptionsIndex = [...postContainer.children].indexOf(post_options);
@@ -992,7 +1039,7 @@ postContainer.addEventListener(
         element.style.display = "none";
       }
     }
-    if (post_data[0].length > 9) {
+    if (post_data[0].length > 12) {
       if (btn_approval_vote) {
         const post_approval_vote = btn_approval_vote.closest(".post");
         const postAprovalVote = [...postContainer.children].indexOf(post_approval_vote);
@@ -2047,7 +2094,7 @@ export function null_all_styles() {
 //Adds new post data that was received from websocket.
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
-  if (new_post.length > 9) {
+  if (new_post.length > 12) {
     post_data[0][16] = post_data[1][16];
   }
   user_chevron_vote.unshift([false, false]);

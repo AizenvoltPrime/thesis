@@ -510,6 +510,9 @@ export function clear_filters() {
       null_style("fa-map-location-dot");
     });
   }
+  if (window.getComputedStyle(document.getElementById("event-map-container")).display !== "none") {
+    $("#event-map-container").fadeOut(300, function () {});
+  }
   post_locations.length = 0;
   if (posts_ids_inside_region !== null) {
     posts_ids_inside_region = null;
@@ -934,9 +937,18 @@ document.getElementsByClassName("close-map")[0].addEventListener("click", functi
   });
 });
 
+//This is for Event map functionality.
+document.getElementsByClassName("close-map")[1].addEventListener("click", function () {
+  $("#event-map-container").fadeOut(300, function () {});
+});
+
 //This is for dragging post locations map
 dragElementTouch(document.getElementById("post-locations-container"));
 dragElementMouse(document.getElementById("post-locations-container"));
+
+//This is for dragging event locations map
+dragElementTouch(document.getElementById("event-map-container"));
+dragElementMouse(document.getElementById("event-map-container"));
 
 function dragElementTouch(elmnt) {
   let pos1 = 0,
