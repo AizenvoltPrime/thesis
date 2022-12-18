@@ -616,6 +616,9 @@ export function generate_posts(
             let new_canvas = document.createElement("canvas");
             new_canvas.className = "myChart";
             document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
+            let element_style = document.getElementsByClassName("post-options-inside-container")[i].getElementsByClassName("post-event-location")[0];
+            element_style.style.borderBottom = "0.1em solid #858585";
+            element_style.style.borderRadius = "0 0 0.5em 0.5em";
             if (post_data[i][2] == 1) {
               let new_yes_button = document.createElement("button");
               new_yes_button.className = "answer-yes";
