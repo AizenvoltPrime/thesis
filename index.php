@@ -342,7 +342,6 @@ require_once "new_config.php";
             <div class="post-options-inside-container" style="display:none;">
               <div data-dir="download-data" class="post-download-data"><i class="fa-solid fa-arrow-down"></i>Download</div>
               <div data-dir="event-location" class="post-event-location"><i class="fa-solid fa-location-dot"></i>Event Location</div>
-              <div data-dir="delete" class="post-delete"><i class="fa-solid fa-trash-can"></i>Delete</div>
             </div>
           </div>
           <div class="poll-timer-container">

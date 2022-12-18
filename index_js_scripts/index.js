@@ -512,6 +512,26 @@ export function generate_posts(
             } else if (post_data[i][7] != 1 && post_data[i][7] != -1) {
               user_chevron_vote.push([false, false]);
             }
+            if (post_data[i][1] === post_data[i][16]) {
+              let new_delete_div = document.createElement("div");
+              new_delete_div.className = "post-delete";
+              document.getElementsByClassName("post-options-inside-container")[i].appendChild(new_delete_div);
+              new_delete_div.setAttribute("data-dir", "delete");
+              new_delete_div.innerText = "Delete";
+
+              let new_delete_icon = document.createElement("i");
+              new_delete_icon.className = "fa-solid fa-trash-can";
+              document
+                .getElementsByClassName("post-options-inside-container")
+                [i].getElementsByClassName("post-delete")[0]
+                .insertBefore(new_delete_icon, new_delete_div.firstChild);
+            } else {
+              let element_style = document
+                .getElementsByClassName("post-options-inside-container")
+                [i].getElementsByClassName("post-event-location")[0];
+              element_style.style.borderBottom = "0.1em solid #858585";
+              element_style.style.borderRadius = "0 0 0.5em 0.5em";
+            }
             if (post_data[i][2] == 1) {
               let new_yes_button = document.createElement("button");
               new_yes_button.className = "answer-yes";
@@ -1989,6 +2009,13 @@ export function reset_poll_data() {
       ) {
         main_class.rows[i].remove();
       }
+  });
+  document.querySelectorAll(".post-options-inside-container").forEach((main_class) => {
+    if (main_class.getElementsByClassName("post-delete")[0]) {
+      main_class.getElementsByClassName("post-delete")[0].remove();
+    }
+    main_class.getElementsByClassName("post-event-location")[0].style.borderBottom = null;
+    main_class.getElementsByClassName("post-event-location")[0].style.borderRadius = null;
   });
 
   if (user_choice !== "none") {

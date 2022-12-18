@@ -90,6 +90,16 @@ addEventListener("DOMContentLoaded", (event) => {
             main_class.rows[i].remove();
           }
       });
+      clone.querySelectorAll(".post-options-inside-container").forEach((main_class) => {
+        if (main_class.getElementsByClassName("post-delete")[0]) {
+          main_class.getElementsByClassName("post-delete")[0].remove();
+        }
+        main_class.getElementsByClassName("post-event-location")[0].style.borderBottom = null;
+        main_class.getElementsByClassName("post-event-location")[0].style.borderRadius = null;
+      });
+      clone.querySelectorAll(".post-options-inside-container").forEach((element) => {
+        element.style.display = "none";
+      });
 
       clone.querySelectorAll(".post-user-name")[0].innerText = JSON.parse(e.data)[1][1];
       clone.querySelectorAll(".post-question")[0].innerText = JSON.parse(e.data)[1][4];
@@ -98,6 +108,24 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".post-time-detailed")[0].innerText = post_time_detailed;
       document.getElementById("posts-container").prepend(clone);
 
+      if (JSON.parse(e.data)[1][1] === get_variables()[3][0][16]) {
+        let new_delete_div = document.createElement("div");
+        new_delete_div.className = "post-delete";
+        document.getElementsByClassName("post-options-inside-container")[0].appendChild(new_delete_div);
+        new_delete_div.setAttribute("data-dir", "delete");
+        new_delete_div.innerText = "Delete";
+
+        let new_delete_icon = document.createElement("i");
+        new_delete_icon.className = "fa-solid fa-trash-can";
+        document
+          .getElementsByClassName("post-options-inside-container")[0]
+          .getElementsByClassName("post-delete")[0]
+          .insertBefore(new_delete_icon, new_delete_div.firstChild);
+      } else {
+        let element_style = document.getElementsByClassName("post-options-inside-container")[0].getElementsByClassName("post-event-location")[0];
+        element_style.style.borderBottom = "0.1em solid #858585";
+        element_style.style.borderRadius = "0 0 0.5em 0.5em";
+      }
       if (JSON.parse(e.data)[1][2] == 1) {
         let new_yes_button = document.createElement("button");
         new_yes_button.className = "answer-yes";

@@ -1708,18 +1708,16 @@ input:checked + .slider:before {
 
 .post-download-data {
   cursor: pointer;
-  border-top: 0.1em solid #858585;
-  border-left: 0.1em solid #858585;
-  border-right: 0.1em solid #858585;
+  border: 0.1em solid #858585;
+  border-bottom: 0;
   border-radius: 0.5em 0.5em 0 0; /* top-left | top-right | bottom-right | bottom-left */
   padding: 0.4em;
 }
 
 .post-event-location {
   cursor: pointer;
-  border-top: 0.1em solid #858585;
-  border-left: 0.1em solid #858585;
-  border-right: 0.1em solid #858585;
+  border: 0.1em solid #858585;
+  border-bottom: 0;
   padding: 0.4em;
 }
 
