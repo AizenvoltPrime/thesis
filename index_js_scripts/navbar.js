@@ -127,6 +127,7 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
     }
     $(".post").fadeOut(300, function () {});
     $("#notification-container").fadeOut(300, function () {});
+    $("#delete-notification-container").fadeOut(300, function () {});
     $(".post")
       .promise()
       .done(function () {
@@ -194,6 +195,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
     }
     $(".post").fadeOut(300, function () {});
     $("#notification-container").fadeOut(300, function () {});
+    $("#delete-notification-container").fadeOut(300, function () {});
     $(".post")
       .promise()
       .done(function () {
@@ -240,6 +242,7 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
     $("#notification-container").fadeOut(300, function () {});
+    $("#delete-notification-container").fadeOut(300, function () {});
     $(".post")
       .promise()
       .done(function () {
@@ -336,6 +339,7 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
     $("#notification-container").fadeOut(300, function () {});
+    $("#delete-notification-container").fadeOut(300, function () {});
     $(".post")
       .promise()
       .done(function () {
@@ -456,6 +460,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
     $("#notification-container").fadeOut(300, function () {});
+    $("#delete-notification-container").fadeOut(300, function () {});
     $(".post")
       .promise()
       .done(function () {

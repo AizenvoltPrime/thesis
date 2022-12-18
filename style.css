@@ -1009,7 +1009,8 @@ a:active {
   border-radius: 1em;
 }
 
-#notification-container {
+#notification-container,
+#delete-notification-container {
   display: none;
   position: fixed;
   z-index: 1;
@@ -1021,7 +1022,8 @@ a:active {
   top: 35%;
 }
 
-#notification {
+#notification,
+#delete-notification {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1035,7 +1037,8 @@ a:active {
   border: 0.01em solid #858585;
 }
 
-#notification-text {
+#notification-text,
+#delete-notification-text {
   color: #f3f3f3;
   font-size: 1.875em;
   font-weight: bold;
@@ -1045,7 +1048,17 @@ a:active {
   padding: 0.4em;
 }
 
-#notification-button {
+#delete-notification-answer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2em;
+}
+
+#notification-button,
+#delete-yes,
+#delete-no {
   background-color: #000;
   border-radius: 0.5em;
   font-weight: bold;
@@ -1053,6 +1066,11 @@ a:active {
   font-size: 1.875em;
   padding: 0.5em 1em;
   border: 0.01em solid #5e5e5e;
+}
+
+#delete-yes,
+#delete-no {
+  width: 3.7em;
 }
 
 #preferred-categories-container {

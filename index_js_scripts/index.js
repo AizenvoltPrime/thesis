@@ -21,6 +21,7 @@ let bookmarks_active = false; //helps decide whether to use filters on all posts
 let user_coordinates = []; //stores user coordinates
 let event_coordinates = []; //stores coordinates of the event when location restricted voting is used
 let event_map = null; //This is for the event map for each post
+let delete_post = null; //This is for deleting posts
 var DateTime = luxon.DateTime; //used for time features
 Chart.defaults.font.size = 20;
 
@@ -142,6 +143,7 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
           $("#add-post-icon").fadeOut(300, function () {});
           $("#all-filters").fadeOut(300, function () {});
           $("#notification-container").fadeOut(300, function () {});
+          $("#delete-notification-container").fadeOut(300, function () {});
           if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
             $("#username-change-form").fadeOut(300, function () {});
           }
@@ -715,6 +717,7 @@ postContainer.addEventListener(
     const btn_options = e.target.closest('div[data-dir="options"]');
     const btn_download = e.target.closest('div[data-dir="download-data"]');
     const btn_event_map = e.target.closest('div[data-dir="event-location"]');
+    const btn_delete = e.target.closest('div[data-dir="delete"]');
 
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
@@ -1652,6 +1655,38 @@ postContainer.addEventListener(
               }
             });
         }
+      } else if (btn_delete) {
+        const post_delete = btn_delete.closest(".post");
+        const postIndexDelete = [...postContainer.children].indexOf(post_delete);
+        if (delete_post === null) {
+          delete_post = postIndexDelete;
+          $("#delete-notification-container").fadeIn(300, function () {});
+        } else if (delete_post === true) {
+          delete_post = null;
+          fetch("process_data.php", {
+            method: "POST",
+            body: JSON.stringify({
+              request: "delete_post",
+              post_id: post_data[postIndexDelete][0],
+            }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() == "Success") {
+                conn.send(JSON.stringify(["delete_post", post_data[postIndexDelete][0]]));
+                delete_post = null;
+                post_data.splice(postIndexDelete, 1);
+                user_chevron_vote.splice(postIndexDelete, 1);
+                user_yes_no_vote.splice(postIndexDelete, 1);
+                myChart.splice(postIndexDelete, 1);
+                if (post_data.length === 0) {
+                  $(document.getElementsByClassName("post")[postIndexDelete]).fadeOut(300, function () {});
+                } else {
+                  document.getElementsByClassName("post")[postIndexDelete].remove();
+                }
+              }
+            });
+        }
       } else {
         return;
       }
@@ -2032,6 +2067,7 @@ export function reset_poll_data() {
   question_choice = "none";
   poll_choices.length = 0;
   poll_choices_number = "";
+  delete_post = null;
   document.forms["poll-question"]["question-text"].value = "";
   document.forms["time-choice"]["time-limit-choice"].value = "";
   document.forms["location-choice"]["radius"].value = "";
@@ -2173,6 +2209,23 @@ export function edit_bookmark(position, value) {
   post_data[position][10] = value;
 }
 
+export function remove_post(post_id) {
+  for (let i = 0; i < post_data.length; i++) {
+    if (post_id === post_data[i][0]) {
+      post_data.splice(i, 1);
+      user_chevron_vote.splice(i, 1);
+      user_yes_no_vote.splice(i, 1);
+      myChart.splice(i, 1);
+      if (post_data.length === 0) {
+        $(document.getElementsByClassName("post")[i]).fadeOut(300, function () {});
+      } else {
+        document.getElementsByClassName("post")[i].remove();
+      }
+      break;
+    }
+  }
+}
+
 document.onvisibilitychange = () => {
   if (document.visibilityState === "hidden" && user_coordinates[0] !== undefined) {
     conn.send(JSON.stringify(["admin_map_delete_marker", user_coordinates[0], user_coordinates[1]]));
@@ -2194,4 +2247,18 @@ window.addEventListener("click", function (e) {
       element.style.display = "none";
     }
   });
+});
+
+document.getElementById("delete-yes").addEventListener("click", function () {
+  if (delete_post !== null) {
+    let temp_post_number = delete_post;
+    delete_post = true;
+    document.getElementsByClassName("post-options-inside-container")[temp_post_number].getElementsByClassName("post-delete")[0].click();
+    $("#delete-notification-container").fadeOut(300, function () {});
+  }
+});
+
+document.getElementById("delete-no").addEventListener("click", function () {
+  delete_post = null;
+  $("#delete-notification-container").fadeOut(300, function () {});
 });

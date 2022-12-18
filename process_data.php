@@ -1017,4 +1017,14 @@ if ($data['request'] == "request_username") {
         }
     }
     echo json_encode($posts_per_location_data);
+} else if ($data['request'] == "delete_post") {
+    require_once "new_config.php";
+
+    $stmt = $conn->prepare("SELECT * FROM posts WHERE user_id=:id AND post_number=:post_id");
+    $stmt->execute([":id" => $_SESSION["id"], ":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        $stmt = $conn->prepare("DELETE FROM posts WHERE user_id=:id AND post_number=:post_id");
+        $stmt->execute([":id" => $_SESSION["id"], ":post_id" => $data["post_id"]]);
+        echo "Success";
+    }
 }

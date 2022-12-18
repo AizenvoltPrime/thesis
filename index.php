@@ -143,6 +143,16 @@ require_once "new_config.php";
       <button id="notification-button" type="button">OK</button>
     </div>
   </div>
+  <!--This div is for delete post notification.-->
+  <div id="delete-notification-container">
+    <div id="delete-notification">
+      <div id="delete-notification-text">Are you sure you want to delete this post?</div>
+      <div id="delete-notification-answer">
+        <button id="delete-yes" type="button">Yes</button>
+        <button id="delete-no" type="button">No</button>
+      </div>
+    </div>
+  </div>
   <!--This div is for notifications when new post is added.-->
   <div id="bell-notification-container">
     <i class="fa-solid fa-bell">
@@ -307,6 +317,7 @@ require_once "new_config.php";
     </div>
     <div id="admin-analytics-map"></div>
   </div>
+  <!--This div is for administrators only.-->
   <div id="admin-analytics-chart-filters-container" style="display:none;">
     <div id="admin-analytics-chart-filters-inside-container">
       <form id="admin-chart-time-filter-container">
@@ -317,9 +328,11 @@ require_once "new_config.php";
       <button id="admin-filter-button" type="button">Filter</button>
     </div>
   </div>
+  <!--This div is for administrators only.-->
   <div id="admin-chart-container" style="display:none;">
     <canvas id="admin-chart" style="padding:0em 0.5em 0em"></canvas>
   </div>
+  <!--This div is for event map.-->
   <div id="event-map-container" style="display:none;">
     <button id="event-map-container-header">Click here to drag</button>
     <div id="post-event-location-map">

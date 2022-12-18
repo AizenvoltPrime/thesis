@@ -8,6 +8,7 @@ import {
   edit_bookmark,
   edit_rating_vote,
   edit_approval_vote,
+  remove_post,
 } from "./index.js";
 import { make_admin_analytics_map, admin_map_remove_marker } from "./admin_analytics.js";
 import { get_posts_ids_inside_region } from "./filters.js";
@@ -662,6 +663,8 @@ addEventListener("DOMContentLoaded", (event) => {
           }
         }
       }
+    } else if (JSON.parse(e.data)[0] === "delete_post") {
+      remove_post(JSON.parse(e.data)[1]);
     }
   };
 });
