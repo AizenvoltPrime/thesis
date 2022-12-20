@@ -1017,7 +1017,7 @@ if ($data['request'] == "request_username") {
         }
     }
     echo json_encode($posts_per_location_data);
-} else if ($data['request'] == "delete_post") {
+} else if ($data['request'] == "delete_post" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
     require_once "new_config.php";
 
     $stmt = $conn->prepare("SELECT * FROM posts WHERE user_id=:id AND post_number=:post_id");
