@@ -595,16 +595,19 @@ export function generate_posts(
               new_check.className = "fa-solid fa-thumbs-up";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#00ffd0";
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
             } else if (post_data[i][15] < 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
               new_check.className = "fa-solid fa-thumbs-down";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#cc0000";
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
             } else if (post_data[i][15] == 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
               new_check.className = "fa-solid fa-question";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#b5b5b5";
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
             let new_canvas = document.createElement("canvas");
             new_canvas.className = "myChart";
@@ -663,16 +666,19 @@ export function generate_posts(
               new_check.className = "fa-solid fa-thumbs-up";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#00ffd0";
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
             } else if (post_data[i][8] < 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
               new_check.className = "fa-solid fa-thumbs-down";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#cc0000";
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
             } else if (post_data[i][8] == 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
               new_check.className = "fa-solid fa-question";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#b5b5b5";
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
           }
         }
@@ -1357,12 +1363,15 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-up";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More Yes Answers";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-down";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More No Answers";
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-question";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Tie of Yes and No Answers";
                     }
                   }
                   conn.send(
@@ -1400,12 +1409,15 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-up";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More Yes Answers";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-down";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More No Answers";
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-question";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Tie of Yes and No Answers";
                     }
                   }
                   conn.send(
@@ -1441,12 +1453,15 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-up";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More Yes Answers";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-down";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More No Answers";
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-question";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Tie of Yes and No Answers";
                     }
                   }
                   conn.send(
@@ -1501,12 +1516,15 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-up";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More Yes Answers";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-down";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More No Answers";
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-question";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Tie of Yes and No Answers";
                     }
                   }
                   conn.send(
@@ -1544,12 +1562,15 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-up";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More Yes Answers";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-down";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More No Answers";
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-question";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Tie of Yes and No Answers";
                     }
                   }
                   conn.send(
@@ -1585,12 +1606,15 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-up";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More Yes Answers";
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-down";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More No Answers";
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-question";
+                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Tie of Yes and No Answers";
                     }
                   }
                   conn.send(

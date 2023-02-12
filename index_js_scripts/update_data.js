@@ -165,6 +165,7 @@ addEventListener("DOMContentLoaded", (event) => {
       if (JSON.parse(e.data)[1][15] == 0 && JSON.parse(e.data)[1][2] == 1) {
         let new_check = document.createElement("i");
         new_check.className = "fa-solid fa-question";
+        clone.getElementsByClassName("parent_of_check_yes_no_details")[0].innerText = "Tie of Yes and No Answers";
         clone.getElementsByClassName("parent_of_check_yes_no")[0].appendChild(new_check);
         clone.getElementsByClassName("parent_of_check_yes_no")[0].children[0].style.color = "#b5b5b5";
       }
@@ -289,6 +290,13 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
+            if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-up") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-down") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
+            }
             if (get_variables()[2] > 12) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
@@ -309,6 +317,13 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
+            if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-up") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-down") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
+            }
             if (get_variables()[2] > 12) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
@@ -330,6 +345,13 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
+            if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-up") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-down") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
+            }
             if (get_variables()[2] > 12) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
@@ -350,6 +372,13 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
+            if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-up") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-down") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
+            }
             if (get_variables()[2] > 12) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
@@ -370,6 +399,13 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
+            if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-up") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-down") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
+            }
             if (get_variables()[2] > 12) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
@@ -391,6 +427,13 @@ addEventListener("DOMContentLoaded", (event) => {
             }
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = JSON.parse(e.data)[2];
             document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].className = JSON.parse(e.data)[7];
+            if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-up") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-thumbs-down") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
+            } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
+              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
+            }
             if (get_variables()[2] > 12) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";

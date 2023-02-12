@@ -903,7 +903,8 @@ a:active {
 }
 
 .post-time-detailed,
-.poll-remaining-time {
+.poll-remaining-time,
+.parent_of_check_yes_no_details {
   display: none;
 }
 
@@ -949,6 +950,11 @@ a:active {
   font-size: 2em;
   cursor: pointer;
 }
+
+.fa-ellipsis {
+  color: #00ffd0b8;
+}
+
 .post-question {
   height: fit-content;
   width: fit-content;
@@ -1761,4 +1767,24 @@ input:checked + .slider:before {
 .post-event-location:hover,
 .post-delete:hover {
   background: #707070;
+}
+
+.parent_of_check_yes_no_container {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.parent_of_check_yes_no:hover + .parent_of_check_yes_no_details {
+  display: block;
+  position: absolute;
+  background-color: #1a1a1b;
+  font-size: 0.9em;
+  margin-bottom: 2em;
+  border-radius: 1em;
+  color: #f3f3f3;
+  padding: 0.5em;
+  margin-right: 0.21em;
+  margin-left: 0.21em;
+  border: 0.01em solid #363636;
 }
