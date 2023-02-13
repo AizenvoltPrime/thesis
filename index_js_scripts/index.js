@@ -1819,6 +1819,12 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
   specific_user_posts = null;
 });
 
+//This is for when the user clicks "About" on the user navbar.
+document.getElementsByClassName("nav-element")[7].addEventListener("click", function () {
+  bookmarks_active = false;
+  specific_user_posts = null;
+});
+
 //Used to create the charts inside the posts.
 function get_yes_no_data(post_number) {
   fetch("process_data.php", {

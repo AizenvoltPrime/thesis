@@ -237,7 +237,8 @@ input {
 .fa-house,
 .fa-times,
 .fa-arrow-right-from-bracket,
-.fa-chart-simple {
+.fa-chart-simple,
+.fa-info {
   background: -webkit-linear-gradient(200deg, #cc0000, #000);
   background-clip: text;
   -webkit-background-clip: text;
@@ -1787,4 +1788,22 @@ input:checked + .slider:before {
   margin-right: 0.21em;
   margin-left: 0.21em;
   border: 0.01em solid #363636;
+}
+
+#about-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10em;
+  width: 90em;
+  height: fit-content;
+  max-width: 98%;
+  padding: 1.3em;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1em;
+  background-color: #1a1a1b;
+  color: #f3f3f3;
+  text-align: left;
 }

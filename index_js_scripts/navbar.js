@@ -43,7 +43,8 @@ document.getElementById("profile-icon").addEventListener("click", function () {
         document.getElementsByClassName("nav-element")[4].style.display = "none";
         document.getElementsByClassName("nav-element")[5].style.display = "none";
         document.getElementsByClassName("nav-element")[6].style.display = "none";
-        document.getElementsByClassName("nav-element")[7].style.display = "none";
+        document.getElementsByClassName("nav-element")[8].style.display = "none";
+        document.getElementsByClassName("fa-solid fa-info")[0].style.paddingRight = "0.55em";
       } else {
         document.getElementsByClassName("nav-element")[1].style.display = "none";
         document.getElementsByClassName("nav-element")[2].style.display = "none";
@@ -54,6 +55,8 @@ document.getElementById("profile-icon").addEventListener("click", function () {
         document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.webkitTextFillColor = "transparent";
         document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.paddingRight = "0.35em";
         document.getElementsByClassName("fa-solid fa-chart-simple")[0].style.paddingRight = "0.35em";
+        document.getElementsByClassName("fa-solid fa-info")[0].style.paddingRight = "0.85em";
+        document.getElementsByClassName("fa-solid fa-arrow-right-from-bracket")[0].style.paddingRight = "0.15em";
         document.getElementsByClassName("fa-solid fa-user fa-1x")[0].style.paddingRight = "0.25em";
         document.getElementsByClassName("fa-solid fa-lock fa-1x")[0].style.paddingRight = "0.25em";
       }
@@ -98,6 +101,14 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
         null_style("fa-solid fa-map");
         conn.send(JSON.stringify(["admin_map_status", false]));
         set_admin_map_bool(false);
+        $("#all-filters").fadeIn(300, function () {});
+        $("#add-post-icon").fadeIn(300, function () {});
+        generate_posts(true);
+      });
+    } else if (window.getComputedStyle(document.getElementById("about-container")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#about-container").fadeOut(300, function () {
         $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(true);
@@ -170,6 +181,14 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
         $("#add-post-icon").fadeIn(300, function () {});
         generate_posts(false);
       });
+    } else if (window.getComputedStyle(document.getElementById("about-container")).display !== "none") {
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("sidenav-icon").style.visibility = "visible";
+      $("#about-container").fadeOut(300, function () {
+        $("#all-filters").fadeIn(300, function () {});
+        $("#add-post-icon").fadeIn(300, function () {});
+        generate_posts(false);
+      });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
@@ -223,6 +242,12 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
         null_style("fa-solid fa-map");
         conn.send(JSON.stringify(["admin_map_status", false]));
         set_admin_map_bool(false);
+        $("#username-change-form").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementById("about-container")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#about-container").fadeOut(300, function () {
         $("#username-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
@@ -320,6 +345,12 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
         null_style("fa-solid fa-map");
         conn.send(JSON.stringify(["admin_map_status", false]));
         set_admin_map_bool(false);
+        $("#password-change-form").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementById("about-container")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#about-container").fadeOut(300, function () {
         $("#password-change-form").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
@@ -435,6 +466,20 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
           admin_analytics_map.invalidateSize();
         });
       });
+    } else if (window.getComputedStyle(document.getElementById("about-container")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#about-container").fadeOut(300, function () {
+        null_style("fa-chart-column");
+        highlight_filter("fa-solid fa-map");
+        document.getElementById("admin-analytics-map").style.display = "block";
+        $("#analytics-container").fadeIn(300, function () {
+          clear_admin_map();
+          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          set_admin_map_bool(true);
+          admin_analytics_map.invalidateSize();
+        });
+      });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
@@ -473,6 +518,59 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
           set_admin_map_bool(true);
           admin_analytics_map.invalidateSize();
         });
+      });
+  }
+});
+
+//This is for when the user clicks "About" on the user navbar.
+document.getElementsByClassName("nav-element")[7].addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
+    clear_screen();
+    if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#username-change-form").fadeOut(300, function () {
+        $("#about-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#password-change-form").fadeOut(300, function () {
+        $("#about-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#admin-analytics-chart-filters-container").fadeOut(300, function () {});
+      $("#analytics-container").fadeOut(300, function () {
+        clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+        null_style("fa-solid fa-map");
+        conn.send(JSON.stringify(["admin_map_status", false]));
+        set_admin_map_bool(false);
+        $("#about-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
+      document.getElementById("user-nav").style.width = "0";
+      document.getElementById("profile-icon").style.visibility = "visible";
+      $("#next-step").fadeOut(300, function () {
+        $("#about-container").fadeIn(300, function () {});
+      });
+    }
+  } else {
+    document.getElementById("user-nav").style.width = "0";
+    document.getElementById("profile-icon").style.visibility = "visible";
+    $("#add-post-icon").fadeOut(300, function () {});
+    $("#all-filters").fadeOut(300, function () {});
+    $(".post").fadeOut(300, function () {});
+    $("#notification-container").fadeOut(300, function () {});
+    $("#delete-notification-container").fadeOut(300, function () {});
+    $(".post")
+      .promise()
+      .done(function () {
+        $(".post").fadeOut(300, function () {});
+        $(".post").not(":first").remove();
+        reset_poll_data();
+        $("#about-container").fadeIn(300, function () {});
       });
   }
 });
