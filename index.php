@@ -439,6 +439,7 @@ require_once "new_config.php";
         <button data-dir="star-vote" class="send-rating-button">Send Vote</button>
       </div>
       <div class="rating-vote-results" style="display:none;">
+        <div class="results-poll-name">Rating Results</div>
         <div class="rating-choices-results" data-value="1">
           <div class="choice-name"></div>
           <button class="half-star-container-results" value="0.5"><i class="fa-solid fa-star-half"></i></button>
@@ -462,6 +463,7 @@ require_once "new_config.php";
         <button data-dir="approval-vote-send" class="send-approval-button">Send Vote</button>
       </div>
       <div class="approval-vote-results" style="display:none;">
+        <div class="results-poll-name">Approval Results</div>
         <table class="approval-results-table">
           <tbody>
             <tr data-value="0">

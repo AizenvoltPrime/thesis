@@ -1993,7 +1993,7 @@ export function make_yes_no_chart(post_number, chart_data) {
       labels: ["Yes", "No"],
       datasets: [
         {
-          label: "Yes/No Poll",
+          label: "Yes/No Results",
           data: chart_data,
           backgroundColor: [],
           borderColor: ["#00ffffbb", "#cc0000"],

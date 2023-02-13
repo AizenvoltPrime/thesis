@@ -1692,6 +1692,7 @@ input:checked + .slider:before {
   border-radius: 1em;
   gap: 1em;
   margin-top: 1em;
+  background: #2c3134;
 }
 
 .approval-results-table {
@@ -1808,4 +1809,12 @@ input:checked + .slider:before {
   background-color: #1a1a1b;
   color: #f3f3f3;
   text-align: left;
+}
+
+.results-poll-name {
+  color: #f3f3f3;
+  font-size: 1.3em;
+  border-radius: 1em;
+  background: #1a1a1b;
+  padding: 0.4em;
 }
