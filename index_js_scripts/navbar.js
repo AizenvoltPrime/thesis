@@ -45,9 +45,6 @@ document.getElementById("profile-icon").addEventListener("click", function () {
         document.getElementsByClassName("nav-element")[6].style.display = "none";
         document.getElementsByClassName("nav-element")[7].style.display = "none";
       } else {
-        if (response !== "admin") {
-          document.getElementsByClassName("nav-element")[6].style.display = "none";
-        }
         document.getElementsByClassName("nav-element")[1].style.display = "none";
         document.getElementsByClassName("nav-element")[2].style.display = "none";
         document.getElementsByClassName("nav-element")[3].style.cursor = "pointer";
