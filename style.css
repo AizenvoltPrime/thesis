@@ -1695,6 +1695,8 @@ input:checked + .slider:before {
 }
 
 .approval-results-table {
+  table-layout: fixed;
+  word-wrap: break-word;
   border-collapse: collapse;
   text-align: center;
   width: 100%;
