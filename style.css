@@ -227,7 +227,8 @@ input {
 .category i,
 .post-download-data i,
 .post-event-location i,
-.post-delete i {
+.post-delete i,
+.download-results-image i {
   margin-right: 0.5em;
 }
 
@@ -1009,6 +1010,13 @@ a:active {
   cursor: pointer;
 }
 
+.yes-no-results-container {
+  display: flex;
+  border-radius: 1em;
+  flex-flow: column;
+  gap: 1em;
+}
+
 .chartCard {
   margin-top: 1em;
   background-color: #2c3134;
@@ -1066,13 +1074,22 @@ a:active {
 #notification-button,
 #delete-yes,
 #delete-no {
-  background-color: #000;
-  border-radius: 0.5em;
+  background-color: #00ffd0;
+  border-radius: 1em;
   font-weight: bold;
-  color: #cc0000;
+  color: #000000;
   font-size: 1.875em;
-  padding: 0.5em 1em;
-  border: 0.01em solid #5e5e5e;
+  padding: 0.4em;
+}
+
+#notification-button {
+  padding: 0.4em 0.9em;
+}
+
+#delete-no {
+  width: 3.7em;
+  background: none;
+  border: none;
 }
 
 #delete-yes,
@@ -1595,8 +1612,7 @@ input:checked + .slider:before {
   margin-top: 11em;
 }
 
-.rating-vote,
-.rating-vote-results {
+.rating-vote {
   align-self: center;
   display: flex;
   justify-content: center;
@@ -1608,7 +1624,27 @@ input:checked + .slider:before {
   padding: 0.8em;
   border-radius: 1em;
   gap: 1em;
-  margin-top: 1em;
+}
+
+.rating-vote-results {
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  gap: 1em;
+}
+
+.rating-vote-results-inside-container {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  background: #2c3134;
+  width: 100%;
+  max-width: 20em;
+  padding: 0.8em;
+  border-radius: 1em;
+  gap: 1em;
 }
 
 .approval-vote-container {
@@ -1681,6 +1717,14 @@ input:checked + .slider:before {
 }
 
 .approval-vote-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  gap: 1em;
+}
+
+.approval-vote-results-inside-container {
   align-self: center;
   display: flex;
   justify-content: center;
@@ -1691,7 +1735,6 @@ input:checked + .slider:before {
   padding: 0.8em;
   border-radius: 1em;
   gap: 1em;
-  margin-top: 1em;
   background: #2c3134;
 }
 
@@ -1817,4 +1860,13 @@ input:checked + .slider:before {
   border-radius: 1em;
   background: #1a1a1b;
   padding: 0.4em;
+}
+
+.download-results-image {
+  background: #00ffd0;
+  border-radius: 1em;
+  padding: 0.4em;
+  color: black;
+  align-self: center;
+  max-width: 5em;
 }

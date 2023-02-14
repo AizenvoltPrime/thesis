@@ -56,7 +56,8 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".poll-timer-container").forEach((main_class) => (main_class.style.display = null));
       clone.querySelectorAll(".fa-clock").forEach((main_class) => (main_class.style.color = null));
       clone.querySelectorAll(".poll-remaining-time").forEach((main_class) => (main_class.innerText = ""));
-      clone.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
+      clone.querySelectorAll(".yes-no-results-container").forEach((main_class) => (main_class.style.display = "none"));
+      clone.querySelectorAll(".chartCard").forEach((main_class) => (main_class.innerHTML = ""));
       clone.querySelectorAll(".answer-yes").forEach((main_class) => main_class.remove());
       clone.querySelectorAll(".answer-no").forEach((main_class) => main_class.remove());
       clone.querySelectorAll(".vote").forEach((main_class) => main_class.remove());
@@ -101,7 +102,7 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".post-options-inside-container").forEach((element) => {
         element.style.display = "none";
       });
-
+      clone.getElementsByClassName("post-critic")[0].style.marginBottom = null;
       clone.querySelectorAll(".post-user-name")[0].innerText = JSON.parse(e.data)[1][1];
       clone.querySelectorAll(".post-question")[0].innerText = JSON.parse(e.data)[1][4];
       clone.querySelectorAll(".score")[0].innerText = JSON.parse(e.data)[1][5];
@@ -510,7 +511,7 @@ addEventListener("DOMContentLoaded", (event) => {
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           if (window.getComputedStyle(document.getElementsByClassName("rating-vote-results")[i]).display === "flex") {
-            let post_element = document.getElementsByClassName("post")[i];
+            let post_element = document.getElementsByClassName("post")[i].getElementsByClassName("rating-vote-results-inside-container")[0];
             post_element.querySelectorAll(".rating-choices-results").forEach((child) => {
               if (child.getAttribute("data-value") !== "1") {
                 child.remove();
@@ -538,7 +539,7 @@ addEventListener("DOMContentLoaded", (event) => {
                   let clone_rating_choices = post_element.getElementsByClassName("rating-choices-results")[0];
                   let clone = clone_rating_choices.cloneNode(true);
                   clone.setAttribute("data-value", j + 1);
-                  post_element.getElementsByClassName("rating-vote-results")[0].appendChild(clone);
+                  post_element.appendChild(clone);
                   post_element
                     .querySelectorAll(".rating-choices-results")
                     [j].querySelectorAll(".half-star-container-results")

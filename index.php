@@ -23,7 +23,9 @@ require_once "new_config.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.4/luxon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
-  <script src=https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
   <script type="module" src="index_js_scripts/index.js"></script>
   <script type="module" src="index_js_scripts/navbar.js"></script>
@@ -421,7 +423,10 @@ require_once "new_config.php";
         </div>
         <button class="parent_of_bookmark" data-dir="bookmark"></button>
       </div>
-      <div class="chartCard" style="display:none;"></div>
+      <div class="yes-no-results-container" style="display:none;">
+        <div class="chartCard"></div>
+        <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
+      </div>
       <div class="rating-vote" style="display:none;">
         <div class="rating-choices" data-value="1">
           <div class="choice-name"></div>
@@ -439,20 +444,23 @@ require_once "new_config.php";
         <button data-dir="star-vote" class="send-rating-button">Send Vote</button>
       </div>
       <div class="rating-vote-results" style="display:none;">
-        <div class="results-poll-name">Rating Results</div>
-        <div class="rating-choices-results" data-value="1">
-          <div class="choice-name"></div>
-          <button class="half-star-container-results" value="0.5"><i class="fa-solid fa-star-half"></i></button>
-          <button class="half-star-container-results" value="1.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
-          <button class="half-star-container-results" value="1.5"><i class="fa-solid fa-star-half"></i></button>
-          <button class="half-star-container-results" value="2.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
-          <button class="half-star-container-results" value="2.5"><i class="fa-solid fa-star-half"></i></button>
-          <button class="half-star-container-results" value="3.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
-          <button class="half-star-container-results" value="3.5"><i class="fa-solid fa-star-half"></i></button>
-          <button class="half-star-container-results" value="4.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
-          <button class="half-star-container-results" value="4.5"><i class="fa-solid fa-star-half"></i></button>
-          <button class="half-star-container-results" value="5.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+        <div class="rating-vote-results-inside-container">
+          <div class="results-poll-name">Rating Results</div>
+          <div class="rating-choices-results" data-value="1">
+            <div class="choice-name"></div>
+            <button class="half-star-container-results" value="0.5"><i class="fa-solid fa-star-half"></i></button>
+            <button class="half-star-container-results" value="1.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+            <button class="half-star-container-results" value="1.5"><i class="fa-solid fa-star-half"></i></button>
+            <button class="half-star-container-results" value="2.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+            <button class="half-star-container-results" value="2.5"><i class="fa-solid fa-star-half"></i></button>
+            <button class="half-star-container-results" value="3.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+            <button class="half-star-container-results" value="3.5"><i class="fa-solid fa-star-half"></i></button>
+            <button class="half-star-container-results" value="4.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+            <button class="half-star-container-results" value="4.5"><i class="fa-solid fa-star-half"></i></button>
+            <button class="half-star-container-results" value="5.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+          </div>
         </div>
+        <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
       </div>
       <div class="approval-vote-container" style="display:none;">
         <div class="approval-choices-container">
@@ -463,30 +471,33 @@ require_once "new_config.php";
         <button data-dir="approval-vote-send" class="send-approval-button">Send Vote</button>
       </div>
       <div class="approval-vote-results" style="display:none;">
-        <div class="results-poll-name">Approval Results</div>
-        <table class="approval-results-table">
-          <tbody>
-            <tr data-value="0">
-              <th>Choices</th>
-              <th>Votes</th>
-            </tr>
-            <tr data-value="1">
-              <td></td>
-              <td>
-              </td>
-            </tr>
-            <tr data-value="2">
-              <td>
-              </td>
-              <td></td>
-            </tr>
-            <tr data-value="3">
-              <td>
-              </td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="approval-vote-results-inside-container">
+          <div class="results-poll-name">Approval Results</div>
+          <table class="approval-results-table">
+            <tbody>
+              <tr data-value="0">
+                <th>Choices</th>
+                <th>Votes</th>
+              </tr>
+              <tr data-value="1">
+                <td></td>
+                <td>
+                </td>
+              </tr>
+              <tr data-value="2">
+                <td>
+                </td>
+                <td></td>
+              </tr>
+              <tr data-value="3">
+                <td>
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
       </div>
     </div>
   </div>

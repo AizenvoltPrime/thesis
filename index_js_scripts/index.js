@@ -724,6 +724,7 @@ postContainer.addEventListener(
     const btn_download = e.target.closest('div[data-dir="download-data"]');
     const btn_event_map = e.target.closest('div[data-dir="event-location"]');
     const btn_delete = e.target.closest('div[data-dir="delete"]');
+    const btn_download_results_img = e.target.closest('button[data-dir="download-results-img"]');
 
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
@@ -743,10 +744,12 @@ postContainer.addEventListener(
           $("#notification-container").fadeIn(300, function () {});
           document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
         } else {
+          document.getElementsByClassName("post-critic")[postIndexVote].style.marginBottom = "1em";
           if (post_data[postIndexVote][2] == "2") {
             if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexVote]).display === "flex") {
               document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = null;
               document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "none";
+              document.getElementsByClassName("post-critic")[postIndexVote].style.marginBottom = null;
             } else {
               if (window.getComputedStyle(document.getElementsByClassName("rating-vote-results")[postIndexVote]).display === "flex") {
                 document.querySelectorAll(".show-results")[postIndexVote].style.backgroundColor = "#00a1ff80";
@@ -810,6 +813,7 @@ postContainer.addEventListener(
             if (window.getComputedStyle(document.getElementsByClassName("approval-vote-container")[postIndexVote]).display === "flex") {
               document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = null;
               document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("approval-vote-container")[0].style.display = "none";
+              document.getElementsByClassName("post-critic")[postIndexVote].style.marginBottom = null;
             } else {
               if (window.getComputedStyle(document.getElementsByClassName("approval-vote-results")[postIndexVote]).display === "flex") {
                 document.querySelectorAll(".show-results")[postIndexVote].style.backgroundColor = "#00a1ff80";
@@ -882,13 +886,15 @@ postContainer.addEventListener(
       const post_show_results = btn_show_results.closest(".post");
       const postIndexShowResults = [...postContainer.children].indexOf(post_show_results);
 
+      document.getElementsByClassName("post-critic")[postIndexShowResults].style.marginBottom = "1em";
       if (post_data[postIndexShowResults][2] == 1)
         if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexShowResults]).display === "block") {
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
-          document.querySelectorAll(".chartCard")[postIndexShowResults].style.display = "none";
+          document.querySelectorAll(".yes-no-results-container")[postIndexShowResults].style.display = "none";
           if (myChart[postIndexShowResults]) {
             myChart[postIndexShowResults].destroy();
           }
+          document.getElementsByClassName("post-critic")[postIndexShowResults].style.marginBottom = null;
         } else {
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff";
           get_yes_no_data(postIndexShowResults);
@@ -897,6 +903,7 @@ postContainer.addEventListener(
         if (window.getComputedStyle(document.getElementsByClassName("rating-vote-results")[postIndexShowResults]).display === "flex") {
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
           document.querySelectorAll(".rating-vote-results")[postIndexShowResults].style.display = "none";
+          document.getElementsByClassName("post-critic")[postIndexShowResults].style.marginBottom = null;
         } else {
           if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexShowResults]).display === "flex") {
             document.querySelectorAll(".post")[postIndexShowResults].getElementsByClassName("vote")[0].style.backgroundColor = null;
@@ -910,6 +917,7 @@ postContainer.addEventListener(
         if (window.getComputedStyle(document.getElementsByClassName("approval-vote-results")[postIndexShowResults]).display === "flex") {
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
           document.querySelectorAll(".approval-vote-results")[postIndexShowResults].style.display = "none";
+          document.getElementsByClassName("post-critic")[postIndexShowResults].style.marginBottom = null;
         } else {
           if (window.getComputedStyle(document.getElementsByClassName("approval-vote-container")[postIndexShowResults]).display === "flex") {
             document.querySelectorAll(".post")[postIndexShowResults].getElementsByClassName("vote")[0].style.backgroundColor = null;
@@ -1068,6 +1076,35 @@ postContainer.addEventListener(
         element.style.display = "flex";
       } else if (window.getComputedStyle(element).display === "flex") {
         element.style.display = "none";
+      }
+    } else if (btn_download_results_img) {
+      const post_download_results_img = btn_download_results_img.closest(".post");
+      const postDownloadResImgIndex = [...postContainer.children].indexOf(post_download_results_img);
+      if (post_data[postDownloadResImgIndex][2] == 1) {
+        let yes_no_chart = document.getElementsByClassName("post")[postDownloadResImgIndex].getElementsByClassName("myChart")[0];
+        let imageData = yes_no_chart.toDataURL("image/png");
+        let link = document.createElement("a");
+        link.download = "Yes_No_Poll_Type_Results.png";
+        link.href = imageData;
+        link.click();
+      } else if (post_data[postDownloadResImgIndex][2] == 2) {
+        html2canvas(
+          document.getElementsByClassName("post")[postDownloadResImgIndex].getElementsByClassName("rating-vote-results-inside-container")[0]
+        ).then((canvas) => {
+          let link = document.createElement("a");
+          link.download = "Rating_Poll_Type_Results.png";
+          link.href = canvas.toDataURL();
+          link.click();
+        });
+      } else if (post_data[postDownloadResImgIndex][2] == 3) {
+        htmlToImage
+          .toPng(document.getElementsByClassName("post")[postDownloadResImgIndex].getElementsByClassName("approval-vote-results-inside-container")[0])
+          .then(function (dataUrl) {
+            let link = document.createElement("a");
+            link.download = "Approval_Poll_Type_Results.png";
+            link.href = dataUrl;
+            link.click();
+          });
       }
     }
     if (post_data[0].length > 12) {
@@ -1880,7 +1917,7 @@ function get_rating_data(post_number) {
             let clone_rating_choices = post_element.getElementsByClassName("rating-choices-results")[0];
             let clone = clone_rating_choices.cloneNode(true);
             clone.setAttribute("data-value", i + 1);
-            post_element.getElementsByClassName("rating-vote-results")[0].appendChild(clone);
+            post_element.getElementsByClassName("rating-vote-results-inside-container")[0].appendChild(clone);
             post_element
               .querySelectorAll(".rating-choices-results")
               [i].querySelectorAll(".half-star-container-results")
@@ -1985,7 +2022,7 @@ export function make_yes_no_chart(post_number, chart_data) {
   if (myChart[post_number]) {
     myChart[post_number].destroy();
   }
-  document.querySelectorAll(".chartCard")[post_number].style.display = "block";
+  document.querySelectorAll(".yes-no-results-container")[post_number].style.display = "flex";
   ctx[post_number] = document.getElementsByClassName("myChart")[post_number].getContext("2d");
   myChart[post_number] = new Chart(ctx[post_number], {
     type: "bar",
@@ -2043,7 +2080,8 @@ export function reset_poll_data() {
   document.querySelectorAll(".poll-timer-container").forEach((main_class) => (main_class.style.display = null));
   document.querySelectorAll(".fa-clock").forEach((main_class) => (main_class.style.color = null));
   document.querySelectorAll(".poll-remaining-time").forEach((main_class) => (main_class.innerText = ""));
-  document.querySelectorAll(".chartCard").forEach((main_class) => ((main_class.innerHTML = ""), (main_class.style.display = "none")));
+  document.querySelectorAll(".yes-no-results-container").forEach((main_class) => (main_class.style.display = "none"));
+  document.querySelectorAll(".chartCard").forEach((main_class) => (main_class.innerHTML = ""));
   document.querySelectorAll(".answer-yes").forEach((main_class) => main_class.remove());
   document.querySelectorAll(".answer-no").forEach((main_class) => main_class.remove());
   document.querySelectorAll(".vote").forEach((main_class) => main_class.remove());
@@ -2085,6 +2123,7 @@ export function reset_poll_data() {
     main_class.getElementsByClassName("post-event-location")[0].style.borderBottom = null;
     main_class.getElementsByClassName("post-event-location")[0].style.borderRadius = null;
   });
+  document.querySelectorAll(".post-critic").forEach((element) => (element.style.marginBottom = null));
 
   if (user_choice !== "none") {
     choice_dehighlight(user_choice);
