@@ -725,6 +725,7 @@ postContainer.addEventListener(
     const btn_event_map = e.target.closest('div[data-dir="event-location"]');
     const btn_delete = e.target.closest('div[data-dir="delete"]');
     const btn_download_results_img = e.target.closest('button[data-dir="download-results-img"]');
+    const btn_download_results_pdf = e.target.closest('button[data-dir="download-results-pdf"]');
 
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
@@ -1081,30 +1082,105 @@ postContainer.addEventListener(
       const post_download_results_img = btn_download_results_img.closest(".post");
       const postDownloadResImgIndex = [...postContainer.children].indexOf(post_download_results_img);
       if (post_data[postDownloadResImgIndex][2] == 1) {
-        let yes_no_chart = document.getElementsByClassName("post")[postDownloadResImgIndex].getElementsByClassName("myChart")[0];
-        let imageData = yes_no_chart.toDataURL("image/png");
-        let link = document.createElement("a");
-        link.download = "Yes_No_Poll_Type_Results.png";
-        link.href = imageData;
-        link.click();
+        let results_element = document.getElementsByClassName("post")[postDownloadResImgIndex].getElementsByClassName("myChart")[0];
+        results_element.style.backgroundColor = "#2c3134";
+        results_element.style.borderRadius = "1em";
+        html2canvas(results_element, {
+          width: results_element.offsetWidth,
+          height: results_element.offsetHeight,
+          scrollY: 0,
+          scale: 1,
+        }).then((canvas) => {
+          let link = document.createElement("a");
+          link.download = "Yes_No_Poll_Type_Results.png";
+          link.href = canvas.toDataURL();
+          link.click();
+        });
       } else if (post_data[postDownloadResImgIndex][2] == 2) {
-        html2canvas(
-          document.getElementsByClassName("post")[postDownloadResImgIndex].getElementsByClassName("rating-vote-results-inside-container")[0]
-        ).then((canvas) => {
+        let results_element = document
+          .getElementsByClassName("post")
+          [postDownloadResImgIndex].getElementsByClassName("rating-vote-results-inside-container")[0];
+        html2canvas(results_element, {
+          width: results_element.offsetWidth,
+          height: results_element.offsetHeight,
+          scrollY: 0,
+          scale: 2,
+        }).then((canvas) => {
           let link = document.createElement("a");
           link.download = "Rating_Poll_Type_Results.png";
           link.href = canvas.toDataURL();
           link.click();
         });
       } else if (post_data[postDownloadResImgIndex][2] == 3) {
-        htmlToImage
-          .toPng(document.getElementsByClassName("post")[postDownloadResImgIndex].getElementsByClassName("approval-vote-results-inside-container")[0])
-          .then(function (dataUrl) {
-            let link = document.createElement("a");
-            link.download = "Approval_Poll_Type_Results.png";
-            link.href = dataUrl;
-            link.click();
-          });
+        let results_element = document
+          .getElementsByClassName("post")
+          [postDownloadResImgIndex].getElementsByClassName("approval-vote-results-inside-container")[0];
+        html2canvas(results_element, {
+          width: results_element.offsetWidth,
+          height: results_element.offsetHeight,
+          scrollY: 0,
+          scale: 2,
+        }).then((canvas) => {
+          let link = document.createElement("a");
+          link.download = "Approval_Poll_Type_Results.png";
+          link.href = canvas.toDataURL();
+          link.click();
+        });
+      }
+    } else if (btn_download_results_pdf) {
+      const post_download_results_pdf = btn_download_results_pdf.closest(".post");
+      const postDownloadResPDFIndex = [...postContainer.children].indexOf(post_download_results_pdf);
+      if (post_data[postDownloadResPDFIndex][2] == 1) {
+        window.jsPDF = window.jspdf.jsPDF;
+        let results_element = document.getElementsByClassName("post")[postDownloadResPDFIndex].getElementsByClassName("myChart")[0];
+        results_element.style.backgroundColor = "#2c3134";
+        results_element.style.borderRadius = "1em";
+        html2canvas(results_element).then((canvas) => {
+          let pdf = new jsPDF("l", "mm", "a4");
+          let pdfWidth = pdf.internal.pageSize.getWidth();
+          let pdfHeight = pdf.internal.pageSize.getHeight();
+          let chartWidth = canvas.width;
+          let chartHeight = canvas.height;
+          let scale = Math.min(pdfWidth / chartWidth, pdfHeight / chartHeight);
+          let scaledWidth = chartWidth * scale;
+          let scaledHeight = chartHeight * scale;
+          pdf.addImage(canvas, "PNG", (pdfWidth - scaledWidth) / 2, (pdfHeight - scaledHeight) / 2, scaledWidth, scaledHeight);
+          pdf.save("Yes_No_Poll_Type_Results.pdf");
+        });
+      } else if (post_data[postDownloadResPDFIndex][2] == 2) {
+        window.jsPDF = window.jspdf.jsPDF;
+        let results_element = document
+          .getElementsByClassName("post")
+          [postDownloadResPDFIndex].getElementsByClassName("rating-vote-results-inside-container")[0];
+        let rating_vote_results_pdf = new jsPDF("p", "pt", [results_element.offsetWidth, results_element.offsetHeight]);
+        html2canvas(results_element, { scale: 3 }).then((canvas) => {
+          let padding = 10;
+          let scale = Math.min(
+            (rating_vote_results_pdf.internal.pageSize.width - padding) / canvas.width,
+            (rating_vote_results_pdf.internal.pageSize.height - padding) / canvas.height
+          );
+          let x = (rating_vote_results_pdf.internal.pageSize.width - canvas.width * scale) / 2;
+          let y = (rating_vote_results_pdf.internal.pageSize.height - canvas.height * scale) / 2;
+          rating_vote_results_pdf.addImage(canvas.toDataURL("image/png"), "PNG", x, y, canvas.width * scale, canvas.height * scale);
+          rating_vote_results_pdf.save("Rating_Poll_Type_Results.pdf");
+        });
+      } else if (post_data[postDownloadResPDFIndex][2] == 3) {
+        window.jsPDF = window.jspdf.jsPDF;
+        let results_element = document
+          .getElementsByClassName("post")
+          [postDownloadResPDFIndex].getElementsByClassName("approval-vote-results-inside-container")[0];
+        let approval_vote_results_pdf = new jsPDF("p", "pt", [results_element.offsetWidth, results_element.offsetHeight]);
+        html2canvas(results_element, { scale: 3 }).then((canvas) => {
+          let padding = 10;
+          let scale = Math.min(
+            (approval_vote_results_pdf.internal.pageSize.width - padding) / canvas.width,
+            (approval_vote_results_pdf.internal.pageSize.height - padding) / canvas.height
+          );
+          let x = (approval_vote_results_pdf.internal.pageSize.width - canvas.width * scale) / 2;
+          let y = (approval_vote_results_pdf.internal.pageSize.height - canvas.height * scale) / 2;
+          approval_vote_results_pdf.addImage(canvas.toDataURL("image/png"), "PNG", x, y, canvas.width * scale, canvas.height * scale);
+          approval_vote_results_pdf.save("Approval_Poll_Type_Results.pdf");
+        });
       }
     }
     if (post_data[0].length > 12) {

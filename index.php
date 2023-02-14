@@ -26,6 +26,7 @@ require_once "new_config.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
   <script type="module" src="index_js_scripts/index.js"></script>
   <script type="module" src="index_js_scripts/navbar.js"></script>
@@ -425,7 +426,10 @@ require_once "new_config.php";
       </div>
       <div class="yes-no-results-container" style="display:none;">
         <div class="chartCard"></div>
-        <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
+        <div class="download-results">
+          <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
+          <button class="download-results-pdf" data-dir="download-results-pdf"><i class="fa-solid fa-cloud-arrow-down"></i>PDF</button>
+        </div>
       </div>
       <div class="rating-vote" style="display:none;">
         <div class="rating-choices" data-value="1">
@@ -460,7 +464,10 @@ require_once "new_config.php";
             <button class="half-star-container-results" value="5.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
           </div>
         </div>
-        <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
+        <div class="download-results">
+          <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
+          <button class="download-results-pdf" data-dir="download-results-pdf"><i class="fa-solid fa-cloud-arrow-down"></i>PDF</button>
+        </div>
       </div>
       <div class="approval-vote-container" style="display:none;">
         <div class="approval-choices-container">
@@ -497,7 +504,10 @@ require_once "new_config.php";
             </tbody>
           </table>
         </div>
-        <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
+        <div class="download-results">
+          <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
+          <button class="download-results-pdf" data-dir="download-results-pdf"><i class="fa-solid fa-cloud-arrow-down"></i>PDF</button>
+        </div>
       </div>
     </div>
   </div>

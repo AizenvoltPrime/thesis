@@ -228,7 +228,8 @@ input {
 .post-download-data i,
 .post-event-location i,
 .post-delete i,
-.download-results-image i {
+.download-results-image i,
+.download-results-pdf i {
   margin-right: 0.5em;
 }
 
@@ -1862,11 +1863,18 @@ input:checked + .slider:before {
   padding: 0.4em;
 }
 
-.download-results-image {
+.download-results-image,
+.download-results-pdf {
   background: #00ffd0;
   border-radius: 1em;
   padding: 0.4em;
   color: black;
   align-self: center;
   max-width: 5em;
+}
+
+.download-results {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
 }

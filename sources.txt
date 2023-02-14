@@ -86,8 +86,7 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 
 - ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
 
-1. πολύ ωραίο το click here to drag - ωραία και τα downloaded xls files - θα ήταν ίσως ενδιαφέρον να υπάρχει επιλογή και για downloading των visualizations σε jpg/pdf
-Με το visualizations εννοείται το yes/no chart, τα αστεράκια και το πίνακα;
+1. Download visualizations as pdf
 
 2. Στο φίλτρο preferred categories ίσως πρέπει να υπάρχει επιλογή select/unselect all
 Σαν default εμφανίζονται τα post από όλες τις κατηγορίες οπότε το select all το θεωρώ αχρείαστω, τώρα για το unselect all θα το δω.
@@ -118,3 +117,4 @@ bookmark οπότε οι χρήστες μπορούν να καταλάβουν
 ότι κάποιος που θα χρησιμοποιούσε την εφαρμοφή θα είχε την εμπειρία από άλλα site για να καταλάβει τι μπορεί να σημαίνει.
 - Σχετικά με το να φαίνεται τι είδους poll είναι το καθένα, στο Show Results πρόσθεσα τίτλο πάνω από τα results που αναφέρει πχ Rating Results ή Approval Results, ώστε να
 μπορούν να καταλάβουν οι χρήστες τι είδους poll είναι.
+- Πρόσθεσα τη δυνατότητα να μπορεί ο χρήστης να κατεβάσει τα results των poll σαν png image.
