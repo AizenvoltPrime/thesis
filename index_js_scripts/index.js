@@ -699,6 +699,13 @@ export function generate_posts(
         $("#all-filters").fadeIn(300, function () {});
       }
       console.log(post_data);
+      if (window.getComputedStyle(document.getElementById("filters-outside-container")).display !== "none") {
+        document.getElementsByClassName("post")[0].scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+      }
+      if (post_data.length === 0) {
+        $("#notification-container").fadeIn(300, function () {});
+        document.getElementById("notification-text").innerText = "No posts found";
+      }
     });
 }
 
