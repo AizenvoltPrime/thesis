@@ -361,6 +361,7 @@ document.getElementById("categories-container").addEventListener(
       e.target.id !== "category-button" &&
       e.target.id !== "categories-container" &&
       e.target.id !== "category-box" &&
+      e.target.id !== "category-clear" &&
       String(e.target.closest(".category").className) === "category"
     ) {
       let target_category_icon = e.target.closest(".category").getElementsByTagName("i")[0].classList[1];
@@ -373,6 +374,13 @@ document.getElementById("categories-container").addEventListener(
   },
   { passive: true }
 );
+
+//This is for clearing preferred categories selections.
+document.getElementById("category-clear").addEventListener("click", function () {
+  document.querySelectorAll(".category").forEach((category) => {
+    null_style(category.getElementsByTagName("i")[0].classList[1]);
+  });
+});
 
 //This is for preferred categories filter functionality.
 document.getElementById("category-button").addEventListener("click", function () {

@@ -90,6 +90,7 @@ require_once "new_config.php";
         <div class="category"><i class="fa-solid fa-masks-theater"></i>Culture</div>
       </div>
       <button id="category-button" type="button">OK</button>
+      <button id="category-clear" type="button">Clear</button>
     </div>
   </div>
   <!--This div is for the Filter.-->

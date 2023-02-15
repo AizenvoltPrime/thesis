@@ -1917,3 +1917,7 @@ input:checked + .slider:before {
   border: 0.01em solid #363636;
   text-align: center;
 }
+
+#category-clear {
+  color: #f3f3f3;
+}
