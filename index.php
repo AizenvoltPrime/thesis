@@ -174,9 +174,13 @@ require_once "new_config.php";
       <div id="first-quetion">Choose one of the following poll types</div>
     </div>
     <button id="yes-no">Yes/No</button>
+    <div class="yes_no_details">Create polls where users answer Yes/No</div>
     <button id="rating">Rating</button>
+    <div class="rating_details">Create polls where users rate answers with a star rating</div>
     <button id="approval">Approval</button>
+    <div class="approval_details">Create polls where users only select answers that they approve</div>
     <button id="ranking">Ranking</button>
+    <div class="ranking_details">Create polls where users rank answers based on their preference</div>
   </div>
   <div id="warning-nothing-selected">You must choose a poll type</div>
   <!--This div is for users to decide how many choiced their poll will have.-->

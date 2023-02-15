@@ -907,7 +907,11 @@ a:active {
 
 .post-time-detailed,
 .poll-remaining-time,
-.parent_of_check_yes_no_details {
+.parent_of_check_yes_no_details,
+.yes_no_details,
+.rating_details,
+.approval_details,
+.ranking_details {
   display: none;
 }
 
@@ -922,6 +926,7 @@ a:active {
   margin-right: 0.21em;
   margin-left: 0.21em;
   border: 0.01em solid #363636;
+  text-align: center;
 }
 
 .fa-clock:hover + .poll-remaining-time {
@@ -934,6 +939,7 @@ a:active {
   padding: 0.5em;
   margin-right: 0.21em;
   border: 0.01em solid #363636;
+  text-align: center;
 }
 
 .fa-bookmark {
@@ -1835,6 +1841,7 @@ input:checked + .slider:before {
   margin-right: 0.21em;
   margin-left: 0.21em;
   border: 0.01em solid #363636;
+  text-align: center;
 }
 
 #about-container {
@@ -1877,4 +1884,22 @@ input:checked + .slider:before {
   display: flex;
   justify-content: center;
   gap: 1em;
+}
+
+#yes-no:hover + .yes_no_details,
+#rating:hover + .rating_details,
+#approval:hover + .approval_details,
+#ranking:hover + .ranking_details {
+  display: flex;
+  position: absolute;
+  background-color: #1a1a1b;
+  font-size: 1em;
+  border-radius: 1em;
+  top: 10em;
+  color: #f3f3f3;
+  padding: 0.5em;
+  margin-right: 0.21em;
+  margin-left: 0.21em;
+  border: 0.01em solid #363636;
+  text-align: center;
 }
