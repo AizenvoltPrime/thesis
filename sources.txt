@@ -92,7 +92,6 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 2. Επίσης, δεν υπάρχουν κάπου συνολικά στατιστικά όπως πόσοι είναι οι εγγραμμένοι χρήστες, πόσα polls υπάρχουν συνολικά και πόσα από αυτά είναι active, πόσα από κάθε κατηγορία και πόσα από αυτά active...
 Θα το κοιτάξω
 
-
 "wss://crowdsource.gamerwelfare.com"
 
 DELETE FROM rating WHERE user_id=14 AND post_id=85;

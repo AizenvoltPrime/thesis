@@ -345,6 +345,10 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
   clear_filters();
 });
 
+document.getElementsByClassName("nav-element")[7].addEventListener("click", function (e) {
+  clear_filters();
+});
+
 document.getElementById("add-post-icon").addEventListener("click", function (e) {
   clear_filters();
 });
@@ -564,7 +568,8 @@ document.getElementById("filter-button").addEventListener("click", function () {
             search_text,
             get_variables()[1],
             radius_filter,
-            posts_ids_inside_region
+            posts_ids_inside_region,
+            true
           );
         } else {
           generate_posts(
@@ -575,7 +580,8 @@ document.getElementById("filter-button").addEventListener("click", function () {
             search_text,
             get_variables()[1],
             radius_filter,
-            posts_ids_inside_region
+            posts_ids_inside_region,
+            true
           );
         }
       });

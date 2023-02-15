@@ -459,7 +459,8 @@ export function generate_posts(
   filter_search,
   user_search,
   radius_filter,
-  posts_in_region_filter
+  posts_in_region_filter,
+  filter_button
 ) {
   fetch("process_data.php", {
     method: "POST",
@@ -699,7 +700,7 @@ export function generate_posts(
         $("#all-filters").fadeIn(300, function () {});
       }
       console.log(post_data);
-      if (window.getComputedStyle(document.getElementById("filters-outside-container")).display !== "none") {
+      if (window.getComputedStyle(document.getElementById("filters-outside-container")).display !== "none" && filter_button === true) {
         document.getElementsByClassName("post")[0].scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
       }
       if (post_data.length === 0) {
