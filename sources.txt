@@ -97,6 +97,9 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 
 DELETE FROM rating WHERE user_id=14 AND post_id=85;
 
+
+Αρχικά πατήστε CTRL+F5 όταν μπείτε στο site για να γίνουν clear τα cache.
+
 Λίστα με αλλαγές:
 
 - Άλλαξα το χρώμα στις ... ώστε να είναι πιο ευδιάκριτες 
