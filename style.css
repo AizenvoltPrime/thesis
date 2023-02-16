@@ -204,7 +204,10 @@ input {
 #post-locations-filter,
 #search,
 #map-analytics,
-#chart-analytics {
+#chart-analytics,
+#general-info,
+#posts-per-poll-type,
+#posts-per-category {
   background-color: #1a1a1b;
   padding: 0.4em;
   border-radius: 1em;
@@ -224,6 +227,9 @@ input {
 .user-nav a i,
 #map-analytics i,
 #chart-analytics i,
+#general-info i,
+#posts-per-poll-type i,
+#posts-per-category i,
 .category i,
 .post-download-data i,
 .post-event-location i,
@@ -1731,6 +1737,31 @@ input:checked + .slider:before {
   gap: 1em;
 }
 
+#general-info-table-outside-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  gap: 1em;
+  margin-top: 2em;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
+}
+
+#general-info-table-inside-container {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  width: 100%;
+  max-width: 30em;
+  border-radius: 1em;
+  gap: 1em;
+  padding: 0.8em;
+  background: #2c3134;
+}
+
 .approval-vote-results-inside-container {
   align-self: center;
   display: flex;
@@ -1745,7 +1776,8 @@ input:checked + .slider:before {
   background: #2c3134;
 }
 
-.approval-results-table {
+.approval-results-table,
+#general-info-table {
   table-layout: fixed;
   word-wrap: break-word;
   border-collapse: collapse;
@@ -1756,13 +1788,26 @@ input:checked + .slider:before {
   color: #f3f3f3;
 }
 
-.approval-results-table td,
-.approval-results-table th {
-  border: 1px solid #ddd;
-  padding: 0.3em;
+#general-info-table {
+  font-size: 1.5em;
 }
 
-.approval-results-table th {
+.approval-results-table td,
+.approval-results-table th,
+#general-info-table td,
+#general-info-table th {
+  border: 1px solid #ddd;
+  padding: 0.3em;
+  background: #222;
+}
+
+#general-info-table td {
+  width: 3em;
+  background: #222;
+}
+
+.approval-results-table th,
+#general-info-table th {
   background-color: #00ffd0;
   color: #000;
 }

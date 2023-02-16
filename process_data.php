@@ -1027,4 +1027,41 @@ if ($data['request'] == "request_username") {
         $stmt->execute([":id" => $_SESSION["id"], ":post_id" => $data["post_id"]]);
         echo "Success";
     }
+} else if ($data['request'] == "general_info_data") {
+    require_once "new_config.php";
+    $general_info = array();
+
+    date_default_timezone_set('Europe/Athens');
+    $current_datetime = date('Y-m-d H:i:s', time());
+
+    $stmt = $conn->prepare("SELECT COUNT(user.id) AS registered_users FROM user");
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $general_info = array($row["registered_users"]);
+        }
+    }
+    $stmt = $conn->prepare("SELECT COUNT(user.id) AS registered_users FROM user");
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $general_info = array($row["registered_users"]);
+        }
+    }
+    $stmt = $conn->prepare("SELECT COUNT(posts.post_number) AS number_of_posts FROM posts");
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($general_info, $row["number_of_posts"]);
+        }
+    }
+    $stmt = $conn->prepare("SELECT COUNT(posts.post_number) AS number_of_active_posts FROM posts WHERE posts.post_expiration_date IS NULL OR
+    posts.post_expiration_date>:date_now");
+    $stmt->execute([":date_now" => $current_datetime]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($general_info, $row["number_of_active_posts"]);
+        }
+    }
+    echo json_encode($general_info);
 }

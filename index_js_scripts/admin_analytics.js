@@ -8,35 +8,129 @@ let ctx; //used for charts
 let admin_chart; //the chart
 
 document.getElementById("map-analytics").addEventListener("click", function () {
-  if (window.getComputedStyle(document.getElementById("admin-analytics-map")).display === "none") {
-    $("#admin-chart-container").fadeOut(300, function () {});
-    $("#admin-analytics-chart-filters-container").fadeOut(300, function () {
-      $("#admin-warning-time-filter-choice").fadeOut(300, function () {});
-      highlight_filter("fa-solid fa-map");
+  if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip !== "text") {
+    if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-column")[0]).backgroundClip === "text") {
       null_style("fa-solid fa-chart-column");
-      $("#admin-analytics-map").fadeIn(300, function () {
-        admin_analytics_map.invalidateSize();
-        conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
-        set_admin_map_bool(true);
+      highlight_filter("fa-solid fa-map");
+      $("#admin-chart-container").fadeOut(300, function () {});
+      $("#admin-analytics-chart-filters-container").fadeOut(300, function () {
+        $("#admin-warning-time-filter-choice").fadeOut(300, function () {});
+        $("#admin-analytics-map").fadeIn(300, function () {
+          admin_analytics_map.invalidateSize();
+          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          set_admin_map_bool(true);
+        });
       });
-    });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-circle-info")[0]).backgroundClip === "text") {
+      null_style("fa-solid fa-circle-info");
+      highlight_filter("fa-solid fa-map");
+      $("#general-info-table-outside-container").fadeOut(300, function () {
+        $("#admin-analytics-map").fadeIn(300, function () {
+          admin_analytics_map.invalidateSize();
+          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          set_admin_map_bool(true);
+        });
+      });
+    }
   }
 });
 
 document.getElementById("chart-analytics").addEventListener("click", function () {
-  if (window.getComputedStyle(document.getElementById("admin-analytics-map")).display !== "none") {
-    highlight_filter("fa-solid fa-chart-column");
-    null_style("fa-solid fa-map");
-    $("#admin-analytics-map").fadeOut(300, function () {
-      clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
-      clear_admin_map();
-      conn.send(JSON.stringify(["admin_map_status", false]));
-      set_admin_map_bool(false);
-    });
-    document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value = "";
-    $("#admin-analytics-chart-filters-container").fadeIn(300, function () {});
+  if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-column")[0]).backgroundClip !== "text") {
+    if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip === "text") {
+      null_style("fa-solid fa-map");
+      highlight_filter("fa-solid fa-chart-column");
+      $("#admin-analytics-map").fadeOut(300, function () {
+        clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+        clear_admin_map();
+        conn.send(JSON.stringify(["admin_map_status", false]));
+        set_admin_map_bool(false);
+        document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value = "";
+        $("#admin-analytics-chart-filters-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-circle-info")[0]).backgroundClip === "text") {
+      null_style("fa-solid fa-circle-info");
+      highlight_filter("fa-solid fa-chart-column");
+      $("#general-info-table-outside-container").fadeOut(300, function () {
+        document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value = "";
+        $("#admin-analytics-chart-filters-container").fadeIn(300, function () {});
+      });
+    }
   }
 });
+
+document.getElementById("general-info").addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-circle-info")[0]).backgroundClip !== "text") {
+    if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip === "text") {
+      null_style("fa-solid fa-map");
+      highlight_filter("fa-solid fa-circle-info");
+      $("#admin-analytics-map").fadeOut(300, function () {
+        clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+        clear_admin_map();
+        conn.send(JSON.stringify(["admin_map_status", false]));
+        set_admin_map_bool(false);
+        $("#general-info-table-outside-container").fadeIn(300, function () {
+          general_info_data();
+        });
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-column")[0]).backgroundClip === "text") {
+      null_style("fa-solid fa-chart-column");
+      highlight_filter("fa-solid fa-circle-info");
+      $("#admin-chart-container").fadeOut(300, function () {});
+      $("#admin-analytics-chart-filters-container").fadeOut(300, function () {
+        $("#admin-warning-time-filter-choice").fadeOut(300, function () {});
+        $("#general-info-table-outside-container").fadeIn(300, function () {
+          general_info_data();
+        });
+      });
+    }
+  }
+});
+
+// document.getElementById("posts-per-poll-type").addEventListener("click", function () {
+//   if (window.getComputedStyle(document.getElementById("admin-analytics-map")).display !== "none") {
+//     highlight_filter("fa-solid fa-chart-pie");
+//     null_style("fa-solid fa-map");
+//     $("#admin-analytics-map").fadeOut(300, function () {
+//       clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+//       clear_admin_map();
+//       conn.send(JSON.stringify(["admin_map_status", false]));
+//       set_admin_map_bool(false);
+//     });
+//     document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value = "";
+//     $("#admin-analytics-chart-filters-container").fadeIn(300, function () {});
+//   }
+// });
+
+// document.getElementById("posts-per-category").addEventListener("click", function () {
+//   if (window.getComputedStyle(document.getElementById("admin-analytics-map")).display !== "none") {
+//     highlight_filter("fa-solid fa-chart-pie");
+//     null_style("fa-solid fa-map");
+//     $("#admin-analytics-map").fadeOut(300, function () {
+//       clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+//       clear_admin_map();
+//       conn.send(JSON.stringify(["admin_map_status", false]));
+//       set_admin_map_bool(false);
+//     });
+//     document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value = "";
+//     $("#admin-analytics-chart-filters-container").fadeIn(300, function () {});
+//   }
+// });
+
+function general_info_data() {
+  fetch("process_data.php", {
+    method: "POST",
+    body: JSON.stringify({
+      request: "general_info_data",
+    }),
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      document.getElementById("general-info-table").rows[0].cells[1].innerText = response[0];
+      document.getElementById("general-info-table").rows[1].cells[1].innerText = response[1];
+      document.getElementById("general-info-table").rows[2].cells[1].innerText = response[2];
+    });
+}
 
 flatpickr("#admin-time-filter-selector", {
   enableTime: true,

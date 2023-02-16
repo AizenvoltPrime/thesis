@@ -321,8 +321,11 @@ require_once "new_config.php";
   <!--This div is for administrators only.-->
   <div id="analytics-container" style="display:none;">
     <div id="all-analytics">
-      <button id="map-analytics"><i class="fa-solid fa-map"></i>Map Analytics</button>
-      <button id="chart-analytics"><i class="fa-solid fa-chart-column"></i>Chart Analytics</button>
+      <button id="map-analytics"><i class="fa-solid fa-map"></i>Live User Locations</button>
+      <button id="chart-analytics"><i class="fa-solid fa-chart-column"></i>Posts per Day/Hour</button>
+      <button id="general-info"><i class="fa-solid fa-circle-info"></i>General Info</button>
+      <button id="posts-per-poll-type"><i class="fa-solid fa-chart-pie"></i>Number of Posts per Poll Type</button>
+      <button id="posts-per-category"><i class="fa-solid fa-chart-pie"></i>Number of Posts per Category</button>
     </div>
     <div id="admin-analytics-map"></div>
   </div>
@@ -340,6 +343,27 @@ require_once "new_config.php";
   <!--This div is for administrators only.-->
   <div id="admin-chart-container" style="display:none;">
     <canvas id="admin-chart" style="padding:0em 0.5em 0em"></canvas>
+  </div>
+  <!--This div is for general-info-table.-->
+  <div id="general-info-table-outside-container" style="display:none;">
+    <div id="general-info-table-inside-container">
+      <table id="general-info-table">
+        <tbody>
+          <tr data-value="1">
+            <th>Registered Users</th>
+            <td></td>
+          </tr>
+          <tr data-value="2">
+            <th>Number of Posts</th>
+            <td></td>
+          </tr>
+          <tr data-value="3">
+            <th>Number of Active Posts</th>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <!--This div is for event map.-->
   <div id="event-map-container" style="display:none;">

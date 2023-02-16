@@ -96,6 +96,7 @@ document.getElementsByClassName("nav-element")[3].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#admin-analytics-chart-filters-container").fadeOut(300, function () {});
+      $("#general-info-table-outside-container").fadeOut(300, function () {});
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
@@ -172,6 +173,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#admin-analytics-chart-filters-container").fadeOut(300, function () {});
+      $("#general-info-table-outside-container").fadeOut(300, function () {});
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
@@ -237,6 +239,7 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#admin-analytics-chart-filters-container").fadeOut(300, function () {});
+      $("#general-info-table-outside-container").fadeOut(300, function () {});
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
@@ -340,6 +343,7 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#admin-analytics-chart-filters-container").fadeOut(300, function () {});
+      $("#general-info-table-outside-container").fadeOut(300, function () {});
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
@@ -443,6 +447,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
         null_style("fa-chart-column");
+        null_style("fa-solid fa-circle-info");
         highlight_filter("fa-solid fa-map");
         document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
@@ -457,6 +462,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#password-change-form").fadeOut(300, function () {
         null_style("fa-chart-column");
+        null_style("fa-solid fa-circle-info");
         highlight_filter("fa-solid fa-map");
         document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
@@ -471,6 +477,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#about-container").fadeOut(300, function () {
         null_style("fa-chart-column");
+        null_style("fa-solid fa-circle-info");
         highlight_filter("fa-solid fa-map");
         document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
@@ -485,6 +492,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
         null_style("fa-chart-column");
+        null_style("fa-solid fa-circle-info");
         highlight_filter("fa-solid fa-map");
         document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
@@ -510,6 +518,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         $(".post").not(":first").remove();
         reset_poll_data();
         null_style("fa-chart-column");
+        null_style("fa-solid fa-circle-info");
         highlight_filter("fa-solid fa-map");
         document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
@@ -542,6 +551,7 @@ document.getElementsByClassName("nav-element")[7].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#admin-analytics-chart-filters-container").fadeOut(300, function () {});
+      $("#general-info-table-outside-container").fadeOut(300, function () {});
       $("#analytics-container").fadeOut(300, function () {
         clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
         null_style("fa-solid fa-map");
