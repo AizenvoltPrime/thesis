@@ -1737,7 +1737,9 @@ input:checked + .slider:before {
   gap: 1em;
 }
 
-#general-info-table-outside-container {
+#general-info-table-outside-container,
+#total-active-posts-outside-container,
+#total-active-posts-per-category-outside-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1748,7 +1750,9 @@ input:checked + .slider:before {
   padding-right: 0.8em;
 }
 
-#general-info-table-inside-container {
+#general-info-table-inside-container,
+#total-active-posts-inside-container-charts,
+#total-active-posts-per-category-inside-container-charts {
   align-self: center;
   display: flex;
   justify-content: center;
@@ -1900,6 +1904,7 @@ input:checked + .slider:before {
   justify-content: center;
   padding-left: 2em;
   padding-right: 2em;
+  padding-bottom: 1.4em;
   align-items: center;
   background: #1a1a1b;
   border-radius: 1em;
@@ -1965,4 +1970,24 @@ input:checked + .slider:before {
 
 #category-clear {
   color: #f3f3f3;
+}
+
+#total-active-posts-inside-container-buttons,
+#total-active-posts-per-category-inside-container-buttons {
+  display: flex;
+  gap: 0.8em;
+}
+
+#total-posts-button,
+#active-posts-button,
+#total-posts-per-category-button,
+#active-posts-per-category-button {
+  background: #007e7e;
+  border-radius: 0.5em;
+  padding: 0.4em;
+  color: black;
+  align-self: center;
+  max-width: 7em;
+  font-weight: bold;
+  font-size: 1.3em;
 }

@@ -27,6 +27,7 @@ require_once "new_config.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://unpkg.com/chart.js-plugin-labels-dv/dist/chartjs-plugin-labels.min.js"></script>
   <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
   <script type="module" src="index_js_scripts/index.js"></script>
   <script type="module" src="index_js_scripts/navbar.js"></script>
@@ -363,6 +364,28 @@ require_once "new_config.php";
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+  <!--This div is for posts per poll type charts.-->
+  <div id="total-active-posts-outside-container" style="display:none;">
+    <div id="total-active-posts-inside-container-buttons">
+      <button id="total-posts-button">Show Total</button>
+      <button id="active-posts-button">Show Active</button>
+    </div>
+    <div id="total-active-posts-inside-container-charts" style="display:none;">
+      <canvas id="total-posts" style="display:none;"></canvas>
+      <canvas id="active-posts" style="display:none;"></canvas>
+    </div>
+  </div>
+  <!--This div is for posts per category charts.-->
+  <div id="total-active-posts-per-category-outside-container" style="display:none;">
+    <div id="total-active-posts-per-category-inside-container-buttons">
+      <button id="total-posts-per-category-button">Show Total</button>
+      <button id="active-posts-per-category-button">Show Active</button>
+    </div>
+    <div id="total-active-posts-per-category-inside-container-charts" style="display:none;">
+      <canvas id="total-posts-per-category" style="display:none;"></canvas>
+      <canvas id="active-posts-per-category" style="display:none;"></canvas>
     </div>
   </div>
   <!--This div is for event map.-->

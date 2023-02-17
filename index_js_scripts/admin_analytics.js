@@ -6,6 +6,10 @@ import { set_admin_map_bool } from "./update_data.js";
 let DateTime = luxon.DateTime;
 let ctx; //used for charts
 let admin_chart; //the chart
+let total_posts_per_poll_type_chart;
+let active_posts_per_poll_type_chart;
+let total_posts_per_category_chart;
+let active_posts_per_category_chart;
 
 document.getElementById("map-analytics").addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip !== "text") {
@@ -25,6 +29,32 @@ document.getElementById("map-analytics").addEventListener("click", function () {
       null_style("fa-solid fa-circle-info");
       highlight_filter("fa-solid fa-map");
       $("#general-info-table-outside-container").fadeOut(300, function () {
+        $("#admin-analytics-map").fadeIn(300, function () {
+          admin_analytics_map.invalidateSize();
+          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          set_admin_map_bool(true);
+        });
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-pie")[0]).backgroundClip === "text") {
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.background = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.backgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitBackgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitTextFillColor = null;
+      highlight_filter("fa-solid fa-map");
+      $("#total-active-posts-outside-container").fadeOut(300, function () {
+        $("#admin-analytics-map").fadeIn(300, function () {
+          admin_analytics_map.invalidateSize();
+          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          set_admin_map_bool(true);
+        });
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-pie")[1]).backgroundClip === "text") {
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.background = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.backgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitBackgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitTextFillColor = null;
+      highlight_filter("fa-solid fa-map");
+      $("#total-active-posts-per-category-outside-container").fadeOut(300, function () {
         $("#admin-analytics-map").fadeIn(300, function () {
           admin_analytics_map.invalidateSize();
           conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
@@ -52,6 +82,26 @@ document.getElementById("chart-analytics").addEventListener("click", function ()
       null_style("fa-solid fa-circle-info");
       highlight_filter("fa-solid fa-chart-column");
       $("#general-info-table-outside-container").fadeOut(300, function () {
+        document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value = "";
+        $("#admin-analytics-chart-filters-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-pie")[0]).backgroundClip === "text") {
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.background = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.backgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitBackgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitTextFillColor = null;
+      highlight_filter("fa-solid fa-chart-column");
+      $("#total-active-posts-outside-container").fadeOut(300, function () {
+        document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value = "";
+        $("#admin-analytics-chart-filters-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-pie")[1]).backgroundClip === "text") {
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.background = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.backgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitBackgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitTextFillColor = null;
+      highlight_filter("fa-solid fa-chart-column");
+      $("#total-active-posts-per-category-outside-container").fadeOut(300, function () {
         document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value = "";
         $("#admin-analytics-chart-filters-container").fadeIn(300, function () {});
       });
@@ -83,39 +133,367 @@ document.getElementById("general-info").addEventListener("click", function () {
           general_info_data();
         });
       });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-pie")[0]).backgroundClip === "text") {
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.background = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.backgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitBackgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitTextFillColor = null;
+      highlight_filter("fa-solid fa-circle-info");
+      $("#total-active-posts-outside-container").fadeOut(300, function () {
+        $("#general-info-table-outside-container").fadeIn(300, function () {
+          general_info_data();
+        });
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-pie")[1]).backgroundClip === "text") {
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.background = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.backgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitBackgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitTextFillColor = null;
+      highlight_filter("fa-solid fa-circle-info");
+      $("#total-active-posts-per-category-outside-container").fadeOut(300, function () {
+        $("#general-info-table-outside-container").fadeIn(300, function () {
+          general_info_data();
+        });
+      });
     }
   }
 });
 
-// document.getElementById("posts-per-poll-type").addEventListener("click", function () {
-//   if (window.getComputedStyle(document.getElementById("admin-analytics-map")).display !== "none") {
-//     highlight_filter("fa-solid fa-chart-pie");
-//     null_style("fa-solid fa-map");
-//     $("#admin-analytics-map").fadeOut(300, function () {
-//       clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
-//       clear_admin_map();
-//       conn.send(JSON.stringify(["admin_map_status", false]));
-//       set_admin_map_bool(false);
-//     });
-//     document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value = "";
-//     $("#admin-analytics-chart-filters-container").fadeIn(300, function () {});
-//   }
-// });
+document.getElementById("posts-per-poll-type").addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-pie")[0]).backgroundClip !== "text") {
+    if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip === "text") {
+      null_style("fa-solid fa-map");
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.background = "-webkit-linear-gradient(200deg, #cc0000, #000)";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.backgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitBackgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitTextFillColor = "transparent";
+      $("#admin-analytics-map").fadeOut(300, function () {
+        clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+        clear_admin_map();
+        conn.send(JSON.stringify(["admin_map_status", false]));
+        set_admin_map_bool(false);
+        $("#total-active-posts-outside-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-column")[0]).backgroundClip === "text") {
+      null_style("fa-solid fa-chart-column");
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.background = "-webkit-linear-gradient(200deg, #cc0000, #000)";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.backgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitBackgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitTextFillColor = "transparent";
+      $("#admin-chart-container").fadeOut(300, function () {});
+      $("#admin-analytics-chart-filters-container").fadeOut(300, function () {
+        $("#admin-warning-time-filter-choice").fadeOut(300, function () {});
+        $("#total-active-posts-outside-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-circle-info")[0]).backgroundClip === "text") {
+      null_style("fa-solid fa-circle-info");
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.background = "-webkit-linear-gradient(200deg, #cc0000, #000)";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.backgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitBackgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitTextFillColor = "transparent";
+      $("#general-info-table-outside-container").fadeOut(300, function () {
+        $("#total-active-posts-outside-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-pie")[1]).backgroundClip === "text") {
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.background = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.backgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitBackgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitTextFillColor = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.background = "-webkit-linear-gradient(200deg, #cc0000, #000)";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.backgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitBackgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitTextFillColor = "transparent";
+      $("#total-active-posts-per-category-outside-container").fadeOut(300, function () {
+        $("#total-active-posts-outside-container").fadeIn(300, function () {});
+      });
+    }
+  }
+});
 
-// document.getElementById("posts-per-category").addEventListener("click", function () {
-//   if (window.getComputedStyle(document.getElementById("admin-analytics-map")).display !== "none") {
-//     highlight_filter("fa-solid fa-chart-pie");
-//     null_style("fa-solid fa-map");
-//     $("#admin-analytics-map").fadeOut(300, function () {
-//       clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
-//       clear_admin_map();
-//       conn.send(JSON.stringify(["admin_map_status", false]));
-//       set_admin_map_bool(false);
-//     });
-//     document.forms["admin-chart-time-filter-container"]["admin-time-filter-choice"].value = "";
-//     $("#admin-analytics-chart-filters-container").fadeIn(300, function () {});
-//   }
-// });
+document.getElementById("posts-per-category").addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-pie")[1]).backgroundClip !== "text") {
+    if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-map")[0]).backgroundClip === "text") {
+      null_style("fa-solid fa-map");
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.background = "-webkit-linear-gradient(200deg, #cc0000, #000)";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.backgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitBackgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitTextFillColor = "transparent";
+      $("#admin-analytics-map").fadeOut(300, function () {
+        clear_map(admin_analytics_map, admin_layerControl, admin_all_geojson, admin_analytics_all_markers);
+        clear_admin_map();
+        conn.send(JSON.stringify(["admin_map_status", false]));
+        set_admin_map_bool(false);
+        $("#total-active-posts-per-category-outside-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-column")[0]).backgroundClip === "text") {
+      null_style("fa-solid fa-chart-column");
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.background = "-webkit-linear-gradient(200deg, #cc0000, #000)";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.backgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitBackgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitTextFillColor = "transparent";
+      $("#admin-chart-container").fadeOut(300, function () {});
+      $("#admin-analytics-chart-filters-container").fadeOut(300, function () {
+        $("#admin-warning-time-filter-choice").fadeOut(300, function () {});
+        $("#total-active-posts-per-category-outside-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-circle-info")[0]).backgroundClip === "text") {
+      null_style("fa-solid fa-circle-info");
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.background = "-webkit-linear-gradient(200deg, #cc0000, #000)";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.backgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitBackgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitTextFillColor = "transparent";
+      $("#general-info-table-outside-container").fadeOut(300, function () {
+        $("#total-active-posts-per-category-outside-container").fadeIn(300, function () {});
+      });
+    } else if (window.getComputedStyle(document.getElementsByClassName("fa-solid fa-chart-pie")[0]).backgroundClip === "text") {
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.background = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.backgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitBackgroundClip = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[0].style.webkitTextFillColor = null;
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.background = "-webkit-linear-gradient(200deg, #cc0000, #000)";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.backgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitBackgroundClip = "text";
+      document.getElementsByClassName("fa-solid fa-chart-pie")[1].style.webkitTextFillColor = "transparent";
+      $("#total-active-posts-outside-container").fadeOut(300, function () {
+        $("#total-active-posts-per-category-outside-container").fadeIn(300, function () {});
+      });
+    }
+  }
+});
+
+document.getElementById("total-posts-button").addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("total-posts")).display !== "block") {
+    document.getElementById("active-posts-button").style.background = null;
+    document.getElementById("total-posts-button").style.background = "#00ffd0";
+    $("#total-active-posts-inside-container-charts").fadeOut(300, function () {
+      fetch("process_data.php", {
+        method: "POST",
+        body: JSON.stringify({
+          request: "total_posts_per_poll_type_data",
+        }),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (total_posts_per_poll_type_chart !== undefined) {
+            total_posts_per_poll_type_chart.destroy();
+          }
+          total_posts_per_poll_type_chart = new Chart(document.getElementById("total-posts"), {
+            type: "pie",
+            data: {
+              labels: ["Yes/No", "Rating", "Approval", "Ranking"],
+              datasets: [
+                {
+                  data: response,
+                  backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#CC0000"],
+                },
+              ],
+            },
+            options: {
+              plugins: {
+                labels: {
+                  render: "value",
+                  color: "#f3f3f3",
+                  fontSize: 20,
+                  fontStyle: "bolder",
+                },
+                legend: {
+                  labels: {
+                    color: "#f3f3f3",
+                  },
+                },
+              },
+            },
+          });
+          if (window.getComputedStyle(document.getElementById("active-posts")).display === "block") {
+            document.getElementById("active-posts").style.display = "none";
+          }
+          document.getElementById("total-posts").style.display = "block";
+          $("#total-active-posts-inside-container-charts").fadeIn(300, function () {});
+        });
+    });
+  }
+});
+
+document.getElementById("active-posts-button").addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("active-posts")).display !== "block") {
+    document.getElementById("total-posts-button").style.background = null;
+    document.getElementById("active-posts-button").style.background = "#00ffd0";
+    $("#total-active-posts-inside-container-charts").fadeOut(300, function () {
+      fetch("process_data.php", {
+        method: "POST",
+        body: JSON.stringify({
+          request: "active_posts_per_poll_type_data",
+        }),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (active_posts_per_poll_type_chart !== undefined) {
+            active_posts_per_poll_type_chart.destroy();
+          }
+          active_posts_per_poll_type_chart = new Chart(document.getElementById("active-posts"), {
+            type: "pie",
+            data: {
+              labels: ["Yes/No", "Rating", "Approval", "Ranking"],
+              datasets: [
+                {
+                  data: response,
+                  backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#CC0000"],
+                },
+              ],
+            },
+            options: {
+              plugins: {
+                labels: {
+                  render: "value",
+                  color: "#f3f3f3",
+                  fontSize: 20,
+                  fontStyle: "bolder",
+                },
+                legend: {
+                  labels: {
+                    color: "#f3f3f3",
+                  },
+                },
+              },
+            },
+          });
+          if (window.getComputedStyle(document.getElementById("total-posts")).display === "block") {
+            document.getElementById("total-posts").style.display = "none";
+          }
+          document.getElementById("active-posts").style.display = "block";
+          $("#total-active-posts-inside-container-charts").fadeIn(300, function () {});
+        });
+    });
+  }
+});
+
+document.getElementById("total-posts-per-category-button").addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("total-posts-per-category")).display !== "block") {
+    document.getElementById("active-posts-per-category-button").style.background = null;
+    document.getElementById("total-posts-per-category-button").style.background = "#00ffd0";
+    $("#total-active-posts-per-category-inside-container-charts").fadeOut(300, function () {
+      fetch("process_data.php", {
+        method: "POST",
+        body: JSON.stringify({
+          request: "total_posts_per_category_data",
+        }),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (total_posts_per_category_chart !== undefined) {
+            total_posts_per_category_chart.destroy();
+          }
+          total_posts_per_category_chart = new Chart(document.getElementById("total-posts-per-category"), {
+            type: "pie",
+            data: {
+              labels: [
+                "Society",
+                "Business",
+                "Economy",
+                "Finance",
+                "Commerce",
+                "Transportation and Travel",
+                "Politics",
+                "Religion",
+                "Education",
+                "Culture",
+              ],
+              datasets: [
+                {
+                  data: response,
+                  backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#CC0000", "#009933", "#FF9900", "#663399", "#991758", "#7A8009", "#5B4066"],
+                },
+              ],
+            },
+            options: {
+              plugins: {
+                labels: {
+                  render: "value",
+                  color: "#f3f3f3",
+                  fontSize: 20,
+                  fontStyle: "bolder",
+                },
+                legend: {
+                  labels: {
+                    color: "#f3f3f3",
+                  },
+                },
+              },
+            },
+          });
+          if (window.getComputedStyle(document.getElementById("active-posts-per-category")).display === "block") {
+            document.getElementById("active-posts-per-category").style.display = "none";
+          }
+          document.getElementById("total-posts-per-category").style.display = "block";
+          $("#total-active-posts-per-category-inside-container-charts").fadeIn(300, function () {});
+        });
+    });
+  }
+});
+
+document.getElementById("active-posts-per-category-button").addEventListener("click", function () {
+  if (window.getComputedStyle(document.getElementById("active-posts-per-category")).display !== "block") {
+    document.getElementById("total-posts-per-category-button").style.background = null;
+    document.getElementById("active-posts-per-category-button").style.background = "#00ffd0";
+    $("#total-active-posts-per-category-inside-container-charts").fadeOut(300, function () {
+      fetch("process_data.php", {
+        method: "POST",
+        body: JSON.stringify({
+          request: "active_posts_per_category_data",
+        }),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (active_posts_per_category_chart !== undefined) {
+            active_posts_per_category_chart.destroy();
+          }
+          active_posts_per_category_chart = new Chart(document.getElementById("active-posts-per-category"), {
+            type: "pie",
+            data: {
+              labels: [
+                "Society",
+                "Business",
+                "Economy",
+                "Finance",
+                "Commerce",
+                "Transportation and Travel",
+                "Politics",
+                "Religion",
+                "Education",
+                "Culture",
+              ],
+              datasets: [
+                {
+                  data: response,
+                  backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#CC0000", "#009933", "#FF9900", "#663399", "#991758", "#7A8009", "#5B4066"],
+                },
+              ],
+            },
+            options: {
+              plugins: {
+                labels: {
+                  render: "value",
+                  color: "#f3f3f3",
+                  fontSize: 20,
+                  fontStyle: "bolder",
+                },
+                legend: {
+                  labels: {
+                    color: "#f3f3f3",
+                  },
+                },
+              },
+            },
+          });
+          if (window.getComputedStyle(document.getElementById("total-posts-per-category")).display === "block") {
+            document.getElementById("total-posts-per-category").style.display = "none";
+          }
+          document.getElementById("active-posts-per-category").style.display = "block";
+          $("#total-active-posts-per-category-inside-container-charts").fadeIn(300, function () {});
+        });
+    });
+  }
+});
 
 function general_info_data() {
   fetch("process_data.php", {

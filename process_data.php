@@ -1034,34 +1034,120 @@ if ($data['request'] == "request_username") {
     date_default_timezone_set('Europe/Athens');
     $current_datetime = date('Y-m-d H:i:s', time());
 
-    $stmt = $conn->prepare("SELECT COUNT(user.id) AS registered_users FROM user");
-    $stmt->execute();
-    if ($stmt->rowCount() > 0) {
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $general_info = array($row["registered_users"]);
-        }
-    }
-    $stmt = $conn->prepare("SELECT COUNT(user.id) AS registered_users FROM user");
-    $stmt->execute();
-    if ($stmt->rowCount() > 0) {
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $general_info = array($row["registered_users"]);
-        }
-    }
-    $stmt = $conn->prepare("SELECT COUNT(posts.post_number) AS number_of_posts FROM posts");
-    $stmt->execute();
-    if ($stmt->rowCount() > 0) {
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            array_push($general_info, $row["number_of_posts"]);
-        }
-    }
-    $stmt = $conn->prepare("SELECT COUNT(posts.post_number) AS number_of_active_posts FROM posts WHERE posts.post_expiration_date IS NULL OR
-    posts.post_expiration_date>:date_now");
+    $stmt = $conn->prepare("SELECT COUNT(user.id) AS registered_users FROM user 
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_active_posts FROM posts WHERE posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now");
     $stmt->execute([":date_now" => $current_datetime]);
     if ($stmt->rowCount() > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            array_push($general_info, $row["number_of_active_posts"]);
+            array_push($general_info, $row["registered_users"]);
         }
     }
     echo json_encode($general_info);
+} else if ($data['request'] == "total_posts_per_poll_type_data") {
+    require_once "new_config.php";
+    $total_posts_per_poll_type = array();
+
+    $stmt = $conn->prepare("SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE poll_type = 1
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE poll_type = 2
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE poll_type = 3
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE poll_type = 4");
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($total_posts_per_poll_type, $row["number_of_posts"]);
+        }
+    }
+    echo json_encode($total_posts_per_poll_type);
+} else if ($data['request'] == "active_posts_per_poll_type_data") {
+    require_once "new_config.php";
+    $active_posts_per_poll_type = array();
+
+    date_default_timezone_set('Europe/Athens');
+    $current_datetime = date('Y-m-d H:i:s', time());
+
+    $stmt = $conn->prepare(
+        "SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE poll_type = 1 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE poll_type = 2 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE poll_type = 3 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE poll_type = 4 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)"
+    );
+    $stmt->execute([":date_now" => $current_datetime]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($active_posts_per_poll_type, $row["number_of_posts"]);
+        }
+    }
+    echo json_encode($active_posts_per_poll_type);
+} else if ($data['request'] == "total_posts_per_category_data") {
+    require_once "new_config.php";
+    $total_posts_per_category = array();
+
+    $stmt = $conn->prepare("SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 1
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 2
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 3
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 4
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 5
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 6
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 7
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 8
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 9
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 10");
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($total_posts_per_category, $row["number_of_posts"]);
+        }
+    }
+    echo json_encode($total_posts_per_category);
+} else if ($data['request'] == "active_posts_per_category_data") {
+    require_once "new_config.php";
+    $active_posts_per_category = array();
+
+    date_default_timezone_set('Europe/Athens');
+    $current_datetime = date('Y-m-d H:i:s', time());
+
+    $stmt = $conn->prepare("SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 1 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 2 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 3 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 4 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 5 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 6 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 7 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 8 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 9 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)
+                UNION ALL
+                SELECT COUNT(posts.post_number) AS number_of_posts FROM posts WHERE post_category = 10 AND (posts.post_expiration_date IS NULL OR posts.post_expiration_date>:date_now)");
+    $stmt->execute([":date_now" => $current_datetime]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($active_posts_per_category, $row["number_of_posts"]);
+        }
+    }
+    echo json_encode($active_posts_per_category);
 }
