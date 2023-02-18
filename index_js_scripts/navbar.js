@@ -39,16 +39,16 @@ document.getElementById("profile-icon").addEventListener("click", function () {
     .then((res) => res.text())
     .then((response) => {
       if (response === "false") {
-        document.getElementsByClassName("nav-element")[3].style.display = "none";
         document.getElementsByClassName("nav-element")[4].style.display = "none";
         document.getElementsByClassName("nav-element")[5].style.display = "none";
         document.getElementsByClassName("nav-element")[6].style.display = "none";
+        document.getElementsByClassName("nav-element")[7].style.display = "none";
         document.getElementsByClassName("nav-element")[8].style.display = "none";
         document.getElementsByClassName("fa-solid fa-info")[0].style.paddingRight = "0.55em";
       } else {
-        document.getElementsByClassName("nav-element")[1].style.display = "none";
         document.getElementsByClassName("nav-element")[2].style.display = "none";
-        document.getElementsByClassName("nav-element")[3].style.cursor = "pointer";
+        document.getElementsByClassName("nav-element")[3].style.display = "none";
+        document.getElementsByClassName("nav-element")[4].style.cursor = "pointer";
         document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.background = "-webkit-linear-gradient(200deg, #cc0000, #000)";
         document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.backgroundClip = "text";
         document.getElementsByClassName("fa-solid fa-bookmark fa-1x")[0].style.webkitBackgroundClip = "text";
@@ -72,7 +72,7 @@ document.getElementsByClassName("closeuserbtn")[0].addEventListener("click", fun
 });
 
 //This is for when the user clicks "Bookmarks" on the user navabar.
-document.getElementsByClassName("nav-element")[3].addEventListener("click", function () {
+document.getElementsByClassName("nav-element")[4].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     null_all_styles();
     clear_screen();
@@ -230,7 +230,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
 });
 
 //This is for when the user clicks "Change Username" on the user navbar.
-document.getElementsByClassName("nav-element")[4].addEventListener("click", function () {
+document.getElementsByClassName("nav-element")[5].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
@@ -336,7 +336,7 @@ document.getElementById("username-change").addEventListener("click", function ()
 });
 
 //This is for when the user clicks "Change Password" on the user navbar.
-document.getElementsByClassName("nav-element")[5].addEventListener("click", function () {
+document.getElementsByClassName("nav-element")[6].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
@@ -447,7 +447,7 @@ document.getElementById("password-change").addEventListener("click", function ()
 });
 
 //This is for when the user clicks "Analytics" on the user navbar.
-document.getElementsByClassName("nav-element")[6].addEventListener("click", function () {
+document.getElementsByClassName("nav-element")[7].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
@@ -468,7 +468,11 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
           clear_admin_map();
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          if (get_variables().length === 3) {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[2], true]));
+          } else {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          }
           set_admin_map_bool(true);
           admin_analytics_map.invalidateSize();
         });
@@ -491,7 +495,11 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
           clear_admin_map();
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          if (get_variables().length === 3) {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[2], true]));
+          } else {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          }
           set_admin_map_bool(true);
           admin_analytics_map.invalidateSize();
         });
@@ -514,7 +522,11 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
           clear_admin_map();
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          if (get_variables().length === 3) {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[2], true]));
+          } else {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          }
           set_admin_map_bool(true);
           admin_analytics_map.invalidateSize();
         });
@@ -537,7 +549,11 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
           clear_admin_map();
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          if (get_variables().length === 3) {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[2], true]));
+          } else {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          }
           set_admin_map_bool(true);
           admin_analytics_map.invalidateSize();
         });
@@ -571,7 +587,11 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
         document.getElementById("admin-analytics-map").style.display = "block";
         $("#analytics-container").fadeIn(300, function () {
           clear_admin_map();
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          if (get_variables().length === 3) {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[2], true]));
+          } else {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          }
           set_admin_map_bool(true);
           admin_analytics_map.invalidateSize();
         });
@@ -580,24 +600,24 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
 });
 
 //This is for when the user clicks "About" on the user navbar.
-document.getElementsByClassName("nav-element")[7].addEventListener("click", function () {
+document.getElementsByClassName("nav-element")[1].addEventListener("click", function () {
   if (window.getComputedStyle(document.getElementById("all-filters")).display === "none") {
     clear_screen();
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
-      document.getElementById("user-nav").style.width = "0";
-      document.getElementById("profile-icon").style.visibility = "visible";
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
         $("#about-container").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
-      document.getElementById("user-nav").style.width = "0";
-      document.getElementById("profile-icon").style.visibility = "visible";
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#password-change-form").fadeOut(300, function () {
         $("#about-container").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
-      document.getElementById("user-nav").style.width = "0";
-      document.getElementById("profile-icon").style.visibility = "visible";
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#admin-analytics-chart-filters-container").fadeOut(300, function () {});
       $("#general-info-table-outside-container").fadeOut(300, function () {});
       $("#total-active-posts-outside-container").fadeOut(300, function () {});
@@ -610,15 +630,15 @@ document.getElementsByClassName("nav-element")[7].addEventListener("click", func
         $("#about-container").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
-      document.getElementById("user-nav").style.width = "0";
-      document.getElementById("profile-icon").style.visibility = "visible";
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
         $("#about-container").fadeIn(300, function () {});
       });
     }
   } else {
-    document.getElementById("user-nav").style.width = "0";
-    document.getElementById("profile-icon").style.visibility = "visible";
+    document.getElementById("sidenav").style.width = "0";
+    document.getElementById("sidenav-icon").style.visibility = "visible";
     $("#add-post-icon").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});

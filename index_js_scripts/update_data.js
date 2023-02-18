@@ -469,7 +469,9 @@ addEventListener("DOMContentLoaded", (event) => {
     } else if (JSON.parse(e.data)[0] === "admin_analytics_map") {
       admin_map_bool = JSON.parse(e.data)[2];
       if (get_variables()[2] > 12) {
-        if (JSON.parse(e.data)[1] !== get_variables()[3][0][16] && get_variables()[4][1] !== undefined) {
+        if (get_variables().length === 3 && JSON.parse(e.data)[1] !== get_variables()[2] && get_variables()[4][1] !== undefined) {
+          conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
+        } else if (get_variables().length !== 3 && JSON.parse(e.data)[1] !== get_variables()[3][0][16] && get_variables()[4][1] !== undefined) {
           conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
         }
       } else {
@@ -479,15 +481,15 @@ addEventListener("DOMContentLoaded", (event) => {
       }
     } else if (JSON.parse(e.data)[0] === "admin_map_coordinates") {
       if (admin_map_bool === true) {
-        if (JSON.parse(e.data)[1] === get_variables()[3][0][16]) {
+        if (get_variables().length === 3 && JSON.parse(e.data)[1] === get_variables()[2]) {
+          make_admin_analytics_map(JSON.parse(e.data)[2], JSON.parse(e.data)[3]);
+        } else if (get_variables().length !== 3 && JSON.parse(e.data)[1] === get_variables()[3][0][16]) {
           make_admin_analytics_map(JSON.parse(e.data)[2], JSON.parse(e.data)[3]);
         }
       }
     } else if (JSON.parse(e.data)[0] === "new_online_user") {
-      if (get_variables()[2] > 12) {
-        if (admin_map_bool === true) {
-          make_admin_analytics_map(JSON.parse(e.data)[1], JSON.parse(e.data)[2]);
-        }
+      if (admin_map_bool === true) {
+        make_admin_analytics_map(JSON.parse(e.data)[1], JSON.parse(e.data)[2]);
       }
     } else if (JSON.parse(e.data)[0] === "admin_map_delete_marker") {
       if (admin_map_bool === true) {

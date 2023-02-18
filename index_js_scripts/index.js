@@ -22,6 +22,7 @@ let user_coordinates = []; //stores user coordinates
 let event_coordinates = []; //stores coordinates of the event when location restricted voting is used
 let event_map = null; //This is for the event map for each post
 let delete_post = null; //This is for deleting posts
+let your_username = null; //Placeholder for username of the the active user in case Bookmarks is empty
 var DateTime = luxon.DateTime; //used for time features
 Chart.defaults.font.size = 20;
 
@@ -478,6 +479,9 @@ export function generate_posts(
   })
     .then((res) => res.json())
     .then((response) => {
+      if (bookmark_filter === false && your_username === null) {
+        your_username = response[0][16];
+      }
       post_data.length = 0;
       user_chevron_vote.length = 0;
       user_yes_no_vote.length = 0;
@@ -1911,7 +1915,7 @@ postContainer.addEventListener("mouseout", (e) => {
 });
 
 //This is for when the user clicks "Bookmarks" on the user navabar.
-document.getElementsByClassName("nav-element")[3].addEventListener("click", function () {
+document.getElementsByClassName("nav-element")[4].addEventListener("click", function () {
   bookmarks_active = true;
   specific_user_posts = null;
 });
@@ -1923,25 +1927,25 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
 });
 
 //This is for when the user clicks "Change Username" on the user navbar.
-document.getElementsByClassName("nav-element")[4].addEventListener("click", function () {
-  bookmarks_active = false;
-  specific_user_posts = null;
-});
-
-//This is for when the user clicks "Change Password" on the user navbar.
 document.getElementsByClassName("nav-element")[5].addEventListener("click", function () {
   bookmarks_active = false;
   specific_user_posts = null;
 });
 
-//This is for when the user clicks "Analytics" on the user navbar.
+//This is for when the user clicks "Change Password" on the user navbar.
 document.getElementsByClassName("nav-element")[6].addEventListener("click", function () {
   bookmarks_active = false;
   specific_user_posts = null;
 });
 
-//This is for when the user clicks "About" on the user navbar.
+//This is for when the user clicks "Analytics" on the user navbar.
 document.getElementsByClassName("nav-element")[7].addEventListener("click", function () {
+  bookmarks_active = false;
+  specific_user_posts = null;
+});
+
+//This is for when the user clicks "About" on the user navbar.
+document.getElementsByClassName("nav-element")[1].addEventListener("click", function () {
   bookmarks_active = false;
   specific_user_posts = null;
 });
@@ -2294,7 +2298,7 @@ function toRad(Value) {
 //exports variables to other js files.
 export function get_variables() {
   if (post_data.length === undefined || post_data.length === 0) {
-    return [bookmarks_active, specific_user_posts];
+    return [bookmarks_active, specific_user_posts, your_username];
   } else {
     return [bookmarks_active, specific_user_posts, post_data[0].length, post_data, [user_coordinates[1], user_coordinates[0]], specific_user_posts];
   }

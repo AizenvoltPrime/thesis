@@ -92,6 +92,17 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 2. ena allo: to Check It Yourself pistevw oti tha prepei na fainetai KAI sto main page... oxi mono sto name tou tab...
 -Θα το κοιτάξω
 
+3. Το About να πάει αριστερά και να αλλάξω το κείμενο.
+
+Ftiakse esu o,ti nomizeis gia arxh... Na einai 1 paragrafos - 2-3
+EULHPTES grammoues - OXI ekthesh - kai sigoura kratas thn teleutaia
+grammh...mporeis na valeis kai For a detailed description see here kai
+kane to here linked me to pop up pou exeis twra minus thn teleutaia
+grammh
+
+4. Ταξινόμηση του star rating
+
+5. pairwise για approval
 "wss://crowdsource.gamerwelfare.com"
 
 DELETE FROM rating WHERE user_id=14 AND post_id=85;

@@ -21,7 +21,11 @@ document.getElementById("map-analytics").addEventListener("click", function () {
         $("#admin-warning-time-filter-choice").fadeOut(300, function () {});
         $("#admin-analytics-map").fadeIn(300, function () {
           admin_analytics_map.invalidateSize();
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          if (get_variables().length === 3) {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[2], true]));
+          } else {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          }
           set_admin_map_bool(true);
         });
       });
@@ -31,7 +35,11 @@ document.getElementById("map-analytics").addEventListener("click", function () {
       $("#general-info-table-outside-container").fadeOut(300, function () {
         $("#admin-analytics-map").fadeIn(300, function () {
           admin_analytics_map.invalidateSize();
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          if (get_variables().length === 3) {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[2], true]));
+          } else {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          }
           set_admin_map_bool(true);
         });
       });
@@ -44,7 +52,11 @@ document.getElementById("map-analytics").addEventListener("click", function () {
       $("#total-active-posts-outside-container").fadeOut(300, function () {
         $("#admin-analytics-map").fadeIn(300, function () {
           admin_analytics_map.invalidateSize();
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          if (get_variables().length === 3) {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[2], true]));
+          } else {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          }
           set_admin_map_bool(true);
         });
       });
@@ -57,7 +69,11 @@ document.getElementById("map-analytics").addEventListener("click", function () {
       $("#total-active-posts-per-category-outside-container").fadeOut(300, function () {
         $("#admin-analytics-map").fadeIn(300, function () {
           admin_analytics_map.invalidateSize();
-          conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          if (get_variables().length === 3) {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[2], true]));
+          } else {
+            conn.send(JSON.stringify(["admin_analytics_map", get_variables()[3][0][16], true]));
+          }
           set_admin_map_bool(true);
         });
       });
