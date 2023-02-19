@@ -82,6 +82,7 @@ require_once "new_config.php";
   <!--This div is for the preferred categories filter.-->
   <div id="preferred-categories-container">
     <div id="categories-container">
+      <button id="close-preferred-categories-container"><i class="fa-solid fa-xmark"></i></button>
       <div id="category-box">
         <div class="category"><i class="fa-solid fa-people-group"></i>Society</div>
         <div class="category"><i class="fa-solid fa-briefcase"></i>Business</div>

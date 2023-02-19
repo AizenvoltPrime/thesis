@@ -2022,3 +2022,9 @@ input:checked + .slider:before {
   cursor: pointer;
   text-align: center;
 }
+
+#close-preferred-categories-container {
+  font-size: 2em;
+  margin-left: auto;
+  color: #cc0000;
+}
