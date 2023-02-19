@@ -82,21 +82,15 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
     AND posts.post_loc_long=post_longitude) AS number_of_responses_in_location 
     FROM posts INNER JOIN yes_no ON posts.post_number=yes_no.post_id GROUP BY post_loc_lat,post_loc_long;
 
-ΕΠΟΜΕΝΑ TASK:
 
-- ΝΑ ΦΤΙΑΞΩ ΛΙΓΟ ΤΑ FORMS ΩΣΤΑ ΝΑ ΜΗΝ ΜΕΓΑΛΩΝΟΥΝ ΟΤΑΝ ΕΜΦΑΝΙΖΟΥΝ ΚΑΠΟΙΑ ΕΙΔΟΠΟΙΗΣΗ(ΔΕΥΤΕΡΕΥΟΝ ΣΗΜΑΣΙΑΣ)
 
-1. Ταξινόμηση του star rating
 
-2. pairwise για approval και ranking να διαβάσω και να στείλω παραδείγματα
 "wss://crowdsource.gamerwelfare.com"
 
-DELETE FROM rating WHERE user_id=14 AND post_id=85;
 
-Αλλαγές:
 
--Πρόσθεσα το τίτλο στο main page
 
--Μετέφερα το About Page στο αριστερό navigation και άλλαξα το περιεχόμενο του
+ΕΠΟΜΕΝΑ TASK:
 
--Πρόσθεσα τρόπο να κλείνει το Preferred Categories filter πέρα από το να πατηθεί το OK.
+1. Να διαβάσω pairwise για approval και ranking και να στείλω παραδείγματα
+

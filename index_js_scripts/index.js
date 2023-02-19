@@ -986,21 +986,43 @@ postContainer.addEventListener(
         })
           .then((res) => res.json())
           .then((response) => {
+            let average_ratings_array = [];
             let rating_choice_names = [];
-            let rating_choice_results = [];
-            for (let i = 0; i < response.length; i++) {
-              if (i < 20 && response[i + 20] !== null) {
-                if (response[i] === null) {
-                  rating_choice_results.push("No Votes");
-                } else {
-                  rating_choice_results.push(response[i]);
-                }
-              } else if (i >= 20 && response[i] !== null) {
+            let zipped = [];
+
+            for (let i = 0; i < 40; i++) {
+              if (i >= 20) {
                 rating_choice_names.push(response[i]);
+              } else {
+                average_ratings_array.push(response[i]);
+              }
+            }
+
+            for (let i = 0; i < rating_choice_names.length; i++) {
+              zipped.push({
+                array1elem: rating_choice_names[i],
+                array2elem: average_ratings_array[i],
+              });
+            }
+
+            zipped.sort(function (a, b) {
+              return b.array2elem - a.array2elem;
+            });
+
+            rating_choice_names = [];
+            average_ratings_array = [];
+            for (let i = 0; i < zipped.length; i++) {
+              rating_choice_names.push(zipped[i].array1elem);
+              average_ratings_array.push(zipped[i].array2elem);
+            }
+
+            for (let i = 0; i < zipped.length; i++) {
+              if (rating_choice_names[i] !== null && average_ratings_array[i] === null) {
+                average_ratings_array[i] = "No Votes";
               }
             }
             const wb = XLSX.utils.book_new();
-            let cell = [["Poll Text: " + post_data[postDownloadIndex][4]], rating_choice_names, rating_choice_results];
+            let cell = [["Poll Text: " + post_data[postDownloadIndex][4]], rating_choice_names, average_ratings_array];
             const ws = XLSX.utils.aoa_to_sheet(cell);
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
             XLSX.writeFile(wb, "Rating_Poll_Type_Results.xlsx");
@@ -1976,6 +1998,9 @@ function get_rating_data(post_number) {
     .then((res) => res.json())
     .then((response) => {
       let post_element = document.getElementsByClassName("post")[post_number];
+      let average_ratings_array = [];
+      let rating_choice_names = [];
+      let zipped = [];
       if (post_data[post_number].length > 17) {
         post_data[post_number].length = 17;
       }
@@ -1984,6 +2009,33 @@ function get_rating_data(post_number) {
           post_data[post_number] = post_data[post_number].concat(response[i]);
         }
       }
+
+      for (let i = 0; i < 40; i++) {
+        if (i >= 20) {
+          rating_choice_names.push(response[i]);
+        } else {
+          average_ratings_array.push(response[i]);
+        }
+      }
+
+      for (let i = 0; i < rating_choice_names.length; i++) {
+        zipped.push({
+          array1elem: rating_choice_names[i],
+          array2elem: average_ratings_array[i],
+        });
+      }
+
+      zipped.sort(function (a, b) {
+        return b.array2elem - a.array2elem;
+      });
+
+      rating_choice_names = [];
+      average_ratings_array = [];
+      for (let i = 0; i < zipped.length; i++) {
+        rating_choice_names.push(zipped[i].array1elem);
+        average_ratings_array.push(zipped[i].array2elem);
+      }
+
       post_element.querySelectorAll(".rating-choices-results").forEach((child) => {
         if (child.getAttribute("data-value") !== "1") {
           child.remove();
@@ -1992,21 +2044,21 @@ function get_rating_data(post_number) {
       for (let i = 0; i < 20; i++) {
         let max_star_position = i * 10;
         let star_limit;
-        if (response[i] !== null) {
-          let first_digit = parseFloat(response[i][0]);
-          let average_rating = parseFloat(response[i]).toFixed(3);
+        if (average_ratings_array[i] !== null) {
+          let first_digit = parseFloat(average_ratings_array[i][0]);
+          let average_rating = parseFloat(average_ratings_array[i]).toFixed(3);
           if (average_rating < first_digit + 0.25) {
-            average_rating = parseFloat(response[i][0]);
+            average_rating = parseFloat(average_ratings_array[i][0]);
           } else if (average_rating >= first_digit + 0.25 && average_rating <= first_digit + 0.5) {
-            average_rating = parseFloat(response[i][0]) + 0.5;
+            average_rating = parseFloat(average_ratings_array[i][0]) + 0.5;
           } else if (average_rating >= first_digit + 0.5 && average_rating < first_digit + 0.75) {
-            average_rating = parseFloat(response[i][0]) + 0.5;
+            average_rating = parseFloat(average_ratings_array[i][0]) + 0.5;
           } else if (average_rating >= first_digit + 0.75) {
-            average_rating = parseFloat(response[i][0]) + 1.0;
+            average_rating = parseFloat(average_ratings_array[i][0]) + 1.0;
           }
           star_limit = parseInt(average_rating * 2.0) + max_star_position;
         }
-        if (response[i + 20] !== null) {
+        if (rating_choice_names[i] !== null) {
           if (i !== 0) {
             let clone_rating_choices = post_element.getElementsByClassName("rating-choices-results")[0];
             let clone = clone_rating_choices.cloneNode(true);
@@ -2016,15 +2068,15 @@ function get_rating_data(post_number) {
               .querySelectorAll(".rating-choices-results")
               [i].querySelectorAll(".half-star-container-results")
               .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
-            post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText = response[i + 20];
+            post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText = rating_choice_names[i];
           } else {
             post_element
               .querySelectorAll(".rating-choices-results")
               [i].querySelectorAll(".half-star-container-results")
               .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
-            post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText = response[i + 20];
+            post_element.querySelectorAll(".rating-choices-results")[i].getElementsByClassName("choice-name")[0].innerText = rating_choice_names[i];
           }
-          if (response[i] !== null) {
+          if (average_ratings_array[i] !== null) {
             for (let k = max_star_position; k < star_limit; k++) {
               post_element.getElementsByClassName("half-star-container-results")[k].style.color = "#00ffd0";
             }
@@ -2043,7 +2095,7 @@ function get_approval_data(post_number) {
     .then((response) => {
       let post_element = document.getElementsByClassName("post")[post_number];
       let results_array = [];
-      let rating_choice_names = [];
+      let approval_choice_names = [];
       let zipped = [];
       if (post_data[post_number].length > 17) {
         post_data[post_number].length = 17;
@@ -2056,15 +2108,15 @@ function get_approval_data(post_number) {
 
       for (let i = 0; i < 40; i++) {
         if (i >= 20) {
-          rating_choice_names.push(response[i]);
+          approval_choice_names.push(response[i]);
         } else {
           results_array.push(response[i]);
         }
       }
 
-      for (let i = 0; i < rating_choice_names.length; i++) {
+      for (let i = 0; i < approval_choice_names.length; i++) {
         zipped.push({
-          array1elem: rating_choice_names[i],
+          array1elem: approval_choice_names[i],
           array2elem: results_array[i],
         });
       }
@@ -2073,22 +2125,22 @@ function get_approval_data(post_number) {
         return b.array2elem - a.array2elem;
       });
 
-      rating_choice_names = [];
+      approval_choice_names = [];
       results_array = [];
       for (let i = 0; i < zipped.length; i++) {
-        rating_choice_names.push(zipped[i].array1elem);
+        approval_choice_names.push(zipped[i].array1elem);
         results_array.push(zipped[i].array2elem);
       }
 
       for (let i = 0; i < 20; i++) {
         if (i < 3) {
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = rating_choice_names[i];
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = approval_choice_names[i];
           if (results_array[i] !== null) {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = results_array[i];
           } else {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
           }
-        } else if (i >= 3 && rating_choice_names[i] !== null) {
+        } else if (i >= 3 && approval_choice_names[i] !== null) {
           if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
             document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
           }
@@ -2096,13 +2148,13 @@ function get_approval_data(post_number) {
           let clone = top_row.cloneNode(true);
           post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(clone);
           document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].setAttribute("data-value", i + 1);
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = rating_choice_names[i];
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = approval_choice_names[i];
           if (results_array[i] !== null) {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = results_array[i];
           } else {
             post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
           }
-        } else if (i >= 3 && rating_choice_names[i] === null) {
+        } else if (i >= 3 && approval_choice_names[i] === null) {
           if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
             document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
           }
