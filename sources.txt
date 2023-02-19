@@ -87,7 +87,11 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 
 "wss://crowdsource.gamerwelfare.com"
 
+https://www.cse.unsw.edu.au/~haziz/comsoc.pdf yes/no, rating
 
+1. Να εμφανίζω επίσης και πόσοι ψήφισαν σε κάθε poll type
+
+2. Να μεταφέρω το Analytics αριστερά
 
 
 ΕΠΟΜΕΝΑ TASK:
