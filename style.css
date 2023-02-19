@@ -191,7 +191,7 @@ input {
 #all-filters,
 #all-analytics {
   display: flex;
-  margin-top: 9em;
+  margin-top: 7em;
   gap: 0.75em;
   justify-content: center;
   flex-wrap: wrap;
@@ -1898,7 +1898,7 @@ input:checked + .slider:before {
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10em;
+  margin-top: 8em;
   height: fit-content;
   max-width: 70em;
   justify-content: center;
@@ -1990,4 +1990,35 @@ input:checked + .slider:before {
   max-width: 7em;
   font-weight: bold;
   font-size: 1.3em;
+}
+
+#dropdown-description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.27em;
+  margin-top: 1em;
+}
+
+#dropdown-button {
+  color: #cc0000;
+}
+
+#app-title-container {
+  display: flex;
+  margin-top: 2em;
+  gap: 0.75em;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#app-title-text {
+  background-color: #1a1a1b;
+  padding: 0.4em;
+  border-radius: 1em;
+  color: #f3f3f3;
+  font-size: 2em;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
 }

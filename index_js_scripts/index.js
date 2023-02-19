@@ -142,6 +142,7 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
       } else {
         if (post_data[0] !== undefined) {
           $("#add-post-icon").fadeOut(300, function () {});
+          $("#app-title-container").fadeOut(300, function () {});
           $("#all-filters").fadeOut(300, function () {});
           $("#notification-container").fadeOut(300, function () {});
           $("#delete-notification-container").fadeOut(300, function () {});
@@ -164,7 +165,9 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
             });
         } else {
           $("#add-post-icon").fadeOut(300, function () {});
+          $("#app-title-container").fadeOut(300, function () {});
           $("#all-filters").fadeOut(300, function () {});
+          $("#notification-container").fadeOut(300, function () {});
           $("#all-filters")
             .promise()
             .done(function () {
@@ -388,8 +391,9 @@ document.getElementById("next-step").addEventListener("click", function () {
           $("#poll-question").fadeOut(300, function () {});
           $("#next-step").fadeOut(300, function () {
             document.getElementById("next-step").innerText = "Next";
-            $("#all-filters").fadeIn(300, function () {});
             $("#add-post-icon").fadeIn(300, function () {});
+            $("#app-title-container").fadeIn(300, function () {});
+            $("#all-filters").fadeIn(300, function () {});
             null_all_styles();
             generate_posts(false);
           });
@@ -688,6 +692,7 @@ export function generate_posts(
           }
         }
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
         $("#all-filters").fadeIn(300, function () {});
         $(".post").fadeIn(300, function () {});
         if (
@@ -701,6 +706,7 @@ export function generate_posts(
         }
       } else {
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
         $("#all-filters").fadeIn(300, function () {});
       }
       console.log(post_data);
@@ -2418,4 +2424,9 @@ document.getElementById("delete-yes").addEventListener("click", function () {
 document.getElementById("delete-no").addEventListener("click", function () {
   delete_post = null;
   $("#delete-notification-container").fadeOut(300, function () {});
+});
+
+document.getElementById("dropdown-button").addEventListener("click", function () {
+  document.getElementById("short-app-description").style.display = "none";
+  document.getElementById("detailed-app-description").style.display = "block";
 });

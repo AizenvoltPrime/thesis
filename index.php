@@ -62,6 +62,10 @@ require_once "new_config.php";
     <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
   </div>
   <!--This div is for the post filters.-->
+  <div id="app-title-container">
+    <div id="app-title-text">Check it Yourself</div>
+  </div>
+  <!--This div is for the post filters.-->
   <div id="all-filters">
     <button id="hot"><i class="fa-solid fa-fire-flame-curved"></i>Hot</button>
     <button id="recent"><i class="fa-solid fa-sun"></i>Recent</button>
@@ -399,45 +403,59 @@ require_once "new_config.php";
   <div id="about-container" style="display:none;">
     <div id="about-inside-container">
       <h1>About</h1>
-      <p>"Check It Yourself": an online crowdsourcing-based application for checking news validity exploiting Social Choice Theory and InfoVis
-        Checking whether news reported via social media or the press is truly valid has recently emerged as a tantalizing issue in our society.
-        Despite the existence of various agencies claiming to perform fact checking, there is important skepticism regarding the result credibility which may indeed be
-        downgraded or biased due to several factors including financial, political or personal incentives or also incomplete, sloppy processes or lack of appropriate sources.
-      </p>
-      <p>
-        Motivated by this observation and the fact that the internet and the web can provide an excellent source of crowd intelligence for efficiently collecting/mining data,
-        we present "Check It Yourself", an online application which is essentially a crowdsourcing system and decision-making mechanism based on social choice,
-        exploiting visualization techniques for allowing users to perform on-the-fly news validity checking.
-      </p>
-      <p>
-        Social Choice Theory (SCT) - and especially Voting Theory - addresses how to interpret the will of people and bring out a satisfying collective decision based
-        on elections in democratic societies, where all citizens have an equal say in the decisions.
-        SCT provides a set of methods for the aggregation of a set of individual preferences into a collective preference or decision.
-        Such methods include collecting data using different kind of polls, which actually work as ranked, approval (e.g., y/n questions) and
-        cardinal (e.g., rating/score questions) voting systems.
-      </p>
-      <p>
-        "Check It Yourself" allows registered users to create such polls for specific issues/questions and ask other users, located geographically close to the news source,
-        to confirm or doubt/challenge its truthfulness. The answers are in the form of preferences/votes which are collected, analyzed, aggregated,
-        and visualized so that users are provided with quantitative and qualitative information. Furthermore, live feedback and live updates are automatically provided
-        for new polls and newly submitted votes.
-      </p>
-      <p>
-        For visualization purposes, we deployed Information Visualization (InfoVis) techniques for designing visual representations of abstract data to help users increase
-        their knowledge about the internal structure of data and the causal relationships between them. In addition, all generated visualizations together with the corresponding
-        data files are fully downloadable so that interested users can save them locally and further process them.
-      </p>
-      <p>
-        "Check It Yourself" is a lightweight and responsive application with an easy-to-use, friendly graphical interface. It does not require installation nor advanced skills
-        to use. It has been developed using mainly javascript (frontend) and php (backend) as well as additional packages, including chart.js and leaflet.js,
-        for the visualization of voting results and ipinfo.api for geolocation.
-      </p>
-      <p>
-        Apart from its broader potential usefulness, "Check It Yourself" can be of particular interest in education since it can contribute to young people (i.e., pupils,
-        students) cultivating the mentality of researching instead of believing, increasing their critical thinking and actively develop and practice values of democracy.
-      </p>
+      <div id="short-app-description">
+        <p>
+          "Check It Yourself" allows registered users to create such polls for specific issues/questions and ask other users, located geographically close to the news source,
+          to confirm or doubt/challenge its truthfulness. The answers are in the form of preferences/votes which are collected, analyzed, aggregated,
+          and visualized so that users are provided with quantitative and qualitative information.
+        </p>
+        <address style="text-align:center;"> To contact us you can use the following email:<a href="mailto:astefan@ceid.upatras.gr" style="color:#cc0000"> astefan@ceid.upatras.gr</a></address>
+        <div id="dropdown-description">
+          <div>For a detailed description click</div>
+          <button id="dropdown-button">here</button>
+        </div>
+      </div>
+      <div id="detailed-app-description" style="display:none;">
+        <p>"Check It Yourself": an online crowdsourcing-based application for checking news validity exploiting Social Choice Theory and InfoVis
+          Checking whether news reported via social media or the press is truly valid has recently emerged as a tantalizing issue in our society.
+          Despite the existence of various agencies claiming to perform fact checking, there is important skepticism regarding the result credibility which may indeed be
+          downgraded or biased due to several factors including financial, political or personal incentives or also incomplete, sloppy processes or lack of appropriate sources.
+        </p>
+        <p>
+          Motivated by this observation and the fact that the internet and the web can provide an excellent source of crowd intelligence for efficiently collecting/mining data,
+          we present "Check It Yourself", an online application which is essentially a crowdsourcing system and decision-making mechanism based on social choice,
+          exploiting visualization techniques for allowing users to perform on-the-fly news validity checking.
+        </p>
+        <p>
+          Social Choice Theory (SCT) - and especially Voting Theory - addresses how to interpret the will of people and bring out a satisfying collective decision based
+          on elections in democratic societies, where all citizens have an equal say in the decisions.
+          SCT provides a set of methods for the aggregation of a set of individual preferences into a collective preference or decision.
+          Such methods include collecting data using different kind of polls, which actually work as ranked, approval (e.g., y/n questions) and
+          cardinal (e.g., rating/score questions) voting systems.
+        </p>
+        <p>
+          "Check It Yourself" allows registered users to create such polls for specific issues/questions and ask other users, located geographically close to the news source,
+          to confirm or doubt/challenge its truthfulness. The answers are in the form of preferences/votes which are collected, analyzed, aggregated,
+          and visualized so that users are provided with quantitative and qualitative information. Furthermore, live feedback and live updates are automatically provided
+          for new polls and newly submitted votes.
+        </p>
+        <p>
+          For visualization purposes, we deployed Information Visualization (InfoVis) techniques for designing visual representations of abstract data to help users increase
+          their knowledge about the internal structure of data and the causal relationships between them. In addition, all generated visualizations together with the corresponding
+          data files are fully downloadable so that interested users can save them locally and further process them.
+        </p>
+        <p>
+          "Check It Yourself" is a lightweight and responsive application with an easy-to-use, friendly graphical interface. It does not require installation nor advanced skills
+          to use. It has been developed using mainly javascript (frontend) and php (backend) as well as additional packages, including chart.js and leaflet.js,
+          for the visualization of voting results and ipinfo.api for geolocation.
+        </p>
+        <p>
+          Apart from its broader potential usefulness, "Check It Yourself" can be of particular interest in education since it can contribute to young people (i.e., pupils,
+          students) cultivating the mentality of researching instead of believing, increasing their critical thinking and actively develop and practice values of democracy.
+        </p>
 
-      <address> To contact us you can use the following email:<a href="mailto:astefan@ceid.upatras.gr" style="color:#cc0000"> astefan@ceid.upatras.gr</a></address>
+        <address style="text-align:center;"> To contact us you can use the following email:<a href="mailto:astefan@ceid.upatras.gr" style="color:#cc0000;"> astefan@ceid.upatras.gr</a></address>
+      </div>
     </div>
   </div>
   <!--This div contains all the posts.-->

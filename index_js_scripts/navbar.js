@@ -80,16 +80,18 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
-        $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
         generate_posts(true);
       });
     } else if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#password-change-form").fadeOut(300, function () {
-        $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
         generate_posts(true);
       });
     } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
@@ -104,24 +106,27 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
         null_style("fa-solid fa-map");
         conn.send(JSON.stringify(["admin_map_status", false]));
         set_admin_map_bool(false);
-        $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
         generate_posts(true);
       });
     } else if (window.getComputedStyle(document.getElementById("about-container")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#about-container").fadeOut(300, function () {
-        $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
         generate_posts(true);
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
       document.getElementById("user-nav").style.width = "0";
       document.getElementById("profile-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
-        $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
         generate_posts(true);
       });
     }
@@ -129,6 +134,7 @@ document.getElementsByClassName("nav-element")[4].addEventListener("click", func
     document.getElementById("user-nav").style.width = "0";
     document.getElementById("profile-icon").style.visibility = "visible";
     $("#add-post-icon").fadeOut(300, function () {});
+    $("#app-title-container").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       $("#username-change-form").fadeOut(300, function () {});
@@ -159,16 +165,18 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
-        $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
         generate_posts(false);
       });
     } else if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#password-change-form").fadeOut(300, function () {
-        $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
         generate_posts(false);
       });
     } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
@@ -183,24 +191,27 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
         null_style("fa-solid fa-map");
         conn.send(JSON.stringify(["admin_map_status", false]));
         set_admin_map_bool(false);
-        $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
         generate_posts(false);
       });
     } else if (window.getComputedStyle(document.getElementById("about-container")).display !== "none") {
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#about-container").fadeOut(300, function () {
-        $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
         generate_posts(false);
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
-        $("#all-filters").fadeIn(300, function () {});
         $("#add-post-icon").fadeIn(300, function () {});
+        $("#app-title-container").fadeIn(300, function () {});
+        $("#all-filters").fadeIn(300, function () {});
         generate_posts(false);
       });
     }
@@ -208,6 +219,7 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
     document.getElementById("sidenav").style.width = "0";
     document.getElementById("sidenav-icon").style.visibility = "visible";
     $("#add-post-icon").fadeOut(300, function () {});
+    $("#app-title-container").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     if (window.getComputedStyle(document.getElementById("username-change-form")).display !== "none") {
       $("#username-change-form").fadeOut(300, function () {});
@@ -270,6 +282,7 @@ document.getElementsByClassName("nav-element")[5].addEventListener("click", func
     document.getElementById("user-nav").style.width = "0";
     document.getElementById("profile-icon").style.visibility = "visible";
     $("#add-post-icon").fadeOut(300, function () {});
+    $("#app-title-container").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
     $("#notification-container").fadeOut(300, function () {});
@@ -326,8 +339,9 @@ document.getElementById("username-change").addEventListener("click", function ()
             .done(function () {
               document.getElementsByClassName("logged-form-control")[0].value = "";
               document.getElementsByClassName("logged-form-control")[1].value = "";
-              $("#all-filters").fadeIn(300, function () {});
               $("#add-post-icon").fadeIn(300, function () {});
+              $("#app-title-container").fadeIn(300, function () {});
+              $("#all-filters").fadeIn(300, function () {});
               generate_posts(false);
             });
         }
@@ -376,6 +390,7 @@ document.getElementsByClassName("nav-element")[6].addEventListener("click", func
     document.getElementById("user-nav").style.width = "0";
     document.getElementById("profile-icon").style.visibility = "visible";
     $("#add-post-icon").fadeOut(300, function () {});
+    $("#app-title-container").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
     $("#notification-container").fadeOut(300, function () {});
@@ -437,8 +452,9 @@ document.getElementById("password-change").addEventListener("click", function ()
               document.getElementsByClassName("logged-form-control")[2].value = "";
               document.getElementsByClassName("logged-form-control")[3].value = "";
               document.getElementsByClassName("logged-form-control")[4].value = "";
-              $("#all-filters").fadeIn(300, function () {});
               $("#add-post-icon").fadeIn(300, function () {});
+              $("#app-title-container").fadeIn(300, function () {});
+              $("#all-filters").fadeIn(300, function () {});
               generate_posts(false);
             });
         }
@@ -563,6 +579,7 @@ document.getElementsByClassName("nav-element")[7].addEventListener("click", func
     document.getElementById("user-nav").style.width = "0";
     document.getElementById("profile-icon").style.visibility = "visible";
     $("#add-post-icon").fadeOut(300, function () {});
+    $("#app-title-container").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
     $("#notification-container").fadeOut(300, function () {});
@@ -607,12 +624,16 @@ document.getElementsByClassName("nav-element")[1].addEventListener("click", func
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#username-change-form").fadeOut(300, function () {
+        document.getElementById("short-app-description").style.display = "block";
+        document.getElementById("detailed-app-description").style.display = "none";
         $("#about-container").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("password-change-form")).display !== "none") {
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#password-change-form").fadeOut(300, function () {
+        document.getElementById("short-app-description").style.display = "block";
+        document.getElementById("detailed-app-description").style.display = "none";
         $("#about-container").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("analytics-container")).display !== "none") {
@@ -627,12 +648,16 @@ document.getElementsByClassName("nav-element")[1].addEventListener("click", func
         null_style("fa-solid fa-map");
         conn.send(JSON.stringify(["admin_map_status", false]));
         set_admin_map_bool(false);
+        document.getElementById("short-app-description").style.display = "block";
+        document.getElementById("detailed-app-description").style.display = "none";
         $("#about-container").fadeIn(300, function () {});
       });
     } else if (window.getComputedStyle(document.getElementById("next-step")).display !== "none") {
       document.getElementById("sidenav").style.width = "0";
       document.getElementById("sidenav-icon").style.visibility = "visible";
       $("#next-step").fadeOut(300, function () {
+        document.getElementById("short-app-description").style.display = "block";
+        document.getElementById("detailed-app-description").style.display = "none";
         $("#about-container").fadeIn(300, function () {});
       });
     }
@@ -640,6 +665,7 @@ document.getElementsByClassName("nav-element")[1].addEventListener("click", func
     document.getElementById("sidenav").style.width = "0";
     document.getElementById("sidenav-icon").style.visibility = "visible";
     $("#add-post-icon").fadeOut(300, function () {});
+    $("#app-title-container").fadeOut(300, function () {});
     $("#all-filters").fadeOut(300, function () {});
     $(".post").fadeOut(300, function () {});
     $("#notification-container").fadeOut(300, function () {});
@@ -650,6 +676,8 @@ document.getElementsByClassName("nav-element")[1].addEventListener("click", func
         $(".post").fadeOut(300, function () {});
         $(".post").not(":first").remove();
         reset_poll_data();
+        document.getElementById("short-app-description").style.display = "block";
+        document.getElementById("detailed-app-description").style.display = "none";
         $("#about-container").fadeIn(300, function () {});
       });
   }
