@@ -387,27 +387,27 @@ document.getElementsByClassName("nav-element")[0].addEventListener("click", func
 });
 
 //This is for when the user clicks "Bookmarks" on the user navabar.
-document.getElementsByClassName("nav-element")[4].addEventListener("click", function (e) {
-  clear_filters();
-});
-
-//This is for when the user clicks "Change Username" on the user navbar.
 document.getElementsByClassName("nav-element")[5].addEventListener("click", function (e) {
   clear_filters();
 });
 
-//This is for when the user clicks "Change Password" on the user navbar.
+//This is for when the user clicks "Change Username" on the user navbar.
 document.getElementsByClassName("nav-element")[6].addEventListener("click", function (e) {
   clear_filters();
 });
 
-//This is for when the user clicks "Analytics" on the user navbar.
+//This is for when the user clicks "Change Password" on the user navbar.
 document.getElementsByClassName("nav-element")[7].addEventListener("click", function (e) {
   clear_filters();
 });
 
-//This is for when the user clicks "About" on the user navbar.
+//This is for when the user clicks "Analytics" on the user navbar.
 document.getElementsByClassName("nav-element")[1].addEventListener("click", function (e) {
+  clear_filters();
+});
+
+//This is for when the user clicks "About" on the user navbar.
+document.getElementsByClassName("nav-element")[2].addEventListener("click", function (e) {
   clear_filters();
 });
 

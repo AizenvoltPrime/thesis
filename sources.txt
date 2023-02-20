@@ -87,14 +87,9 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 
 "wss://crowdsource.gamerwelfare.com"
 
-https://www.cse.unsw.edu.au/~haziz/comsoc.pdf yes/no, rating
+ΕΠΟΜΕΝΑ TASK:
 
 1. Να εμφανίζω επίσης και πόσοι ψήφισαν σε κάθε poll type
 
-2. Να μεταφέρω το Analytics αριστερά
-
-
-ΕΠΟΜΕΝΑ TASK:
-
-1. Να διαβάσω pairwise για approval και ranking και να στείλω παραδείγματα
+2. Να διαβάσω pairwise για approval και ranking και να στείλω παραδείγματα
 

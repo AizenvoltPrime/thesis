@@ -48,6 +48,7 @@ require_once "new_config.php";
   <div id="sidenav" class="sidenav">
     <button class="closebtn"><i class="fa-solid fa-times fa-2x"></i></button>
     <a class="nav-element"><i class="fa-solid fa-house"></i>Home</a>
+    <a class="nav-element"><i class="fa-solid fa-chart-simple"></i>Analytics</a>
     <a class="nav-element"><i class="fa-solid fa-info"></i>About</a>
   </div>
   <!--This div is for the right navbar icons.-->
@@ -58,7 +59,6 @@ require_once "new_config.php";
     <a class="nav-element"><i class="fa-solid fa-bookmark fa-1x"></i>Bookmarks</a>
     <a class="nav-element"><i class="fa-solid fa-user fa-1x" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>Change Username</a>
     <a class="nav-element"><i class="fa-solid fa-lock fa-1x"></i>Change Password</a>
-    <a class="nav-element"><i class="fa-solid fa-chart-simple"></i>Analytics</a>
     <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
   </div>
   <!--This div is for the post filters.-->
