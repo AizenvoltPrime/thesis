@@ -1126,7 +1126,7 @@ postContainer.addEventListener(
       const post_download_results_img = btn_download_results_img.closest(".post");
       const postDownloadResImgIndex = [...postContainer.children].indexOf(post_download_results_img);
       if (post_data[postDownloadResImgIndex][2] == 1) {
-        let results_element = document.getElementsByClassName("post")[postDownloadResImgIndex].getElementsByClassName("myChart")[0];
+        let results_element = document.getElementsByClassName("post")[postDownloadResImgIndex].getElementsByClassName("chartCard")[0];
         results_element.style.backgroundColor = "#2c3134";
         results_element.style.borderRadius = "1em";
         html2canvas(results_element, {
@@ -1176,7 +1176,7 @@ postContainer.addEventListener(
       const postDownloadResPDFIndex = [...postContainer.children].indexOf(post_download_results_pdf);
       if (post_data[postDownloadResPDFIndex][2] == 1) {
         window.jsPDF = window.jspdf.jsPDF;
-        let results_element = document.getElementsByClassName("post")[postDownloadResPDFIndex].getElementsByClassName("myChart")[0];
+        let results_element = document.getElementsByClassName("post")[postDownloadResPDFIndex].getElementsByClassName("chartCard")[0];
         results_element.style.backgroundColor = "#2c3134";
         results_element.style.borderRadius = "1em";
         html2canvas(results_element).then((canvas) => {
