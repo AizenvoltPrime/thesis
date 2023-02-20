@@ -498,7 +498,11 @@ require_once "new_config.php";
         <button class="parent_of_bookmark" data-dir="bookmark"></button>
       </div>
       <div class="yes-no-results-container" style="display:none;">
-        <div class="chartCard"></div>
+        <div class="chartCard">
+          <div class="yes-no-total-votes-container">
+            <div class="yes-no-total-votes-text"></div>
+          </div>
+        </div>
         <div class="download-results">
           <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
           <button class="download-results-pdf" data-dir="download-results-pdf"><i class="fa-solid fa-cloud-arrow-down"></i>PDF</button>
@@ -535,6 +539,9 @@ require_once "new_config.php";
             <button class="half-star-container-results" value="4.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
             <button class="half-star-container-results" value="4.5"><i class="fa-solid fa-star-half"></i></button>
             <button class="half-star-container-results" value="5.0" style="transform: scaleX(-1);"><i class="fa-solid fa-star-half"></i></button>
+          </div>
+          <div class="rating-total-votes-container">
+            <div class="rating-total-votes-text"></div>
           </div>
         </div>
         <div class="download-results">

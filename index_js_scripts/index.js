@@ -620,7 +620,9 @@ export function generate_posts(
             }
             let new_canvas = document.createElement("canvas");
             new_canvas.className = "myChart";
-            document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
+            document
+              .getElementsByClassName("chartCard")
+              [i].insertBefore(new_canvas, document.getElementsByClassName("yes-no-total-votes-container")[i]);
           }
         } else if (post_data[0].length <= 12) {
           for (let i = 0; i < post_data.length; i++) {
@@ -629,7 +631,9 @@ export function generate_posts(
             document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
             let new_canvas = document.createElement("canvas");
             new_canvas.className = "myChart";
-            document.getElementsByClassName("chartCard")[i].appendChild(new_canvas);
+            document
+              .getElementsByClassName("chartCard")
+              [i].insertBefore(new_canvas, document.getElementsByClassName("yes-no-total-votes-container")[i]);
             let element_style = document.getElementsByClassName("post-options-inside-container")[i].getElementsByClassName("post-event-location")[0];
             element_style.style.borderBottom = "0.1em solid #858585";
             element_style.style.borderRadius = "0 0 0.5em 0.5em";
@@ -1352,7 +1356,7 @@ postContainer.addEventListener(
           })
             .then((res) => res.json())
             .then((response) => {
-              if (response[60].trim() == "Success") {
+              if (response[61].trim() == "Success") {
                 let vote_data = response;
                 vote_data.pop();
                 conn.send(JSON.stringify(["rating_vote", post_data[postIndexPostStarVote][0], post_data[0][16], vote_data]));
@@ -2063,7 +2067,9 @@ function get_rating_data(post_number) {
             let clone_rating_choices = post_element.getElementsByClassName("rating-choices-results")[0];
             let clone = clone_rating_choices.cloneNode(true);
             clone.setAttribute("data-value", i + 1);
-            post_element.getElementsByClassName("rating-vote-results-inside-container")[0].appendChild(clone);
+            post_element
+              .getElementsByClassName("rating-vote-results-inside-container")[0]
+              .insertBefore(clone, post_element.getElementsByClassName("rating-total-votes-container")[0]);
             post_element
               .querySelectorAll(".rating-choices-results")
               [i].querySelectorAll(".half-star-container-results")
@@ -2083,6 +2089,7 @@ function get_rating_data(post_number) {
           }
         }
       }
+      document.getElementsByClassName("rating-total-votes-text")[post_number].innerText = "Number of Votes: " + response[40];
     });
 }
 
@@ -2212,6 +2219,7 @@ export function make_yes_no_chart(post_number, chart_data) {
       },
     },
   });
+  document.getElementsByClassName("yes-no-total-votes-text")[post_number].innerText = "Number of Votes: " + (chart_data[0] + chart_data[1]);
 }
 
 //used to clear all posts data each time the user returns to the main page without reloading the page.
@@ -2227,7 +2235,7 @@ export function reset_poll_data() {
   document.querySelectorAll(".fa-clock").forEach((main_class) => (main_class.style.color = null));
   document.querySelectorAll(".poll-remaining-time").forEach((main_class) => (main_class.innerText = ""));
   document.querySelectorAll(".yes-no-results-container").forEach((main_class) => (main_class.style.display = "none"));
-  document.querySelectorAll(".chartCard").forEach((main_class) => (main_class.innerHTML = ""));
+  document.querySelectorAll(".myChart").forEach((main_class) => main_class.remove());
   document.querySelectorAll(".answer-yes").forEach((main_class) => main_class.remove());
   document.querySelectorAll(".answer-no").forEach((main_class) => main_class.remove());
   document.querySelectorAll(".vote").forEach((main_class) => main_class.remove());

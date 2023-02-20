@@ -809,9 +809,21 @@ if ($data['request'] == "request_username") {
                 $row["choice_five_name"], $row["choice_six_name"], $row["choice_seven_name"], $row["choice_eight_name"], $row["choice_nine_name"],
                 $row["choice_ten_name"], $row["choice_eleven_name"], $row["choice_twelve_name"], $row["choice_thirteen_name"], $row["choice_fourteen_name"],
                 $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
-                $row["choice_twenty_name"],
-                "Success"
+                $row["choice_twenty_name"]
             );
+        }
+    }
+    $stmt = $conn->prepare(
+        "SELECT COUNT(user_id) AS total_votes FROM rating WHERE post_id=:post_id AND 
+    (choice_one IS NOT NULL OR choice_two IS NOT NULL OR choice_three IS NOT NULL OR choice_four IS NOT NULL OR choice_five IS NOT NULL 
+    OR choice_six IS NOT NULL OR choice_seven IS NOT NULL OR choice_eight IS NOT NULL OR choice_nine IS NOT NULL OR choice_ten IS NOT NULL 
+    OR choice_eleven IS NOT NULL OR choice_twelve IS NOT NULL OR choice_thirteen IS NOT NULL OR choice_fourteen IS NOT NULL OR choice_fifteen IS NOT NULL 
+    OR choice_sixteen IS NOT NULL OR choice_seventeen IS NOT NULL OR choice_eighteen IS NOT NULL OR choice_nineteen IS NOT NULL OR choice_twenty IS NOT NULL)"
+    );
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($tmp, $row["total_votes"], "Success");
         }
     }
     echo json_encode($tmp);
@@ -887,6 +899,19 @@ if ($data['request'] == "request_username") {
                 $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
                 $row["choice_twenty_name"]
             );
+        }
+    }
+    $stmt = $conn->prepare(
+        "SELECT COUNT(user_id) AS total_votes FROM rating WHERE post_id=:post_id AND 
+    (choice_one IS NOT NULL OR choice_two IS NOT NULL OR choice_three IS NOT NULL OR choice_four IS NOT NULL OR choice_five IS NOT NULL 
+    OR choice_six IS NOT NULL OR choice_seven IS NOT NULL OR choice_eight IS NOT NULL OR choice_nine IS NOT NULL OR choice_ten IS NOT NULL 
+    OR choice_eleven IS NOT NULL OR choice_twelve IS NOT NULL OR choice_thirteen IS NOT NULL OR choice_fourteen IS NOT NULL OR choice_fifteen IS NOT NULL 
+    OR choice_sixteen IS NOT NULL OR choice_seventeen IS NOT NULL OR choice_eighteen IS NOT NULL OR choice_nineteen IS NOT NULL OR choice_twenty IS NOT NULL)"
+    );
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($tmp, $row["total_votes"]);
         }
     }
     echo json_encode($tmp);

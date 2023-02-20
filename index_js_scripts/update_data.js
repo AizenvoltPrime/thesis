@@ -57,7 +57,7 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".fa-clock").forEach((main_class) => (main_class.style.color = null));
       clone.querySelectorAll(".poll-remaining-time").forEach((main_class) => (main_class.innerText = ""));
       clone.querySelectorAll(".yes-no-results-container").forEach((main_class) => (main_class.style.display = "none"));
-      clone.querySelectorAll(".chartCard").forEach((main_class) => (main_class.innerHTML = ""));
+      clone.querySelectorAll(".myChart").forEach((main_class) => main_class.remove());
       clone.querySelectorAll(".answer-yes").forEach((main_class) => main_class.remove());
       clone.querySelectorAll(".answer-no").forEach((main_class) => main_class.remove());
       clone.querySelectorAll(".vote").forEach((main_class) => main_class.remove());
@@ -152,7 +152,7 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.getElementsByClassName("parent_of_bookmark")[0].appendChild(new_bookmark);
       let new_canvas = document.createElement("canvas");
       new_canvas.className = "myChart";
-      clone.getElementsByClassName("chartCard")[0].appendChild(new_canvas);
+      clone.getElementsByClassName("chartCard")[0].insertBefore(new_canvas, document.getElementsByClassName("yes-no-total-votes-container")[0]);
       if (
         JSON.parse(e.data)[1][11] !== null &&
         DateTime.fromFormat(JSON.parse(e.data)[1][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") === -1
@@ -562,7 +562,7 @@ addEventListener("DOMContentLoaded", (event) => {
                   let clone_rating_choices = post_element.getElementsByClassName("rating-choices-results")[0];
                   let clone = clone_rating_choices.cloneNode(true);
                   clone.setAttribute("data-value", j + 1);
-                  post_element.appendChild(clone);
+                  post_element.insertBefore(clone, post_element.getElementsByClassName("rating-total-votes-container")[0]);
                   post_element
                     .querySelectorAll(".rating-choices-results")
                     [j].querySelectorAll(".half-star-container-results")
@@ -631,6 +631,8 @@ addEventListener("DOMContentLoaded", (event) => {
               edit_rating_vote(i, ratings_array);
             }
           }
+          let post_element = document.getElementsByClassName("post")[i].getElementsByClassName("rating-vote-results-inside-container")[0];
+          post_element.getElementsByClassName("rating-total-votes-text")[0].innerText = "Number of Votes: " + JSON.parse(e.data)[3][60];
         }
       }
     } else if (JSON.parse(e.data)[0] === "approval_vote") {
