@@ -871,6 +871,7 @@ postContainer.addEventListener(
                       }
                     }
                   }
+                  document.querySelectorAll(".total-votes-container")[postIndexVote].style.display = "flex";
                   document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("rating-vote")[0].style.display = "flex";
                 });
             }
@@ -884,6 +885,7 @@ postContainer.addEventListener(
                 document.querySelectorAll(".show-results")[postIndexVote].style.backgroundColor = "#00a1ff80";
                 document.querySelectorAll(".approval-vote-results")[postIndexVote].style.display = "none";
               }
+              document.querySelectorAll(".total-votes-container")[postIndexVote].style.display = "flex";
               document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
               document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("approval-vote-container")[0].style.display = "flex";
               for (
@@ -956,6 +958,7 @@ postContainer.addEventListener(
         if (window.getComputedStyle(document.getElementsByClassName("myChart")[postIndexShowResults]).display === "block") {
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
           document.querySelectorAll(".yes-no-results-container")[postIndexShowResults].style.display = "none";
+          document.querySelectorAll(".total-votes-container")[postIndexShowResults].style.display = "flex";
           if (myChart[postIndexShowResults]) {
             myChart[postIndexShowResults].destroy();
           }
@@ -968,12 +971,14 @@ postContainer.addEventListener(
         if (window.getComputedStyle(document.getElementsByClassName("rating-vote-results")[postIndexShowResults]).display === "flex") {
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
           document.querySelectorAll(".rating-vote-results")[postIndexShowResults].style.display = "none";
+          document.querySelectorAll(".total-votes-container")[postIndexShowResults].style.display = "flex";
           document.getElementsByClassName("post-critic")[postIndexShowResults].style.marginBottom = null;
         } else {
           if (window.getComputedStyle(document.getElementsByClassName("rating-vote")[postIndexShowResults]).display === "flex") {
             document.querySelectorAll(".post")[postIndexShowResults].getElementsByClassName("vote")[0].style.backgroundColor = null;
             document.querySelectorAll(".rating-vote")[postIndexShowResults].style.display = "none";
           }
+          document.querySelectorAll(".total-votes-container")[postIndexShowResults].style.display = "none";
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff";
           document.querySelectorAll(".rating-vote-results")[postIndexShowResults].style.display = "flex";
           get_rating_data(postIndexShowResults);
@@ -982,12 +987,14 @@ postContainer.addEventListener(
         if (window.getComputedStyle(document.getElementsByClassName("approval-vote-results")[postIndexShowResults]).display === "flex") {
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
           document.querySelectorAll(".approval-vote-results")[postIndexShowResults].style.display = "none";
+          document.querySelectorAll(".total-votes-container")[postIndexShowResults].style.display = "flex";
           document.getElementsByClassName("post-critic")[postIndexShowResults].style.marginBottom = null;
         } else {
           if (window.getComputedStyle(document.getElementsByClassName("approval-vote-container")[postIndexShowResults]).display === "flex") {
             document.querySelectorAll(".post")[postIndexShowResults].getElementsByClassName("vote")[0].style.backgroundColor = null;
             document.querySelectorAll(".approval-vote-container")[postIndexShowResults].style.display = "none";
           }
+          document.querySelectorAll(".total-votes-container")[postIndexShowResults].style.display = "none";
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff";
           document.querySelectorAll(".approval-vote-results")[postIndexShowResults].style.display = "flex";
           get_approval_data(postIndexShowResults);
@@ -2226,6 +2233,7 @@ export function make_yes_no_chart(post_number, chart_data) {
   if (myChart[post_number]) {
     myChart[post_number].destroy();
   }
+  document.querySelectorAll(".total-votes-container")[post_number].style.display = "none";
   document.querySelectorAll(".yes-no-results-container")[post_number].style.display = "flex";
   ctx[post_number] = document.getElementsByClassName("myChart")[post_number].getContext("2d");
   myChart[post_number] = new Chart(ctx[post_number], {
@@ -2329,6 +2337,7 @@ export function reset_poll_data() {
     main_class.getElementsByClassName("post-event-location")[0].style.borderRadius = null;
   });
   document.querySelectorAll(".post-critic").forEach((element) => (element.style.marginBottom = null));
+  document.querySelectorAll(".total-votes-container").forEach((element) => (element.style.display = "flex"));
 
   if (user_choice !== "none") {
     choice_dehighlight(user_choice);

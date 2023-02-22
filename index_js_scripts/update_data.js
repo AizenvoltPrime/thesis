@@ -102,6 +102,7 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".post-options-inside-container").forEach((element) => {
         element.style.display = "none";
       });
+      clone.querySelectorAll(".total-votes-container").forEach((element) => (element.style.display = "flex"));
       clone.getElementsByClassName("post-critic")[0].style.marginBottom = null;
       clone.querySelectorAll(".post-user-name")[0].innerText = JSON.parse(e.data)[1][1];
       clone.querySelectorAll(".post-question")[0].innerText = JSON.parse(e.data)[1][4];
