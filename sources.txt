@@ -89,4 +89,10 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 
 ΕΠΟΜΕΝΑ TASK:
 
-1. Να διαβάσω pairwise για approval και ranking και να στείλω παραδείγματα.
+1. Να περιορίσω σε 5 επιλογές το approval και να κάνω pairwise comparisons.
+2. Να δημιουργήσω ρεαλιστικά παραδείγματα για κάθε poll type.
+
+
+ΑΛΛΑΓΕΣ:
+
+1. Να εμφανίζεται ο αριθμός των ψήφων στο κάθε post δίπλα από το Show Results

@@ -500,6 +500,27 @@ export function generate_posts(
           document.getElementsByClassName("score")[0].innerText = post_data[i][5];
           document.getElementsByClassName("post-time")[0].innerText = post_time;
           document.getElementsByClassName("post-time-detailed")[0].innerText = post_data[i][6];
+          if (post_data[0].length > 14) {
+            if (post_data[i][2] == 1) {
+              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][17];
+            } else if (post_data[i][2] == 2) {
+              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][18];
+            } else if (post_data[i][2] == 3) {
+              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + "1";
+            } else if (post_data[i][2] == 4) {
+              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + "1";
+            }
+          } else if (post_data[0].length <= 14) {
+            if (post_data[i][2] == 1) {
+              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][12];
+            } else if (post_data[i][2] == 2) {
+              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][13];
+            } else if (post_data[i][2] == 3) {
+              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + "1";
+            } else if (post_data[i][2] == 4) {
+              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + "1";
+            }
+          }
         } else if (i > 0) {
           node[i - 1] = document.getElementsByClassName("post")[0];
           clone[i - 1] = node[i - 1].cloneNode(true);
@@ -508,11 +529,32 @@ export function generate_posts(
           clone[i - 1].querySelectorAll(".score")[0].innerText = post_data[i][5];
           clone[i - 1].querySelectorAll(".post-time")[0].innerText = post_time;
           clone[i - 1].querySelectorAll(".post-time-detailed")[0].innerText = post_data[i][6];
+          if (post_data[0].length > 14) {
+            if (post_data[i][2] == 1) {
+              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][17];
+            } else if (post_data[i][2] == 2) {
+              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][18];
+            } else if (post_data[i][2] == 3) {
+              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + "1";
+            } else if (post_data[i][2] == 4) {
+              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + "1";
+            }
+          } else if (post_data[0].length <= 14) {
+            if (post_data[i][2] == 1) {
+              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][12];
+            } else if (post_data[i][2] == 2) {
+              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][13];
+            } else if (post_data[i][2] == 3) {
+              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + "1";
+            } else if (post_data[i][2] == 4) {
+              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + "1";
+            }
+          }
           document.getElementById("posts-container").appendChild(clone[i - 1]);
         }
       }
       if (post_time !== undefined && post_time !== null) {
-        if (post_data[0].length > 12) {
+        if (post_data[0].length > 14) {
           for (let i = 0; i < post_data.length; i++) {
             if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
@@ -624,7 +666,7 @@ export function generate_posts(
               .getElementsByClassName("chartCard")
               [i].insertBefore(new_canvas, document.getElementsByClassName("yes-no-total-votes-container")[i]);
           }
-        } else if (post_data[0].length <= 12) {
+        } else if (post_data[0].length <= 14) {
           for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
@@ -752,7 +794,7 @@ postContainer.addEventListener(
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
       const postIndexVote = [...postContainer.children].indexOf(post_vote);
-      if (post_data[0].length > 12) {
+      if (post_data[0].length > 14) {
         if (
           post_data[postIndexVote][11] !== null &&
           DateTime.fromFormat(post_data[postIndexVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
@@ -786,8 +828,8 @@ postContainer.addEventListener(
                 .then((res) => res.json())
                 .then((response) => {
                   let post_element = document.getElementsByClassName("post")[postIndexVote];
-                  if (post_data[postIndexVote].length > 17) {
-                    post_data[postIndexVote].length = 17;
+                  if (post_data[postIndexVote].length > 19) {
+                    post_data[postIndexVote].length = 19;
                   }
                   post_data[postIndexVote] = post_data[postIndexVote].concat(response);
                   post_element.querySelectorAll(".rating-choices").forEach((child) => {
@@ -866,8 +908,8 @@ postContainer.addEventListener(
                 .then((res) => res.json())
                 .then((response) => {
                   let post_element = document.getElementsByClassName("post")[postIndexVote];
-                  if (post_data[postIndexVote].length > 17) {
-                    post_data[postIndexVote].length = 17;
+                  if (post_data[postIndexVote].length > 19) {
+                    post_data[postIndexVote].length = 19;
                   }
                   post_data[postIndexVote] = post_data[postIndexVote].concat(response);
                   post_element.querySelectorAll(".approval-choice").forEach((child) => {
@@ -1069,11 +1111,11 @@ postContainer.addEventListener(
       let data_index_lat;
       let data_index_long;
       let data_index_radius;
-      if (post_data[0].length > 12) {
+      if (post_data[0].length > 14) {
         data_index_lat = 12;
         data_index_long = 13;
         data_index_radius = 14;
-      } else if (post_data[0].length <= 12) {
+      } else if (post_data[0].length <= 14) {
         data_index_lat = 9;
         data_index_long = 10;
         data_index_radius = 11;
@@ -1227,7 +1269,7 @@ postContainer.addEventListener(
         });
       }
     }
-    if (post_data[0].length > 12) {
+    if (post_data[0].length > 14) {
       if (btn_approval_vote) {
         const post_approval_vote = btn_approval_vote.closest(".post");
         const postAprovalVote = [...postContainer.children].indexOf(post_approval_vote);
@@ -1258,11 +1300,11 @@ postContainer.addEventListener(
         const post_approval_send = btn_approval_send.closest(".post");
         const postIndexApprovalSend = [...postContainer.children].indexOf(post_approval_send);
         let votes = [];
-        for (let i = 17; i < 37; i++) {
+        for (let i = 19; i < 39; i++) {
           if (
             post_data[postIndexApprovalSend][i] !== null &&
             window.getComputedStyle(
-              document.getElementsByClassName("approval-choices-container")[postIndexApprovalSend].getElementsByClassName("approval-choice")[i - 17]
+              document.getElementsByClassName("approval-choices-container")[postIndexApprovalSend].getElementsByClassName("approval-choice")[i - 19]
             ).color === "rgb(204, 0, 0)"
           ) {
             votes.push(1);
@@ -1317,7 +1359,7 @@ postContainer.addEventListener(
             post_index.getElementsByClassName("half-star-container")[i].style.color = "#00ffd0";
           }
 
-          let temp_pos = parseInt(rating_choice) + 36;
+          let temp_pos = parseInt(rating_choice) + 38;
           post_data[postIndexStar][temp_pos] = parseFloat(btn_star.value);
         }
       } else if (btn_star_vote) {
@@ -1343,7 +1385,7 @@ postContainer.addEventListener(
           document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
         } else {
           let votes = [];
-          for (let i = 17; i < 37; i++) {
+          for (let i = 19; i < 39; i++) {
             if (post_data[postIndexPostStarVote][i] !== null) {
               votes.push(post_data[postIndexPostStarVote][i + 20]);
             } else {
@@ -1362,6 +1404,7 @@ postContainer.addEventListener(
                 conn.send(JSON.stringify(["rating_vote", post_data[postIndexPostStarVote][0], post_data[0][16], vote_data]));
                 $("#notification-container").fadeIn(300, function () {});
                 document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
+                document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Number of Votes: " + vote_data[60];
               }
             });
         }
@@ -1512,6 +1555,8 @@ postContainer.addEventListener(
               .then((res) => res.json())
               .then((response) => {
                 if (response[2].trim() == "Success") {
+                  document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
+                    "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) - 1);
                   post_data[postIndexYes][8] = parseInt(response[0]);
                   post_data[postIndexYes][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
@@ -1602,6 +1647,8 @@ postContainer.addEventListener(
               .then((res) => res.json())
               .then((response) => {
                 if (response[2] == "Success") {
+                  document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
+                    "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) + 1);
                   post_data[postIndexYes][8] = parseInt(response[0]);
                   post_data[postIndexYes][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
@@ -1665,6 +1712,8 @@ postContainer.addEventListener(
               .then((res) => res.json())
               .then((response) => {
                 if (response[2].trim() == "Success") {
+                  document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
+                    "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) - 1);
                   post_data[postIndexNo][8] = parseInt(response[0]);
                   post_data[postIndexNo][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
@@ -1755,6 +1804,8 @@ postContainer.addEventListener(
               .then((res) => res.json())
               .then((response) => {
                 if (response[2].trim() == "Success") {
+                  document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
+                    "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) + 1);
                   post_data[postIndexNo][8] = parseInt(response[0]);
                   post_data[postIndexNo][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
@@ -1921,7 +1972,7 @@ postContainer.addEventListener("mouseout", (e) => {
     let star_range = rating_choice * 10;
     let max_star_position = star_range - 10;
     let star_limit;
-    let temp_pos = parseInt(rating_choice) + 36;
+    let temp_pos = parseInt(rating_choice) + 38;
     let post_index = document.querySelectorAll(".post")[postIndexStar];
 
     if (post_data[postIndexStar][temp_pos] === undefined) {
@@ -2005,10 +2056,10 @@ function get_rating_data(post_number) {
       let average_ratings_array = [];
       let rating_choice_names = [];
       let zipped = [];
-      if (post_data[post_number].length > 17) {
-        post_data[post_number].length = 17;
+      if (post_data[post_number].length > 19) {
+        post_data[post_number].length = 19;
       }
-      if (post_data[post_number].length === 17) {
+      if (post_data[post_number].length === 19) {
         for (let i = 20; i < 40; i++) {
           post_data[post_number] = post_data[post_number].concat(response[i]);
         }
@@ -2104,10 +2155,10 @@ function get_approval_data(post_number) {
       let results_array = [];
       let approval_choice_names = [];
       let zipped = [];
-      if (post_data[post_number].length > 17) {
-        post_data[post_number].length = 17;
+      if (post_data[post_number].length > 19) {
+        post_data[post_number].length = 19;
       }
-      if (post_data[post_number].length === 17) {
+      if (post_data[post_number].length === 19) {
         for (let i = 20; i < 40; i++) {
           post_data[post_number] = post_data[post_number].concat(response[i]);
         }
@@ -2382,7 +2433,7 @@ export function null_all_styles() {
 //Adds new post data that was received from websocket.
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
-  if (new_post.length > 12) {
+  if (new_post.length > 14) {
     post_data[0][16] = post_data[1][16];
   }
   user_chevron_vote.unshift([false, false]);
@@ -2417,13 +2468,13 @@ export function edit_vote(position, value_yes, value_no, vote_bool) {
 //Adds new vote data that was received from websocket.
 export function edit_rating_vote(position, votes) {
   for (let i = 0; i < votes.length; i++) {
-    post_data[position][i + 37] = votes[i];
+    post_data[position][i + 39] = votes[i];
   }
 }
 
 export function edit_approval_vote(position, votes) {
   for (let i = 0; i < votes.length; i++) {
-    post_data[position][i + 37] = votes[i];
+    post_data[position][i + 39] = votes[i];
   }
 }
 

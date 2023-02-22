@@ -485,6 +485,9 @@ require_once "new_config.php";
         <div class="user-question-answers">
           <div class="post-question"></div>
           <button data-dir="show-results" class="show-results">Show Results</button>
+          <div class="total-votes-container">
+            <div class="total-votes-text">Number of Votes: 20</div>
+          </div>
         </div>
       </div>
       <div class="post-critic">
