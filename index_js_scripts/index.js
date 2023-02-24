@@ -198,6 +198,17 @@ document.getElementById("next-step").addEventListener("click", function () {
         .promise()
         .done(function () {
           if (user_choice === "rating" || user_choice === "approval" || user_choice === "ranking") {
+            if (user_choice === "approval") {
+              const choices_select = document.getElementById("poll-choices");
+              for (let i = 5; i < 19; i++) {
+                choices_select.children[i].style.display = "none";
+              }
+            } else {
+              const choices_select = document.getElementById("poll-choices");
+              for (let i = 5; i < 19; i++) {
+                choices_select.children[i].style.display = null;
+              }
+            }
             $("#poll-choices-number-container").fadeIn(300, function () {});
             $("#next-step").fadeIn(300, function () {});
             template_status = "special-1";
