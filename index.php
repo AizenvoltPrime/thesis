@@ -554,9 +554,21 @@ require_once "new_config.php";
       </div>
       <div class="approval-vote-container" style="display:none;">
         <div class="approval-choices-container">
-          <div data-dir="approval-vote" class="approval-choice" value="1"></div>
-          <div data-dir="approval-vote" class="approval-choice" value="2"></div>
-          <div data-dir="approval-vote" class="approval-choice" value="3"></div>
+          <div class="approval-pair" value="1">
+            <div data-dir="approval-vote" class="approval-choice" value="1"></div>
+            <div class="approval-or">or</div>
+            <div data-dir="approval-vote" class="approval-choice" value="2"></div>
+          </div>
+          <div class="approval-pair" value="2">
+            <div data-dir="approval-vote" class="approval-choice" value="3"></div>
+            <div class="approval-or">or</div>
+            <div data-dir="approval-vote" class="approval-choice" value="4"></div>
+          </div>
+          <div class="approval-pair" value="3">
+            <div data-dir="approval-vote" class="approval-choice" value="5"></div>
+            <div class="approval-or">or</div>
+            <div data-dir="approval-vote" class="approval-choice" value="6"></div>
+          </div>
         </div>
         <button data-dir="approval-vote-send" class="send-approval-button">Send Vote</button>
       </div>
@@ -564,27 +576,7 @@ require_once "new_config.php";
         <div class="approval-vote-results-inside-container">
           <div class="results-poll-name">Approval Results</div>
           <table class="approval-results-table">
-            <tbody>
-              <tr data-value="0">
-                <th>Choices</th>
-                <th>Votes</th>
-              </tr>
-              <tr data-value="1">
-                <td></td>
-                <td>
-                </td>
-              </tr>
-              <tr data-value="2">
-                <td>
-                </td>
-                <td></td>
-              </tr>
-              <tr data-value="3">
-                <td>
-                </td>
-                <td></td>
-              </tr>
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
         <div class="download-results">

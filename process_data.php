@@ -190,7 +190,7 @@ if ($data['request'] == "request_username") {
             array(
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"],
                 $row["post_date"], $row["user_chevron_result"], $row["user_yes_answer"], $row["user_no_answer"], $row["user_bookmark"], $row["post_expiration_date"],
-                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"]
+                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"], "0", "0", "0"
             );
     }
     echo json_encode($new_data);
@@ -302,7 +302,12 @@ if ($data['request'] == "request_username") {
                     OR rating.choice_six IS NOT NULL OR rating.choice_seven IS NOT NULL OR rating.choice_eight IS NOT NULL OR rating.choice_nine IS NOT NULL OR rating.choice_ten IS NOT NULL 
                     OR rating.choice_eleven IS NOT NULL OR rating.choice_twelve IS NOT NULL OR rating.choice_thirteen IS NOT NULL OR rating.choice_fourteen IS NOT NULL OR rating.choice_fifteen IS NOT NULL 
                     OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
-                    AS total_rating_votes
+                    AS total_rating_votes,
+                    (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts.post_number AND 
+                    (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
+                    OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
+                    OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+                    AS total_approval_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
@@ -327,7 +332,12 @@ if ($data['request'] == "request_username") {
                     OR rating.choice_six IS NOT NULL OR rating.choice_seven IS NOT NULL OR rating.choice_eight IS NOT NULL OR rating.choice_nine IS NOT NULL OR rating.choice_ten IS NOT NULL 
                     OR rating.choice_eleven IS NOT NULL OR rating.choice_twelve IS NOT NULL OR rating.choice_thirteen IS NOT NULL OR rating.choice_fourteen IS NOT NULL OR rating.choice_fifteen IS NOT NULL 
                     OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
-                    AS total_rating_votes
+                    AS total_rating_votes,
+                    (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts.post_number AND 
+                    (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
+                    OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
+                    OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+                    AS total_approval_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
@@ -354,7 +364,12 @@ if ($data['request'] == "request_username") {
                     OR rating.choice_six IS NOT NULL OR rating.choice_seven IS NOT NULL OR rating.choice_eight IS NOT NULL OR rating.choice_nine IS NOT NULL OR rating.choice_ten IS NOT NULL 
                     OR rating.choice_eleven IS NOT NULL OR rating.choice_twelve IS NOT NULL OR rating.choice_thirteen IS NOT NULL OR rating.choice_fourteen IS NOT NULL OR rating.choice_fifteen IS NOT NULL 
                     OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
-                    AS total_rating_votes
+                    AS total_rating_votes,
+                    (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts.post_number AND 
+                    (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
+                    OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
+                    OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+                    AS total_approval_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
@@ -380,7 +395,12 @@ if ($data['request'] == "request_username") {
                     OR rating.choice_six IS NOT NULL OR rating.choice_seven IS NOT NULL OR rating.choice_eight IS NOT NULL OR rating.choice_nine IS NOT NULL OR rating.choice_ten IS NOT NULL 
                     OR rating.choice_eleven IS NOT NULL OR rating.choice_twelve IS NOT NULL OR rating.choice_thirteen IS NOT NULL OR rating.choice_fourteen IS NOT NULL OR rating.choice_fifteen IS NOT NULL 
                     OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
-                    AS total_rating_votes
+                    AS total_rating_votes,
+                    (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts.post_number AND 
+                    (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
+                    OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
+                    OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+                    AS total_approval_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
@@ -410,7 +430,8 @@ if ($data['request'] == "request_username") {
             $tmp = array(
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"],
                 $row["post_date"], $row["user_chevron_result"], $row["user_yes_answer"], $row["user_no_answer"], $row["user_bookmark"], $row["post_expiration_date"],
-                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"], $row["total_yes_no_votes"], $row["total_rating_votes"]
+                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"], $row["total_yes_no_votes"],
+                $row["total_rating_votes"], $row["total_approval_votes"]
             );
             array_push($post_data, $tmp);
         }
@@ -428,7 +449,12 @@ if ($data['request'] == "request_username") {
             OR rating.choice_six IS NOT NULL OR rating.choice_seven IS NOT NULL OR rating.choice_eight IS NOT NULL OR rating.choice_nine IS NOT NULL OR rating.choice_ten IS NOT NULL 
             OR rating.choice_eleven IS NOT NULL OR rating.choice_twelve IS NOT NULL OR rating.choice_thirteen IS NOT NULL OR rating.choice_fourteen IS NOT NULL OR rating.choice_fifteen IS NOT NULL 
             OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
-            AS total_rating_votes
+            AS total_rating_votes,
+            (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts_info.post_number AND 
+            (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
+            OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
+            OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+            AS total_approval_votes
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
@@ -445,7 +471,12 @@ if ($data['request'] == "request_username") {
             OR rating.choice_six IS NOT NULL OR rating.choice_seven IS NOT NULL OR rating.choice_eight IS NOT NULL OR rating.choice_nine IS NOT NULL OR rating.choice_ten IS NOT NULL 
             OR rating.choice_eleven IS NOT NULL OR rating.choice_twelve IS NOT NULL OR rating.choice_thirteen IS NOT NULL OR rating.choice_fourteen IS NOT NULL OR rating.choice_fifteen IS NOT NULL 
             OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
-            AS total_rating_votes
+            AS total_rating_votes,
+            (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts_info.post_number AND 
+            (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
+            OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
+            OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+            AS total_approval_votes
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
@@ -469,7 +500,7 @@ if ($data['request'] == "request_username") {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $tmp = array(
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"], $row["post_date"], $row["post_expiration_date"],
-                $row["post_vote_result"], $row["event_lat"], $row["event_long"], $row["event_radius"], $row["total_yes_no_votes"], $row["total_rating_votes"]
+                $row["post_vote_result"], $row["event_lat"], $row["event_long"], $row["event_radius"], $row["total_yes_no_votes"], $row["total_rating_votes"], $row["total_approval_votes"]
             );
             array_push($post_data, $tmp);
         }
@@ -878,10 +909,87 @@ if ($data['request'] == "request_username") {
 } else if ($data['request'] == "user_approval_vote_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
     require_once "new_config.php";
 
-    $stmt = $conn->prepare("SELECT choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
-    choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,choice_ten_name,
-    choice_eleven_name, choice_twelve_name, choice_thirteen_name, choice_fourteen_name,choice_fifteen_name,
-    choice_sixteen_name, choice_seventeen_name, choice_eighteen_name, choice_nineteen_name,choice_twenty_name,
+    $choices_number = 0;
+    $stmt = $conn->prepare(
+        "SELECT (CASE WHEN choice_one_name IS NOT NULL THEN 1 ELSE 0 END + 
+        CASE WHEN choice_two_name IS NOT NULL THEN 1 ELSE 0 END + 
+        CASE WHEN choice_three_name IS NOT NULL THEN 1 ELSE 0 END + 
+        CASE WHEN choice_four_name IS NOT NULL THEN 1 ELSE 0 END + 
+        CASE WHEN choice_five_name IS NOT NULL THEN 1 ELSE 0 END + 
+        CASE WHEN choice_six_name IS NOT NULL THEN 1 ELSE 0 END) AS count_choices 
+        FROM posts WHERE post_number=:post_id;"
+    );
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $choices_number = $row["count_choices"];
+        }
+    }
+
+    if ($choices_number == 3) {
+        $stmt = $conn->prepare("SELECT choice_one_name, choice_two_name, choice_three_name,
+        COALESCE((SELECT approval.choice_one FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_one,
+        COALESCE((SELECT approval.choice_two FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_two,
+        COALESCE((SELECT approval.choice_six FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_three
+        FROM posts INNER JOIN approval ON posts.post_number=approval.post_id WHERE posts.post_number=:post_id");
+        $stmt->execute([":id" => $_SESSION["id"], ":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $tmp = array(
+                    $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"],
+                    $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $choices_number
+                );
+            }
+        }
+        echo json_encode($tmp);
+    } else if ($choices_number == 4) {
+        $stmt = $conn->prepare("SELECT choice_one_name, choice_two_name, choice_three_name, choice_four_name,
+        COALESCE((SELECT approval.choice_one FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_one,
+        COALESCE((SELECT approval.choice_two FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_two,
+        COALESCE((SELECT approval.choice_three FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_three,
+        COALESCE((SELECT approval.choice_six FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_four,
+        COALESCE((SELECT approval.choice_seven FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_five,
+        COALESCE((SELECT approval.choice_ten FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_six
+        FROM posts INNER JOIN approval ON posts.post_number=approval.post_id WHERE posts.post_number=:post_id");
+        $stmt->execute([":id" => $_SESSION["id"], ":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $tmp = array(
+                    $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"],
+                    $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"],
+                    $row["approval_choice_five"], $row["approval_choice_six"], $choices_number
+                );
+            }
+        }
+        echo json_encode($tmp);
+    } else if ($choices_number == 5) {
+        $stmt = $conn->prepare("SELECT choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
+    COALESCE((SELECT approval.choice_one FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_one,
+    COALESCE((SELECT approval.choice_two FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_two,
+    COALESCE((SELECT approval.choice_three FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_three,
+    COALESCE((SELECT approval.choice_four FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_four,
+    COALESCE((SELECT approval.choice_six FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_five,
+    COALESCE((SELECT approval.choice_seven FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_six,
+    COALESCE((SELECT approval.choice_eight FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_seven,
+    COALESCE((SELECT approval.choice_ten FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_eight,
+    COALESCE((SELECT approval.choice_eleven FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_nine,
+    COALESCE((SELECT approval.choice_thirteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_ten
+    FROM posts INNER JOIN approval ON posts.post_number=approval.post_id WHERE posts.post_number=:post_id");
+        $stmt->execute([":id" => $_SESSION["id"], ":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $tmp = array(
+                    $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"], $row["choice_five_name"],
+                    $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"],
+                    $row["approval_choice_five"], $row["approval_choice_six"], $row["approval_choice_seven"], $row["approval_choice_eight"],
+                    $row["approval_choice_nine"], $row["approval_choice_ten"], $choices_number
+                );
+            }
+        }
+        echo json_encode($tmp);
+    } else if ($choices_number == 6) {
+        $stmt = $conn->prepare("SELECT choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
+    choice_six_name,
     COALESCE((SELECT approval.choice_one FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_one,
     COALESCE((SELECT approval.choice_two FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_two,
     COALESCE((SELECT approval.choice_three FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_three,
@@ -896,31 +1004,22 @@ if ($data['request'] == "request_username") {
     COALESCE((SELECT approval.choice_twelve FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_twelve,
     COALESCE((SELECT approval.choice_thirteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_thirteen,
     COALESCE((SELECT approval.choice_fourteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_fourteen,
-    COALESCE((SELECT approval.choice_fifteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_fifteen,
-    COALESCE((SELECT approval.choice_sixteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_sixteen,
-    COALESCE((SELECT approval.choice_seventeen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_seventeen,
-    COALESCE((SELECT approval.choice_eighteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_eighteen,
-    COALESCE((SELECT approval.choice_nineteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_nineteen,
-    COALESCE((SELECT approval.choice_twenty FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_twenty
+    COALESCE((SELECT approval.choice_fifteen FROM approval WHERE approval.user_id=:id AND approval.post_id=:post_id),NULL) AS approval_choice_fifteen
     FROM posts INNER JOIN approval ON posts.post_number=approval.post_id WHERE posts.post_number=:post_id");
-    $stmt->execute([":id" => $_SESSION["id"], ":post_id" => $data["post_id"]]);
-    if ($stmt->rowCount() > 0) {
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $tmp = array(
-                $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"],
-                $row["choice_five_name"], $row["choice_six_name"], $row["choice_seven_name"], $row["choice_eight_name"], $row["choice_nine_name"],
-                $row["choice_ten_name"], $row["choice_eleven_name"], $row["choice_twelve_name"], $row["choice_thirteen_name"], $row["choice_fourteen_name"],
-                $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
-                $row["choice_twenty_name"],
-                $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"],
-                $row["approval_choice_five"], $row["approval_choice_six"], $row["approval_choice_seven"], $row["approval_choice_eight"], $row["approval_choice_nine"],
-                $row["approval_choice_ten"], $row["approval_choice_eleven"], $row["approval_choice_twelve"], $row["approval_choice_thirteen"], $row["approval_choice_fourteen"],
-                $row["approval_choice_fifteen"], $row["approval_choice_sixteen"], $row["approval_choice_seventeen"], $row["approval_choice_eighteen"], $row["approval_choice_nineteen"],
-                $row["approval_choice_twenty"],
-            );
+        $stmt->execute([":id" => $_SESSION["id"], ":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $tmp = array(
+                    $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"], $row["choice_five_name"], $row["choice_six_name"],
+                    $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"], $row["approval_choice_five"],
+                    $row["approval_choice_six"], $row["approval_choice_seven"], $row["approval_choice_eight"], $row["approval_choice_nine"], $row["approval_choice_ten"],
+                    $row["approval_choice_eleven"], $row["approval_choice_twelve"], $row["approval_choice_thirteen"], $row["approval_choice_fourteen"], $row["approval_choice_fifteen"],
+                    $choices_number
+                );
+            }
         }
+        echo json_encode($tmp);
     }
-    echo json_encode($tmp);
 } else if ($data['request'] == "average_rating_data") {
     require_once "new_config.php";
 
@@ -966,97 +1065,552 @@ if ($data['request'] == "request_username") {
 } else if ($data['request'] == "approval_vote" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
     require_once "new_config.php";
 
+    $returned_data = array();
+    $number_of_votes = count($data["votes"]);
     $stmt = $conn->prepare("SELECT user_id FROM approval WHERE user_id=:id");
     $stmt->execute([":id" => $_SESSION["id"]]);
     if ($stmt->rowCount() > 0) {
-        $stmt = $conn->prepare("UPDATE approval SET choice_one = :choice_one, choice_two = :choice_two, choice_three = :choice_three,
-        choice_four = :choice_four, choice_five = :choice_five, choice_six = :choice_six, choice_seven = :choice_seven, choice_eight = :choice_eight,
-        choice_nine = :choice_nine, choice_ten = :choice_ten, choice_eleven = :choice_eleven, choice_twelve = :choice_twelve, choice_thirteen = :choice_thirteen,
-        choice_fourteen = :choice_fourteen, choice_fifteen = :choice_fifteen, choice_sixteen = :choice_sixteen, choice_seventeen = :choice_seventeen, 
-        choice_eighteen = :choice_eighteen, choice_nineteen = :choice_nineteen, choice_twenty = :choice_twenty WHERE post_id=:post_id AND user_id=:id");
+        if ($number_of_votes == 3) {
+            $stmt = $conn->prepare("UPDATE approval SET choice_one = :choice_one, choice_two = :choice_two, choice_six = :choice_three 
+            WHERE post_id=:post_id AND user_id=:id");
+            $stmt->execute([
+                ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+                ":choice_three" => $data["votes"][2]
+            ]);
+        } else if ($number_of_votes == 6) {
+            $stmt = $conn->prepare("UPDATE approval SET choice_one = :choice_one, choice_two = :choice_two, choice_three = :choice_three,
+            choice_six = :choice_four, choice_seven = :choice_five, choice_ten = :choice_six WHERE post_id=:post_id AND user_id=:id");
+            $stmt->execute([
+                ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+                ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5]
+            ]);
+        } else if ($number_of_votes == 10) {
+            $stmt = $conn->prepare("UPDATE approval SET choice_one = :choice_one, choice_two = :choice_two, choice_three = :choice_three,
+            choice_four = :choice_four, choice_six = :choice_five, choice_seven = :choice_six, choice_eight = :choice_seven, choice_ten = :choice_eight, 
+            choice_eleven = :choice_nine, choice_thirteen = :choice_ten WHERE post_id=:post_id AND user_id=:id");
+            $stmt->execute([
+                ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+                ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5],
+                ":choice_seven" => $data["votes"][6], ":choice_eight" => $data["votes"][7], ":choice_nine" => $data["votes"][8], ":choice_ten" => $data["votes"][9]
+            ]);
+        } else if ($number_of_votes == 15) {
+            $stmt = $conn->prepare("UPDATE approval SET choice_one = :choice_one, choice_two = :choice_two, choice_three = :choice_three,
+            choice_four = :choice_four, choice_five = :choice_five, choice_six = :choice_six, choice_seven = :choice_seven, choice_eight = :choice_eight,
+            choice_nine = :choice_nine, choice_ten = :choice_ten, choice_eleven = :choice_eleven, choice_twelve = :choice_twelve, choice_thirteen = :choice_thirteen,
+            choice_fourteen = :choice_fourteen, choice_fifteen = :choice_fifteen WHERE post_id=:post_id AND user_id=:id");
+            $stmt->execute([
+                ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+                ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5],
+                ":choice_seven" => $data["votes"][6], ":choice_eight" => $data["votes"][7], ":choice_nine" => $data["votes"][8], ":choice_ten" => $data["votes"][9],
+                ":choice_eleven" => $data["votes"][10], ":choice_twelve" => $data["votes"][11], ":choice_thirteen" => $data["votes"][12], ":choice_fourteen" => $data["votes"][13],
+                ":choice_fifteen" => $data["votes"][14]
+            ]);
+        }
+    }
+    if ($number_of_votes == 3) {
+        $stmt = $conn->prepare("INSERT IGNORE INTO approval(post_id,user_id,poll_type,choice_one,choice_two,choice_six) 
+            VALUES(:post_id,:id,3,:choice_one,:choice_two,:choice_three)");
+        $stmt->execute([
+            ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+            ":choice_three" => $data["votes"][2]
+        ]);
+
+        $stmt = $conn->prepare(
+            "SELECT COUNT(choice_one) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_one=1 
+            UNION ALL 
+            SELECT COUNT(choice_two) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_two=1 
+            UNION ALL 
+            SELECT COUNT(choice_six) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_six=1"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($returned_data, $row["number_of_plus_votes"]);
+            }
+        }
+
+        $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_six, choice_one_name, choice_two_name, choice_three_name
+            FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $returned_data,
+                    $data["votes"][0],
+                    $data["votes"][1],
+                    $data["votes"][2],
+                    $row["approval_choice_one"],
+                    $row["approval_choice_two"],
+                    $row["approval_choice_six"],
+                    $row["choice_one_name"],
+                    $row["choice_two_name"],
+                    $row["choice_three_name"],
+                    "Success"
+                );
+            }
+        }
+        echo json_encode($returned_data);
+    } else if ($number_of_votes == 6) {
+        $stmt = $conn->prepare("INSERT IGNORE INTO approval(post_id,user_id,poll_type,choice_one,choice_two,choice_three,
+            choice_six,choice_seven, choice_ten) 
+            VALUES(:post_id,:id,3,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five,:choice_six)");
+        $stmt->execute([
+            ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+            ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5]
+        ]);
+
+        $stmt = $conn->prepare(
+            "SELECT COUNT(choice_one) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_one=1 
+            UNION ALL 
+            SELECT COUNT(choice_two) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_two=1 
+            UNION ALL 
+            SELECT COUNT(choice_three) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_three=1 
+            UNION ALL
+            SELECT COUNT(choice_six) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_six=1
+            UNION ALL
+            SELECT COUNT(choice_seven) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_seven=1 
+            UNION ALL 
+            SELECT COUNT(choice_ten) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_ten=1"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($returned_data, $row["number_of_plus_votes"]);
+            }
+        }
+
+        $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_three, approval_choice_six, approval_choice_seven, 
+            approval_choice_ten, choice_one_name, choice_two_name, choice_three_name, choice_four_name
+            FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $returned_data,
+                    $data["votes"][0],
+                    $data["votes"][1],
+                    $data["votes"][2],
+                    $data["votes"][3],
+                    $data["votes"][4],
+                    $data["votes"][5],
+                    $row["approval_choice_one"],
+                    $row["approval_choice_two"],
+                    $row["approval_choice_three"],
+                    $row["approval_choice_six"],
+                    $row["approval_choice_seven"],
+                    $row["approval_choice_ten"],
+                    $row["choice_one_name"],
+                    $row["choice_two_name"],
+                    $row["choice_three_name"],
+                    $row["choice_four_name"],
+                    "Success"
+                );
+            }
+        }
+        echo json_encode($returned_data);
+    } else if ($number_of_votes == 10) {
+        $stmt = $conn->prepare("INSERT IGNORE INTO approval(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,
+            choice_six,choice_seven,choice_eight,choice_ten,choice_eleven,choice_thirteen) 
+            VALUES(:post_id,:id,3,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five,:choice_six,:choice_seven,:choice_eight,:choice_nine,:choice_ten)");
+        $stmt->execute([
+            ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+            ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5],
+            ":choice_seven" => $data["votes"][6], ":choice_eight" => $data["votes"][7], ":choice_nine" => $data["votes"][8], ":choice_ten" => $data["votes"][9]
+        ]);
+
+        $stmt = $conn->prepare(
+            "SELECT COUNT(choice_one) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_one=1 
+            UNION ALL 
+            SELECT COUNT(choice_two) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_two=1 
+            UNION ALL 
+            SELECT COUNT(choice_three) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_three=1
+            UNION ALL
+            SELECT COUNT(choice_four) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_four=1  
+            UNION ALL
+            SELECT COUNT(choice_six) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_six=1
+            UNION ALL
+            SELECT COUNT(choice_seven) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_seven=1 
+            UNION ALL 
+            SELECT COUNT(choice_eight) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_eight=1 
+            UNION ALL 
+            SELECT COUNT(choice_ten) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_ten=1
+            UNION ALL 
+            SELECT COUNT(choice_eleven) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_eleven=1
+            UNION ALL 
+            SELECT COUNT(choice_thirteen) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_thirteen=1"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($returned_data, $row["number_of_plus_votes"]);
+            }
+        }
+
+        $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_three, approval_choice_four,
+            approval_choice_six, approval_choice_seven, approval_choice_eight, approval_choice_ten, approval_choice_eleven, approval_choice_thirteen, 
+            choice_one_name, choice_two_name, choice_three_name, choice_four_name, choice_five_name
+            FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $returned_data,
+                    $data["votes"][0],
+                    $data["votes"][1],
+                    $data["votes"][2],
+                    $data["votes"][3],
+                    $data["votes"][4],
+                    $data["votes"][5],
+                    $data["votes"][6],
+                    $data["votes"][7],
+                    $data["votes"][8],
+                    $data["votes"][9],
+                    $row["approval_choice_one"],
+                    $row["approval_choice_two"],
+                    $row["approval_choice_three"],
+                    $row["approval_choice_four"],
+                    $row["approval_choice_six"],
+                    $row["approval_choice_seven"],
+                    $row["approval_choice_eight"],
+                    $row["approval_choice_ten"],
+                    $row["approval_choice_eleven"],
+                    $row["approval_choice_thirteen"],
+                    $row["choice_one_name"],
+                    $row["choice_two_name"],
+                    $row["choice_three_name"],
+                    $row["choice_four_name"],
+                    $row["choice_five_name"],
+                    "Success"
+                );
+            }
+        }
+        echo json_encode($returned_data);
+    } else if ($number_of_votes == 15) {
+        $stmt = $conn->prepare("INSERT IGNORE INTO approval(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five,
+            choice_six,choice_seven,choice_eight,choice_nine,choice_ten,choice_eleven,choice_twelve,choice_thirteen,choice_fourteen,choice_fifteen) 
+            VALUES(:post_id,:id,3,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five,:choice_six,:choice_seven,:choice_eight,:choice_nine,:choice_ten,
+            :choice_eleven,:choice_twelve,:choice_thirteen,:choice_fourteen,:choice_fifteen)");
         $stmt->execute([
             ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
             ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5],
             ":choice_seven" => $data["votes"][6], ":choice_eight" => $data["votes"][7], ":choice_nine" => $data["votes"][8], ":choice_ten" => $data["votes"][9],
             ":choice_eleven" => $data["votes"][10], ":choice_twelve" => $data["votes"][11], ":choice_thirteen" => $data["votes"][12], ":choice_fourteen" => $data["votes"][13],
-            ":choice_fifteen" => $data["votes"][14], ":choice_sixteen" => $data["votes"][15], ":choice_seventeen" => $data["votes"][16], ":choice_eighteen" => $data["votes"][17],
-            ":choice_nineteen" => $data["votes"][18], ":choice_twenty" => $data["votes"][19]
+            ":choice_fifteen" => $data["votes"][14]
         ]);
-    }
-    $stmt = $conn->prepare("INSERT IGNORE INTO approval(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five,
-    choice_six,choice_seven,choice_eight,choice_nine,choice_ten,choice_eleven,choice_twelve,choice_thirteen,choice_fourteen,choice_fifteen,choice_sixteen,choice_seventeen,
-    choice_eighteen,choice_nineteen,choice_twenty) 
-            VALUES(:post_id,:id,3,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five,:choice_six,:choice_seven,:choice_eight,:choice_nine,:choice_ten,
-            :choice_eleven,:choice_twelve,:choice_thirteen,:choice_fourteen,:choice_fifteen,:choice_sixteen,:choice_seventeen,
-            :choice_eighteen,:choice_nineteen,:choice_twenty)");
-    $stmt->execute([
-        ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
-        ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5],
-        ":choice_seven" => $data["votes"][6], ":choice_eight" => $data["votes"][7], ":choice_nine" => $data["votes"][8], ":choice_ten" => $data["votes"][9],
-        ":choice_eleven" => $data["votes"][10], ":choice_twelve" => $data["votes"][11], ":choice_thirteen" => $data["votes"][12], ":choice_fourteen" => $data["votes"][13],
-        ":choice_fifteen" => $data["votes"][14], ":choice_sixteen" => $data["votes"][15], ":choice_seventeen" => $data["votes"][16], ":choice_eighteen" => $data["votes"][17],
-        ":choice_nineteen" => $data["votes"][18], ":choice_twenty" => $data["votes"][19]
-    ]);
 
-    $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_three, approval_choice_four, approval_choice_five,
-    approval_choice_six, approval_choice_seven, approval_choice_eight, approval_choice_nine, approval_choice_ten, approval_choice_eleven, approval_choice_twelve,
-    approval_choice_thirteen, approval_choice_fourteen, approval_choice_fifteen, approval_choice_sixteen, approval_choice_seventeen, approval_choice_eighteen,
-    approval_choice_nineteen, approval_choice_twenty, choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
-    choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,choice_ten_name, choice_eleven_name, choice_twelve_name, choice_thirteen_name, 
-    choice_fourteen_name,choice_fifteen_name, choice_sixteen_name, choice_seventeen_name, choice_eighteen_name, choice_nineteen_name,choice_twenty_name
-    FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
-    $stmt->execute([":post_id" => $data["post_id"]]);
-    if ($stmt->rowCount() > 0) {
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $tmp = array(
-                $data["votes"][0], $data["votes"][1], $data["votes"][2], $data["votes"][3], $data["votes"][4],
-                $data["votes"][5], $data["votes"][6], $data["votes"][7], $data["votes"][8], $data["votes"][9],
-                $data["votes"][10], $data["votes"][11], $data["votes"][12], $data["votes"][13], $data["votes"][14],
-                $data["votes"][15], $data["votes"][16], $data["votes"][17], $data["votes"][18], $data["votes"][19],
-                $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"],
-                $row["approval_choice_five"], $row["approval_choice_six"], $row["approval_choice_seven"], $row["approval_choice_eight"],
-                $row["approval_choice_nine"], $row["approval_choice_ten"], $row["approval_choice_eleven"], $row["approval_choice_twelve"],
-                $row["approval_choice_thirteen"], $row["approval_choice_fourteen"], $row["approval_choice_fifteen"], $row["approval_choice_sixteen"],
-                $row["approval_choice_seventeen"], $row["approval_choice_eighteen"], $row["approval_choice_nineteen"], $row["approval_choice_twenty"],
-                $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"],
-                $row["choice_five_name"], $row["choice_six_name"], $row["choice_seven_name"], $row["choice_eight_name"], $row["choice_nine_name"],
-                $row["choice_ten_name"], $row["choice_eleven_name"], $row["choice_twelve_name"], $row["choice_thirteen_name"], $row["choice_fourteen_name"],
-                $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
-                $row["choice_twenty_name"],
-                "Success"
-            );
+        $stmt = $conn->prepare(
+            "SELECT COUNT(choice_one) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_one=1 
+            UNION ALL 
+            SELECT COUNT(choice_two) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_two=1 
+            UNION ALL 
+            SELECT COUNT(choice_three) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_three=1
+            UNION ALL
+            SELECT COUNT(choice_four) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_four=1  
+            UNION ALL
+            SELECT COUNT(choice_five) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_five=1  
+            UNION ALL
+            SELECT COUNT(choice_six) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_six=1
+            UNION ALL
+            SELECT COUNT(choice_seven) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_seven=1 
+            UNION ALL 
+            SELECT COUNT(choice_eight) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_eight=1 
+            UNION ALL 
+            SELECT COUNT(choice_nine) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_nine=1 
+            UNION ALL 
+            SELECT COUNT(choice_ten) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_ten=1
+            UNION ALL 
+            SELECT COUNT(choice_eleven) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_eleven=1
+            UNION ALL 
+            SELECT COUNT(choice_twelve) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_twelve=1 
+            UNION ALL 
+            SELECT COUNT(choice_thirteen) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_thirteen=1
+            UNION ALL
+            SELECT COUNT(choice_fourteen) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_fourteen=1 
+            UNION ALL 
+            SELECT COUNT(choice_fifteen) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_fifteen=1"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($returned_data, $row["number_of_plus_votes"]);
+            }
         }
+
+        $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_three, approval_choice_four, approval_choice_five,
+            approval_choice_six, approval_choice_seven, approval_choice_eight, approval_choice_nine, approval_choice_ten, approval_choice_eleven, approval_choice_twelve,
+            approval_choice_thirteen, approval_choice_fourteen, approval_choice_fifteen, choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
+            choice_six_name
+            FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $returned_data,
+                    $data["votes"][0],
+                    $data["votes"][1],
+                    $data["votes"][2],
+                    $data["votes"][3],
+                    $data["votes"][4],
+                    $data["votes"][5],
+                    $data["votes"][6],
+                    $data["votes"][7],
+                    $data["votes"][8],
+                    $data["votes"][9],
+                    $data["votes"][10],
+                    $data["votes"][11],
+                    $data["votes"][12],
+                    $data["votes"][13],
+                    $data["votes"][14],
+                    $row["approval_choice_one"],
+                    $row["approval_choice_two"],
+                    $row["approval_choice_three"],
+                    $row["approval_choice_four"],
+                    $row["approval_choice_five"],
+                    $row["approval_choice_six"],
+                    $row["approval_choice_seven"],
+                    $row["approval_choice_eight"],
+                    $row["approval_choice_nine"],
+                    $row["approval_choice_ten"],
+                    $row["approval_choice_eleven"],
+                    $row["approval_choice_twelve"],
+                    $row["approval_choice_thirteen"],
+                    $row["approval_choice_fourteen"],
+                    $row["approval_choice_fifteen"],
+                    $row["choice_one_name"],
+                    $row["choice_two_name"],
+                    $row["choice_three_name"],
+                    $row["choice_four_name"],
+                    $row["choice_five_name"],
+                    $row["choice_six_name"],
+                    "Success"
+                );
+            }
+        }
+        echo json_encode($returned_data);
     }
-    echo json_encode($tmp);
 } else if ($data['request'] == "approval_data") {
     require_once "new_config.php";
 
-    $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_three, approval_choice_four, approval_choice_five,
-    approval_choice_six, approval_choice_seven, approval_choice_eight, approval_choice_nine, approval_choice_ten, approval_choice_eleven, approval_choice_twelve,
-    approval_choice_thirteen, approval_choice_fourteen, approval_choice_fifteen, approval_choice_sixteen, approval_choice_seventeen, approval_choice_eighteen,
-    approval_choice_nineteen, approval_choice_twenty,
-    choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name, choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,
-    choice_ten_name, choice_eleven_name, choice_twelve_name, choice_thirteen_name, choice_fourteen_name,choice_fifteen_name, choice_sixteen_name, choice_seventeen_name, 
-    choice_eighteen_name, choice_nineteen_name,choice_twenty_name
-    FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
+    $number_of_choices = 0;
+    $number_of_plus_votes = array();
+
+    $stmt = $conn->prepare("SELECT sum(choice_one_name IS NOT NULL) + sum(choice_two_name IS NOT NULL) + sum(choice_three_name IS NOT NULL)
+            + sum(choice_four_name IS NOT NULL) + sum(choice_five_name IS NOT NULL) + sum(choice_six_name IS NOT NULL) AS not_null_count
+            FROM posts WHERE post_number=:post_id");
     $stmt->execute([":post_id" => $data["post_id"]]);
     if ($stmt->rowCount() > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $tmp = array(
-                $row["approval_choice_one"], $row["approval_choice_two"], $row["approval_choice_three"], $row["approval_choice_four"],
-                $row["approval_choice_five"], $row["approval_choice_six"], $row["approval_choice_seven"], $row["approval_choice_eight"],
-                $row["approval_choice_nine"], $row["approval_choice_ten"], $row["approval_choice_eleven"], $row["approval_choice_twelve"],
-                $row["approval_choice_thirteen"], $row["approval_choice_fourteen"], $row["approval_choice_fifteen"], $row["approval_choice_sixteen"],
-                $row["approval_choice_seventeen"], $row["approval_choice_eighteen"], $row["approval_choice_nineteen"], $row["approval_choice_twenty"],
-                $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"],
-                $row["choice_five_name"], $row["choice_six_name"], $row["choice_seven_name"], $row["choice_eight_name"], $row["choice_nine_name"],
-                $row["choice_ten_name"], $row["choice_eleven_name"], $row["choice_twelve_name"], $row["choice_thirteen_name"], $row["choice_fourteen_name"],
-                $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
-                $row["choice_twenty_name"]
-            );
+            $number_of_choices = $row["not_null_count"];
         }
     }
-    echo json_encode($tmp);
+    if ($number_of_choices == 3) {
+        $stmt = $conn->prepare(
+            "SELECT COUNT(choice_one) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_one=1 
+            UNION ALL 
+            SELECT COUNT(choice_two) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_two=1 
+            UNION ALL 
+            SELECT COUNT(choice_six) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_six=1"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($number_of_plus_votes, $row["number_of_plus_votes"]);
+            }
+        }
+
+        $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_six, 
+            choice_one_name, choice_two_name, choice_three_name
+            FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $number_of_plus_votes,
+                    $row["approval_choice_one"],
+                    $row["approval_choice_two"],
+                    $row["approval_choice_six"],
+                    $row["choice_one_name"],
+                    $row["choice_two_name"],
+                    $row["choice_three_name"]
+                );
+            }
+        }
+        echo json_encode($number_of_plus_votes);
+    } else if ($number_of_choices == 4) {
+        $stmt = $conn->prepare(
+            "SELECT COUNT(choice_one) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_one=1 
+            UNION ALL 
+            SELECT COUNT(choice_two) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_two=1 
+            UNION ALL 
+            SELECT COUNT(choice_three) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_three=1 
+            UNION ALL
+            SELECT COUNT(choice_six) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_six=1
+            UNION ALL
+            SELECT COUNT(choice_seven) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_seven=1 
+            UNION ALL 
+            SELECT COUNT(choice_ten) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_ten=1"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($number_of_plus_votes, $row["number_of_plus_votes"]);
+            }
+        }
+
+        $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_three, approval_choice_six, 
+            approval_choice_seven, approval_choice_ten, choice_one_name, choice_two_name, choice_three_name, choice_four_name
+            FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $number_of_plus_votes,
+                    $row["approval_choice_one"],
+                    $row["approval_choice_two"],
+                    $row["approval_choice_three"],
+                    $row["approval_choice_six"],
+                    $row["approval_choice_seven"],
+                    $row["approval_choice_ten"],
+                    $row["choice_one_name"],
+                    $row["choice_two_name"],
+                    $row["choice_three_name"],
+                    $row["choice_four_name"]
+                );
+            }
+        }
+        echo json_encode($number_of_plus_votes);
+    } else if ($number_of_choices == 5) {
+        $stmt = $conn->prepare(
+            "SELECT COUNT(choice_one) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_one=1 
+            UNION ALL 
+            SELECT COUNT(choice_two) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_two=1 
+            UNION ALL 
+            SELECT COUNT(choice_three) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_three=1
+            UNION ALL
+            SELECT COUNT(choice_four) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_four=1  
+            UNION ALL
+            SELECT COUNT(choice_six) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_six=1
+            UNION ALL
+            SELECT COUNT(choice_seven) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_seven=1 
+            UNION ALL 
+            SELECT COUNT(choice_eight) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_eight=1 
+            UNION ALL 
+            SELECT COUNT(choice_ten) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_ten=1
+            UNION ALL 
+            SELECT COUNT(choice_eleven) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_eleven=1
+            UNION ALL 
+            SELECT COUNT(choice_thirteen) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_thirteen=1"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($number_of_plus_votes, $row["number_of_plus_votes"]);
+            }
+        }
+
+        $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_three, approval_choice_four, approval_choice_six, 
+            approval_choice_seven, approval_choice_eight, approval_choice_ten, approval_choice_eleven, approval_choice_thirteen,
+            choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name
+            FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $number_of_plus_votes,
+                    $row["approval_choice_one"],
+                    $row["approval_choice_two"],
+                    $row["approval_choice_three"],
+                    $row["approval_choice_four"],
+                    $row["approval_choice_six"],
+                    $row["approval_choice_seven"],
+                    $row["approval_choice_eight"],
+                    $row["approval_choice_ten"],
+                    $row["approval_choice_eleven"],
+                    $row["approval_choice_thirteen"],
+                    $row["choice_one_name"],
+                    $row["choice_two_name"],
+                    $row["choice_three_name"],
+                    $row["choice_four_name"],
+                    $row["choice_five_name"]
+                );
+            }
+        }
+        echo json_encode($number_of_plus_votes);
+    } else if ($number_of_choices == 6) {
+        $stmt = $conn->prepare(
+            "SELECT COUNT(choice_one) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_one=1 
+            UNION ALL 
+            SELECT COUNT(choice_two) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_two=1 
+            UNION ALL 
+            SELECT COUNT(choice_three) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_three=1
+            UNION ALL
+            SELECT COUNT(choice_four) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_four=1  
+            UNION ALL
+            SELECT COUNT(choice_five) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_five=1  
+            UNION ALL
+            SELECT COUNT(choice_six) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_six=1
+            UNION ALL
+            SELECT COUNT(choice_seven) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_seven=1 
+            UNION ALL 
+            SELECT COUNT(choice_eight) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_eight=1 
+            UNION ALL 
+            SELECT COUNT(choice_nine) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_nine=1 
+            UNION ALL 
+            SELECT COUNT(choice_ten) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_ten=1
+            UNION ALL 
+            SELECT COUNT(choice_eleven) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_eleven=1
+            UNION ALL 
+            SELECT COUNT(choice_twelve) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_twelve=1 
+            UNION ALL 
+            SELECT COUNT(choice_thirteen) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_thirteen=1
+            UNION ALL
+            SELECT COUNT(choice_fourteen) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_fourteen=1 
+            UNION ALL 
+            SELECT COUNT(choice_fifteen) as number_of_plus_votes FROM approval INNER JOIN posts ON approval.post_id=posts.post_number WHERE post_id=:post_id AND choice_fifteen=1"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($number_of_plus_votes, $row["number_of_plus_votes"]);
+            }
+        }
+
+        $stmt = $conn->prepare("SELECT approval_choice_one, approval_choice_two, approval_choice_three, approval_choice_four, approval_choice_five,
+            approval_choice_six, approval_choice_seven, approval_choice_eight, approval_choice_nine, approval_choice_ten, approval_choice_eleven, approval_choice_twelve,
+            approval_choice_thirteen, approval_choice_fourteen, approval_choice_fifteen,
+            choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name, choice_six_name
+            FROM posts_approval_info INNER JOIN posts ON posts_approval_info.approval_post_id=posts.post_number WHERE approval_post_id=:post_id");
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $number_of_plus_votes,
+                    $row["approval_choice_one"],
+                    $row["approval_choice_two"],
+                    $row["approval_choice_three"],
+                    $row["approval_choice_four"],
+                    $row["approval_choice_five"],
+                    $row["approval_choice_six"],
+                    $row["approval_choice_seven"],
+                    $row["approval_choice_eight"],
+                    $row["approval_choice_nine"],
+                    $row["approval_choice_ten"],
+                    $row["approval_choice_eleven"],
+                    $row["approval_choice_twelve"],
+                    $row["approval_choice_thirteen"],
+                    $row["approval_choice_fourteen"],
+                    $row["approval_choice_fifteen"],
+                    $row["choice_one_name"],
+                    $row["choice_two_name"],
+                    $row["choice_three_name"],
+                    $row["choice_four_name"],
+                    $row["choice_five_name"],
+                    $row["choice_six_name"]
+                );
+            }
+        }
+        echo json_encode($number_of_plus_votes);
+    }
 } else if ($data['request'] == "posts_per_location_data") {
     require_once "new_config.php";
 

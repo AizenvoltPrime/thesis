@@ -89,10 +89,45 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 
 ΕΠΟΜΕΝΑ TASK:
 
-1. Να περιορίσω σε 5 επιλογές το approval και να κάνω pairwise comparisons.
-2. Να δημιουργήσω ρεαλιστικά παραδείγματα για κάθε poll type.
+1. Να δημιουργήσω ρεαλιστικά παραδείγματα για κάθε poll type.
+2. Να λειτουργεί το Live User Locations και στους μη registered users
 
 
 ΑΛΛΑΓΕΣ:
 
 1. Να εμφανίζεται ο αριθμός των ψήφων στο κάθε post δίπλα από το Show Results
+
+
+  
+  
+  
+  //Get user coordinates
+fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
+  .then((response) => response.json())
+  .then((jsonResponse) => {
+    const loc = jsonResponse.loc.split(",");
+    user_coordinates[0] = loc[0];
+    user_coordinates[1] = loc[1];
+  	setTimeout(() => {
+      conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
+    }, 1000);
+  });
+  
+  
+  
+  //Get user coordinates
+fetch("process_data.php", {
+  method: "POST",
+  body: JSON.stringify({
+    request: "get_geolocation_data",
+  }),
+})
+  .then((res) => res.json())
+  .then((response) => {
+    const loc = JSON.parse(response).loc.split(",");
+    user_coordinates[0] = loc[0];
+    user_coordinates[1] = loc[1];
+    setTimeout(() => {
+      conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
+    }, 1000);
+  });

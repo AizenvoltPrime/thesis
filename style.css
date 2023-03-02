@@ -1685,6 +1685,15 @@ input:checked + .slider:before {
   gap: 0.7em;
 }
 
+.approval-pair {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 0.2em;
+}
+
 .rating-choices,
 .rating-choices-results {
   display: flex;
@@ -1702,7 +1711,7 @@ input:checked + .slider:before {
 }
 
 .approval-choice {
-  font-size: 1.3em;
+  font-size: 0.83em;
   color: #f3f3f3;
   text-align: center;
   font-weight: bold;
@@ -1712,6 +1721,11 @@ input:checked + .slider:before {
   padding: 0.4em;
   border: 0.1em solid #1a1a1b;
   cursor: pointer;
+}
+
+.approval-or {
+  font-size: 0.8em;
+  color: #f3f3f3;
 }
 
 .half-star-container,
