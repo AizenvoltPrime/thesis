@@ -2030,7 +2030,8 @@ input:checked + .slider:before {
 #app-title-text,
 .total-votes-text,
 .yes-no-total-votes-text,
-.rating-total-votes-text {
+.rating-total-votes-text,
+.approval-total-votes-text {
   background-color: #1a1a1b;
   padding: 0.4em;
   border-radius: 1em;
@@ -2043,7 +2044,8 @@ input:checked + .slider:before {
 
 .total-votes-text,
 .yes-no-total-votes-text,
-.rating-total-votes-text {
+.rating-total-votes-text,
+.approval-total-votes-text {
   font-size: 1em;
 }
 
@@ -2052,6 +2054,7 @@ input:checked + .slider:before {
 }
 
 .yes-no-total-votes-container,
+.rating-total-votes-container,
 .rating-total-votes-container {
   display: flex;
   justify-content: center;

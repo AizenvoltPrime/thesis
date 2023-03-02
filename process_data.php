@@ -304,9 +304,21 @@ if ($data['request'] == "request_username") {
                     OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
                     AS total_rating_votes,
                     (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts.post_number AND 
-                    (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
-                    OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
-                    OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+                    ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+                    (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+                    (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+                    (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+                    (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+                    (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+                    (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+                    (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+                    (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+                    (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+                    (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+                    (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+                    (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+                    (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+                    (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0)))
                     AS total_approval_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
@@ -334,9 +346,21 @@ if ($data['request'] == "request_username") {
                     OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
                     AS total_rating_votes,
                     (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts.post_number AND 
-                    (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
-                    OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
-                    OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+                    ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+                    (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+                    (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+                    (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+                    (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+                    (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+                    (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+                    (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+                    (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+                    (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+                    (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+                    (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+                    (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+                    (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+                    (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0)))
                     AS total_approval_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
@@ -366,9 +390,21 @@ if ($data['request'] == "request_username") {
                     OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
                     AS total_rating_votes,
                     (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts.post_number AND 
-                    (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
-                    OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
-                    OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+                    ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+                    (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+                    (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+                    (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+                    (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+                    (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+                    (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+                    (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+                    (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+                    (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+                    (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+                    (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+                    (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+                    (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+                    (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0)))
                     AS total_approval_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
@@ -397,9 +433,21 @@ if ($data['request'] == "request_username") {
                     OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
                     AS total_rating_votes,
                     (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts.post_number AND 
-                    (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
-                    OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
-                    OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+                    ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+                    (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+                    (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+                    (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+                    (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+                    (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+                    (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+                    (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+                    (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+                    (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+                    (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+                    (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+                    (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+                    (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+                    (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0)))
                     AS total_approval_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
@@ -451,9 +499,21 @@ if ($data['request'] == "request_username") {
             OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
             AS total_rating_votes,
             (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts_info.post_number AND 
-            (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
-            OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
-            OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+            ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+            (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+            (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+            (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+            (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+            (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+            (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+            (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+            (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+            (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+            (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+            (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+            (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+            (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+            (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0)))
             AS total_approval_votes
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
@@ -473,9 +533,21 @@ if ($data['request'] == "request_username") {
             OR rating.choice_sixteen IS NOT NULL OR rating.choice_seventeen IS NOT NULL OR rating.choice_eighteen IS NOT NULL OR rating.choice_nineteen IS NOT NULL OR rating.choice_twenty IS NOT NULL)) 
             AS total_rating_votes,
             (SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=posts_info.post_number AND 
-            (approval.choice_one IS NOT NULL OR approval.choice_two IS NOT NULL OR approval.choice_three IS NOT NULL OR approval.choice_four IS NOT NULL OR approval.choice_five IS NOT NULL 
-            OR approval.choice_six IS NOT NULL OR approval.choice_seven IS NOT NULL OR approval.choice_eight IS NOT NULL OR approval.choice_nine IS NOT NULL OR approval.choice_ten IS NOT NULL 
-            OR approval.choice_eleven IS NOT NULL OR approval.choice_twelve IS NOT NULL OR approval.choice_thirteen IS NOT NULL OR approval.choice_fourteen IS NOT NULL OR approval.choice_fifteen))
+            ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+            (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+            (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+            (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+            (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+            (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+            (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+            (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+            (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+            (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+            (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+            (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+            (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+            (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+            (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0)))
             AS total_approval_votes
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
@@ -1144,7 +1216,34 @@ if ($data['request'] == "request_username") {
                     $row["approval_choice_six"],
                     $row["choice_one_name"],
                     $row["choice_two_name"],
-                    $row["choice_three_name"],
+                    $row["choice_three_name"]
+                );
+            }
+        }
+        $stmt = $conn->prepare(
+            "SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=:post_id AND 
+            ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+            (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+            (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+            (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+            (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+            (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+            (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+            (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+            (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+            (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+            (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+            (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+            (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+            (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+            (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0))"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $returned_data,
+                    $row["total_votes"],
                     "Success"
                 );
             }
@@ -1202,7 +1301,34 @@ if ($data['request'] == "request_username") {
                     $row["choice_one_name"],
                     $row["choice_two_name"],
                     $row["choice_three_name"],
-                    $row["choice_four_name"],
+                    $row["choice_four_name"]
+                );
+            }
+        }
+        $stmt = $conn->prepare(
+            "SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=:post_id AND 
+            ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+            (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+            (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+            (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+            (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+            (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+            (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+            (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+            (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+            (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+            (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+            (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+            (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+            (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+            (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0))"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $returned_data,
+                    $row["total_votes"],
                     "Success"
                 );
             }
@@ -1279,7 +1405,34 @@ if ($data['request'] == "request_username") {
                     $row["choice_two_name"],
                     $row["choice_three_name"],
                     $row["choice_four_name"],
-                    $row["choice_five_name"],
+                    $row["choice_five_name"]
+                );
+            }
+        }
+        $stmt = $conn->prepare(
+            "SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=:post_id AND 
+            ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+            (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+            (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+            (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+            (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+            (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+            (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+            (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+            (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+            (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+            (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+            (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+            (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+            (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+            (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0))"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $returned_data,
+                    $row["total_votes"],
                     "Success"
                 );
             }
@@ -1381,7 +1534,34 @@ if ($data['request'] == "request_username") {
                     $row["choice_three_name"],
                     $row["choice_four_name"],
                     $row["choice_five_name"],
-                    $row["choice_six_name"],
+                    $row["choice_six_name"]
+                );
+            }
+        }
+        $stmt = $conn->prepare(
+            "SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=:post_id AND 
+            ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+            (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+            (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+            (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+            (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+            (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+            (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+            (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+            (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+            (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+            (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+            (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+            (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+            (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+            (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0))"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $returned_data,
+                    $row["total_votes"],
                     "Success"
                 );
             }
@@ -1435,6 +1615,33 @@ if ($data['request'] == "request_username") {
                 );
             }
         }
+        $stmt = $conn->prepare(
+            "SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=:post_id AND 
+            ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+            (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+            (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+            (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+            (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+            (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+            (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+            (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+            (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+            (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+            (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+            (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+            (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+            (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+            (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0))"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $number_of_plus_votes,
+                    $row["total_votes"],
+                );
+            }
+        }
         echo json_encode($number_of_plus_votes);
     } else if ($number_of_choices == 4) {
         $stmt = $conn->prepare(
@@ -1475,6 +1682,33 @@ if ($data['request'] == "request_username") {
                     $row["choice_two_name"],
                     $row["choice_three_name"],
                     $row["choice_four_name"]
+                );
+            }
+        }
+        $stmt = $conn->prepare(
+            "SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=:post_id AND 
+            ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+            (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+            (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+            (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+            (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+            (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+            (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+            (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+            (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+            (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+            (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+            (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+            (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+            (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+            (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0))"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $number_of_plus_votes,
+                    $row["total_votes"],
                 );
             }
         }
@@ -1532,6 +1766,33 @@ if ($data['request'] == "request_username") {
                     $row["choice_three_name"],
                     $row["choice_four_name"],
                     $row["choice_five_name"]
+                );
+            }
+        }
+        $stmt = $conn->prepare(
+            "SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=:post_id AND 
+            ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+            (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+            (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+            (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+            (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+            (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+            (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+            (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+            (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+            (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+            (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+            (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+            (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+            (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+            (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0))"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $number_of_plus_votes,
+                    $row["total_votes"],
                 );
             }
         }
@@ -1606,6 +1867,33 @@ if ($data['request'] == "request_username") {
                     $row["choice_four_name"],
                     $row["choice_five_name"],
                     $row["choice_six_name"]
+                );
+            }
+        }
+        $stmt = $conn->prepare(
+            "SELECT COUNT(approval.user_id) AS total_votes FROM approval WHERE approval.post_id=:post_id AND 
+            ((approval.choice_one IS NOT NULL AND approval.choice_one!=0) OR 
+            (approval.choice_two IS NOT NULL AND approval.choice_two!=0) OR 
+            (approval.choice_three IS NOT NULL AND approval.choice_three!=0) OR 
+            (approval.choice_four IS NOT NULL AND approval.choice_four!=0) OR 
+            (approval.choice_five IS NOT NULL AND approval.choice_five!=0) OR 
+            (approval.choice_six IS NOT NULL AND approval.choice_six!=0) OR 
+            (approval.choice_seven IS NOT NULL AND approval.choice_seven!=0) OR 
+            (approval.choice_eight IS NOT NULL AND approval.choice_eight!=0) OR 
+            (approval.choice_nine IS NOT NULL AND approval.choice_nine!=0) OR 
+            (approval.choice_ten IS NOT NULL AND approval.choice_ten!=0) OR 
+            (approval.choice_eleven IS NOT NULL AND approval.choice_eleven!=0) OR 
+            (approval.choice_twelve IS NOT NULL AND approval.choice_twelve!=0) OR 
+            (approval.choice_thirteen IS NOT NULL AND approval.choice_thirteen!=0) OR 
+            (approval.choice_fourteen IS NOT NULL AND approval.choice_fourteen!=0) OR 
+            (approval.choice_fifteen IS NOT NULL AND approval.choice_fifteen!=0))"
+        );
+        $stmt->execute([":post_id" => $data["post_id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push(
+                    $number_of_plus_votes,
+                    $row["total_votes"],
                 );
             }
         }

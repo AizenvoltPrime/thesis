@@ -1373,6 +1373,7 @@ postContainer.addEventListener(
               conn.send(JSON.stringify(["approval_vote", post_data[postIndexApprovalSend][0], post_data[0][16], vote_data]));
               $("#notification-container").fadeIn(300, function () {});
               document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
+              post_element.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + response[response.length - 1];
             }
           });
       } else if (btn_star) {
@@ -2204,13 +2205,15 @@ function get_approval_data(post_number) {
       let approval_choice_names_scores = [];
       let limit = 0;
       let sim_dod = [];
+      let number_of_votes = response[response.length - 1];
+
       function compare_by_score(a, b) {
         return a.score - b.score;
       }
       if (post_data[post_number].length > 20) {
         post_data[post_number].length = 20;
       }
-      if (response.length === 9) {
+      if (response.length === 10) {
         limit = 9;
         for (let i = 0; i < limit; i++) {
           if (i < 3) {
@@ -2223,7 +2226,7 @@ function get_approval_data(post_number) {
             sim_dod.push(0);
           }
         }
-      } else if (response.length === 16) {
+      } else if (response.length === 17) {
         limit = 16;
         for (let i = 0; i < limit; i++) {
           if (i < 6) {
@@ -2236,7 +2239,7 @@ function get_approval_data(post_number) {
             sim_dod.push(0);
           }
         }
-      } else if (response.length === 25) {
+      } else if (response.length === 26) {
         limit = 25;
         for (let i = 0; i < limit; i++) {
           if (i < 10) {
@@ -2249,7 +2252,7 @@ function get_approval_data(post_number) {
             sim_dod.push(0);
           }
         }
-      } else if (response.length === 36) {
+      } else if (response.length === 37) {
         limit = 36;
         for (let i = 0; i < limit; i++) {
           if (i < 15) {
@@ -2364,6 +2367,7 @@ function get_approval_data(post_number) {
           }
         }
       }
+      post_element.getElementsByClassName("approval-total-votes-text")[0].innerText = "Number of Votes: " + number_of_votes;
     });
 }
 
