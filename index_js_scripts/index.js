@@ -1107,21 +1107,148 @@ postContainer.addEventListener(
         })
           .then((res) => res.json())
           .then((response) => {
-            let approval_choice_names = [];
             let approval_choice_results = [];
-            for (let i = 0; i < response.length; i++) {
-              if (i < 20 && response[i + 20] !== null) {
-                if (response[i] === null) {
-                  approval_choice_results.push("No Votes");
-                } else {
-                  approval_choice_results.push(response[i]);
+            let upper_diagonal_plus = [];
+            let upper_diagonal_minus = [];
+            let results_array = [];
+            let results_array_pairwise = [];
+            let approval_choice_names_scores = [];
+            let limit = 0;
+            let sim_dod = [];
+
+            function compare_by_score(a, b) {
+              return a.score - b.score;
+            }
+            if (response.length === 10) {
+              limit = 9;
+              for (let i = 0; i < limit; i++) {
+                if (i < 3) {
+                  upper_diagonal_plus.push(parseInt(response[i]));
+                  upper_diagonal_minus.push(parseInt(response[i]) - parseInt(response[i + 3]));
+                } else if (i >= 3 && i < 6) {
+                  results_array.push(parseInt(response[i]));
+                } else if (i >= 6) {
+                  approval_choice_names_scores.push({ name: response[i], score: 0 });
+                  sim_dod.push(0);
                 }
-              } else if (i >= 20 && response[i] !== null) {
-                approval_choice_names.push(response[i]);
+              }
+            } else if (response.length === 17) {
+              limit = 16;
+              for (let i = 0; i < limit; i++) {
+                if (i < 6) {
+                  upper_diagonal_plus.push(parseInt(response[i]));
+                  upper_diagonal_minus.push(parseInt(response[i]) - parseInt(response[i + 6]));
+                } else if (i >= 6 && i < 12) {
+                  results_array.push(parseInt(response[i]));
+                } else if (i >= 12) {
+                  approval_choice_names_scores.push({ name: response[i], score: 0 });
+                  sim_dod.push(0);
+                }
+              }
+            } else if (response.length === 26) {
+              limit = 25;
+              for (let i = 0; i < limit; i++) {
+                if (i < 10) {
+                  upper_diagonal_plus.push(parseInt(response[i]));
+                  upper_diagonal_minus.push(parseInt(response[i]) - parseInt(response[i + 10]));
+                } else if (i >= 10 && i < 20) {
+                  results_array.push(parseInt(response[i]));
+                } else if (i >= 20) {
+                  approval_choice_names_scores.push({ name: response[i], score: 0 });
+                  sim_dod.push(0);
+                }
+              }
+            } else if (response.length === 37) {
+              limit = 36;
+              for (let i = 0; i < limit; i++) {
+                if (i < 15) {
+                  upper_diagonal_plus.push(parseInt(response[i]));
+                  upper_diagonal_minus.push(parseInt(response[i]) - parseInt(response[i + 15]));
+                } else if (i >= 15 && i < 30) {
+                  results_array.push(parseInt(response[i]));
+                } else if (i >= 30) {
+                  approval_choice_names_scores.push({ name: response[i], score: 0 });
+                  sim_dod.push(0);
+                }
               }
             }
+
+            //Create an array of objects that has every pair of choices combination as "pair" and the weight of that pair as "score"
+            let pos_results_pair_up = 0;
+            for (let i = 0; i < approval_choice_names_scores.length; i++) {
+              for (let j = 0; j < approval_choice_names_scores.length; j++) {
+                if (approval_choice_names_scores[i].name == approval_choice_names_scores[j].name) {
+                  results_array_pairwise.push({
+                    pair: approval_choice_names_scores[i].name + approval_choice_names_scores[j].name,
+                    score: 0,
+                  });
+                } else {
+                  if (i < j) {
+                    results_array_pairwise.push({
+                      pair: approval_choice_names_scores[i].name + approval_choice_names_scores[j].name,
+                      score:
+                        results_array[pos_results_pair_up] / (upper_diagonal_plus[pos_results_pair_up] + upper_diagonal_minus[pos_results_pair_up]),
+                    });
+                    results_array_pairwise.push({
+                      pair: approval_choice_names_scores[j].name + approval_choice_names_scores[i].name,
+                      score:
+                        -results_array[pos_results_pair_up] / (upper_diagonal_plus[pos_results_pair_up] + upper_diagonal_minus[pos_results_pair_up]),
+                    });
+                    pos_results_pair_up++;
+                  }
+                }
+              }
+            }
+
+            //Calculate true Dodgson score for each choice
+            let pos_plus = 0;
+            let pos_minus = 0;
+            for (let i = 0; i < approval_choice_names_scores.length; i++) {
+              for (let j = 0; j < approval_choice_names_scores.length; j++) {
+                if (approval_choice_names_scores[i].name == approval_choice_names_scores[j].name) {
+                  continue;
+                } else {
+                  if (i < j) {
+                    sim_dod[i] += parseInt(upper_diagonal_minus[pos_minus]);
+                    pos_minus++;
+                  } else if (i > j) {
+                    sim_dod[i] += parseInt(upper_diagonal_plus[pos_plus]);
+                    pos_plus++;
+                  }
+                }
+              }
+              approval_choice_names_scores[i].score =
+                approval_choice_names_scores.length * sim_dod[i] +
+                approval_choice_names_scores.length * (Math.log(approval_choice_names_scores.length) + 1);
+            }
+            approval_choice_names_scores.sort(compare_by_score);
+
+            //Fill results table
+            let pair_index = 0;
+            let cell = [["Poll Text: " + post_data[postDownloadIndex][4]]];
+            for (let i = 0; i < approval_choice_names_scores.length + 1; i++) {
+              approval_choice_results[i] = [];
+              for (let j = 0; j < approval_choice_names_scores.length + 1; j++) {
+                if (i > 0 && j == 0) {
+                  approval_choice_results[i][j] = approval_choice_names_scores[i - 1].name;
+                } else if (i == 0 && j > 0) {
+                  approval_choice_results[i][j] = approval_choice_names_scores[j - 1].name;
+                } else if (i == j && i > 0 && j > 0) {
+                  approval_choice_results[i][j] = "-";
+                } else {
+                  pair_index = results_array_pairwise.findIndex((item) => item.pair == approval_choice_results[i][0] + approval_choice_results[0][j]);
+                  if (pair_index >= 0) {
+                    if (!isNaN(results_array_pairwise[pair_index].score)) {
+                      approval_choice_results[i][j] = results_array_pairwise[pair_index].score.toFixed(2);
+                    } else {
+                      approval_choice_results[i][j] = "0";
+                    }
+                  }
+                }
+              }
+              cell.push(approval_choice_results[i]);
+            }
             const wb = XLSX.utils.book_new();
-            let cell = [["Poll Text: " + post_data[postDownloadIndex][4]], approval_choice_names, approval_choice_results];
             const ws = XLSX.utils.aoa_to_sheet(cell);
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
             XLSX.writeFile(wb, "Approval_Poll_Type_Results.xlsx");
