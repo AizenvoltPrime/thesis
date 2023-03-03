@@ -9,6 +9,7 @@ import {
   edit_rating_vote,
   remove_post,
   number_to_color,
+  th_size,
 } from "./index.js";
 import { make_admin_analytics_map, admin_map_remove_marker } from "./admin_analytics.js";
 import { get_posts_ids_inside_region } from "./filters.js";
@@ -786,7 +787,7 @@ addEventListener("DOMContentLoaded", (event) => {
                 }
               }
             }
-
+            th_size();
             //Fill results table
             let pair_index = 0;
             for (let k = 0; k < approval_choice_names_scores.length + 1; k++) {
