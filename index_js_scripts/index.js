@@ -2464,7 +2464,7 @@ function get_approval_data(post_number) {
           }
         }
       }
-      th_size();
+
       //Fill results table
       let pair_index = 0;
       for (let i = 0; i < approval_choice_names_scores.length + 1; i++) {
@@ -2826,30 +2826,3 @@ document.getElementById("dropdown-button").addEventListener("click", function ()
   document.getElementById("short-app-description").style.display = "none";
   document.getElementById("detailed-app-description").style.display = "block";
 });
-
-export function th_size() {
-  let tableHeaders = document.getElementsByTagName("th");
-  for (let i = 0; i < tableHeaders.length; i++) {
-    if (window.innerWidth >= 776) {
-      tableHeaders[i].style.fontSize = "0.578em";
-    } else if (window.innerWidth < 776 && window.innerWidth >= 714) {
-      tableHeaders[i].style.fontSize = "0.529em";
-    } else if (window.innerWidth < 714 && window.innerWidth >= 653) {
-      tableHeaders[i].style.fontSize = "0.48em";
-    } else if (window.innerWidth < 653 && window.innerWidth >= 603) {
-      tableHeaders[i].style.fontSize = "0.44em";
-    } else if (window.innerWidth < 603 && window.innerWidth >= 557) {
-      tableHeaders[i].style.fontSize = "0.4em";
-    } else if (window.innerWidth < 557 && window.innerWidth >= 512) {
-      tableHeaders[i].style.fontSize = "0.36em";
-    } else if (window.innerWidth < 512 && window.innerWidth >= 466) {
-      tableHeaders[i].style.fontSize = "0.32em";
-    } else if (window.innerWidth < 466 && window.innerWidth >= 420) {
-      tableHeaders[i].style.fontSize = "0.29em";
-    }
-  }
-}
-
-window.onresize = function () {
-  th_size();
-};

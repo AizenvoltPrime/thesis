@@ -90,6 +90,8 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 ΕΠΟΜΕΝΑ TASK:
 
 1. Να δημιουργήσω ρεαλιστικά παραδείγματα για κάθε poll type.
+2. Να λειτουργεί το Live User Locations και στους μη registered users.
+3. Να προσαρμόσω το μέγεθος του results table ανάλογα με το μέγεθος της οθόνης.
 
 
 ΑΛΛΑΓΕΣ:
