@@ -89,7 +89,7 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 
 ΕΠΟΜΕΝΑ TASK:
 
-1. Να περιορίσω σε 5 επιλογές το approval και να κάνω pairwise comparisons.
+1. Να κάνω το approval και το ranking poll type.
 2. Να δημιουργήσω ρεαλιστικά παραδείγματα για κάθε poll type.
 
 
