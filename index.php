@@ -578,9 +578,6 @@ require_once "new_config.php";
           <table class="approval-results-table">
             <tbody></tbody>
           </table>
-          <div class="approval-total-votes-container">
-            <div class="approval-total-votes-text"></div>
-          </div>
         </div>
         <div class="download-results">
           <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
