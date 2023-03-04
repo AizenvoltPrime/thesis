@@ -2153,17 +2153,11 @@ function get_approval_data(post_number) {
   })
     .then((res) => res.json())
     .then((response) => {
-      let post_element = document.getElementsByClassName("post")[post_number];
       let results_array = [];
       let approval_choice_names = [];
       let zipped = [];
       if (post_data[post_number].length > 19) {
         post_data[post_number].length = 19;
-      }
-      if (post_data[post_number].length === 19) {
-        for (let i = 20; i < 40; i++) {
-          post_data[post_number] = post_data[post_number].concat(response[i]);
-        }
       }
 
       for (let i = 0; i < 40; i++) {
@@ -2191,35 +2185,7 @@ function get_approval_data(post_number) {
         approval_choice_names.push(zipped[i].array1elem);
         results_array.push(zipped[i].array2elem);
       }
-
-      for (let i = 0; i < 20; i++) {
-        if (i < 3) {
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = approval_choice_names[i];
-          if (results_array[i] !== null) {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = results_array[i];
-          } else {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
-          }
-        } else if (i >= 3 && approval_choice_names[i] !== null) {
-          if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
-            document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
-          }
-          let top_row = post_element.getElementsByClassName("approval-results-table")[0].rows[1];
-          let clone = top_row.cloneNode(true);
-          post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(clone);
-          document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].setAttribute("data-value", i + 1);
-          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = approval_choice_names[i];
-          if (results_array[i] !== null) {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = results_array[i];
-          } else {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
-          }
-        } else if (i >= 3 && approval_choice_names[i] === null) {
-          if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
-            document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
-          }
-        }
-      }
+      make_approval_chart(post_number, approval_choice_names, results_array);
     });
 }
 
@@ -2274,6 +2240,95 @@ export function make_yes_no_chart(post_number, chart_data) {
     },
   });
   document.getElementsByClassName("yes-no-total-votes-text")[post_number].innerText = "Number of Votes: " + (chart_data[0] + chart_data[1]);
+}
+
+export function make_approval_chart(post_number, choice_names, results) {
+  let ctx_approval;
+  let approval_chart;
+  let colors = [
+    "#FF5733",
+    "#C70039",
+    "#900C3F",
+    "#581845",
+    "#FFC300",
+    "#DAF7A6",
+    "#CC33FF",
+    "#800000",
+    "#808000",
+    "#000080",
+    "#008000",
+    "#800080",
+    "#808080",
+    "#a52a2a",
+    "#a9a9a9",
+    "#adff2f",
+    "#afafaf",
+    "#afd700",
+    "#FFAACC",
+    "#CCA700",
+  ];
+  choice_names = choice_names.filter((item) => item !== null);
+  let bar_colors = [];
+  for (let i = 0; i < choice_names.length; i++) {
+    bar_colors.push(colors[i]);
+  }
+  let approval_chart_card = document.getElementsByClassName("approval-chart-card")[post_number];
+  if (approval_chart_card.getElementsByClassName("approval_bar_chart")[0]) {
+    // Remove the canvas element from its parent
+    approval_chart_card.removeChild(approval_chart_card.getElementsByClassName("approval_bar_chart")[0]);
+  }
+  let new_canvas = document.createElement("canvas");
+  new_canvas.className = "approval_bar_chart";
+  document
+    .getElementsByClassName("approval-chart-card")
+    [post_number].insertBefore(
+      new_canvas,
+      document.getElementsByClassName("approval-chart-card")[post_number].getElementsByClassName("approval-total-votes-container")[0]
+    );
+  ctx_approval = document.getElementsByClassName("approval-chart-card")[post_number].getElementsByClassName("approval_bar_chart")[0].getContext("2d");
+  approval_chart = new Chart(ctx_approval, {
+    type: "bar",
+    data: {
+      labels: choice_names,
+      datasets: [
+        {
+          label: "",
+          data: results,
+          backgroundColor: [],
+          borderColor: bar_colors,
+          borderWidth: 1,
+          hoverBackgroundColor: bar_colors,
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      hover: { mode: null },
+      plugins: {
+        legend: {
+          labels: {
+            color: "#f3f3f3",
+            boxWidth: 0,
+            fontSize: 2,
+          },
+        },
+      },
+      scales: {
+        y: {
+          ticks: {
+            color: "#f3f3f3",
+            precision: 0,
+          },
+        },
+        x: {
+          ticks: {
+            color: "#f3f3f3",
+          },
+        },
+      },
+    },
+  });
+  document.getElementsByClassName("approval-total-votes-text")[post_number].innerText = "Number of Votes: " + 1;
 }
 
 //used to clear all posts data each time the user returns to the main page without reloading the page.
@@ -2471,12 +2526,6 @@ export function edit_vote(position, value_yes, value_no, vote_bool) {
 
 //Adds new vote data that was received from websocket.
 export function edit_rating_vote(position, votes) {
-  for (let i = 0; i < votes.length; i++) {
-    post_data[position][i + 39] = votes[i];
-  }
-}
-
-export function edit_approval_vote(position, votes) {
   for (let i = 0; i < votes.length; i++) {
     post_data[position][i + 39] = votes[i];
   }

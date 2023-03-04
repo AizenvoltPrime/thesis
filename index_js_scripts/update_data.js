@@ -7,8 +7,8 @@ import {
   edit_vote,
   edit_bookmark,
   edit_rating_vote,
-  edit_approval_vote,
   remove_post,
+  make_approval_chart,
 } from "./index.js";
 import { make_admin_analytics_map, admin_map_remove_marker } from "./admin_analytics.js";
 import { get_posts_ids_inside_region } from "./filters.js";
@@ -682,35 +682,7 @@ addEventListener("DOMContentLoaded", (event) => {
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           if (window.getComputedStyle(document.getElementsByClassName("approval-vote-results")[i]).display === "flex") {
-            let post_element = document.getElementsByClassName("post")[i];
-            for (let j = 0; j < 20; j++) {
-              if (j < 3) {
-                post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[0].innerText = approval_choice_names[j];
-                if (results_array[j] !== null) {
-                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = results_array[j];
-                } else {
-                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = "0";
-                }
-              } else if (j >= 3 && approval_choice_names[j] !== null) {
-                if (document.querySelectorAll(".approval-results-table")[i].rows[j + 1]) {
-                  document.querySelectorAll(".approval-results-table")[i].rows[j + 1].remove();
-                }
-                let top_row = post_element.getElementsByClassName("approval-results-table")[0].rows[1];
-                let clone = top_row.cloneNode(true);
-                post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(clone);
-                document.querySelectorAll(".approval-results-table")[i].rows[j + 1].setAttribute("data-value", j + 1);
-                post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[0].innerText = approval_choice_names[j];
-                if (results_array[j] !== null) {
-                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = results_array[j];
-                } else {
-                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = "0";
-                }
-              } else if (j >= 3 && approval_choice_names[j] === null) {
-                if (document.querySelectorAll(".approval-results-table")[i].rows[j + 1]) {
-                  document.querySelectorAll(".approval-results-table")[i].rows[j + 1].remove();
-                }
-              }
-            }
+            make_approval_chart(i, approval_choice_names, results_array);
           }
           if (get_variables()[2] > 14) {
             if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
@@ -731,7 +703,7 @@ addEventListener("DOMContentLoaded", (event) => {
                   }
                 }
               }
-              edit_approval_vote(i, user_approval_array);
+              //edit_approval_vote(i, user_approval_array);
             }
           }
         }

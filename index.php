@@ -563,29 +563,11 @@ require_once "new_config.php";
       <div class="approval-vote-results" style="display:none;">
         <div class="approval-vote-results-inside-container">
           <div class="results-poll-name">Approval Results</div>
-          <table class="approval-results-table">
-            <tbody>
-              <tr data-value="0">
-                <th>Choices</th>
-                <th>Votes</th>
-              </tr>
-              <tr data-value="1">
-                <td></td>
-                <td>
-                </td>
-              </tr>
-              <tr data-value="2">
-                <td>
-                </td>
-                <td></td>
-              </tr>
-              <tr data-value="3">
-                <td>
-                </td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="approval-chart-card">
+            <div class="approval-total-votes-container">
+              <div class="approval-total-votes-text">2</div>
+            </div>
+          </div>
         </div>
         <div class="download-results">
           <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
