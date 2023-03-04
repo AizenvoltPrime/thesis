@@ -110,10 +110,15 @@ document.getElementsByClassName("fa-circle-chevron-right")[1].addEventListener("
 generate_posts(false);
 
 //Get user coordinates
-fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
-  .then((response) => response.json())
-  .then((jsonResponse) => {
-    const loc = jsonResponse.loc.split(",");
+fetch("process_data.php", {
+  method: "POST",
+  body: JSON.stringify({
+    request: "get_geolocation_data",
+  }),
+})
+  .then((res) => res.json())
+  .then((response) => {
+    const loc = JSON.parse(response).loc.split(",");
     user_coordinates[0] = loc[0];
     user_coordinates[1] = loc[1];
     setTimeout(() => {
@@ -242,7 +247,7 @@ document.getElementById("next-step").addEventListener("click", function () {
             document.getElementById("input-poll-choices").appendChild(new_write_poll_choice);
             document.getElementById("input-poll-choices").children[i + pos + 2].setAttribute("type", "text");
             document.getElementById("input-poll-choices").children[i + pos + 2].name = "poll-choice";
-            document.getElementById("input-poll-choices").children[i + pos + 2].maxLength = 11;
+            document.getElementById("input-poll-choices").children[i + pos + 2].maxLength = 50;
             document.getElementById("input-poll-choices").children[i + pos + 2].placeholder = "Type Choice " + (i + 1);
             pos++;
           }
@@ -506,23 +511,23 @@ export function generate_posts(
           document.getElementsByClassName("score")[0].innerText = post_data[i][5];
           document.getElementsByClassName("post-time")[0].innerText = post_time;
           document.getElementsByClassName("post-time-detailed")[0].innerText = post_data[i][6];
-          if (post_data[0].length > 15) {
+          if (post_data[0].length > 14) {
             if (post_data[i][2] == 1) {
               document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][17];
             } else if (post_data[i][2] == 2) {
               document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][18];
             } else if (post_data[i][2] == 3) {
-              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][19];
+              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + "1";
             } else if (post_data[i][2] == 4) {
               document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + "1";
             }
-          } else if (post_data[0].length <= 15) {
+          } else if (post_data[0].length <= 14) {
             if (post_data[i][2] == 1) {
               document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][12];
             } else if (post_data[i][2] == 2) {
               document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][13];
             } else if (post_data[i][2] == 3) {
-              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][14];
+              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + "1";
             } else if (post_data[i][2] == 4) {
               document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + "1";
             }
@@ -535,23 +540,23 @@ export function generate_posts(
           clone[i - 1].querySelectorAll(".score")[0].innerText = post_data[i][5];
           clone[i - 1].querySelectorAll(".post-time")[0].innerText = post_time;
           clone[i - 1].querySelectorAll(".post-time-detailed")[0].innerText = post_data[i][6];
-          if (post_data[0].length > 15) {
+          if (post_data[0].length > 14) {
             if (post_data[i][2] == 1) {
               clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][17];
             } else if (post_data[i][2] == 2) {
               clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][18];
             } else if (post_data[i][2] == 3) {
-              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][19];
+              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + "1";
             } else if (post_data[i][2] == 4) {
               clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + "1";
             }
-          } else if (post_data[0].length <= 15) {
+          } else if (post_data[0].length <= 14) {
             if (post_data[i][2] == 1) {
               clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][12];
             } else if (post_data[i][2] == 2) {
               clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][13];
             } else if (post_data[i][2] == 3) {
-              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][14];
+              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + "1";
             } else if (post_data[i][2] == 4) {
               clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + "1";
             }
@@ -560,7 +565,7 @@ export function generate_posts(
         }
       }
       if (post_time !== undefined && post_time !== null) {
-        if (post_data[0].length > 15) {
+        if (post_data[0].length > 14) {
           for (let i = 0; i < post_data.length; i++) {
             if (post_data[i][7] == 1) {
               document.getElementsByClassName("fa-chevron-up")[i].style.color = "#00ffd0";
@@ -672,7 +677,7 @@ export function generate_posts(
               .getElementsByClassName("chartCard")
               [i].insertBefore(new_canvas, document.getElementsByClassName("yes-no-total-votes-container")[i]);
           }
-        } else if (post_data[0].length <= 15) {
+        } else if (post_data[0].length <= 14) {
           for (let i = 0; i < post_data.length; i++) {
             let new_bookmark = document.createElement("i");
             new_bookmark.className = "fa-regular fa-bookmark";
@@ -800,7 +805,7 @@ postContainer.addEventListener(
     if (btn_vote) {
       const post_vote = btn_vote.closest(".post");
       const postIndexVote = [...postContainer.children].indexOf(post_vote);
-      if (post_data[0].length > 15) {
+      if (post_data[0].length > 14) {
         if (
           post_data[postIndexVote][11] !== null &&
           DateTime.fromFormat(post_data[postIndexVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
@@ -834,8 +839,8 @@ postContainer.addEventListener(
                 .then((res) => res.json())
                 .then((response) => {
                   let post_element = document.getElementsByClassName("post")[postIndexVote];
-                  if (post_data[postIndexVote].length > 20) {
-                    post_data[postIndexVote].length = 20;
+                  if (post_data[postIndexVote].length > 19) {
+                    post_data[postIndexVote].length = 19;
                   }
                   post_data[postIndexVote] = post_data[postIndexVote].concat(response);
                   post_element.querySelectorAll(".rating-choices").forEach((child) => {
@@ -894,6 +899,21 @@ postContainer.addEventListener(
               document.querySelectorAll(".total-votes-container")[postIndexVote].style.display = "flex";
               document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
               document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("approval-vote-container")[0].style.display = "flex";
+              for (
+                let i = 0;
+                i < document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("approval-choices-container")[0].children.length;
+                i++
+              ) {
+                if (post_data[postIndexVote][i + 27] === "0") {
+                  document.getElementsByClassName("post")[postIndexVote].getElementsByClassName("approval-choice")[i].style.border =
+                    "0.1em solid #1a1a1b";
+                  document.getElementsByClassName("post")[postIndexVote].getElementsByClassName("approval-choice")[i].style.color = "#f3f3f3";
+                } else if (post_data[postIndexVote][i + 27] === "1") {
+                  document.getElementsByClassName("post")[postIndexVote].getElementsByClassName("approval-choice")[i].style.border =
+                    "0.1em solid #cc0000";
+                  document.getElementsByClassName("post")[postIndexVote].getElementsByClassName("approval-choice")[i].style.color = "#cc0000";
+                }
+              }
               fetch("process_data.php", {
                 method: "POST",
                 body: JSON.stringify({ request: "user_approval_vote_data", post_id: post_data[postIndexVote][0] }),
@@ -901,65 +921,36 @@ postContainer.addEventListener(
                 .then((res) => res.json())
                 .then((response) => {
                   let post_element = document.getElementsByClassName("post")[postIndexVote];
-                  if (post_data[postIndexVote].length > 20) {
-                    post_data[postIndexVote].length = 20;
+                  if (post_data[postIndexVote].length > 19) {
+                    post_data[postIndexVote].length = 19;
                   }
                   post_data[postIndexVote] = post_data[postIndexVote].concat(response);
-                  post_element.querySelectorAll(".approval-pair").forEach((child) => {
+                  post_element.querySelectorAll(".approval-choice").forEach((child) => {
                     if (child.getAttribute("value") !== "1" && child.getAttribute("value") !== "2" && child.getAttribute("value") !== "3") {
                       child.remove();
                     }
                   });
-                  let pos = 0;
-                  for (let j = 0; j < response[response.length - 1] - 1; j++) {
-                    for (let k = j + 1; k < response[response.length - 1]; k++) {
-                      if (pos > 5) {
-                        let clone_approval_pair = post_element.getElementsByClassName("approval-pair")[0];
-                        let clone = clone_approval_pair.cloneNode(true);
-                        clone.getElementsByClassName("approval-choice")[0].setAttribute("value", pos + 1);
-                        clone.getElementsByClassName("approval-choice")[1].setAttribute("value", pos + 2);
-                        clone.setAttribute("value", (pos + 2) / 2);
+                  for (let j = 0; j < 20; j++) {
+                    if (response[j] !== null) {
+                      if (j > 2) {
+                        let clone_approval_choices = post_element.getElementsByClassName("approval-choice")[0];
+                        let clone = clone_approval_choices.cloneNode(true);
+                        clone.setAttribute("value", j + 1);
                         post_element.getElementsByClassName("approval-choices-container")[0].appendChild(clone);
+                        post_element.querySelectorAll(".approval-choices-container")[0].getElementsByClassName("approval-choice")[j].innerText =
+                          response[j];
+                      } else if (j <= 2) {
+                        post_element.querySelectorAll(".approval-choices-container")[0].getElementsByClassName("approval-choice")[j].innerText =
+                          response[j];
                       }
-                      post_element.querySelectorAll(".approval-choices-container")[0].getElementsByClassName("approval-choice")[pos].innerText =
-                        response[j];
-                      post_element.querySelectorAll(".approval-choices-container")[0].getElementsByClassName("approval-choice")[pos + 1].innerText =
-                        response[k];
-                      pos += 2;
+                      if (response[j + 20] === "1") {
+                        post_element.getElementsByClassName("approval-choice")[j].style.border = "0.1em solid #cc0000";
+                        post_element.getElementsByClassName("approval-choice")[j].style.color = "#cc0000";
+                      } else if (response[j + 20] === "0") {
+                        post_element.getElementsByClassName("approval-choice")[j].style.border = "0.1em solid #1a1a1b";
+                        post_element.getElementsByClassName("approval-choice")[j].style.color = "#f3f3f3";
+                      }
                     }
-                  }
-                  let k = response[response.length - 1];
-                  let pair_pos = 0;
-                  for (k; k < response.length - 1; k++) {
-                    if (response[k] === "1") {
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[0].style.border =
-                        "0.1em solid #cc0000";
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[0].style.color =
-                        "#cc0000";
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[1].style.border =
-                        "0.1em solid #1a1a1b";
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[1].style.color =
-                        "#f3f3f3";
-                    } else if (response[k] === "-1") {
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[1].style.border =
-                        "0.1em solid #cc0000";
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[1].style.color =
-                        "#cc0000";
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[0].style.border =
-                        "0.1em solid #1a1a1b";
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[0].style.color =
-                        "#f3f3f3";
-                    } else {
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[0].style.border =
-                        "0.1em solid #1a1a1b";
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[0].style.color =
-                        "#f3f3f3";
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[1].style.border =
-                        "0.1em solid #1a1a1b";
-                      post_element.getElementsByClassName("approval-pair")[pair_pos].getElementsByClassName("approval-choice")[1].style.color =
-                        "#f3f3f3";
-                    }
-                    pair_pos += 1;
                   }
                 });
             }
@@ -1138,11 +1129,11 @@ postContainer.addEventListener(
       let data_index_lat;
       let data_index_long;
       let data_index_radius;
-      if (post_data[0].length > 15) {
+      if (post_data[0].length > 14) {
         data_index_lat = 12;
         data_index_long = 13;
         data_index_radius = 14;
-      } else if (post_data[0].length <= 15) {
+      } else if (post_data[0].length <= 14) {
         data_index_lat = 9;
         data_index_long = 10;
         data_index_radius = 11;
@@ -1296,12 +1287,11 @@ postContainer.addEventListener(
         });
       }
     }
-    if (post_data[0].length > 15) {
+    if (post_data[0].length > 14) {
       if (btn_approval_vote) {
         const post_approval_vote = btn_approval_vote.closest(".post");
         const postAprovalVote = [...postContainer.children].indexOf(post_approval_vote);
-        let post_element = document.getElementsByClassName("post")[postAprovalVote];
-        let value_number = parseInt(btn_approval_vote.getAttribute("value"));
+
         if (
           post_data[postAprovalVote][11] !== null &&
           DateTime.fromFormat(post_data[postAprovalVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
@@ -1320,45 +1310,28 @@ postContainer.addEventListener(
             btn_approval_vote.style.border = null;
             btn_approval_vote.style.color = null;
           } else {
-            if (value_number % 2 == 1) {
-              if (window.getComputedStyle(post_element.getElementsByClassName("approval-choice")[value_number]).color === "rgb(204, 0, 0)") {
-                post_element.getElementsByClassName("approval-choice")[value_number].style.border = "0.1em solid #1a1a1b";
-                post_element.getElementsByClassName("approval-choice")[value_number].style.color = "#f3f3f3";
-              }
-              btn_approval_vote.style.border = "0.1em solid #cc0000";
-              btn_approval_vote.style.color = "#cc0000";
-            } else if (value_number % 2 == 0) {
-              if (window.getComputedStyle(post_element.getElementsByClassName("approval-choice")[value_number - 2]).color === "rgb(204, 0, 0)") {
-                post_element.getElementsByClassName("approval-choice")[value_number - 2].style.border = "0.1em solid #1a1a1b";
-                post_element.getElementsByClassName("approval-choice")[value_number - 2].style.color = "#f3f3f3";
-              }
-              btn_approval_vote.style.border = "0.1em solid #cc0000";
-              btn_approval_vote.style.color = "#cc0000";
-            }
+            btn_approval_vote.style.border = "0.1em solid #cc0000";
+            btn_approval_vote.style.color = "#cc0000";
           }
         }
       } else if (btn_approval_send) {
         const post_approval_send = btn_approval_send.closest(".post");
         const postIndexApprovalSend = [...postContainer.children].indexOf(post_approval_send);
-        let post_element = document.getElementsByClassName("post")[postIndexApprovalSend];
         let votes = [];
-        let pair_pos = 20 + parseInt(post_data[postIndexApprovalSend][post_data[postIndexApprovalSend].length - 1]);
-        for (let i = pair_pos; i < post_data[postIndexApprovalSend].length - 1; i++) {
+        for (let i = 19; i < 39; i++) {
           if (
-            window.getComputedStyle(post_element.getElementsByClassName("approval-pair")[i - pair_pos].getElementsByClassName("approval-choice")[0])
-              .color === "rgb(204, 0, 0)"
+            post_data[postIndexApprovalSend][i] !== null &&
+            window.getComputedStyle(
+              document.getElementsByClassName("approval-choices-container")[postIndexApprovalSend].getElementsByClassName("approval-choice")[i - 19]
+            ).color === "rgb(204, 0, 0)"
           ) {
             votes.push(1);
-            post_data[postIndexApprovalSend][i] = "1";
-          } else if (
-            window.getComputedStyle(post_element.getElementsByClassName("approval-pair")[i - pair_pos].getElementsByClassName("approval-choice")[1])
-              .color === "rgb(204, 0, 0)"
-          ) {
-            votes.push(-1);
-            post_data[postIndexApprovalSend][i] = "-1";
-          } else {
+            post_data[postIndexApprovalSend][i + 20] = "1";
+          } else if (post_data[postIndexApprovalSend][i] !== null) {
             votes.push(0);
-            post_data[postIndexApprovalSend][i] = "0";
+            post_data[postIndexApprovalSend][i + 20] = "0";
+          } else {
+            votes.push(null);
           }
         }
         fetch("process_data.php", {
@@ -1367,7 +1340,7 @@ postContainer.addEventListener(
         })
           .then((res) => res.json())
           .then((response) => {
-            if (response[response.length - 1].trim() == "Success") {
+            if (response[60].trim() == "Success") {
               let vote_data = response;
               vote_data.pop();
               conn.send(JSON.stringify(["approval_vote", post_data[postIndexApprovalSend][0], post_data[0][16], vote_data]));
@@ -1404,7 +1377,7 @@ postContainer.addEventListener(
             post_index.getElementsByClassName("half-star-container")[i].style.color = "#00ffd0";
           }
 
-          let temp_pos = parseInt(rating_choice) + 39;
+          let temp_pos = parseInt(rating_choice) + 38;
           post_data[postIndexStar][temp_pos] = parseFloat(btn_star.value);
         }
       } else if (btn_star_vote) {
@@ -1430,7 +1403,7 @@ postContainer.addEventListener(
           document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
         } else {
           let votes = [];
-          for (let i = 20; i < 40; i++) {
+          for (let i = 19; i < 39; i++) {
             if (post_data[postIndexPostStarVote][i] !== null) {
               votes.push(post_data[postIndexPostStarVote][i + 20]);
             } else {
@@ -2017,7 +1990,7 @@ postContainer.addEventListener("mouseout", (e) => {
     let star_range = rating_choice * 10;
     let max_star_position = star_range - 10;
     let star_limit;
-    let temp_pos = parseInt(rating_choice) + 39;
+    let temp_pos = parseInt(rating_choice) + 38;
     let post_index = document.querySelectorAll(".post")[postIndexStar];
 
     if (post_data[postIndexStar][temp_pos] === undefined) {
@@ -2101,10 +2074,10 @@ function get_rating_data(post_number) {
       let average_ratings_array = [];
       let rating_choice_names = [];
       let zipped = [];
-      if (post_data[post_number].length > 20) {
-        post_data[post_number].length = 20;
+      if (post_data[post_number].length > 19) {
+        post_data[post_number].length = 19;
       }
-      if (post_data[post_number].length === 20) {
+      if (post_data[post_number].length === 19) {
         for (let i = 20; i < 40; i++) {
           post_data[post_number] = post_data[post_number].concat(response[i]);
         }
@@ -2197,197 +2170,73 @@ function get_approval_data(post_number) {
     .then((res) => res.json())
     .then((response) => {
       let post_element = document.getElementsByClassName("post")[post_number];
-      let upper_diagonal_plus = [];
-      let upper_diagonal_minus = [];
       let results_array = [];
-      let results_array_pairwise = [];
-      let approval_choice_names_scores = [];
-      let limit = 0;
-      let sim_dod = [];
-      function compare_by_score(a, b) {
-        return a.score - b.score;
+      let approval_choice_names = [];
+      let zipped = [];
+      if (post_data[post_number].length > 19) {
+        post_data[post_number].length = 19;
       }
-      if (post_data[post_number].length > 20) {
-        post_data[post_number].length = 20;
-      }
-      if (response.length === 9) {
-        limit = 9;
-        for (let i = 0; i < limit; i++) {
-          if (i < 3) {
-            upper_diagonal_plus.push(parseInt(response[i]));
-            upper_diagonal_minus.push(parseInt(response[i]) - parseInt(response[i + 3]));
-          } else if (i >= 3 && i < 6) {
-            results_array.push(parseInt(response[i]));
-          } else if (i >= 6) {
-            approval_choice_names_scores.push({ name: response[i], score: 0 });
-            sim_dod.push(0);
-          }
-        }
-      } else if (response.length === 16) {
-        limit = 16;
-        for (let i = 0; i < limit; i++) {
-          if (i < 6) {
-            upper_diagonal_plus.push(parseInt(response[i]));
-            upper_diagonal_minus.push(parseInt(response[i]) - parseInt(response[i + 6]));
-          } else if (i >= 6 && i < 12) {
-            results_array.push(parseInt(response[i]));
-          } else if (i >= 12) {
-            approval_choice_names_scores.push({ name: response[i], score: 0 });
-            sim_dod.push(0);
-          }
-        }
-      } else if (response.length === 25) {
-        limit = 25;
-        for (let i = 0; i < limit; i++) {
-          if (i < 10) {
-            upper_diagonal_plus.push(parseInt(response[i]));
-            upper_diagonal_minus.push(parseInt(response[i]) - parseInt(response[i + 10]));
-          } else if (i >= 10 && i < 20) {
-            results_array.push(parseInt(response[i]));
-          } else if (i >= 20) {
-            approval_choice_names_scores.push({ name: response[i], score: 0 });
-            sim_dod.push(0);
-          }
-        }
-      } else if (response.length === 36) {
-        limit = 36;
-        for (let i = 0; i < limit; i++) {
-          if (i < 15) {
-            upper_diagonal_plus.push(parseInt(response[i]));
-            upper_diagonal_minus.push(parseInt(response[i]) - parseInt(response[i + 15]));
-          } else if (i >= 15 && i < 30) {
-            results_array.push(parseInt(response[i]));
-          } else if (i >= 30) {
-            approval_choice_names_scores.push({ name: response[i], score: 0 });
-            sim_dod.push(0);
-          }
+      if (post_data[post_number].length === 19) {
+        for (let i = 20; i < 40; i++) {
+          post_data[post_number] = post_data[post_number].concat(response[i]);
         }
       }
 
-      //Create an array of objects that has every pair of choices combination as "pair" and the weight of that pair as "score"
-      let pos_results_pair_up = 0;
-      for (let i = 0; i < approval_choice_names_scores.length; i++) {
-        for (let j = 0; j < approval_choice_names_scores.length; j++) {
-          if (approval_choice_names_scores[i].name == approval_choice_names_scores[j].name) {
-            results_array_pairwise.push({
-              pair: approval_choice_names_scores[i].name + approval_choice_names_scores[j].name,
-              score: 0,
-            });
+      for (let i = 0; i < 40; i++) {
+        if (i >= 20) {
+          approval_choice_names.push(response[i]);
+        } else {
+          results_array.push(response[i]);
+        }
+      }
+
+      for (let i = 0; i < approval_choice_names.length; i++) {
+        zipped.push({
+          array1elem: approval_choice_names[i],
+          array2elem: results_array[i],
+        });
+      }
+
+      zipped.sort(function (a, b) {
+        return b.array2elem - a.array2elem;
+      });
+
+      approval_choice_names = [];
+      results_array = [];
+      for (let i = 0; i < zipped.length; i++) {
+        approval_choice_names.push(zipped[i].array1elem);
+        results_array.push(zipped[i].array2elem);
+      }
+
+      for (let i = 0; i < 20; i++) {
+        if (i < 3) {
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = approval_choice_names[i];
+          if (results_array[i] !== null) {
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = results_array[i];
           } else {
-            if (i < j) {
-              results_array_pairwise.push({
-                pair: approval_choice_names_scores[i].name + approval_choice_names_scores[j].name,
-                score: results_array[pos_results_pair_up] / (upper_diagonal_plus[pos_results_pair_up] + upper_diagonal_minus[pos_results_pair_up]),
-              });
-              results_array_pairwise.push({
-                pair: approval_choice_names_scores[j].name + approval_choice_names_scores[i].name,
-                score: -results_array[pos_results_pair_up] / (upper_diagonal_plus[pos_results_pair_up] + upper_diagonal_minus[pos_results_pair_up]),
-              });
-              pos_results_pair_up++;
-            }
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
           }
-        }
-      }
-
-      //Calculate true Dodgson score for each choice
-      let pos_plus = 0;
-      let pos_minus = 0;
-      for (let i = 0; i < approval_choice_names_scores.length; i++) {
-        for (let j = 0; j < approval_choice_names_scores.length; j++) {
-          if (approval_choice_names_scores[i].name == approval_choice_names_scores[j].name) {
-            continue;
+        } else if (i >= 3 && approval_choice_names[i] !== null) {
+          if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
+            document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
+          }
+          let top_row = post_element.getElementsByClassName("approval-results-table")[0].rows[1];
+          let clone = top_row.cloneNode(true);
+          post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(clone);
+          document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].setAttribute("data-value", i + 1);
+          post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[0].innerText = approval_choice_names[i];
+          if (results_array[i] !== null) {
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = results_array[i];
           } else {
-            if (i < j) {
-              sim_dod[i] += parseInt(upper_diagonal_minus[pos_minus]);
-              pos_minus++;
-            } else if (i > j) {
-              sim_dod[i] += parseInt(upper_diagonal_plus[pos_plus]);
-              pos_plus++;
-            }
+            post_element.getElementsByClassName("approval-results-table")[0].rows[i + 1].cells[1].innerText = "0";
           }
-        }
-        approval_choice_names_scores[i].score =
-          approval_choice_names_scores.length * sim_dod[i] +
-          approval_choice_names_scores.length * (Math.log(approval_choice_names_scores.length) + 1);
-      }
-      approval_choice_names_scores.sort(compare_by_score);
-
-      //Delete all rows and columns of results table and create new rows and columns
-      post_element.getElementsByClassName("approval-results-table")[0].children[0].innerHTML = "";
-      for (let i = 0; i < approval_choice_names_scores.length + 1; i++) {
-        let tr = document.createElement("tr");
-        post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(tr);
-        tr.setAttribute("data-value", i);
-        for (let j = 0; j < approval_choice_names_scores.length + 1; j++) {
-          if (i == 0 && j == 0) {
-            let td = document.createElement("td");
-            tr.appendChild(td);
-          } else if (i == 0 && j > 0) {
-            let th = document.createElement("th");
-            tr.appendChild(th);
-          } else if (i > 0 && j == 0) {
-            let th = document.createElement("th");
-            tr.appendChild(th);
-          } else if (i > 0 && j > 0) {
-            let td = document.createElement("td");
-            tr.appendChild(td);
-          }
-        }
-      }
-
-      //Fill results table
-      let pair_index = 0;
-      for (let i = 0; i < approval_choice_names_scores.length + 1; i++) {
-        for (let j = 0; j < approval_choice_names_scores.length + 1; j++) {
-          if (i > 0 && j == 0) {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[j].innerText = approval_choice_names_scores[i - 1].name;
-          } else if (i == 0 && j > 0) {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[j].innerText = approval_choice_names_scores[j - 1].name;
-          } else if (i == j && i > 0 && j > 0) {
-            post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[j].style.background = "#81F9FE";
-          } else {
-            pair_index = results_array_pairwise.findIndex(
-              (item) =>
-                item.pair ==
-                post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[0].textContent +
-                  post_element.getElementsByClassName("approval-results-table")[0].rows[0].cells[j].textContent
-            );
-            if (pair_index >= 0) {
-              if (!isNaN(results_array_pairwise[pair_index].score)) {
-                post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[j].style.background = number_to_color(
-                  results_array_pairwise[pair_index].score.toFixed(2)
-                );
-              } else {
-                post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[j].style.background = number_to_color(0);
-              }
-            }
+        } else if (i >= 3 && approval_choice_names[i] === null) {
+          if (document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1]) {
+            document.querySelectorAll(".approval-results-table")[post_number].rows[i + 1].remove();
           }
         }
       }
     });
-}
-
-export function number_to_color(saturation) {
-  const minRGB = [220, 0, 0];
-  const maxRGB = [0, 220, 0];
-  const midRGB = [220, 220, 0];
-
-  let rgb = [];
-
-  if (saturation === 0) {
-    rgb = midRGB;
-  } else if (saturation > 0) {
-    for (let i = 0; i < 3; i++) {
-      rgb[i] = Math.round((maxRGB[i] - midRGB[i]) * saturation + midRGB[i]);
-    }
-  } else {
-    for (let i = 0; i < 3; i++) {
-      rgb[i] = Math.round((minRGB[i] - midRGB[i]) * Math.abs(saturation) + midRGB[i]);
-    }
-  }
-
-  // Return the RGB color as a string in the format "rgb(x, y, z)"
-  return "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")";
 }
 
 //Makes yes_no post chart.
@@ -2469,7 +2318,7 @@ export function reset_poll_data() {
   document.querySelectorAll(".approval-vote-container").forEach((main_class) => {
     main_class.style.display = "none";
   });
-  document.querySelectorAll(".approval-pair").forEach((main_class) => {
+  document.querySelectorAll(".approval-choice").forEach((main_class) => {
     if (main_class.getAttribute("value") !== "1" && main_class.getAttribute("value") !== "2" && main_class.getAttribute("value") !== "3") {
       main_class.remove();
     } else {
@@ -2479,6 +2328,17 @@ export function reset_poll_data() {
   });
   document.querySelectorAll(".approval-vote-results").forEach((main_class) => {
     main_class.style.display = "none";
+  });
+  document.querySelectorAll(".approval-results-table").forEach((main_class) => {
+    for (let i = 0; i < main_class.rows.length; i++)
+      if (
+        main_class.rows[i].getAttribute("data-value") !== "0" &&
+        main_class.rows[i].getAttribute("data-value") !== "1" &&
+        main_class.rows[i].getAttribute("data-value") !== "2" &&
+        main_class.rows[i].getAttribute("data-value") !== "3"
+      ) {
+        main_class.rows[i].remove();
+      }
   });
   document.querySelectorAll(".post-options-inside-container").forEach((main_class) => {
     if (main_class.getElementsByClassName("post-delete")[0]) {
@@ -2593,7 +2453,7 @@ export function null_all_styles() {
 //Adds new post data that was received from websocket.
 export function add_new_post(new_post) {
   post_data.unshift(new_post);
-  if (new_post.length > 15) {
+  if (new_post.length > 14) {
     post_data[0][16] = post_data[1][16];
   }
   user_chevron_vote.unshift([false, false]);
@@ -2628,7 +2488,13 @@ export function edit_vote(position, value_yes, value_no, vote_bool) {
 //Adds new vote data that was received from websocket.
 export function edit_rating_vote(position, votes) {
   for (let i = 0; i < votes.length; i++) {
-    post_data[position][i + 40] = votes[i];
+    post_data[position][i + 39] = votes[i];
+  }
+}
+
+export function edit_approval_vote(position, votes) {
+  for (let i = 0; i < votes.length; i++) {
+    post_data[position][i + 39] = votes[i];
   }
 }
 

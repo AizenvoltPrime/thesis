@@ -7,8 +7,8 @@ import {
   edit_vote,
   edit_bookmark,
   edit_rating_vote,
+  edit_approval_vote,
   remove_post,
-  number_to_color,
 } from "./index.js";
 import { make_admin_analytics_map, admin_map_remove_marker } from "./admin_analytics.js";
 import { get_posts_ids_inside_region } from "./filters.js";
@@ -70,7 +70,7 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".approval-vote-container").forEach((main_class) => {
         main_class.style.display = "none";
       });
-      clone.querySelectorAll(".approval-pair").forEach((main_class) => {
+      clone.querySelectorAll(".approval-choice").forEach((main_class) => {
         if (main_class.getAttribute("value") !== "1" && main_class.getAttribute("value") !== "2" && main_class.getAttribute("value") !== "3") {
           main_class.remove();
         } else {
@@ -80,6 +80,17 @@ addEventListener("DOMContentLoaded", (event) => {
       });
       clone.querySelectorAll(".approval-vote-results").forEach((main_class) => {
         main_class.style.display = "none";
+      });
+      clone.querySelectorAll(".approval-results-table").forEach((main_class) => {
+        for (let i = 0; i < main_class.rows.length; i++)
+          if (
+            main_class.rows[i].getAttribute("data-value") !== "0" &&
+            main_class.rows[i].getAttribute("data-value") !== "1" &&
+            main_class.rows[i].getAttribute("data-value") !== "2" &&
+            main_class.rows[i].getAttribute("data-value") !== "3"
+          ) {
+            main_class.rows[i].remove();
+          }
       });
       clone.querySelectorAll(".post-options-inside-container").forEach((main_class) => {
         if (main_class.getElementsByClassName("post-delete")[0]) {
@@ -162,9 +173,9 @@ addEventListener("DOMContentLoaded", (event) => {
         clone.getElementsByClassName("parent_of_check_yes_no")[0].children[0].style.color = "#b5b5b5";
       }
 
-      if (get_variables()[2] > 15) {
+      if (get_variables()[2] > 14) {
         add_new_post(JSON.parse(e.data)[1]);
-      } else if (get_variables()[2] <= 15) {
+      } else if (get_variables()[2] <= 14) {
         add_new_post([
           JSON.parse(e.data)[1][0],
           JSON.parse(e.data)[1][1],
@@ -178,7 +189,6 @@ addEventListener("DOMContentLoaded", (event) => {
           JSON.parse(e.data)[1][12],
           JSON.parse(e.data)[1][13],
           JSON.parse(e.data)[1][14],
-          "0",
           "0",
           "0",
         ]);
@@ -294,7 +304,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 14) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                 edit_vote(i, new_value_yes, new_value_no, [false, false]);
@@ -321,7 +331,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 14) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
@@ -351,7 +361,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 14) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
                 edit_vote(i, new_value_yes, new_value_no, [true, false]);
@@ -380,7 +390,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 14) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
                 edit_vote(i, new_value_yes, new_value_no, [false, false]);
@@ -407,7 +417,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 14) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
@@ -437,7 +447,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 14) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
                 edit_vote(i, new_value_yes, new_value_no, [false, true]);
@@ -451,7 +461,7 @@ addEventListener("DOMContentLoaded", (event) => {
     } else if (JSON.parse(e.data)[0] === "bookmark_on" && window.getComputedStyle(document.getElementById("all-filters")).display !== "none") {
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
-          if (get_variables()[2] > 15 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+          if (get_variables()[2] > 14 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].className = "fa-solid fa-bookmark";
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = "#98d9ff";
             edit_bookmark(i, 1);
@@ -461,7 +471,7 @@ addEventListener("DOMContentLoaded", (event) => {
     } else if (JSON.parse(e.data)[0] === "bookmark_off" && window.getComputedStyle(document.getElementById("all-filters")).display !== "none") {
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
-          if (get_variables()[2] > 15 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+          if (get_variables()[2] > 14 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].className = "fa-regular fa-bookmark";
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = null;
             edit_bookmark(i, 0);
@@ -470,7 +480,7 @@ addEventListener("DOMContentLoaded", (event) => {
       }
     } else if (JSON.parse(e.data)[0] === "admin_analytics_map") {
       admin_map_bool = JSON.parse(e.data)[2];
-      if (get_variables()[2] > 15) {
+      if (get_variables()[2] > 14) {
         if (get_variables().length === 3 && JSON.parse(e.data)[1] !== get_variables()[2] && get_variables()[4][1] !== undefined) {
           conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
         } else if (get_variables().length !== 3 && JSON.parse(e.data)[1] !== get_variables()[3][0][16] && get_variables()[4][1] !== undefined) {
@@ -587,7 +597,7 @@ addEventListener("DOMContentLoaded", (event) => {
               }
             }
           }
-          if (get_variables()[2] > 15) {
+          if (get_variables()[2] > 14) {
             if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
               let post_element = document.getElementsByClassName("post")[i];
               post_element.querySelectorAll(".rating-choices").forEach((child) => {
@@ -601,8 +611,8 @@ addEventListener("DOMContentLoaded", (event) => {
                 if (ratings_array[j] !== null) {
                   star_limit = parseInt(parseFloat(ratings_array[j]) * 2.0) + max_star_position;
                 }
-                if (get_variables()[3][i][j + 20] !== null) {
-                  if (j + 20 !== 20) {
+                if (get_variables()[3][i][j + 19] !== null) {
+                  if (j + 19 !== 19) {
                     let clone_rating_choices = post_element.getElementsByClassName("rating-choices")[0];
                     let clone = clone_rating_choices.cloneNode(true);
                     clone.setAttribute("data-value", j + 1);
@@ -614,14 +624,14 @@ addEventListener("DOMContentLoaded", (event) => {
                       [j].querySelectorAll(".half-star-container")
                       .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
                     post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText =
-                      get_variables()[3][i][j + 20];
+                      get_variables()[3][i][j + 19];
                   } else {
                     post_element
                       .querySelectorAll(".rating-choices")
                       [j].querySelectorAll(".half-star-container")
                       .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
                     post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText =
-                      get_variables()[3][i][j + 20];
+                      get_variables()[3][i][j + 19];
                   }
                   if (ratings_array[j] !== null) {
                     for (let k = max_star_position; k < star_limit; k++) {
@@ -641,222 +651,91 @@ addEventListener("DOMContentLoaded", (event) => {
       }
     } else if (JSON.parse(e.data)[0] === "approval_vote") {
       let user_approval_array = [];
-      let upper_diagonal_plus = [];
-      let upper_diagonal_minus = [];
       let results_array = [];
-      let results_array_pairwise = [];
-      let approval_choice_names_scores = [];
-      let limit = 0;
-      let sim_dod = [];
-      function compare_by_score(a, b) {
-        return a.score - b.score;
+      let approval_choice_names = [];
+      let zipped = [];
+
+      for (let i = 0; i < JSON.parse(e.data)[3].length; i++) {
+        if (i < 20) {
+          user_approval_array.push(JSON.parse(e.data)[3][i]);
+        } else if (i >= 20 && i < 40) {
+          results_array.push(JSON.parse(e.data)[3][i]);
+        } else if (i >= 40) {
+          approval_choice_names.push(JSON.parse(e.data)[3][i]);
+        }
       }
-      if (JSON.parse(e.data)[3].length === 12) {
-        limit = 12;
-        for (let i = 0; i < limit; i++) {
-          if (i < 3) {
-            upper_diagonal_plus.push(parseInt(JSON.parse(e.data)[3][i]));
-            upper_diagonal_minus.push(parseInt(JSON.parse(e.data)[3][i]) - parseInt(JSON.parse(e.data)[3][i + 6]));
-          } else if (i >= 3 && i < 6) {
-            user_approval_array.push(JSON.parse(e.data)[3][i]);
-          } else if (i >= 6 && i < 9) {
-            results_array.push(JSON.parse(e.data)[3][i]);
-          } else if (i >= 9) {
-            approval_choice_names_scores.push({ name: JSON.parse(e.data)[3][i], score: 0 });
-            sim_dod.push(0);
-          }
-        }
-      } else if (JSON.parse(e.data)[3].length === 22) {
-        limit = 22;
-        for (let i = 0; i < limit; i++) {
-          if (i < 6) {
-            upper_diagonal_plus.push(parseInt(JSON.parse(e.data)[3][i]));
-            upper_diagonal_minus.push(parseInt(JSON.parse(e.data)[3][i]) - parseInt(JSON.parse(e.data)[3][i + 12]));
-          } else if (i >= 6 && i < 12) {
-            user_approval_array.push(JSON.parse(e.data)[3][i]);
-          } else if (i >= 12 && i < 18) {
-            results_array.push(JSON.parse(e.data)[3][i]);
-          } else if (i >= 18) {
-            approval_choice_names_scores.push({ name: JSON.parse(e.data)[3][i], score: 0 });
-            sim_dod.push(0);
-          }
-        }
-      } else if (JSON.parse(e.data)[3].length === 35) {
-        limit = 35;
-        for (let i = 0; i < limit; i++) {
-          if (i < 10) {
-            upper_diagonal_plus.push(parseInt(JSON.parse(e.data)[3][i]));
-            upper_diagonal_minus.push(parseInt(JSON.parse(e.data)[3][i]) - parseInt(JSON.parse(e.data)[3][i + 20]));
-          } else if (i >= 10 && i < 20) {
-            user_approval_array.push(JSON.parse(e.data)[3][i]);
-          } else if (i >= 20 && i < 30) {
-            results_array.push(JSON.parse(e.data)[3][i]);
-          } else if (i >= 30) {
-            approval_choice_names_scores.push({ name: JSON.parse(e.data)[3][i], score: 0 });
-            sim_dod.push(0);
-          }
-        }
-      } else if (JSON.parse(e.data)[3].length === 51) {
-        limit = 51;
-        for (let i = 0; i < limit; i++) {
-          if (i < 15) {
-            upper_diagonal_plus.push(parseInt(JSON.parse(e.data)[3][i]));
-            upper_diagonal_minus.push(parseInt(JSON.parse(e.data)[3][i]) - parseInt(JSON.parse(e.data)[3][i + 30]));
-          } else if (i >= 15 && i < 30) {
-            user_approval_array.push(JSON.parse(e.data)[3][i]);
-          } else if (i >= 30 && i < 45) {
-            results_array.push(JSON.parse(e.data)[3][i]);
-          } else if (i >= 45) {
-            approval_choice_names_scores.push({ name: JSON.parse(e.data)[3][i], score: 0 });
-            sim_dod.push(0);
-          }
-        }
+
+      for (let i = 0; i < approval_choice_names.length; i++) {
+        zipped.push({
+          array1elem: approval_choice_names[i],
+          array2elem: results_array[i],
+        });
+      }
+
+      zipped.sort(function (a, b) {
+        return b.array2elem - a.array2elem;
+      });
+
+      approval_choice_names = [];
+      results_array = [];
+      for (let i = 0; i < zipped.length; i++) {
+        approval_choice_names.push(zipped[i].array1elem);
+        results_array.push(zipped[i].array2elem);
       }
 
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
           if (window.getComputedStyle(document.getElementsByClassName("approval-vote-results")[i]).display === "flex") {
             let post_element = document.getElementsByClassName("post")[i];
-
-            //Create an array of objects that has every pair of choices combination as "pair" and the weight of that pair as "score"
-            let pos_results_pair_up = 0;
-            let pos_results_pair_low = 0;
-            for (let i = 0; i < approval_choice_names_scores.length; i++) {
-              for (let j = 0; j < approval_choice_names_scores.length; j++) {
-                if (approval_choice_names_scores[i].name == approval_choice_names_scores[j].name) {
-                  results_array_pairwise.push({
-                    pair: approval_choice_names_scores[i].name + approval_choice_names_scores[j].name,
-                    score: 0,
-                  });
+            for (let j = 0; j < 20; j++) {
+              if (j < 3) {
+                post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[0].innerText = approval_choice_names[j];
+                if (results_array[j] !== null) {
+                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = results_array[j];
                 } else {
-                  if (i < j) {
-                    results_array_pairwise.push({
-                      pair: approval_choice_names_scores[i].name + approval_choice_names_scores[j].name,
-                      score:
-                        results_array[pos_results_pair_up] / (upper_diagonal_plus[pos_results_pair_up] + upper_diagonal_minus[pos_results_pair_up]),
-                    });
-                    pos_results_pair_up++;
-                  } else if (i > j) {
-                    results_array_pairwise.push({
-                      pair: approval_choice_names_scores[i].name + approval_choice_names_scores[j].name,
-                      score:
-                        -results_array[pos_results_pair_low] /
-                        (upper_diagonal_plus[pos_results_pair_low] + upper_diagonal_minus[pos_results_pair_low]),
-                    });
-                    pos_results_pair_low++;
-                  }
+                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = "0";
                 }
-              }
-            }
-
-            //Calculate true Dodgson score for each choice
-            let pos_plus = 0;
-            let pos_minus = 0;
-            for (let i = 0; i < approval_choice_names_scores.length; i++) {
-              for (let j = 0; j < approval_choice_names_scores.length; j++) {
-                if (approval_choice_names_scores[i].name == approval_choice_names_scores[j].name) {
-                  continue;
+              } else if (j >= 3 && approval_choice_names[j] !== null) {
+                if (document.querySelectorAll(".approval-results-table")[i].rows[j + 1]) {
+                  document.querySelectorAll(".approval-results-table")[i].rows[j + 1].remove();
+                }
+                let top_row = post_element.getElementsByClassName("approval-results-table")[0].rows[1];
+                let clone = top_row.cloneNode(true);
+                post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(clone);
+                document.querySelectorAll(".approval-results-table")[i].rows[j + 1].setAttribute("data-value", j + 1);
+                post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[0].innerText = approval_choice_names[j];
+                if (results_array[j] !== null) {
+                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = results_array[j];
                 } else {
-                  if (i < j) {
-                    sim_dod[i] += parseInt(upper_diagonal_minus[pos_minus]);
-                    pos_minus++;
-                  } else if (i > j) {
-                    sim_dod[i] += parseInt(upper_diagonal_plus[pos_plus]);
-                    pos_plus++;
-                  }
+                  post_element.getElementsByClassName("approval-results-table")[0].rows[j + 1].cells[1].innerText = "0";
                 }
-              }
-              approval_choice_names_scores[i].score =
-                approval_choice_names_scores.length * sim_dod[i] +
-                approval_choice_names_scores.length * (Math.log(approval_choice_names_scores.length) + 1);
-            }
-            approval_choice_names_scores.sort(compare_by_score);
-
-            //Delete all rows and columns of results table and create new rows and columns
-            post_element.getElementsByClassName("approval-results-table")[0].children[0].innerHTML = "";
-            for (let i = 0; i < approval_choice_names_scores.length + 1; i++) {
-              let tr = document.createElement("tr");
-              post_element.getElementsByClassName("approval-results-table")[0].children[0].appendChild(tr);
-              tr.setAttribute("data-value", i);
-              for (let j = 0; j < approval_choice_names_scores.length + 1; j++) {
-                if (i == 0 && j == 0) {
-                  let td = document.createElement("td");
-                  tr.appendChild(td);
-                } else if (i == 0 && j > 0) {
-                  let th = document.createElement("th");
-                  tr.appendChild(th);
-                } else if (i > 0 && j == 0) {
-                  let th = document.createElement("th");
-                  tr.appendChild(th);
-                } else if (i > 0 && j > 0) {
-                  let td = document.createElement("td");
-                  tr.appendChild(td);
-                }
-              }
-            }
-
-            //Fill results table
-            let pair_index = 0;
-            for (let i = 0; i < approval_choice_names_scores.length + 1; i++) {
-              for (let j = 0; j < approval_choice_names_scores.length + 1; j++) {
-                if (i > 0 && j == 0) {
-                  post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[j].innerText =
-                    approval_choice_names_scores[i - 1].name;
-                } else if (i == 0 && j > 0) {
-                  post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[j].innerText =
-                    approval_choice_names_scores[j - 1].name;
-                } else if (i == j && i > 0 && j > 0) {
-                  post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[j].style.background = "#81F9FE";
-                } else {
-                  pair_index = results_array_pairwise.findIndex(
-                    (item) =>
-                      item.pair ==
-                      post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[0].textContent +
-                        post_element.getElementsByClassName("approval-results-table")[0].rows[0].cells[j].textContent
-                  );
-                  if (pair_index >= 0) {
-                    if (!isNaN(results_array_pairwise[pair_index].score)) {
-                      post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[j].style.background = number_to_color(
-                        results_array_pairwise[pair_index].score.toFixed(2)
-                      );
-                    } else {
-                      post_element.getElementsByClassName("approval-results-table")[0].rows[i].cells[j].style.background = number_to_color(0);
-                    }
-                  }
+              } else if (j >= 3 && approval_choice_names[j] === null) {
+                if (document.querySelectorAll(".approval-results-table")[i].rows[j + 1]) {
+                  document.querySelectorAll(".approval-results-table")[i].rows[j + 1].remove();
                 }
               }
             }
           }
-          if (get_variables()[2] > 15) {
-            if (
-              JSON.parse(e.data)[2] === get_variables()[3][0][16] &&
-              window.getComputedStyle(document.getElementsByClassName("approval-vote-container")[i]).display === "flex"
-            ) {
-              let post_element = document.getElementsByClassName("post")[i];
-              for (let j = 0; j < user_approval_array.length; j++) {
-                if (user_approval_array[j] == "1") {
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[0].style.border =
-                    "0.1em solid #cc0000";
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[0].style.color = "#cc0000";
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[1].style.border =
-                    "0.1em solid #1a1a1b";
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[1].style.color = "#f3f3f3";
-                } else if (user_approval_array[j] == "-1") {
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[1].style.border =
-                    "0.1em solid #cc0000";
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[1].style.color = "#cc0000";
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[0].style.border =
-                    "0.1em solid #1a1a1b";
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[0].style.color = "#f3f3f3";
-                } else {
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[0].style.border =
-                    "0.1em solid #1a1a1b";
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[0].style.color = "#f3f3f3";
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[1].style.border =
-                    "0.1em solid #1a1a1b";
-                  post_element.getElementsByClassName("approval-pair")[j].getElementsByClassName("approval-choice")[1].style.color = "#f3f3f3";
+          if (get_variables()[2] > 14) {
+            if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+              for (let j = 0; j < 20; j++) {
+                if (get_variables()[3][i][j + 19] !== null) {
+                  if (
+                    user_approval_array[j] === 1 &&
+                    window.getComputedStyle(document.getElementsByClassName("approval-vote-container")[i]).display === "flex"
+                  ) {
+                    document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.border = "0.1em solid #cc0000";
+                    document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.color = "#cc0000";
+                  } else if (
+                    user_approval_array[j] === 0 &&
+                    window.getComputedStyle(document.getElementsByClassName("approval-vote-container")[i]).display === "flex"
+                  ) {
+                    document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.border = "0.1em solid #1a1a1b";
+                    document.getElementsByClassName("post")[i].getElementsByClassName("approval-choice")[j].style.color = "#f3f3f3";
+                  }
                 }
               }
+              edit_approval_vote(i, user_approval_array);
             }
           }
         }
