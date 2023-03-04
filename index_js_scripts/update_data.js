@@ -720,6 +720,7 @@ addEventListener("DOMContentLoaded", (event) => {
 
             //Create an array of objects that has every pair of choices combination as "pair" and the weight of that pair as "score"
             let pos_results_pair_up = 0;
+            let pos_results_pair_low = 0;
             for (let i = 0; i < approval_choice_names_scores.length; i++) {
               for (let j = 0; j < approval_choice_names_scores.length; j++) {
                 if (approval_choice_names_scores[i].name == approval_choice_names_scores[j].name) {
@@ -734,12 +735,15 @@ addEventListener("DOMContentLoaded", (event) => {
                       score:
                         results_array[pos_results_pair_up] / (upper_diagonal_plus[pos_results_pair_up] + upper_diagonal_minus[pos_results_pair_up]),
                     });
-                    results_array_pairwise.push({
-                      pair: approval_choice_names_scores[j].name + approval_choice_names_scores[i].name,
-                      score:
-                        -results_array[pos_results_pair_up] / (upper_diagonal_plus[pos_results_pair_up] + upper_diagonal_minus[pos_results_pair_up]),
-                    });
                     pos_results_pair_up++;
+                  } else if (i > j) {
+                    results_array_pairwise.push({
+                      pair: approval_choice_names_scores[i].name + approval_choice_names_scores[j].name,
+                      score:
+                        -results_array[pos_results_pair_low] /
+                        (upper_diagonal_plus[pos_results_pair_low] + upper_diagonal_minus[pos_results_pair_low]),
+                    });
+                    pos_results_pair_low++;
                   }
                 }
               }
