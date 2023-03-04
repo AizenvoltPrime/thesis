@@ -110,15 +110,10 @@ document.getElementsByClassName("fa-circle-chevron-right")[1].addEventListener("
 generate_posts(false);
 
 //Get user coordinates
-fetch("process_data.php", {
-  method: "POST",
-  body: JSON.stringify({
-    request: "get_geolocation_data",
-  }),
-})
-  .then((res) => res.json())
-  .then((response) => {
-    const loc = JSON.parse(response).loc.split(",");
+fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
+  .then((response) => response.json())
+  .then((jsonResponse) => {
+    const loc = jsonResponse.loc.split(",");
     user_coordinates[0] = loc[0];
     user_coordinates[1] = loc[1];
     setTimeout(() => {
