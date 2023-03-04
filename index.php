@@ -565,7 +565,7 @@ require_once "new_config.php";
           <div class="results-poll-name">Approval Results</div>
           <div class="approval-chart-card">
             <div class="approval-total-votes-container">
-              <div class="approval-total-votes-text">2</div>
+              <div class="approval-total-votes-text"></div>
             </div>
           </div>
         </div>
