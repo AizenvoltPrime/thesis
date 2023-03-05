@@ -162,9 +162,9 @@ addEventListener("DOMContentLoaded", (event) => {
         clone.getElementsByClassName("parent_of_check_yes_no")[0].children[0].style.color = "#b5b5b5";
       }
 
-      if (get_variables()[2] > 15) {
+      if (get_variables()[2] > 16) {
         add_new_post(JSON.parse(e.data)[1]);
-      } else if (get_variables()[2] <= 15) {
+      } else if (get_variables()[2] <= 16) {
         add_new_post([
           JSON.parse(e.data)[1][0],
           JSON.parse(e.data)[1][1],
@@ -178,6 +178,7 @@ addEventListener("DOMContentLoaded", (event) => {
           JSON.parse(e.data)[1][12],
           JSON.parse(e.data)[1][13],
           JSON.parse(e.data)[1][14],
+          "0",
           "0",
           "0",
           "0",
@@ -294,7 +295,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 16) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                 edit_vote(i, new_value_yes, new_value_no, [false, false]);
@@ -321,7 +322,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 16) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
@@ -351,7 +352,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 16) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
                 edit_vote(i, new_value_yes, new_value_no, [true, false]);
@@ -380,7 +381,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 16) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
                 edit_vote(i, new_value_yes, new_value_no, [false, false]);
@@ -407,7 +408,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 16) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
@@ -437,7 +438,7 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (JSON.parse(e.data)[7] === "fa-solid fa-question") {
               document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
             }
-            if (get_variables()[2] > 15) {
+            if (get_variables()[2] > 16) {
               if (JSON.parse(e.data)[4] === get_variables()[3][0][16]) {
                 document.querySelectorAll(".post")[i].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
                 edit_vote(i, new_value_yes, new_value_no, [false, true]);
@@ -451,7 +452,7 @@ addEventListener("DOMContentLoaded", (event) => {
     } else if (JSON.parse(e.data)[0] === "bookmark_on" && window.getComputedStyle(document.getElementById("all-filters")).display !== "none") {
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
-          if (get_variables()[2] > 15 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+          if (get_variables()[2] > 16 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].className = "fa-solid fa-bookmark";
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = "#98d9ff";
             edit_bookmark(i, 1);
@@ -461,7 +462,7 @@ addEventListener("DOMContentLoaded", (event) => {
     } else if (JSON.parse(e.data)[0] === "bookmark_off" && window.getComputedStyle(document.getElementById("all-filters")).display !== "none") {
       for (let i = 0; i < get_variables()[3].length; i++) {
         if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
-          if (get_variables()[2] > 15 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+          if (get_variables()[2] > 16 && JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].className = "fa-regular fa-bookmark";
             document.getElementsByClassName("parent_of_bookmark")[i].children[0].style.color = null;
             edit_bookmark(i, 0);
@@ -470,7 +471,7 @@ addEventListener("DOMContentLoaded", (event) => {
       }
     } else if (JSON.parse(e.data)[0] === "admin_analytics_map") {
       admin_map_bool = JSON.parse(e.data)[2];
-      if (get_variables()[2] > 15) {
+      if (get_variables()[2] > 16) {
         if (get_variables().length === 3 && JSON.parse(e.data)[1] !== get_variables()[2] && get_variables()[4][1] !== undefined) {
           conn.send(JSON.stringify(["admin_map_coordinates", JSON.parse(e.data)[1], get_variables()[4][1], get_variables()[4][0]]));
         } else if (get_variables().length !== 3 && JSON.parse(e.data)[1] !== get_variables()[3][0][16] && get_variables()[4][1] !== undefined) {
@@ -583,7 +584,7 @@ addEventListener("DOMContentLoaded", (event) => {
               }
             }
           }
-          if (get_variables()[2] > 15) {
+          if (get_variables()[2] > 16) {
             if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
               let post_element = document.getElementsByClassName("post")[i];
               post_element.querySelectorAll(".rating-choices").forEach((child) => {
@@ -597,8 +598,8 @@ addEventListener("DOMContentLoaded", (event) => {
                 if (ratings_array[j] !== null) {
                   star_limit = parseInt(parseFloat(ratings_array[j]) * 2.0) + max_star_position;
                 }
-                if (get_variables()[3][i][j + 20] !== null) {
-                  if (j + 20 !== 20) {
+                if (get_variables()[3][i][j + 21] !== null) {
+                  if (j + 21 !== 21) {
                     let clone_rating_choices = post_element.getElementsByClassName("rating-choices")[0];
                     let clone = clone_rating_choices.cloneNode(true);
                     clone.setAttribute("data-value", j + 1);
@@ -610,14 +611,14 @@ addEventListener("DOMContentLoaded", (event) => {
                       [j].querySelectorAll(".half-star-container")
                       .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
                     post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText =
-                      get_variables()[3][i][j + 20];
+                      get_variables()[3][i][j + 21];
                   } else {
                     post_element
                       .querySelectorAll(".rating-choices")
                       [j].querySelectorAll(".half-star-container")
                       .forEach((half_star) => (half_star.style.color = "#f3f3f3"));
                     post_element.querySelectorAll(".rating-choices")[j].getElementsByClassName("choice-name")[0].innerText =
-                      get_variables()[3][i][j + 20];
+                      get_variables()[3][i][j + 21];
                   }
                   if (ratings_array[j] !== null) {
                     for (let k = max_star_position; k < star_limit; k++) {
@@ -675,10 +676,10 @@ addEventListener("DOMContentLoaded", (event) => {
           if (window.getComputedStyle(document.getElementsByClassName("approval-vote-results")[i]).display === "flex") {
             make_approval_chart(i, approval_choice_names, results_array);
           }
-          if (get_variables()[2] > 15) {
+          if (get_variables()[2] > 16) {
             if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
               for (let j = 0; j < 20; j++) {
-                if (get_variables()[3][i][j + 20] !== null) {
+                if (get_variables()[3][i][j + 21] !== null) {
                   if (
                     user_approval_array[j] === 1 &&
                     window.getComputedStyle(document.getElementsByClassName("approval-vote-container")[i]).display === "flex"

@@ -190,7 +190,7 @@ if ($data['request'] == "request_username") {
             array(
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"],
                 $row["post_date"], $row["user_chevron_result"], $row["user_yes_answer"], $row["user_no_answer"], $row["user_bookmark"], $row["post_expiration_date"],
-                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"], "0", "0", "0"
+                $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"], "0", "0", "0", "0"
             );
     }
     echo json_encode($new_data);
@@ -324,7 +324,29 @@ if ($data['request'] == "request_username") {
                     (approval.choice_eighteen IS NOT NULL AND approval.choice_eighteen!=0) OR
                     (approval.choice_nineteen IS NOT NULL AND approval.choice_nineteen!=0) OR
                     (approval.choice_twenty IS NOT NULL AND approval.choice_twenty!=0)))
-                    AS total_approval_votes
+                    AS total_approval_votes,
+                    (SELECT COUNT(ranking.user_id) AS total_votes FROM ranking WHERE ranking.post_id=posts.post_number AND 
+                    (ranking.choice_one IS NOT NULL OR
+                    ranking.choice_two IS NOT NULL OR 
+                    ranking.choice_three IS NOT NULL OR 
+                    ranking.choice_four IS NOT NULL OR 
+                    ranking.choice_five IS NOT NULL OR 
+                    ranking.choice_six IS NOT NULL OR 
+                    ranking.choice_seven IS NOT NULL OR 
+                    ranking.choice_eight IS NOT NULL OR 
+                    ranking.choice_nine IS NOT NULL OR 
+                    ranking.choice_ten IS NOT NULL OR 
+                    ranking.choice_eleven IS NOT NULL OR 
+                    ranking.choice_twelve IS NOT NULL OR 
+                    ranking.choice_thirteen IS NOT NULL OR 
+                    ranking.choice_fourteen IS NOT NULL OR 
+                    ranking.choice_fifteen IS NOT NULL OR
+                    ranking.choice_sixteen IS NOT NULL OR
+                    ranking.choice_seventeen IS NOT NULL OR
+                    ranking.choice_eighteen IS NOT NULL OR
+                    ranking.choice_nineteen IS NOT NULL OR
+                    ranking.choice_twenty IS NOT NULL))
+                    AS total_ranking_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
@@ -371,7 +393,29 @@ if ($data['request'] == "request_username") {
                     (approval.choice_eighteen IS NOT NULL AND approval.choice_eighteen!=0) OR
                     (approval.choice_nineteen IS NOT NULL AND approval.choice_nineteen!=0) OR
                     (approval.choice_twenty IS NOT NULL AND approval.choice_twenty!=0)))
-                    AS total_approval_votes
+                    AS total_approval_votes,
+                    (SELECT COUNT(ranking.user_id) AS total_votes FROM ranking WHERE ranking.post_id=posts.post_number AND 
+                    (ranking.choice_one IS NOT NULL OR
+                    ranking.choice_two IS NOT NULL OR 
+                    ranking.choice_three IS NOT NULL OR 
+                    ranking.choice_four IS NOT NULL OR 
+                    ranking.choice_five IS NOT NULL OR 
+                    ranking.choice_six IS NOT NULL OR 
+                    ranking.choice_seven IS NOT NULL OR 
+                    ranking.choice_eight IS NOT NULL OR 
+                    ranking.choice_nine IS NOT NULL OR 
+                    ranking.choice_ten IS NOT NULL OR 
+                    ranking.choice_eleven IS NOT NULL OR 
+                    ranking.choice_twelve IS NOT NULL OR 
+                    ranking.choice_thirteen IS NOT NULL OR 
+                    ranking.choice_fourteen IS NOT NULL OR 
+                    ranking.choice_fifteen IS NOT NULL OR
+                    ranking.choice_sixteen IS NOT NULL OR
+                    ranking.choice_seventeen IS NOT NULL OR
+                    ranking.choice_eighteen IS NOT NULL OR
+                    ranking.choice_nineteen IS NOT NULL OR
+                    ranking.choice_twenty IS NOT NULL))
+                    AS total_ranking_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
@@ -420,7 +464,29 @@ if ($data['request'] == "request_username") {
                     (approval.choice_eighteen IS NOT NULL AND approval.choice_eighteen!=0) OR
                     (approval.choice_nineteen IS NOT NULL AND approval.choice_nineteen!=0) OR
                     (approval.choice_twenty IS NOT NULL AND approval.choice_twenty!=0)))
-                    AS total_approval_votes
+                    AS total_approval_votes,
+                    (SELECT COUNT(ranking.user_id) AS total_votes FROM ranking WHERE ranking.post_id=posts.post_number AND 
+                    (ranking.choice_one IS NOT NULL OR
+                    ranking.choice_two IS NOT NULL OR 
+                    ranking.choice_three IS NOT NULL OR 
+                    ranking.choice_four IS NOT NULL OR 
+                    ranking.choice_five IS NOT NULL OR 
+                    ranking.choice_six IS NOT NULL OR 
+                    ranking.choice_seven IS NOT NULL OR 
+                    ranking.choice_eight IS NOT NULL OR 
+                    ranking.choice_nine IS NOT NULL OR 
+                    ranking.choice_ten IS NOT NULL OR 
+                    ranking.choice_eleven IS NOT NULL OR 
+                    ranking.choice_twelve IS NOT NULL OR 
+                    ranking.choice_thirteen IS NOT NULL OR 
+                    ranking.choice_fourteen IS NOT NULL OR 
+                    ranking.choice_fifteen IS NOT NULL OR
+                    ranking.choice_sixteen IS NOT NULL OR
+                    ranking.choice_seventeen IS NOT NULL OR
+                    ranking.choice_eighteen IS NOT NULL OR
+                    ranking.choice_nineteen IS NOT NULL OR
+                    ranking.choice_twenty IS NOT NULL))
+                    AS total_ranking_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
@@ -468,7 +534,29 @@ if ($data['request'] == "request_username") {
                     (approval.choice_eighteen IS NOT NULL AND approval.choice_eighteen!=0) OR
                     (approval.choice_nineteen IS NOT NULL AND approval.choice_nineteen!=0) OR
                     (approval.choice_twenty IS NOT NULL AND approval.choice_twenty!=0)))
-                    AS total_approval_votes
+                    AS total_approval_votes,
+                    (SELECT COUNT(ranking.user_id) AS total_votes FROM ranking WHERE ranking.post_id=posts.post_number AND 
+                    (ranking.choice_one IS NOT NULL OR
+                    ranking.choice_two IS NOT NULL OR 
+                    ranking.choice_three IS NOT NULL OR 
+                    ranking.choice_four IS NOT NULL OR 
+                    ranking.choice_five IS NOT NULL OR 
+                    ranking.choice_six IS NOT NULL OR 
+                    ranking.choice_seven IS NOT NULL OR 
+                    ranking.choice_eight IS NOT NULL OR 
+                    ranking.choice_nine IS NOT NULL OR 
+                    ranking.choice_ten IS NOT NULL OR 
+                    ranking.choice_eleven IS NOT NULL OR 
+                    ranking.choice_twelve IS NOT NULL OR 
+                    ranking.choice_thirteen IS NOT NULL OR 
+                    ranking.choice_fourteen IS NOT NULL OR 
+                    ranking.choice_fifteen IS NOT NULL OR
+                    ranking.choice_sixteen IS NOT NULL OR
+                    ranking.choice_seventeen IS NOT NULL OR
+                    ranking.choice_eighteen IS NOT NULL OR
+                    ranking.choice_nineteen IS NOT NULL OR
+                    ranking.choice_twenty IS NOT NULL))
+                    AS total_ranking_votes
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories 
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
@@ -499,7 +587,7 @@ if ($data['request'] == "request_username") {
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"],
                 $row["post_date"], $row["user_chevron_result"], $row["user_yes_answer"], $row["user_no_answer"], $row["user_bookmark"], $row["post_expiration_date"],
                 $row["event_lat"], $row["event_long"], $row["event_radius"], $row["post_vote_result"], $_SESSION["username"], $row["total_yes_no_votes"],
-                $row["total_rating_votes"], $row["total_approval_votes"]
+                $row["total_rating_votes"], $row["total_approval_votes"], $row["total_ranking_votes"]
             );
             array_push($post_data, $tmp);
         }
@@ -539,7 +627,29 @@ if ($data['request'] == "request_username") {
             (approval.choice_eighteen IS NOT NULL AND approval.choice_eighteen!=0) OR
             (approval.choice_nineteen IS NOT NULL AND approval.choice_nineteen!=0) OR
             (approval.choice_twenty IS NOT NULL AND approval.choice_twenty!=0)))
-            AS total_approval_votes
+            AS total_approval_votes,
+            (SELECT COUNT(ranking.user_id) AS total_votes FROM ranking WHERE ranking.post_id=posts_info.post_number AND 
+            (ranking.choice_one IS NOT NULL OR
+            ranking.choice_two IS NOT NULL OR 
+            ranking.choice_three IS NOT NULL OR 
+            ranking.choice_four IS NOT NULL OR 
+            ranking.choice_five IS NOT NULL OR 
+            ranking.choice_six IS NOT NULL OR 
+            ranking.choice_seven IS NOT NULL OR 
+            ranking.choice_eight IS NOT NULL OR 
+            ranking.choice_nine IS NOT NULL OR 
+            ranking.choice_ten IS NOT NULL OR 
+            ranking.choice_eleven IS NOT NULL OR 
+            ranking.choice_twelve IS NOT NULL OR 
+            ranking.choice_thirteen IS NOT NULL OR 
+            ranking.choice_fourteen IS NOT NULL OR 
+            ranking.choice_fifteen IS NOT NULL OR
+            ranking.choice_sixteen IS NOT NULL OR
+            ranking.choice_seventeen IS NOT NULL OR
+            ranking.choice_eighteen IS NOT NULL OR
+            ranking.choice_nineteen IS NOT NULL OR
+            ranking.choice_twenty IS NOT NULL))
+            AS total_ranking_votes
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
@@ -578,7 +688,29 @@ if ($data['request'] == "request_username") {
             (approval.choice_eighteen IS NOT NULL AND approval.choice_eighteen!=0) OR
             (approval.choice_nineteen IS NOT NULL AND approval.choice_nineteen!=0) OR
             (approval.choice_twenty IS NOT NULL AND approval.choice_twenty!=0)))
-            AS total_approval_votes
+            AS total_approval_votes,
+            (SELECT COUNT(ranking.user_id) AS total_votes FROM ranking WHERE ranking.post_id=posts_info.post_number AND 
+            (ranking.choice_one IS NOT NULL OR
+            ranking.choice_two IS NOT NULL OR 
+            ranking.choice_three IS NOT NULL OR 
+            ranking.choice_four IS NOT NULL OR 
+            ranking.choice_five IS NOT NULL OR 
+            ranking.choice_six IS NOT NULL OR 
+            ranking.choice_seven IS NOT NULL OR 
+            ranking.choice_eight IS NOT NULL OR 
+            ranking.choice_nine IS NOT NULL OR 
+            ranking.choice_ten IS NOT NULL OR 
+            ranking.choice_eleven IS NOT NULL OR 
+            ranking.choice_twelve IS NOT NULL OR 
+            ranking.choice_thirteen IS NOT NULL OR 
+            ranking.choice_fourteen IS NOT NULL OR 
+            ranking.choice_fifteen IS NOT NULL OR
+            ranking.choice_sixteen IS NOT NULL OR
+            ranking.choice_seventeen IS NOT NULL OR
+            ranking.choice_eighteen IS NOT NULL OR
+            ranking.choice_nineteen IS NOT NULL OR
+            ranking.choice_twenty IS NOT NULL))
+            AS total_ranking_votes
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
             WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
@@ -602,7 +734,8 @@ if ($data['request'] == "request_username") {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $tmp = array(
                 $row["post_number"], $row["username"], $row["poll_id"], $row["category_name"], $row["post_text"], $row["chevron_result"], $row["post_date"], $row["post_expiration_date"],
-                $row["post_vote_result"], $row["event_lat"], $row["event_long"], $row["event_radius"], $row["total_yes_no_votes"], $row["total_rating_votes"], $row["total_approval_votes"]
+                $row["post_vote_result"], $row["event_lat"], $row["event_long"], $row["event_radius"], $row["total_yes_no_votes"], $row["total_rating_votes"], $row["total_approval_votes"],
+                $row["total_ranking_votes"]
             );
             array_push($post_data, $tmp);
         }
