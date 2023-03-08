@@ -109,17 +109,17 @@ document.getElementsByClassName("fa-circle-chevron-right")[1].addEventListener("
 
 generate_posts(false);
 
-// //Get user coordinates
-// fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
-//   .then((response) => response.json())
-//   .then((jsonResponse) => {
-//     const loc = jsonResponse.loc.split(",");
-//     user_coordinates[0] = loc[0];
-//     user_coordinates[1] = loc[1];
-//     setTimeout(() => {
-//       conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
-//     }, 1000);
-//   });
+//Get user coordinates
+fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
+  .then((response) => response.json())
+  .then((jsonResponse) => {
+    const loc = jsonResponse.loc.split(",");
+    user_coordinates[0] = loc[0];
+    user_coordinates[1] = loc[1];
+    setTimeout(() => {
+      conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
+    }, 1000);
+  });
 
 //This is for when the user clicks the "Plus" icon.
 document.getElementById("add-post-icon").addEventListener("click", function () {
