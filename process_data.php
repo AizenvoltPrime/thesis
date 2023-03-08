@@ -1741,7 +1741,7 @@ if ($data['request'] == "request_username") {
         }
     }
     echo json_encode($results);
-} else if ($data['request'] == "ranking_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+} else if ($data['request'] == "ranking_data") {
     require_once "new_config.php";
 
     $results = array();
