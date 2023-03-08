@@ -109,17 +109,17 @@ document.getElementsByClassName("fa-circle-chevron-right")[1].addEventListener("
 
 generate_posts(false);
 
-//Get user coordinates
-fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
-  .then((response) => response.json())
-  .then((jsonResponse) => {
-    const loc = jsonResponse.loc.split(",");
-    user_coordinates[0] = loc[0];
-    user_coordinates[1] = loc[1];
-    setTimeout(() => {
-      conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
-    }, 1000);
-  });
+// //Get user coordinates
+// fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
+//   .then((response) => response.json())
+//   .then((jsonResponse) => {
+//     const loc = jsonResponse.loc.split(",");
+//     user_coordinates[0] = loc[0];
+//     user_coordinates[1] = loc[1];
+//     setTimeout(() => {
+//       conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
+//     }, 1000);
+//   });
 
 //This is for when the user clicks the "Plus" icon.
 document.getElementById("add-post-icon").addEventListener("click", function () {
@@ -777,8 +777,9 @@ postContainer.addEventListener(
     const btn_vote = e.target.closest('button[data-dir="vote"]');
     const btn_star = e.target.closest('button[data-dir="star"]');
     const btn_star_vote = e.target.closest('button[data-dir="star-vote"]');
-    const btn_approval_send = e.target.closest('button[data-dir="approval-vote-send"]');
     const btn_approval_vote = e.target.closest('div[data-dir="approval-vote"]');
+    const btn_approval_send = e.target.closest('button[data-dir="approval-vote-send"]');
+    const btn_ranking_send = e.target.closest('button[data-dir="ranking-vote-send"]');
     const btn_options = e.target.closest('div[data-dir="options"]');
     const btn_download = e.target.closest('div[data-dir="download-data"]');
     const btn_event_map = e.target.closest('div[data-dir="event-location"]');
@@ -938,6 +939,131 @@ postContainer.addEventListener(
                   }
                 });
             }
+          } else if (post_data[postIndexVote][2] == "4") {
+            if (window.getComputedStyle(document.getElementsByClassName("ranking-vote-container")[postIndexVote]).display === "flex") {
+              document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = null;
+              document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("ranking-vote-container")[0].style.display = "none";
+            } else {
+              if (window.getComputedStyle(document.getElementsByClassName("ranking-vote-results")[postIndexVote]).display === "flex") {
+                document.querySelectorAll(".show-results")[postIndexVote].style.backgroundColor = "#00a1ff80";
+                document.querySelectorAll(".ranking-vote-results")[postIndexVote].style.display = "none";
+              }
+              document.querySelectorAll(".total-votes-container")[postIndexVote].style.display = "flex";
+              document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("vote")[0].style.backgroundColor = "#00ffd0";
+              document.querySelectorAll(".post")[postIndexVote].getElementsByClassName("ranking-vote-container")[0].style.display = "flex";
+
+              fetch("process_data.php", {
+                method: "POST",
+                body: JSON.stringify({ request: "user_ranking_vote_data", post_id: post_data[postIndexVote][0] }),
+              })
+                .then((res) => res.json())
+                .then((response) => {
+                  let post_element = document.getElementsByClassName("post")[postIndexVote].querySelectorAll(".ranking-vote-container")[0];
+                  let ranking_choice_names = [];
+                  let ranking_choice_results = [];
+                  let empty_results = true;
+
+                  for (let j = 0; j < 20; j++) {
+                    if (response[j] !== null) {
+                      ranking_choice_names.push(response[j]);
+                      ranking_choice_results.push(response[j + 20]);
+                    }
+                  }
+                  post_element.querySelectorAll(".ranking-choices").forEach((element) => {
+                    if (element.getAttribute("data-value") != "1") {
+                      element.remove();
+                    } else {
+                      element.innerHTML = "";
+                    }
+                  });
+                  for (let j = 0; j < ranking_choice_names.length; j++) {
+                    if (response[j] !== null) {
+                      if (j == 0) {
+                        let el_ranking_choice_name = document.createElement("div");
+                        el_ranking_choice_name.className = "ranking-choice-name";
+                        post_element.getElementsByClassName("ranking-choices")[j].appendChild(el_ranking_choice_name);
+
+                        let el_choice_rank = document.createElement("select");
+                        el_choice_rank.className = "choice-rank";
+                        post_element.getElementsByClassName("ranking-choices")[j].appendChild(el_choice_rank);
+
+                        post_element.getElementsByClassName("ranking-choices")[j].getElementsByClassName("ranking-choice-name")[0].innerText =
+                          ranking_choice_names[j];
+                        for (let k = 0; k < ranking_choice_names.length; k++) {
+                          if (k == 0) {
+                            let default_ranking_option = document.createElement("option");
+                            default_ranking_option.text = "Rank";
+                            post_element.getElementsByClassName("choice-rank")[0].add(default_ranking_option, k);
+                          }
+                          if (ranking_choice_results[k] === null) {
+                            let ranking_option = document.createElement("option");
+                            ranking_option.text = k + 1;
+                            post_element.getElementsByClassName("choice-rank")[0].add(ranking_option, k + 1);
+                          } else if (ranking_choice_results[k] !== null) {
+                            let ranking_option = document.createElement("option");
+                            ranking_option.text = ranking_choice_results[k];
+                            post_element
+                              .getElementsByClassName("choice-rank")[0]
+                              .add(ranking_option, post_element.getElementsByClassName("choice-rank")[0].length + 1);
+                            empty_results = false;
+                            break;
+                          }
+                        }
+                      }
+                      if (j > 0) {
+                        let clone = post_element.getElementsByClassName("ranking-choices")[0].cloneNode(true);
+                        clone.setAttribute("data-value", j + 1);
+                        post_element.insertBefore(clone, post_element.getElementsByClassName("send-ranking-button")[0]);
+                        post_element.getElementsByClassName("ranking-choices")[j].getElementsByClassName("ranking-choice-name")[0].innerText =
+                          ranking_choice_names[j];
+                        if (empty_results === false) {
+                          post_element.getElementsByClassName("choice-rank")[0].children[1].text = ranking_choice_results[j];
+                        }
+                      }
+                    }
+                  }
+                  for (let j = 0; j < ranking_choice_names.length; j++) {
+                    if (ranking_choice_results[j] !== null) {
+                      post_element.getElementsByClassName("choice-rank")[j].children[1].text = ranking_choice_results[j];
+                      post_element.getElementsByClassName("choice-rank")[j].selectedIndex = 1;
+                    }
+                  }
+                  let choice_rank = post_element.querySelectorAll(".choice-rank");
+                  let oldValue;
+                  choice_rank.forEach((select) => {
+                    select.addEventListener("focus", (event) => {
+                      oldValue = event.target.value;
+                    });
+                    select.addEventListener("change", (event) => {
+                      choice_rank.forEach((otherSelect) => {
+                        if (select[select.selectedIndex].text === "Rank") {
+                          if (!Array.from(otherSelect.options).some((option) => option.text === oldValue)) {
+                            let new_option = document.createElement("option");
+                            new_option.text = oldValue;
+                            let index = Array.from(otherSelect.options).findIndex((option, i) => parseInt(option.text) > parseInt(oldValue) && i > 0);
+                            if (index === -1) index = otherSelect.options.length;
+                            otherSelect.add(new_option, index);
+                          }
+                        } else if (otherSelect !== select) {
+                          Array.from(otherSelect.options).forEach((option) => {
+                            if (option.text === select[select.selectedIndex].text) {
+                              otherSelect.remove(option.index);
+                            }
+                          });
+                          if (!Array.from(otherSelect.options).some((option) => option.text === oldValue)) {
+                            let new_option = document.createElement("option");
+                            new_option.text = oldValue;
+                            let index = Array.from(otherSelect.options).findIndex((option, i) => parseInt(option.text) > parseInt(oldValue) && i > 0);
+                            if (index === -1) index = otherSelect.options.length;
+                            otherSelect.add(new_option, index);
+                          }
+                        }
+                      });
+                      oldValue = event.target.value;
+                    });
+                  });
+                });
+            }
           }
         }
       } else {
@@ -993,6 +1119,22 @@ postContainer.addEventListener(
           document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff";
           document.querySelectorAll(".approval-vote-results")[postIndexShowResults].style.display = "flex";
           get_approval_data(postIndexShowResults);
+        }
+      } else if (post_data[postIndexShowResults][2] == 4) {
+        if (window.getComputedStyle(document.getElementsByClassName("ranking-vote-results")[postIndexShowResults]).display === "flex") {
+          document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff80";
+          document.querySelectorAll(".ranking-vote-results")[postIndexShowResults].style.display = "none";
+          document.querySelectorAll(".total-votes-container")[postIndexShowResults].style.display = "flex";
+          document.getElementsByClassName("post-critic")[postIndexShowResults].style.marginBottom = null;
+        } else {
+          if (window.getComputedStyle(document.getElementsByClassName("ranking-vote-container")[postIndexShowResults]).display === "flex") {
+            document.querySelectorAll(".post")[postIndexShowResults].getElementsByClassName("vote")[0].style.backgroundColor = null;
+            document.querySelectorAll(".ranking-vote-container")[postIndexShowResults].style.display = "none";
+          }
+          document.querySelectorAll(".total-votes-container")[postIndexShowResults].style.display = "none";
+          document.querySelectorAll(".show-results")[postIndexShowResults].style.backgroundColor = "#00a1ff";
+          document.querySelectorAll(".ranking-vote-results")[postIndexShowResults].style.display = "flex";
+          get_ranking_data(postIndexShowResults);
         }
       }
     } else if (btn_user_name) {
@@ -1100,6 +1242,110 @@ postContainer.addEventListener(
             const ws = XLSX.utils.aoa_to_sheet(cell);
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
             XLSX.writeFile(wb, "Approval_Poll_Type_Results.xlsx");
+          });
+      } else if (post_data[postDownloadIndex][2] == 4) {
+        fetch("process_data.php", {
+          method: "POST",
+          body: JSON.stringify({ request: "ranking_data", post_id: post_data[postDownloadIndex][0] }),
+        })
+          .then((res) => res.json())
+          .then((response) => {
+            let ranking_choice_results = [];
+            let results_array = response;
+            results_array.pop();
+            let ranking_choice_names = results_array[results_array.length - 1];
+            results_array.pop();
+            ranking_choice_names = ranking_choice_names.filter((item) => item !== null);
+
+            let ranking_choice_names_ranks = [];
+            let sim_dod = [];
+            let true_dod = [];
+
+            let pairwise_weights = [];
+            for (let j = 0; j < results_array.length; j++) {
+              ranking_choice_names_ranks[j] = [];
+              for (let k = 0; k < ranking_choice_names.length; k++) {
+                ranking_choice_names_ranks[j].push({ name: ranking_choice_names[k], rank: parseInt(results_array[j][k]) });
+              }
+              ranking_choice_names_ranks[j].sort((a, b) => a.rank - b.rank);
+            }
+
+            for (let j = 0; j < ranking_choice_names.length; j++) {
+              sim_dod.push(0);
+              true_dod.push({ name: ranking_choice_names[j], score: 0 });
+              for (let other_candidate of ranking_choice_names) {
+                if (ranking_choice_names[j] !== other_candidate) {
+                  for (let vote of ranking_choice_names_ranks) {
+                    let candidate_rank = vote.find((x) => x.name === ranking_choice_names[j]).rank;
+                    let other_candidate_rank = vote.find((x) => x.name === other_candidate).rank;
+                    if (candidate_rank > other_candidate_rank) {
+                      sim_dod[j]++;
+                    }
+                  }
+                }
+              }
+              true_dod[j].score =
+                ranking_choice_names.length * sim_dod[j] + ranking_choice_names.length * (Math.log(ranking_choice_names.length) + 1);
+            }
+            true_dod.sort((a, b) => a.score - b.score);
+            for (let j = 0; j < ranking_choice_names.length; j++) {
+              for (let k = j + 1; k < ranking_choice_names.length; k++) {
+                let candidateJ = ranking_choice_names[j];
+                let candidateK = ranking_choice_names[k];
+
+                let countJ = 0;
+                let countK = 0;
+
+                for (let voter of ranking_choice_names_ranks) {
+                  let candidateJRank = voter.find((x) => x.name === candidateJ).rank;
+                  let candidateKRank = voter.find((x) => x.name === candidateK).rank;
+                  if (candidateJRank < candidateKRank) {
+                    countJ++;
+                  } else if (candidateJRank > candidateKRank) {
+                    countK++;
+                  }
+                }
+
+                pairwise_weights.push({
+                  pair: [candidateJ + candidateK],
+                  weight: (countJ - countK) / ranking_choice_names_ranks.length,
+                });
+                pairwise_weights.push({
+                  pair: [candidateK + candidateJ],
+                  weight: -(countJ - countK) / ranking_choice_names_ranks.length,
+                });
+              }
+            }
+
+            //Fill results table
+            let pair_index = 0;
+            let cell = [["Poll Text: " + post_data[postDownloadIndex][4]]];
+            for (let j = 0; j < true_dod.length + 1; j++) {
+              ranking_choice_results[j] = [];
+              for (let k = 0; k < true_dod.length + 1; k++) {
+                if (j > 0 && k == 0) {
+                  ranking_choice_results[j][k] = true_dod[j - 1].name;
+                } else if (j == 0 && k > 0) {
+                  ranking_choice_results[j][k] = true_dod[k - 1].name;
+                } else if (j == k && j > 0 && k > 0) {
+                  ranking_choice_results[j][k] = "-";
+                } else {
+                  pair_index = pairwise_weights.findIndex((item) => item.pair == ranking_choice_results[j][0] + ranking_choice_results[0][k]);
+                  if (pair_index >= 0) {
+                    if (!isNaN(pairwise_weights[pair_index].weight)) {
+                      ranking_choice_results[j][k] = pairwise_weights[pair_index].weight.toFixed(2);
+                    } else {
+                      ranking_choice_results[j][k] = "0";
+                    }
+                  }
+                }
+              }
+              cell.push(ranking_choice_results[j]);
+            }
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(cell);
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            XLSX.writeFile(wb, "Ranking_Poll_Type_Results.xlsx");
           });
       }
     } else if (btn_event_map) {
@@ -1214,6 +1460,21 @@ postContainer.addEventListener(
           link.href = canvas.toDataURL();
           link.click();
         });
+      } else if (post_data[postDownloadResImgIndex][2] == 4) {
+        let results_element = document
+          .getElementsByClassName("post")
+          [postDownloadResImgIndex].getElementsByClassName("ranking-vote-results-inside-container")[0];
+        html2canvas(results_element, {
+          width: results_element.offsetWidth,
+          height: results_element.offsetHeight,
+          scrollY: 0,
+          scale: 2,
+        }).then((canvas) => {
+          let link = document.createElement("a");
+          link.download = "Ranking_Poll_Type_Results.png";
+          link.href = canvas.toDataURL();
+          link.click();
+        });
       }
     } else if (btn_download_results_pdf) {
       const post_download_results_pdf = btn_download_results_pdf.closest(".post");
@@ -1268,6 +1529,23 @@ postContainer.addEventListener(
           let y = (approval_vote_results_pdf.internal.pageSize.height - canvas.height * scale) / 2;
           approval_vote_results_pdf.addImage(canvas.toDataURL("image/png"), "PNG", x, y, canvas.width * scale, canvas.height * scale);
           approval_vote_results_pdf.save("Approval_Poll_Type_Results.pdf");
+        });
+      } else if (post_data[postDownloadResPDFIndex][2] == 4) {
+        window.jsPDF = window.jspdf.jsPDF;
+        let results_element = document
+          .getElementsByClassName("post")
+          [postDownloadResPDFIndex].getElementsByClassName("ranking-vote-results-inside-container")[0];
+        let ranking_vote_results_pdf = new jsPDF("p", "pt", [results_element.offsetWidth, 500]);
+        html2canvas(results_element, { scale: 1 }).then((canvas) => {
+          let padding = 10;
+          let scale = Math.min(
+            (ranking_vote_results_pdf.internal.pageSize.width - padding) / canvas.width,
+            (ranking_vote_results_pdf.internal.pageSize.height - padding) / canvas.height
+          );
+          let x = (ranking_vote_results_pdf.internal.pageSize.width - canvas.width * scale) / 2;
+          let y = (ranking_vote_results_pdf.internal.pageSize.height - canvas.height * scale) / 2;
+          ranking_vote_results_pdf.addImage(canvas.toDataURL("image/png"), "PNG", x, y, canvas.width * scale, canvas.height * scale);
+          ranking_vote_results_pdf.save("Ranking_Poll_Type_Results.pdf");
         });
       }
     }
@@ -1415,6 +1693,70 @@ postContainer.addEventListener(
                 document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Number of Votes: " + vote_data[60];
               }
             });
+        }
+      } else if (btn_ranking_send) {
+        const post_ranking_vote = btn_ranking_send.closest(".post");
+        const postIndexRankingVote = [...postContainer.children].indexOf(post_ranking_vote);
+
+        if (
+          post_data[postIndexRankingVote][11] !== null &&
+          DateTime.fromFormat(post_data[postIndexRankingVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText = "Poll is closed";
+        } else if (
+          post_data[postIndexRankingVote][12] !== null &&
+          calcCrow(
+            user_coordinates[0],
+            user_coordinates[1],
+            parseFloat(post_data[postIndexRankingVote][12]),
+            parseFloat(post_data[postIndexRankingVote][13])
+          ) > parseInt(post_data[postIndexRankingVote][14])
+        ) {
+          $("#notification-container").fadeIn(300, function () {});
+          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
+        } else {
+          let post_element = document.getElementsByClassName("post")[postIndexRankingVote].querySelectorAll(".ranking-vote-container")[0];
+          let votes = [];
+          let send_vote = true;
+
+          for (let j = 0; j < 20; j++) {
+            if (j < post_element.getElementsByClassName("ranking-choices").length) {
+              if (post_element.getElementsByClassName("ranking-choices")[j].getElementsByClassName("choice-rank")[0].value === "Rank") {
+                send_vote = false;
+                $("#notification-container").fadeIn(300, function () {});
+                document.getElementById("notification-text").innerText = "You must rank all choices";
+                break;
+              } else {
+                votes.push(post_element.getElementsByClassName("ranking-choices")[j].getElementsByClassName("choice-rank")[0].value);
+              }
+            } else {
+              votes.push(null);
+            }
+          }
+          if (send_vote) {
+            fetch("process_data.php", {
+              method: "POST",
+              body: JSON.stringify({ request: "ranking_vote", votes: votes, post_id: post_data[postIndexRankingVote][0] }),
+            })
+              .then((res) => res.json())
+              .then((response) => {
+                if (response[response.length - 1][response[response.length - 1].length - 1].trim() == "Success") {
+                  let vote_data = response;
+                  vote_data[vote_data.length - 1].pop();
+                  let user_votes = vote_data[vote_data.length - 1];
+                  vote_data.pop();
+                  let total_votes = user_votes[user_votes.length - 1];
+                  user_votes.pop();
+                  conn.send(
+                    JSON.stringify(["ranking_vote", post_data[postIndexRankingVote][0], post_data[0][16], vote_data, user_votes, total_votes])
+                  );
+                  $("#notification-container").fadeIn(300, function () {});
+                  document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
+                  document.querySelectorAll(".total-votes-text")[postIndexRankingVote].innerText = "Number of Votes: " + total_votes;
+                }
+              });
+          }
         }
       } else if (btn_up) {
         const post_up = btn_up.closest(".post");
@@ -2196,6 +2538,159 @@ function get_approval_data(post_number) {
     });
 }
 
+function get_ranking_data(post_number) {
+  fetch("process_data.php", {
+    method: "POST",
+    body: JSON.stringify({ request: "ranking_data", post_id: post_data[post_number][0] }),
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      let post_element = document.getElementsByClassName("post")[post_number];
+      let number_of_votes = response[response.length - 1][0];
+      let results_array = response;
+      results_array.pop();
+      let ranking_choice_names = results_array[results_array.length - 1];
+      results_array.pop();
+      ranking_choice_names = ranking_choice_names.filter((item) => item !== null);
+
+      let ranking_choice_names_ranks = [];
+      let sim_dod = [];
+      let true_dod = [];
+
+      let pairwise_weights = [];
+      for (let j = 0; j < results_array.length; j++) {
+        ranking_choice_names_ranks[j] = [];
+        for (let k = 0; k < ranking_choice_names.length; k++) {
+          ranking_choice_names_ranks[j].push({ name: ranking_choice_names[k], rank: parseInt(results_array[j][k]) });
+        }
+        ranking_choice_names_ranks[j].sort((a, b) => a.rank - b.rank);
+      }
+
+      for (let j = 0; j < ranking_choice_names.length; j++) {
+        sim_dod.push(0);
+        true_dod.push({ name: ranking_choice_names[j], score: 0 });
+        for (let other_candidate of ranking_choice_names) {
+          if (ranking_choice_names[j] !== other_candidate) {
+            for (let vote of ranking_choice_names_ranks) {
+              let candidate_rank = vote.find((x) => x.name === ranking_choice_names[j]).rank;
+              let other_candidate_rank = vote.find((x) => x.name === other_candidate).rank;
+              if (candidate_rank > other_candidate_rank) {
+                sim_dod[j]++;
+              }
+            }
+          }
+        }
+        true_dod[j].score = ranking_choice_names.length * sim_dod[j] + ranking_choice_names.length * (Math.log(ranking_choice_names.length) + 1);
+      }
+      true_dod.sort((a, b) => a.score - b.score);
+      for (let j = 0; j < ranking_choice_names.length; j++) {
+        for (let k = j + 1; k < ranking_choice_names.length; k++) {
+          let candidateJ = ranking_choice_names[j];
+          let candidateK = ranking_choice_names[k];
+
+          let countJ = 0;
+          let countK = 0;
+
+          for (let voter of ranking_choice_names_ranks) {
+            let candidateJRank = voter.find((x) => x.name === candidateJ).rank;
+            let candidateKRank = voter.find((x) => x.name === candidateK).rank;
+            if (candidateJRank < candidateKRank) {
+              countJ++;
+            } else if (candidateJRank > candidateKRank) {
+              countK++;
+            }
+          }
+
+          pairwise_weights.push({
+            pair: [candidateJ + candidateK],
+            weight: (countJ - countK) / ranking_choice_names_ranks.length,
+          });
+          pairwise_weights.push({
+            pair: [candidateK + candidateJ],
+            weight: -(countJ - countK) / ranking_choice_names_ranks.length,
+          });
+        }
+      }
+
+      //Delete all rows and columns of results table and create new rows and columns
+      post_element.getElementsByClassName("ranking-results-table")[0].children[0].innerHTML = "";
+      for (let i = 0; i < ranking_choice_names.length + 1; i++) {
+        let tr = document.createElement("tr");
+        post_element.getElementsByClassName("ranking-results-table")[0].children[0].appendChild(tr);
+        tr.setAttribute("data-value", i);
+        for (let j = 0; j < ranking_choice_names.length + 1; j++) {
+          if (i == 0 && j == 0) {
+            let td = document.createElement("td");
+            tr.appendChild(td);
+          } else if (i == 0 && j > 0) {
+            let th = document.createElement("th");
+            tr.appendChild(th);
+          } else if (i > 0 && j == 0) {
+            let th = document.createElement("th");
+            tr.appendChild(th);
+          } else if (i > 0 && j > 0) {
+            let td = document.createElement("td");
+            tr.appendChild(td);
+          }
+        }
+      }
+      th_size();
+      //Fill results table
+      let pair_index = 0;
+      for (let j = 0; j < true_dod.length + 1; j++) {
+        for (let k = 0; k < true_dod.length + 1; k++) {
+          if (j > 0 && k == 0) {
+            post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[k].innerText = true_dod[j - 1].name;
+          } else if (j == 0 && k > 0) {
+            post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[k].innerText = true_dod[k - 1].name;
+          } else if (j == k && j > 0 && k > 0) {
+            post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[k].style.background = "#81F9FE";
+          } else {
+            pair_index = pairwise_weights.findIndex(
+              (item) =>
+                item.pair ==
+                post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[0].textContent +
+                  post_element.getElementsByClassName("ranking-results-table")[0].rows[0].cells[k].textContent
+            );
+            if (pair_index >= 0) {
+              if (!isNaN(pairwise_weights[pair_index].weight)) {
+                post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[k].style.background = number_to_color(
+                  pairwise_weights[pair_index].weight.toFixed(2)
+                );
+              } else {
+                post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[k].style.background = number_to_color(0);
+              }
+            }
+          }
+        }
+      }
+      post_element.getElementsByClassName("ranking-total-votes-text")[0].innerText = "Number of Votes: " + number_of_votes;
+    });
+}
+
+export function number_to_color(saturation) {
+  const minRGB = [220, 0, 0];
+  const maxRGB = [0, 220, 0];
+  const midRGB = [220, 220, 0];
+
+  let rgb = [];
+
+  if (saturation === 0) {
+    rgb = midRGB;
+  } else if (saturation > 0) {
+    for (let i = 0; i < 3; i++) {
+      rgb[i] = Math.round((maxRGB[i] - midRGB[i]) * saturation + midRGB[i]);
+    }
+  } else {
+    for (let i = 0; i < 3; i++) {
+      rgb[i] = Math.round((minRGB[i] - midRGB[i]) * Math.abs(saturation) + midRGB[i]);
+    }
+  }
+
+  // Return the RGB color as a string in the format "rgb(x, y, z)"
+  return "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")";
+}
+
 //Makes yes_no post chart.
 export function make_yes_no_chart(post_number, chart_data) {
   if (myChart[post_number]) {
@@ -2373,6 +2868,20 @@ export function reset_poll_data() {
     }
   });
   document.querySelectorAll(".approval-vote-results").forEach((main_class) => {
+    main_class.style.display = "none";
+  });
+  document.querySelectorAll(".ranking-vote-container").forEach((main_class) => {
+    main_class.style.display = "none";
+  });
+  document.querySelectorAll(".ranking-pair").forEach((main_class) => {
+    if (main_class.getAttribute("value") !== "1" && main_class.getAttribute("value") !== "2" && main_class.getAttribute("value") !== "3") {
+      main_class.remove();
+    } else {
+      main_class.style.border = null;
+      main_class.style.color = null;
+    }
+  });
+  document.querySelectorAll(".ranking-vote-results").forEach((main_class) => {
     main_class.style.display = "none";
   });
   document.querySelectorAll(".post-options-inside-container").forEach((main_class) => {
@@ -2590,3 +3099,30 @@ document.getElementById("dropdown-button").addEventListener("click", function ()
   document.getElementById("short-app-description").style.display = "none";
   document.getElementById("detailed-app-description").style.display = "block";
 });
+
+export function th_size() {
+  let tableHeaders = document.getElementsByTagName("th");
+  for (let i = 0; i < tableHeaders.length; i++) {
+    if (window.innerWidth >= 776) {
+      tableHeaders[i].style.fontSize = "0.578em";
+    } else if (window.innerWidth < 776 && window.innerWidth >= 714) {
+      tableHeaders[i].style.fontSize = "0.529em";
+    } else if (window.innerWidth < 714 && window.innerWidth >= 653) {
+      tableHeaders[i].style.fontSize = "0.48em";
+    } else if (window.innerWidth < 653 && window.innerWidth >= 603) {
+      tableHeaders[i].style.fontSize = "0.44em";
+    } else if (window.innerWidth < 603 && window.innerWidth >= 557) {
+      tableHeaders[i].style.fontSize = "0.4em";
+    } else if (window.innerWidth < 557 && window.innerWidth >= 512) {
+      tableHeaders[i].style.fontSize = "0.36em";
+    } else if (window.innerWidth < 512 && window.innerWidth >= 466) {
+      tableHeaders[i].style.fontSize = "0.32em";
+    } else if (window.innerWidth < 466 && window.innerWidth >= 420) {
+      tableHeaders[i].style.fontSize = "0.29em";
+    }
+  }
+}
+
+window.onresize = function () {
+  th_size();
+};

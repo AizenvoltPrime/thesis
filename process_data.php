@@ -1549,4 +1549,303 @@ if ($data['request'] == "request_username") {
         }
     }
     echo json_encode($active_posts_per_category);
+} else if ($data['request'] == "user_ranking_vote_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+    require_once "new_config.php";
+
+    $stmt = $conn->prepare("SELECT choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
+    choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,choice_ten_name,
+    choice_eleven_name, choice_twelve_name, choice_thirteen_name, choice_fourteen_name,choice_fifteen_name,
+    choice_sixteen_name, choice_seventeen_name, choice_eighteen_name, choice_nineteen_name,choice_twenty_name,
+    COALESCE((SELECT ranking.choice_one FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_one,
+    COALESCE((SELECT ranking.choice_two FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_two,
+    COALESCE((SELECT ranking.choice_three FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_three,
+    COALESCE((SELECT ranking.choice_four FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_four,
+    COALESCE((SELECT ranking.choice_five FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_five,
+    COALESCE((SELECT ranking.choice_six FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_six,
+    COALESCE((SELECT ranking.choice_seven FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_seven,
+    COALESCE((SELECT ranking.choice_eight FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_eight,
+    COALESCE((SELECT ranking.choice_nine FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_nine,
+    COALESCE((SELECT ranking.choice_ten FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_ten,
+    COALESCE((SELECT ranking.choice_eleven FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_eleven,
+    COALESCE((SELECT ranking.choice_twelve FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_twelve,
+    COALESCE((SELECT ranking.choice_thirteen FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_thirteen,
+    COALESCE((SELECT ranking.choice_fourteen FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_fourteen,
+    COALESCE((SELECT ranking.choice_fifteen FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_fifteen,
+    COALESCE((SELECT ranking.choice_sixteen FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_sixteen,
+    COALESCE((SELECT ranking.choice_seventeen FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_seventeen,
+    COALESCE((SELECT ranking.choice_eighteen FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_eighteen,
+    COALESCE((SELECT ranking.choice_nineteen FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_nineteen,
+    COALESCE((SELECT ranking.choice_twenty FROM ranking WHERE ranking.user_id=:id AND ranking.post_id=:post_id),NULL) AS ranking_choice_twenty
+    FROM posts INNER JOIN ranking ON posts.post_number=ranking.post_id WHERE posts.post_number=:post_id");
+    $stmt->execute([":id" => $_SESSION["id"], ":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $tmp = array(
+                $row["choice_one_name"], $row["choice_two_name"], $row["choice_three_name"], $row["choice_four_name"],
+                $row["choice_five_name"], $row["choice_six_name"], $row["choice_seven_name"], $row["choice_eight_name"], $row["choice_nine_name"],
+                $row["choice_ten_name"], $row["choice_eleven_name"], $row["choice_twelve_name"], $row["choice_thirteen_name"], $row["choice_fourteen_name"],
+                $row["choice_fifteen_name"], $row["choice_sixteen_name"], $row["choice_seventeen_name"], $row["choice_eighteen_name"], $row["choice_nineteen_name"],
+                $row["choice_twenty_name"],
+                $row["ranking_choice_one"], $row["ranking_choice_two"], $row["ranking_choice_three"], $row["ranking_choice_four"],
+                $row["ranking_choice_five"], $row["ranking_choice_six"], $row["ranking_choice_seven"], $row["ranking_choice_eight"], $row["ranking_choice_nine"],
+                $row["ranking_choice_ten"], $row["ranking_choice_eleven"], $row["ranking_choice_twelve"], $row["ranking_choice_thirteen"], $row["ranking_choice_fourteen"],
+                $row["ranking_choice_fifteen"], $row["ranking_choice_sixteen"], $row["ranking_choice_seventeen"], $row["ranking_choice_eighteen"], $row["ranking_choice_nineteen"],
+                $row["ranking_choice_twenty"],
+            );
+        }
+    }
+    echo json_encode($tmp);
+} else if ($data['request'] == "ranking_vote" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+    require_once "new_config.php";
+
+    $results = array();
+    $stmt = $conn->prepare("SELECT user_id FROM ranking WHERE user_id=:id");
+    $stmt->execute([":id" => $_SESSION["id"]]);
+    if ($stmt->rowCount() > 0) {
+        $stmt = $conn->prepare("UPDATE ranking SET choice_one = :choice_one, choice_two = :choice_two, choice_three = :choice_three,
+        choice_four = :choice_four, choice_five = :choice_five, choice_six = :choice_six, choice_seven = :choice_seven, choice_eight = :choice_eight,
+        choice_nine = :choice_nine, choice_ten = :choice_ten, choice_eleven = :choice_eleven, choice_twelve = :choice_twelve, choice_thirteen = :choice_thirteen,
+        choice_fourteen = :choice_fourteen, choice_fifteen = :choice_fifteen, choice_sixteen = :choice_sixteen, choice_seventeen = :choice_seventeen, 
+        choice_eighteen = :choice_eighteen, choice_nineteen = :choice_nineteen, choice_twenty = :choice_twenty WHERE post_id=:post_id AND user_id=:id");
+        $stmt->execute([
+            ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+            ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5],
+            ":choice_seven" => $data["votes"][6], ":choice_eight" => $data["votes"][7], ":choice_nine" => $data["votes"][8], ":choice_ten" => $data["votes"][9],
+            ":choice_eleven" => $data["votes"][10], ":choice_twelve" => $data["votes"][11], ":choice_thirteen" => $data["votes"][12], ":choice_fourteen" => $data["votes"][13],
+            ":choice_fifteen" => $data["votes"][14], ":choice_sixteen" => $data["votes"][15], ":choice_seventeen" => $data["votes"][16], ":choice_eighteen" => $data["votes"][17],
+            ":choice_nineteen" => $data["votes"][18], ":choice_twenty" => $data["votes"][19]
+        ]);
+    }
+    $stmt = $conn->prepare("INSERT IGNORE INTO ranking(post_id,user_id,poll_type,choice_one,choice_two,choice_three,choice_four,choice_five,
+    choice_six,choice_seven,choice_eight,choice_nine,choice_ten,choice_eleven,choice_twelve,choice_thirteen,choice_fourteen,choice_fifteen,choice_sixteen,choice_seventeen,
+    choice_eighteen,choice_nineteen,choice_twenty) 
+            VALUES(:post_id,:id,4,:choice_one,:choice_two,:choice_three,:choice_four,:choice_five,:choice_six,:choice_seven,:choice_eight,:choice_nine,:choice_ten,
+            :choice_eleven,:choice_twelve,:choice_thirteen,:choice_fourteen,:choice_fifteen,:choice_sixteen,:choice_seventeen,
+            :choice_eighteen,:choice_nineteen,:choice_twenty)");
+    $stmt->execute([
+        ":post_id" => $data["post_id"], ":id" => $_SESSION["id"], ":choice_one" => $data["votes"][0], ":choice_two" => $data["votes"][1],
+        ":choice_three" => $data["votes"][2], ":choice_four" => $data["votes"][3], ":choice_five" => $data["votes"][4], ":choice_six" => $data["votes"][5],
+        ":choice_seven" => $data["votes"][6], ":choice_eight" => $data["votes"][7], ":choice_nine" => $data["votes"][8], ":choice_ten" => $data["votes"][9],
+        ":choice_eleven" => $data["votes"][10], ":choice_twelve" => $data["votes"][11], ":choice_thirteen" => $data["votes"][12], ":choice_fourteen" => $data["votes"][13],
+        ":choice_fifteen" => $data["votes"][14], ":choice_sixteen" => $data["votes"][15], ":choice_seventeen" => $data["votes"][16], ":choice_eighteen" => $data["votes"][17],
+        ":choice_nineteen" => $data["votes"][18], ":choice_twenty" => $data["votes"][19]
+    ]);
+
+    $stmt = $conn->prepare("SELECT choice_one, choice_two, choice_three, choice_four, choice_five,
+    choice_six, choice_seven, choice_eight, choice_nine, choice_ten, choice_eleven, choice_twelve,
+    choice_thirteen, choice_fourteen, choice_fifteen, choice_sixteen, choice_seventeen, choice_eighteen,
+    choice_nineteen, choice_twenty, choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
+    choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,choice_ten_name, choice_eleven_name, choice_twelve_name, choice_thirteen_name, 
+    choice_fourteen_name,choice_fifteen_name, choice_sixteen_name, choice_seventeen_name, choice_eighteen_name, choice_nineteen_name,choice_twenty_name
+    FROM ranking INNER JOIN posts ON ranking.post_id=posts.post_number WHERE ranking.post_id=:post_id");
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push(
+                $results,
+                [
+                    $row["choice_one"],
+                    $row["choice_two"],
+                    $row["choice_three"],
+                    $row["choice_four"],
+                    $row["choice_five"],
+                    $row["choice_six"],
+                    $row["choice_seven"],
+                    $row["choice_eight"],
+                    $row["choice_nine"],
+                    $row["choice_ten"],
+                    $row["choice_eleven"],
+                    $row["choice_twelve"],
+                    $row["choice_thirteen"],
+                    $row["choice_fourteen"],
+                    $row["choice_fifteen"],
+                    $row["choice_sixteen"],
+                    $row["choice_seventeen"],
+                    $row["choice_eighteen"],
+                    $row["choice_nineteen"],
+                    $row["choice_twenty"],
+                    $row["choice_one_name"],
+                    $row["choice_two_name"],
+                    $row["choice_three_name"],
+                    $row["choice_four_name"],
+                    $row["choice_five_name"],
+                    $row["choice_six_name"],
+                    $row["choice_seven_name"],
+                    $row["choice_eight_name"],
+                    $row["choice_nine_name"],
+                    $row["choice_ten_name"],
+                    $row["choice_eleven_name"],
+                    $row["choice_twelve_name"],
+                    $row["choice_thirteen_name"],
+                    $row["choice_fourteen_name"],
+                    $row["choice_fifteen_name"],
+                    $row["choice_sixteen_name"],
+                    $row["choice_seventeen_name"],
+                    $row["choice_eighteen_name"],
+                    $row["choice_nineteen_name"],
+                    $row["choice_twenty_name"]
+                ]
+            );
+        }
+    }
+    $stmt = $conn->prepare("SELECT COUNT(ranking.user_id) AS total_votes FROM ranking WHERE ranking.post_id=:post_id AND 
+            (ranking.choice_one IS NOT NULL OR
+            ranking.choice_two IS NOT NULL OR 
+            ranking.choice_three IS NOT NULL OR 
+            ranking.choice_four IS NOT NULL OR 
+            ranking.choice_five IS NOT NULL OR 
+            ranking.choice_six IS NOT NULL OR 
+            ranking.choice_seven IS NOT NULL OR 
+            ranking.choice_eight IS NOT NULL OR 
+            ranking.choice_nine IS NOT NULL OR 
+            ranking.choice_ten IS NOT NULL OR 
+            ranking.choice_eleven IS NOT NULL OR 
+            ranking.choice_twelve IS NOT NULL OR 
+            ranking.choice_thirteen IS NOT NULL OR 
+            ranking.choice_fourteen IS NOT NULL OR 
+            ranking.choice_fifteen IS NOT NULL OR
+            ranking.choice_sixteen IS NOT NULL OR
+            ranking.choice_seventeen IS NOT NULL OR
+            ranking.choice_eighteen IS NOT NULL OR
+            ranking.choice_nineteen IS NOT NULL OR
+            ranking.choice_twenty IS NOT NULL)");
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push(
+                $results,
+                [
+                    $data["votes"][0],
+                    $data["votes"][1],
+                    $data["votes"][2],
+                    $data["votes"][3],
+                    $data["votes"][4],
+                    $data["votes"][5],
+                    $data["votes"][6],
+                    $data["votes"][7],
+                    $data["votes"][8],
+                    $data["votes"][9],
+                    $data["votes"][10],
+                    $data["votes"][11],
+                    $data["votes"][12],
+                    $data["votes"][13],
+                    $data["votes"][14],
+                    $data["votes"][15],
+                    $data["votes"][16],
+                    $data["votes"][17],
+                    $data["votes"][18],
+                    $data["votes"][19],
+                    $row["total_votes"], "Success"
+                ]
+            );
+        }
+    }
+    echo json_encode($results);
+} else if ($data['request'] == "ranking_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+    require_once "new_config.php";
+
+    $results = array();
+
+    $stmt = $conn->prepare("SELECT choice_one, choice_two, choice_three, choice_four, choice_five,
+    choice_six, choice_seven, choice_eight, choice_nine, choice_ten, choice_eleven, choice_twelve,
+    choice_thirteen, choice_fourteen, choice_fifteen, choice_sixteen, choice_seventeen, choice_eighteen,
+    choice_nineteen, choice_twenty
+    FROM ranking INNER JOIN posts ON ranking.post_id=posts.post_number WHERE ranking.post_id=:post_id");
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push(
+                $results,
+                [
+                    $row["choice_one"],
+                    $row["choice_two"],
+                    $row["choice_three"],
+                    $row["choice_four"],
+                    $row["choice_five"],
+                    $row["choice_six"],
+                    $row["choice_seven"],
+                    $row["choice_eight"],
+                    $row["choice_nine"],
+                    $row["choice_ten"],
+                    $row["choice_eleven"],
+                    $row["choice_twelve"],
+                    $row["choice_thirteen"],
+                    $row["choice_fourteen"],
+                    $row["choice_fifteen"],
+                    $row["choice_sixteen"],
+                    $row["choice_seventeen"],
+                    $row["choice_eighteen"],
+                    $row["choice_nineteen"],
+                    $row["choice_twenty"]
+                ]
+            );
+        }
+    }
+    $stmt = $conn->prepare("SELECT choice_one_name, choice_two_name, choice_three_name, choice_four_name,choice_five_name,
+    choice_six_name, choice_seven_name, choice_eight_name, choice_nine_name,choice_ten_name, choice_eleven_name, choice_twelve_name, choice_thirteen_name, 
+    choice_fourteen_name,choice_fifteen_name, choice_sixteen_name, choice_seventeen_name, choice_eighteen_name, choice_nineteen_name,choice_twenty_name
+    FROM posts WHERE post_number=:post_id");
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push(
+                $results,
+                [
+                    $row["choice_one_name"],
+                    $row["choice_two_name"],
+                    $row["choice_three_name"],
+                    $row["choice_four_name"],
+                    $row["choice_five_name"],
+                    $row["choice_six_name"],
+                    $row["choice_seven_name"],
+                    $row["choice_eight_name"],
+                    $row["choice_nine_name"],
+                    $row["choice_ten_name"],
+                    $row["choice_eleven_name"],
+                    $row["choice_twelve_name"],
+                    $row["choice_thirteen_name"],
+                    $row["choice_fourteen_name"],
+                    $row["choice_fifteen_name"],
+                    $row["choice_sixteen_name"],
+                    $row["choice_seventeen_name"],
+                    $row["choice_eighteen_name"],
+                    $row["choice_nineteen_name"],
+                    $row["choice_twenty_name"]
+                ]
+            );
+        }
+    }
+    $stmt = $conn->prepare("SELECT COUNT(ranking.user_id) AS total_votes FROM ranking WHERE ranking.post_id=:post_id AND 
+            (ranking.choice_one IS NOT NULL OR
+            ranking.choice_two IS NOT NULL OR 
+            ranking.choice_three IS NOT NULL OR 
+            ranking.choice_four IS NOT NULL OR 
+            ranking.choice_five IS NOT NULL OR 
+            ranking.choice_six IS NOT NULL OR 
+            ranking.choice_seven IS NOT NULL OR 
+            ranking.choice_eight IS NOT NULL OR 
+            ranking.choice_nine IS NOT NULL OR 
+            ranking.choice_ten IS NOT NULL OR 
+            ranking.choice_eleven IS NOT NULL OR 
+            ranking.choice_twelve IS NOT NULL OR 
+            ranking.choice_thirteen IS NOT NULL OR 
+            ranking.choice_fourteen IS NOT NULL OR 
+            ranking.choice_fifteen IS NOT NULL OR
+            ranking.choice_sixteen IS NOT NULL OR
+            ranking.choice_seventeen IS NOT NULL OR
+            ranking.choice_eighteen IS NOT NULL OR
+            ranking.choice_nineteen IS NOT NULL OR
+            ranking.choice_twenty IS NOT NULL)");
+    $stmt->execute([":post_id" => $data["post_id"]]);
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push(
+                $results,
+                [
+                    $row["total_votes"]
+                ]
+            );
+        }
+    }
+    echo json_encode($results);
 }

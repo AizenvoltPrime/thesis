@@ -574,6 +574,25 @@ require_once "new_config.php";
           <button class="download-results-pdf" data-dir="download-results-pdf"><i class="fa-solid fa-cloud-arrow-down"></i>PDF</button>
         </div>
       </div>
+      <div class="ranking-vote-container" style="display:none;">
+        <div class="ranking-choices" data-value="1"></div>
+        <button data-dir="ranking-vote-send" class="send-ranking-button">Send Vote</button>
+      </div>
+      <div class="ranking-vote-results" style="display:none;">
+        <div class="ranking-vote-results-inside-container">
+          <div class="results-poll-name">Ranking Results</div>
+          <table class="ranking-results-table">
+            <tbody></tbody>
+          </table>
+          <div class="ranking-total-votes-container">
+            <div class="ranking-total-votes-text"></div>
+          </div>
+        </div>
+        <div class="download-results">
+          <button class="download-results-image" data-dir="download-results-img"><i class="fa-solid fa-cloud-arrow-down"></i>PNG</button>
+          <button class="download-results-pdf" data-dir="download-results-pdf"><i class="fa-solid fa-cloud-arrow-down"></i>PDF</button>
+        </div>
+      </div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

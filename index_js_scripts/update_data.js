@@ -9,6 +9,8 @@ import {
   edit_rating_vote,
   remove_post,
   make_approval_chart,
+  number_to_color,
+  th_size,
 } from "./index.js";
 import { make_admin_analytics_map, admin_map_remove_marker } from "./admin_analytics.js";
 import { get_posts_ids_inside_region } from "./filters.js";
@@ -79,6 +81,20 @@ addEventListener("DOMContentLoaded", (event) => {
         }
       });
       clone.querySelectorAll(".approval-vote-results").forEach((main_class) => {
+        main_class.style.display = "none";
+      });
+      clone.querySelectorAll(".ranking-vote-container").forEach((main_class) => {
+        main_class.style.display = "none";
+      });
+      clone.querySelectorAll(".ranking-pair").forEach((main_class) => {
+        if (main_class.getAttribute("value") !== "1" && main_class.getAttribute("value") !== "2" && main_class.getAttribute("value") !== "3") {
+          main_class.remove();
+        } else {
+          main_class.style.border = null;
+          main_class.style.color = null;
+        }
+      });
+      clone.querySelectorAll(".ranking-vote-results").forEach((main_class) => {
         main_class.style.display = "none";
       });
       clone.querySelectorAll(".post-options-inside-container").forEach((main_class) => {
@@ -698,6 +714,249 @@ addEventListener("DOMContentLoaded", (event) => {
             }
           }
           document.getElementsByClassName("post")[i].getElementsByClassName("approval-total-votes-text")[0].innerText =
+            "Number of Votes: " + number_of_votes;
+          document.getElementsByClassName("post")[i].getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + number_of_votes;
+        }
+      }
+    } else if (JSON.parse(e.data)[0] === "ranking_vote") {
+      let user_ranking_array = JSON.parse(e.data)[4];
+      let results_array = [];
+      let ranking_choice_names = [];
+      let number_of_votes = JSON.parse(e.data)[5];
+
+      for (let i = 0; i < JSON.parse(e.data)[3].length; i++) {
+        results_array[i] = [];
+        for (let j = 0; j < 40; j++) {
+          if (i == 0 && j >= 20) {
+            ranking_choice_names.push(JSON.parse(e.data)[3][i][j]);
+          } else if (i > 0 && j >= 20) {
+            break;
+          }
+          if (j < 20) {
+            results_array[i].push(JSON.parse(e.data)[3][i][j]);
+          }
+        }
+      }
+      ranking_choice_names = ranking_choice_names.filter((item) => item !== null);
+      for (let i = 0; i < get_variables()[3].length; i++) {
+        if (get_variables()[3][i][0] === JSON.parse(e.data)[1]) {
+          if (window.getComputedStyle(document.getElementsByClassName("ranking-vote-results")[i]).display === "flex") {
+            let post_element = document.getElementsByClassName("post")[i];
+            let ranking_choice_names_ranks = [];
+            let sim_dod = [];
+            let true_dod = [];
+
+            let pairwise_weights = [];
+            for (let j = 0; j < results_array.length; j++) {
+              ranking_choice_names_ranks[j] = [];
+              for (let k = 0; k < ranking_choice_names.length; k++) {
+                ranking_choice_names_ranks[j].push({ name: ranking_choice_names[k], rank: parseInt(results_array[j][k]) });
+              }
+              ranking_choice_names_ranks[j].sort((a, b) => a.rank - b.rank);
+            }
+
+            for (let j = 0; j < ranking_choice_names.length; j++) {
+              sim_dod.push(0);
+              true_dod.push({ name: ranking_choice_names[j], score: 0 });
+              for (let other_candidate of ranking_choice_names) {
+                if (ranking_choice_names[j] !== other_candidate) {
+                  for (let vote of ranking_choice_names_ranks) {
+                    let candidate_rank = vote.find((x) => x.name === ranking_choice_names[j]).rank;
+                    let other_candidate_rank = vote.find((x) => x.name === other_candidate).rank;
+                    if (candidate_rank > other_candidate_rank) {
+                      sim_dod[j]++;
+                    }
+                  }
+                }
+              }
+              true_dod[j].score =
+                ranking_choice_names.length * sim_dod[j] + ranking_choice_names.length * (Math.log(ranking_choice_names.length) + 1);
+            }
+            true_dod.sort((a, b) => a.score - b.score);
+            for (let j = 0; j < ranking_choice_names.length; j++) {
+              for (let k = j + 1; k < ranking_choice_names.length; k++) {
+                let candidateJ = ranking_choice_names[j];
+                let candidateK = ranking_choice_names[k];
+
+                let countJ = 0;
+                let countK = 0;
+
+                for (let voter of ranking_choice_names_ranks) {
+                  let candidateJRank = voter.find((x) => x.name === candidateJ).rank;
+                  let candidateKRank = voter.find((x) => x.name === candidateK).rank;
+                  if (candidateJRank < candidateKRank) {
+                    countJ++;
+                  } else if (candidateJRank > candidateKRank) {
+                    countK++;
+                  }
+                }
+
+                pairwise_weights.push({
+                  pair: [candidateJ + candidateK],
+                  weight: (countJ - countK) / ranking_choice_names_ranks.length,
+                });
+                pairwise_weights.push({
+                  pair: [candidateK + candidateJ],
+                  weight: -(countJ - countK) / ranking_choice_names_ranks.length,
+                });
+              }
+            }
+
+            //Delete all rows and columns of results table and create new rows and columns
+            post_element.getElementsByClassName("ranking-results-table")[0].children[0].innerHTML = "";
+            for (let j = 0; j < ranking_choice_names.length + 1; j++) {
+              let tr = document.createElement("tr");
+              post_element.getElementsByClassName("ranking-results-table")[0].children[0].appendChild(tr);
+              tr.setAttribute("data-value", j);
+              for (let k = 0; k < ranking_choice_names.length + 1; k++) {
+                if (j == 0 && k == 0) {
+                  let td = document.createElement("td");
+                  tr.appendChild(td);
+                } else if (j == 0 && k > 0) {
+                  let th = document.createElement("th");
+                  tr.appendChild(th);
+                } else if (j > 0 && k == 0) {
+                  let th = document.createElement("th");
+                  tr.appendChild(th);
+                } else if (j > 0 && k > 0) {
+                  let td = document.createElement("td");
+                  tr.appendChild(td);
+                }
+              }
+            }
+            th_size();
+            //Fill results table
+            let pair_index = 0;
+            for (let j = 0; j < true_dod.length + 1; j++) {
+              for (let k = 0; k < true_dod.length + 1; k++) {
+                if (j > 0 && k == 0) {
+                  post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[k].innerText = true_dod[j - 1].name;
+                } else if (j == 0 && k > 0) {
+                  post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[k].innerText = true_dod[k - 1].name;
+                } else if (j == k && j > 0 && k > 0) {
+                  post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[k].style.background = "#81F9FE";
+                } else {
+                  pair_index = pairwise_weights.findIndex(
+                    (item) =>
+                      item.pair ==
+                      post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[0].textContent +
+                        post_element.getElementsByClassName("ranking-results-table")[0].rows[0].cells[k].textContent
+                  );
+                  if (pair_index >= 0) {
+                    if (!isNaN(pairwise_weights[pair_index].weight)) {
+                      post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[k].style.background = number_to_color(
+                        pairwise_weights[pair_index].weight.toFixed(2)
+                      );
+                    } else {
+                      post_element.getElementsByClassName("ranking-results-table")[0].rows[j].cells[k].style.background = number_to_color(0);
+                    }
+                  }
+                }
+              }
+            }
+          }
+          if (get_variables()[2] > 16) {
+            if (JSON.parse(e.data)[2] === get_variables()[3][0][16]) {
+              if (window.getComputedStyle(document.getElementsByClassName("ranking-vote-container")[i]).display === "flex") {
+                let post_element = document.getElementsByClassName("post")[i].querySelectorAll(".ranking-vote-container")[0];
+                let empty_results = true;
+                post_element.querySelectorAll(".ranking-choices").forEach((element) => {
+                  if (element.getAttribute("data-value") != "1") {
+                    element.remove();
+                  } else {
+                    element.innerHTML = "";
+                  }
+                });
+                for (let j = 0; j < ranking_choice_names.length; j++) {
+                  if (ranking_choice_names[j] !== null) {
+                    if (j == 0) {
+                      let el_ranking_choice_name = document.createElement("div");
+                      el_ranking_choice_name.className = "ranking-choice-name";
+                      post_element.getElementsByClassName("ranking-choices")[j].appendChild(el_ranking_choice_name);
+
+                      let el_choice_rank = document.createElement("select");
+                      el_choice_rank.className = "choice-rank";
+                      post_element.getElementsByClassName("ranking-choices")[j].appendChild(el_choice_rank);
+
+                      post_element.getElementsByClassName("ranking-choices")[j].getElementsByClassName("ranking-choice-name")[0].innerText =
+                        ranking_choice_names[j];
+                      for (let k = 0; k < ranking_choice_names.length; k++) {
+                        if (k == 0) {
+                          let default_ranking_option = document.createElement("option");
+                          default_ranking_option.text = "Rank";
+                          post_element.getElementsByClassName("choice-rank")[0].add(default_ranking_option, k);
+                        }
+                        if (user_ranking_array[k] === null) {
+                          let ranking_option = document.createElement("option");
+                          ranking_option.text = k + 1;
+                          post_element.getElementsByClassName("choice-rank")[0].add(ranking_option, k + 1);
+                        } else if (user_ranking_array[k] !== null) {
+                          let ranking_option = document.createElement("option");
+                          ranking_option.text = user_ranking_array[k];
+                          post_element
+                            .getElementsByClassName("choice-rank")[0]
+                            .add(ranking_option, post_element.getElementsByClassName("choice-rank")[0].length + 1);
+                          empty_results = false;
+                          break;
+                        }
+                      }
+                    }
+                    if (j > 0) {
+                      let clone = post_element.getElementsByClassName("ranking-choices")[0].cloneNode(true);
+                      clone.setAttribute("data-value", j + 1);
+                      post_element.insertBefore(clone, post_element.getElementsByClassName("send-ranking-button")[0]);
+                      post_element.getElementsByClassName("ranking-choices")[j].getElementsByClassName("ranking-choice-name")[0].innerText =
+                        ranking_choice_names[j];
+                      if (empty_results === false) {
+                        post_element.getElementsByClassName("choice-rank")[0].children[1].text = user_ranking_array[j];
+                      }
+                    }
+                  }
+                }
+                for (let j = 0; j < ranking_choice_names.length; j++) {
+                  if (user_ranking_array[j] !== null) {
+                    post_element.getElementsByClassName("choice-rank")[j].children[1].text = user_ranking_array[j];
+                    post_element.getElementsByClassName("choice-rank")[j].selectedIndex = 1;
+                  }
+                }
+                let choice_rank = post_element.querySelectorAll(".choice-rank");
+                let oldValue;
+                choice_rank.forEach((select) => {
+                  select.addEventListener("focus", (event) => {
+                    oldValue = event.target.value;
+                  });
+                  select.addEventListener("change", (event) => {
+                    choice_rank.forEach((otherSelect) => {
+                      if (select[select.selectedIndex].text === "Rank") {
+                        if (!Array.from(otherSelect.options).some((option) => option.text === oldValue)) {
+                          let new_option = document.createElement("option");
+                          new_option.text = oldValue;
+                          let index = Array.from(otherSelect.options).findIndex((option, i) => parseInt(option.text) > parseInt(oldValue) && i > 0);
+                          if (index === -1) index = otherSelect.options.length;
+                          otherSelect.add(new_option, index);
+                        }
+                      } else if (otherSelect !== select) {
+                        Array.from(otherSelect.options).forEach((option) => {
+                          if (option.text === select[select.selectedIndex].text) {
+                            otherSelect.remove(option.index);
+                          }
+                        });
+                        if (!Array.from(otherSelect.options).some((option) => option.text === oldValue)) {
+                          let new_option = document.createElement("option");
+                          new_option.text = oldValue;
+                          let index = Array.from(otherSelect.options).findIndex((option, i) => parseInt(option.text) > parseInt(oldValue) && i > 0);
+                          if (index === -1) index = otherSelect.options.length;
+                          otherSelect.add(new_option, index);
+                        }
+                      }
+                    });
+                    oldValue = event.target.value;
+                  });
+                });
+              }
+            }
+          }
+          document.getElementsByClassName("post")[i].getElementsByClassName("ranking-total-votes-text")[0].innerText =
             "Number of Votes: " + number_of_votes;
           document.getElementsByClassName("post")[i].getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + number_of_votes;
         }
