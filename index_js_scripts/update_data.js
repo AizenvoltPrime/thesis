@@ -824,6 +824,25 @@ addEventListener("DOMContentLoaded", (event) => {
                 }
               }
             }
+
+            post_element.getElementsByClassName("ranking-results-table")[0].addEventListener("mouseover", function (e) {
+              if (e.target.tagName === "TD") {
+                const row = e.target.parentNode.rowIndex;
+                const col = e.target.cellIndex;
+                const rowHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[row].cells[0].textContent;
+                const colHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[0].cells[col].textContent;
+                e.target.title = `Row Name: \n${rowHeader}\n\nColumn Name: \n${colHeader}`;
+              }
+            });
+
+            post_element.getElementsByClassName("ranking-results-table")[0].addEventListener("mouseout", function (e) {
+              if (e.target.tagName === "TD") {
+                e.target.title = "";
+                e.target.style.borderColor = "";
+                e.target.style.border = null;
+              }
+            });
+
             th_size();
             //Fill results table
             let pair_index = 0;

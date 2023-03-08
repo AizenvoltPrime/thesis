@@ -1817,9 +1817,9 @@ input:checked + .slider:before {
   background: #222;
 }
 
-.ranking-results-table td,
 .ranking-results-table th {
   font-size: 0.578em;
+  padding: 0.1em;
 }
 
 #general-info-table td {
@@ -2110,7 +2110,7 @@ input:checked + .slider:before {
 }
 
 .ranking-choice-name {
-  font-size: 1em;
+  font-size: 0.9em;
   color: #f3f3f3;
   text-align: center;
   font-weight: bold;

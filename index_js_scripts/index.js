@@ -2634,6 +2634,25 @@ function get_ranking_data(post_number) {
           }
         }
       }
+
+      post_element.getElementsByClassName("ranking-results-table")[0].addEventListener("mouseover", function (e) {
+        if (e.target.tagName === "TD") {
+          const row = e.target.parentNode.rowIndex;
+          const col = e.target.cellIndex;
+          const rowHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[row].cells[0].textContent;
+          const colHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[0].cells[col].textContent;
+          e.target.title = `Row Name: \n${rowHeader}\n\nColumn Name: \n${colHeader}`;
+        }
+      });
+
+      post_element.getElementsByClassName("ranking-results-table")[0].addEventListener("mouseout", function (e) {
+        if (e.target.tagName === "TD") {
+          e.target.title = "";
+          e.target.style.borderColor = "";
+          e.target.style.border = null;
+        }
+      });
+
       th_size();
       //Fill results table
       let pair_index = 0;
@@ -3101,28 +3120,60 @@ document.getElementById("dropdown-button").addEventListener("click", function ()
 });
 
 export function th_size() {
-  let tableHeaders = document.getElementsByTagName("th");
-  for (let i = 0; i < tableHeaders.length; i++) {
-    if (window.innerWidth >= 776) {
-      tableHeaders[i].style.fontSize = "0.578em";
-    } else if (window.innerWidth < 776 && window.innerWidth >= 714) {
-      tableHeaders[i].style.fontSize = "0.529em";
-    } else if (window.innerWidth < 714 && window.innerWidth >= 653) {
-      tableHeaders[i].style.fontSize = "0.48em";
-    } else if (window.innerWidth < 653 && window.innerWidth >= 603) {
-      tableHeaders[i].style.fontSize = "0.44em";
-    } else if (window.innerWidth < 603 && window.innerWidth >= 557) {
-      tableHeaders[i].style.fontSize = "0.4em";
-    } else if (window.innerWidth < 557 && window.innerWidth >= 512) {
-      tableHeaders[i].style.fontSize = "0.36em";
-    } else if (window.innerWidth < 512 && window.innerWidth >= 466) {
-      tableHeaders[i].style.fontSize = "0.32em";
-    } else if (window.innerWidth < 466 && window.innerWidth >= 420) {
-      tableHeaders[i].style.fontSize = "0.29em";
+  document.querySelectorAll(".ranking-results-table").forEach((element) => {
+    if (element.getElementsByTagName("th").length > 0) {
+      for (let i = 0; i < element.getElementsByTagName("th").length; i++) {
+        if (window.innerWidth >= 776) {
+          element.getElementsByTagName("th")[i].style.fontSize = "0.57em";
+        } else if (window.innerWidth < 776 && window.innerWidth >= 714) {
+          element.getElementsByTagName("th")[i].style.fontSize = "0.529em";
+        } else if (window.innerWidth < 714 && window.innerWidth >= 653) {
+          element.getElementsByTagName("th")[i].style.fontSize = "0.48em";
+        } else if (window.innerWidth < 653 && window.innerWidth >= 603) {
+          element.getElementsByTagName("th")[i].style.fontSize = "0.44em";
+        } else if (window.innerWidth < 603 && window.innerWidth >= 557) {
+          element.getElementsByTagName("th")[i].style.fontSize = "0.4em";
+        } else if (window.innerWidth < 557 && window.innerWidth >= 512) {
+          element.getElementsByTagName("th")[i].style.fontSize = "0.36em";
+        } else if (window.innerWidth < 512 && window.innerWidth >= 466) {
+          element.getElementsByTagName("th")[i].style.fontSize = "0.32em";
+        } else if (window.innerWidth < 466 && window.innerWidth >= 420) {
+          element.getElementsByTagName("th")[i].style.fontSize = "0.29em";
+        }
+      }
     }
-  }
+  });
 }
 
 window.onresize = function () {
   th_size();
 };
+
+const style = document.createElement("style");
+style.textContent = `
+td {
+    position: relative;
+}
+
+td:hover {
+    border-color: black;
+    border: 0.2em solid black;
+}
+
+td[title]:hover::after {
+    content: attr(title);
+    white-space: pre;
+    position: absolute;
+    top: 100%;
+    left:-6em;
+    z-index: 1;
+    background-color: #2c3134;
+    color:#f3f3f3;
+    font-size:0.4em;
+    border: 1px solid #858585;
+    padding: 0.4em;
+    border-radius: 1em;
+    max-width: calc(100vw - 1.2em);
+}
+`;
+document.head.appendChild(style);
