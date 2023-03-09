@@ -88,3 +88,5 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 ΕΠΟΜΕΝΑ TASK:
 
 1. Να δημιουργήσω ρεαλιστικά παραδείγματα για κάθε poll type.
+2. Να αλλάξω το plus icon να είναι πιο εμφανές
+3. Να προσθέσω την επιλογή να εμφανίζεται το site στα αγγλικά

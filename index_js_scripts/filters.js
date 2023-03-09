@@ -461,7 +461,7 @@ document.getElementById("category-button").addEventListener("click", function ()
     document.querySelectorAll(".category").forEach((category) => {
       let target_category_icon = category.getElementsByTagName("i")[0].classList[1];
       if (window.getComputedStyle(document.getElementsByClassName(target_category_icon)[0]).backgroundClip === "text") {
-        preferred_categories.push(category.innerText.toLowerCase());
+        preferred_categories.push(category.getAttribute("value"));
         categories_counter++;
       }
     });

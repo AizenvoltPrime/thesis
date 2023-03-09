@@ -208,10 +208,14 @@ if ($data['request'] == "request_username") {
         $filter_preferred_categories = ".";
     } else {
         for ($i = 0; $i < count($data["filter_preferred_categories"]); $i++) {
-            if ($i == 0) {
-                $filter_preferred_categories = $data["filter_preferred_categories"][$i];
-            } else {
-                $filter_preferred_categories .= "|" . $data["filter_preferred_categories"][$i];
+            if ($i == 0 && count($data["filter_preferred_categories"]) == 1) {
+                $filter_preferred_categories = "[[:<:]]" . $data["filter_preferred_categories"][$i] . "[[:>:]]";
+            } else if ($i == 0 && count($data["filter_preferred_categories"]) > 1) {
+                $filter_preferred_categories = "[[:<:]]" . $data["filter_preferred_categories"][$i] . "[[:>:]]|";
+            } else if (count($data["filter_preferred_categories"]) > 1 && $i < count($data["filter_preferred_categories"]) - 1) {
+                $filter_preferred_categories .= "[[:<:]]" . $data["filter_preferred_categories"][$i] . "[[:>:]]|";
+            } else if (count($data["filter_preferred_categories"]) > 1 && $i == count($data["filter_preferred_categories"]) - 1) {
+                $filter_preferred_categories .= "[[:<:]]" . $data["filter_preferred_categories"][$i] . "[[:>:]]";
             }
         }
     }
@@ -350,7 +354,7 @@ if ($data['request'] == "request_username") {
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
-                    WHERE user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
+                    WHERE user.username LIKE :username ESCAPE '=' AND posts.post_category RLIKE :category_id AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
                     AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC");
@@ -419,7 +423,7 @@ if ($data['request'] == "request_username") {
                     FROM posts join user on posts.user_id = user.id join polls on posts.poll_type = polls.poll_id join categories
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id 
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
-                    WHERE user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
+                    WHERE user.username LIKE :username ESCAPE '=' AND posts.post_category RLIKE :category_id AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
                     AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter
                     GROUP BY posts.post_number ORDER BY posts.post_date DESC");
@@ -491,7 +495,7 @@ if ($data['request'] == "request_username") {
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
                     WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) = 1 
-                    AND user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
+                    AND user.username LIKE :username ESCAPE '=' AND posts.post_category RLIKE :category_id AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
                     AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter
                     GROUP BY posts.post_number ORDER BY chevron_result DESC, posts.post_date DESC");
@@ -561,7 +565,7 @@ if ($data['request'] == "request_username") {
                     on posts.post_category = categories.category_id join chevron_vote ON posts.post_number = chevron_vote.post_id
                     join posts_yes_no_info ON posts.post_number=posts_yes_no_info.post_number
                     WHERE COALESCE((SELECT bookmarks.user_bookmark FROM bookmarks WHERE bookmarks.user_id=:id AND bookmarks.post_id=posts.post_number),0) = 1 
-                    AND user.username LIKE :username ESCAPE '=' AND categories.category_name RLIKE :category_name AND posts.post_text LIKE :filter_search ESCAPE '=' 
+                    AND user.username LIKE :username ESCAPE '=' AND posts.post_category RLIKE :category_id AND posts.post_text LIKE :filter_search ESCAPE '=' 
                     AND (posts.post_date BETWEEN :first_date AND :second_date) AND polls.poll_id RLIKE :filter_poll_type AND user.username LIKE :filter_username ESCAPE '=' 
                     AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter
                     GROUP BY posts.post_number ORDER BY posts.post_date DESC");
@@ -570,13 +574,13 @@ if ($data['request'] == "request_username") {
 
         if (!isset($data["radius_filter"])) {
             $stmt->execute([
-                ":id" => $_SESSION["id"], ":username" => $user_search, ":category_name" => $filter_preferred_categories, ":filter_search" => $filter_search,
+                ":id" => $_SESSION["id"], ":username" => $user_search, ":category_id" => $filter_preferred_categories, ":filter_search" => $filter_search,
                 ":first_date" => $filter_filter_time[0], ":second_date" => $filter_filter_time[1], ":filter_poll_type" => $filter_filter_poll_type,
                 ":filter_username" => $filter_filter_user, ":posts_in_region_filter" => $posts_in_region_filter
             ]);
         } else {
             $stmt->execute([
-                ":id" => $_SESSION["id"], ":username" => $user_search, ":category_name" => $filter_preferred_categories, ":filter_search" => $filter_search,
+                ":id" => $_SESSION["id"], ":username" => $user_search, ":category_id" => $filter_preferred_categories, ":filter_search" => $filter_search,
                 ":first_date" => $filter_filter_time[0], ":second_date" => $filter_filter_time[1], ":filter_poll_type" => $filter_filter_poll_type,
                 ":filter_username" => $filter_filter_user, ":user_long" => $data["radius_filter"][0], ":user_lat" => $data["radius_filter"][1],
                 ":posts_in_region_filter" => $posts_in_region_filter
@@ -651,7 +655,7 @@ if ($data['request'] == "request_username") {
             ranking.choice_twenty IS NOT NULL))
             AS total_ranking_votes
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
-            WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
+            WHERE posts_info.username LIKE :username ESCAPE '=' AND posts.post_category RLIKE :category_id AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
             AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter ORDER BY chevron_result DESC, posts.post_date DESC");
         } else {
@@ -712,20 +716,20 @@ if ($data['request'] == "request_username") {
             ranking.choice_twenty IS NOT NULL))
             AS total_ranking_votes
             FROM posts_info INNER JOIN posts_yes_no_info ON posts_info.post_number=posts_yes_no_info.post_number INNER JOIN posts ON posts_info.post_number=posts.post_number
-            WHERE posts_info.username LIKE :username ESCAPE '=' AND posts_info.category_name RLIKE :category_name AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
+            WHERE posts_info.username LIKE :username ESCAPE '=' AND posts.post_category RLIKE :category_id AND posts_info.post_text LIKE :filter_search ESCAPE '=' 
             AND (posts_info.post_date BETWEEN :first_date AND :second_date) AND poll_id RLIKE :filter_poll_type AND posts_info.username LIKE :filter_username ESCAPE '=' 
             AND $filter_filter_poll_status AND $filter_radius_filter AND posts.post_number RLIKE :posts_in_region_filter ORDER BY posts.post_date DESC");
         }
 
         if (!isset($data["radius_filter"])) {
             $stmt->execute([
-                ":username" => $user_search, ":category_name" => $filter_preferred_categories, ":filter_search" => $filter_search,
+                ":username" => $user_search, ":category_id" => $filter_preferred_categories, ":filter_search" => $filter_search,
                 ":first_date" => $filter_filter_time[0], ":second_date" => $filter_filter_time[1], ":filter_poll_type" => $filter_filter_poll_type,
                 ":filter_username" => $filter_filter_user, ":posts_in_region_filter" => $posts_in_region_filter
             ]);
         } else {
             $stmt->execute([
-                ":username" => $user_search, ":category_name" => $filter_preferred_categories, ":filter_search" => $filter_search,
+                ":username" => $user_search, ":category_id" => $filter_preferred_categories, ":filter_search" => $filter_search,
                 ":first_date" => $filter_filter_time[0], ":second_date" => $filter_filter_time[1], ":filter_poll_type" => $filter_filter_poll_type,
                 ":filter_username" => $filter_filter_user, ":user_long" => $data["radius_filter"][0], ":user_lat" => $data["radius_filter"][1],
                 ":posts_in_region_filter" => $posts_in_region_filter

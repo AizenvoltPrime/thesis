@@ -84,16 +84,16 @@ require_once "new_config.php";
     <div id="categories-container">
       <button id="close-preferred-categories-container"><i class="fa-solid fa-xmark"></i></button>
       <div id="category-box">
-        <div class="category"><i class="fa-solid fa-people-group"></i>Society</div>
-        <div class="category"><i class="fa-solid fa-briefcase"></i>Business</div>
-        <div class="category"><i class="fa-solid fa-coins"></i>Economy</div>
-        <div class="category"><i class="fa-solid fa-people-roof"></i>Finance</div>
-        <div class="category"><i class="fa-solid fa-cart-shopping"></i>Commerce</div>
-        <div class="category"><i class="fa-solid fa-bus"></i>Transportation and Travel</div>
-        <div class="category"><i class="fa-solid fa-landmark"></i>Politics</div>
-        <div class="category"><i class="fa-solid fa-church"></i>Religion</div>
-        <div class="category"><i class="fa-solid fa-graduation-cap"></i>Education</div>
-        <div class="category"><i class="fa-solid fa-masks-theater"></i>Culture</div>
+        <div class="category" value="1"><i class="fa-solid fa-people-group"></i>Society</div>
+        <div class="category" value="2"><i class="fa-solid fa-briefcase"></i>Business</div>
+        <div class="category" value="3"><i class="fa-solid fa-coins"></i>Economy</div>
+        <div class="category" value="4"><i class="fa-solid fa-people-roof"></i>Finance</div>
+        <div class="category" value="5"><i class="fa-solid fa-cart-shopping"></i>Commerce</div>
+        <div class="category" value="6"><i class="fa-solid fa-bus"></i>Transportation and Travel</div>
+        <div class="category" value="7"><i class="fa-solid fa-landmark"></i>Politics</div>
+        <div class="category" value="8"><i class="fa-solid fa-church"></i>Religion</div>
+        <div class="category" value="9"><i class="fa-solid fa-graduation-cap"></i>Education</div>
+        <div class="category" value="10"><i class="fa-solid fa-masks-theater"></i>Culture</div>
       </div>
       <button id="category-button" type="button">OK</button>
       <button id="category-clear" type="button">Clear</button>
