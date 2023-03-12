@@ -2,6 +2,7 @@ import { conn, get_variables } from "./index.js";
 import { style, getColor, highlight_filter, null_style, clear_map } from "./filters.js";
 import { greece_regions, update_region_posts } from "../geojson/greece_regions.js";
 import { set_admin_map_bool } from "./update_data.js";
+import { translator } from "./translate.js";
 
 let DateTime = luxon.DateTime;
 let ctx; //used for charts
@@ -281,6 +282,10 @@ document.getElementById("total-posts-button").addEventListener("click", function
   if (window.getComputedStyle(document.getElementById("total-posts")).display !== "block") {
     document.getElementById("active-posts-button").style.background = null;
     document.getElementById("total-posts-button").style.background = "#00ffd0";
+    let chart_labels = ["Yes/No", "Rating", "Approval", "Ranking"];
+    if (translator._currentLanguage === "el") {
+      chart_labels = ["Ναι/Όχι", "Αξιολόγηση", "Έγκριση", "Κατάταξη"];
+    }
     $("#total-active-posts-inside-container-charts").fadeOut(300, function () {
       fetch("process_data.php", {
         method: "POST",
@@ -296,7 +301,7 @@ document.getElementById("total-posts-button").addEventListener("click", function
           total_posts_per_poll_type_chart = new Chart(document.getElementById("total-posts"), {
             type: "pie",
             data: {
-              labels: ["Yes/No", "Rating", "Approval", "Ranking"],
+              labels: chart_labels,
               datasets: [
                 {
                   data: response,
@@ -334,6 +339,10 @@ document.getElementById("active-posts-button").addEventListener("click", functio
   if (window.getComputedStyle(document.getElementById("active-posts")).display !== "block") {
     document.getElementById("total-posts-button").style.background = null;
     document.getElementById("active-posts-button").style.background = "#00ffd0";
+    let chart_labels = ["Yes/No", "Rating", "Approval", "Ranking"];
+    if (translator._currentLanguage === "el") {
+      chart_labels = ["Ναι/Όχι", "Αξιολόγηση", "Έγκριση", "Κατάταξη"];
+    }
     $("#total-active-posts-inside-container-charts").fadeOut(300, function () {
       fetch("process_data.php", {
         method: "POST",
@@ -349,7 +358,7 @@ document.getElementById("active-posts-button").addEventListener("click", functio
           active_posts_per_poll_type_chart = new Chart(document.getElementById("active-posts"), {
             type: "pie",
             data: {
-              labels: ["Yes/No", "Rating", "Approval", "Ranking"],
+              labels: chart_labels,
               datasets: [
                 {
                   data: response,
@@ -387,6 +396,32 @@ document.getElementById("total-posts-per-category-button").addEventListener("cli
   if (window.getComputedStyle(document.getElementById("total-posts-per-category")).display !== "block") {
     document.getElementById("active-posts-per-category-button").style.background = null;
     document.getElementById("total-posts-per-category-button").style.background = "#00ffd0";
+    let chart_labels = [
+      "Society",
+      "Business",
+      "Economy",
+      "Finance",
+      "Commerce",
+      "Transportation and Travel",
+      "Politics",
+      "Religion",
+      "Education",
+      "Culture",
+    ];
+    if (translator._currentLanguage === "el") {
+      chart_labels = [
+        "Κοινωνία",
+        "Επιχειρήσεις",
+        "Οικονομία",
+        "Οικονομικά",
+        "Εμπόριο",
+        "Μεταφορά και Ταξίδι",
+        "Πολιτική",
+        "Θρησκεία",
+        "Εκπαίδευση",
+        "Κουλτούρα",
+      ];
+    }
     $("#total-active-posts-per-category-inside-container-charts").fadeOut(300, function () {
       fetch("process_data.php", {
         method: "POST",
@@ -402,18 +437,7 @@ document.getElementById("total-posts-per-category-button").addEventListener("cli
           total_posts_per_category_chart = new Chart(document.getElementById("total-posts-per-category"), {
             type: "pie",
             data: {
-              labels: [
-                "Society",
-                "Business",
-                "Economy",
-                "Finance",
-                "Commerce",
-                "Transportation and Travel",
-                "Politics",
-                "Religion",
-                "Education",
-                "Culture",
-              ],
+              labels: chart_labels,
               datasets: [
                 {
                   data: response,
@@ -451,6 +475,32 @@ document.getElementById("active-posts-per-category-button").addEventListener("cl
   if (window.getComputedStyle(document.getElementById("active-posts-per-category")).display !== "block") {
     document.getElementById("total-posts-per-category-button").style.background = null;
     document.getElementById("active-posts-per-category-button").style.background = "#00ffd0";
+    let chart_labels = [
+      "Society",
+      "Business",
+      "Economy",
+      "Finance",
+      "Commerce",
+      "Transportation and Travel",
+      "Politics",
+      "Religion",
+      "Education",
+      "Culture",
+    ];
+    if (translator._currentLanguage === "el") {
+      chart_labels = [
+        "Κοινωνία",
+        "Επιχειρήσεις",
+        "Οικονομία",
+        "Οικονομικά",
+        "Εμπόριο",
+        "Μεταφορά και Ταξίδι",
+        "Πολιτική",
+        "Θρησκεία",
+        "Εκπαίδευση",
+        "Κουλτούρα",
+      ];
+    }
     $("#total-active-posts-per-category-inside-container-charts").fadeOut(300, function () {
       fetch("process_data.php", {
         method: "POST",
@@ -466,18 +516,7 @@ document.getElementById("active-posts-per-category-button").addEventListener("cl
           active_posts_per_category_chart = new Chart(document.getElementById("active-posts-per-category"), {
             type: "pie",
             data: {
-              labels: [
-                "Society",
-                "Business",
-                "Economy",
-                "Finance",
-                "Commerce",
-                "Transportation and Travel",
-                "Politics",
-                "Religion",
-                "Education",
-                "Culture",
-              ],
+              labels: chart_labels,
               datasets: [
                 {
                   data: response,
@@ -594,11 +633,23 @@ info_admin.onAdd = function (map) {
 // method that we will use to update the control based on feature properties passed
 info_admin.update = function (props) {
   if (props !== undefined && parseInt(props.number_of_posts) === 1) {
-    this._div.innerHTML =
-      "<h4>Number of Users</h4>" + (props ? "<b>" + props.name + "</b><br />" + props.number_of_posts + " user" : "Hover over a region");
+    if (translator._currentLanguage === "el") {
+      this._div.innerHTML =
+        "<h4>Αριθμός Χρηστών</h4>" +
+        (props ? "<b>" + props.name + "</b><br />" + props.number_of_posts + " χρήστης" : "Βάλτε το δείκτη του ποντικιού πάνω από μια περιοχή");
+    } else {
+      this._div.innerHTML =
+        "<h4>Number of Users</h4>" + (props ? "<b>" + props.name + "</b><br />" + props.number_of_posts + " user" : "Hover over a region");
+    }
   } else {
-    this._div.innerHTML =
-      "<h4>Number of Users</h4>" + (props ? "<b>" + props.name + "</b><br />" + props.number_of_posts + " users" : "Hover over a region");
+    if (translator._currentLanguage === "el") {
+      this._div.innerHTML =
+        "<h4>Αριθμός Χρηστών</h4>" +
+        (props ? "<b>" + props.name + "</b><br />" + props.number_of_posts + " χρήστες" : "Βάλτε το δείκτη του ποντικιού πάνω από μια περιοχή");
+    } else {
+      this._div.innerHTML =
+        "<h4>Number of Users</h4>" + (props ? "<b>" + props.name + "</b><br />" + props.number_of_posts + " users" : "Hover over a region");
+    }
   }
 };
 
@@ -716,7 +767,11 @@ function get_admin_analytics_data(time_filter, filter_type) {
           make_admin_posts_chart((() => chart_data.map((x) => x[0]))(), (() => chart_data.map((x) => x[1]))(), "Posts Per Hour");
         }
       } else {
-        document.getElementById("admin-warning-time-filter-choice").innerText = "There are no posts in these dates!";
+        if (translator._currentLanguage === "el") {
+          document.getElementById("admin-warning-time-filter-choice").innerText = "Δεν υπάρχουν αναρτήσεις σε αυτές τις ημερομηνίες";
+        } else {
+          document.getElementById("admin-warning-time-filter-choice").innerText = "There are no posts in these dates";
+        }
         $("#admin-warning-time-filter-choice").fadeIn(300, function () {});
         $("#admin-chart-container").fadeOut(300, function () {});
       }
@@ -739,7 +794,11 @@ document.getElementById("admin-filter-button").addEventListener("click", functio
       get_admin_analytics_data(admin_time_filter, "different_days_with_range");
     }
   } else if (admin_time_filter !== "") {
-    document.getElementById("admin-warning-time-filter-choice").innerText = "You must select a date range!";
+    if (translator._currentLanguage === "el") {
+      document.getElementById("admin-warning-time-filter-choice").innerText = "Πρέπει να διαλέξετε ένα χρονικό διάστημα";
+    } else {
+      document.getElementById("admin-warning-time-filter-choice").innerText = "You must select a date range";
+    }
     $("#admin-warning-time-filter-choice").fadeIn(300, function () {});
   }
 });

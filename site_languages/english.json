@@ -1,0 +1,224 @@
+{
+  "sidenav": {
+    "home": "Home",
+    "analytics": "Analytics",
+    "about": "About"
+  },
+  "usernav": {
+    "bookmarks": "Bookmarks",
+    "login": "Login",
+    "registration": "Registration",
+    "change_username": "Change Username",
+    "change_password": "Change Password",
+    "logout": "Logout"
+  },
+  "all-filters": {
+    "hot": "Hot",
+    "recent": "Recent",
+    "preferred_categories": "Preferred Categories",
+    "filter": "Filter",
+    "post_locations": "Post Locations",
+    "search": "Search"
+  },
+  "category-box": {
+    "society": "Society",
+    "business": "Business",
+    "economy": "Economy",
+    "finance": "Finance",
+    "commerce": "Commerce",
+    "transportation_and_travel": "Transportation and Travel",
+    "politics": "Politics",
+    "religion": "Religion",
+    "education": "Education",
+    "culture": "Culture"
+  },
+  "categories-container": {
+    "clear": "Clear"
+  },
+  "time-filter": {
+    "time_filter": "Time Filter",
+    "warning_time_filter_choice": "You must select a date range"
+  },
+  "poll-filters-containter": {
+    "poll_type_filter": "Poll Type Filter",
+    "yes_no": "Yes/No",
+    "rating": "Rating",
+    "approval": "Approval",
+    "ranking": "Ranking"
+  },
+  "user-filter": {
+    "user_filter": "User Filter"
+  },
+  "poll-status-filter-container": {
+    "poll_status_filter": "Poll Status Filter",
+    "show_open": "Show Open",
+    "show_closed": "Show Closed"
+  },
+  "radius-filter-container": {
+    "radius_filter": "Radius Filter",
+    "radius_filter_info": "Enable Radius Filter to only see polls that you can participate in",
+    "filter": "Filter"
+  },
+  "post-locations-container": {
+    "post_locations_container_header": "Click here to drag"
+  },
+  "delete-notification-container": {
+    "delete-notification-text": "Are you sure you want to delete this post?",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "bell-notification-details": {
+    "clear_notifications": "Clear notifications"
+  },
+  "poll-selection": {
+    "first_question": "Choose one of the following poll types",
+    "yes_no": "Yes/No",
+    "yes_no_details": "Create polls where users answer Yes/No",
+    "rating": "Rating",
+    "rating_details": "Create polls where users rate answers with a star rating",
+    "approval": "Approval",
+    "approval_details": "Create polls where users only select answers that they approve",
+    "ranking": "Ranking",
+    "ranking_details": "Create polls where users rank answers based on their preference"
+  },
+  "warning-nothing-selected": {
+    "text": "You must choose a poll type"
+  },
+  "poll-choices-number-container": {
+    "poll_choices_number_instruction": "Select number of poll choices",
+    "poll-choices": "Poll Choices"
+  },
+  "warning-no-poll-choice-number-selected": {
+    "text": "You must select a number"
+  },
+  "warning-no-input-poll-choices": {
+    "text": "You must fill all boxes"
+  },
+  "template-instructions-container": {
+    "time_limit": "Do you want to close your poll after a set time limit?",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "warning-no-time-limit-choice": {
+    "text": "You must choose to continue"
+  },
+  "time-choice": {
+    "time_limit": "Select time limit",
+    "warning_no_time_limit": "You must set a time limit"
+  },
+  "poll-template-location-restriction": {
+    "location-restriction": "Do you want to put a location restriction for user votes?",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "warning-no-location-restriction-choice": {
+    "text": "You must choose to continue"
+  },
+  "location-choice": {
+    "location-restriction": "Click on the map to select event location",
+    "warning-no-location-selected": "You must select a location",
+    "event-radius": "Only users inside this radius will be allowed to vote (Default Radius is 5000 meters)",
+    "warning-radius-too-small": "Radius must be at least 5000 meters"
+  },
+  "categories": {
+    "select_category": "Select category",
+    "society": "Society",
+    "business": "Business",
+    "economy": "Economy",
+    "finance": "Finance",
+    "commerce": "Commerce",
+    "transportation_and_travel": "Transportation and Travel",
+    "politics": "Politics",
+    "religion": "Religion",
+    "education": "Education",
+    "culture": "Culture"
+  },
+  "warning-no-category-selected": {
+    "text": "You must select a category"
+  },
+  "poll-question": {
+    "question-instruction": "Please type your question and keep in mind that after submission, edit is not allowed"
+  },
+  "warning-empty-text-area": {
+    "text": "Text area needs to have at least 15 characters and at most 150 characters"
+  },
+  "next-step": {
+    "text": "Next"
+  },
+  "all-analytics": {
+    "map-analytics": "Live User Locations",
+    "chart-analytics": "Posts per Day/Hour",
+    "general-info": "General Info",
+    "posts-per-poll-type": "Number of Posts per Poll Type",
+    "posts-per-category": "Number of Posts per Category"
+  },
+  "admin-chart-time-filter-container": {
+    "filter-instruction": "Time Filter",
+    "filter": "Filter"
+  },
+  "general-info-table": {
+    "registered_users": "Registered Users",
+    "number_of_posts": "Number of Posts",
+    "number_of_active_posts": "Number of Active Posts"
+  },
+  "total-active-posts-outside-container": {
+    "total-posts-button": "Show Total",
+    "active-posts-button": "Show Active"
+  },
+  "total-active-posts-per-category-outside-container": {
+    "total-posts-per-category-button": "Show Total",
+    "active-posts-per-category-button": "Show Active"
+  },
+  "event-map-container": {
+    "event-map-container-header": "Click here to drag"
+  },
+  "about-inside-container": {
+    "about": "About"
+  },
+  "short-app-description": {
+    "p1": "\"Check It Yourself\" allows registered users to create polls for specific issues/questions and ask other users, located geographically close to the news source, to confirm or doubt/challenge its truthfulness. The answers are in the form of preferences/votes which are collected, analyzed, aggregated, and visualized so that users are provided with quantitative and qualitative information.",
+    "p2": "To contact us you can use the following email:"
+  },
+  "dropdown-description": {
+    "p1": "For a detailed description click",
+    "p2": "here"
+  },
+  "detailed-app-description": {
+    "p1": "\"Check It Yourself\": an online crowdsourcing-based application for checking news validity exploiting Social Choice Theory and InfoVis. Checking whether news reported via social media or the press is truly valid has recently emerged as a tantalizing issue in our society. Despite the existence of various agencies claiming to perform fact checking, there is important skepticism regarding the result credibility which may indeed be downgraded or biased due to several factors including financial, political or personal incentives or also incomplete, sloppy processes or lack of appropriate sources.",
+    "p2": "Motivated by this observation and the fact that the internet and the web can provide an excellent source of crowd intelligence for efficiently collecting/mining data, we present \"Check It Yourself\", an online application which is essentially a crowdsourcing system and decision-making mechanism based on social choice, exploiting visualization techniques for allowing users to perform on-the-fly news validity checking.",
+    "p3": "Social Choice Theory (SCT) - and especially Voting Theory - addresses how to interpret the will of people and bring out a satisfying collective decision based on elections in democratic societies, where all citizens have an equal say in the decisions. SCT provides a set of methods for the aggregation of a set of individual preferences into a collective preference or decision. Such methods include collecting data using different kind of polls, which actually work as ranked, approval (e.g., y/n questions) and cardinal (e.g., rating/score questions) voting systems.",
+    "p4": "\"Check It Yourself\" allows registered users to create polls for specific issues/questions and ask other users, located geographically close to the news source, to confirm or doubt/challenge its truthfulness. The answers are in the form of preferences/votes which are collected, analyzed, aggregated, and visualized so that users are provided with quantitative and qualitative information. Furthermore, live feedback and live updates are automatically provided for new polls and newly submitted votes.",
+    "p5": "For visualization purposes, we deployed Information Visualization (InfoVis) techniques for designing visual representations of abstract data to help users increase their knowledge about the internal structure of data and the causal relationships between them. In addition, all generated visualizations together with the corresponding data files are fully downloadable so that interested users can save them locally and further process them.",
+    "p6": "\"Check It Yourself\" is a lightweight and responsive application with an easy-to-use, friendly graphical interface. It does not require installation nor advanced skills to use. It has been developed using mainly javascript (frontend) and php (backend) as well as additional packages, including chart.js and leaflet.js, for the visualization of voting results and ipinfo.api for geolocation.",
+    "p7": "Apart from its broader potential usefulness, \"Check It Yourself\" can be of particular interest in education since it can contribute to young people (i.e., pupils, students) cultivating the mentality of researching instead of believing, increasing their critical thinking and actively develop and practice values of democracy.",
+    "p8": "To contact us you can use the following email:"
+  },
+  "user-who-posted": {
+    "posted_by": "Posted By"
+  },
+  "post-options-inside-container": {
+    "download": "Download",
+    "event_location": "Event Location"
+  },
+  "user-question-answers": {
+    "show_results": "Results"
+  },
+  "rating-vote": {
+    "send_vote": "Send Vote"
+  },
+  "rating-vote-results-inside-container": {
+    "rating_results": "Rating Results"
+  },
+  "approval-vote-container": {
+    "send_vote": "Send Vote"
+  },
+  "approval-vote-results-inside-container": {
+    "approval_results": "Approval Results"
+  },
+  "ranking-vote-container": {
+    "send_vote": "Send Vote"
+  },
+  "ranking-vote-results-inside-container": {
+    "ranking_results": "Ranking Results"
+  }
+}

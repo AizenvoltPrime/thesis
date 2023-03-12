@@ -1,6 +1,6 @@
-import { clear_region_posts } from "../geojson/greece_regions.js";
 import { null_style, clear_filters } from "./filters.js";
 import { clear_bell_counter } from "./update_data.js";
+import { translator } from "./translate.js";
 
 let user_choice = "none"; //poll choice
 let specific_user_posts = null; //this is for showing posts of a specified user
@@ -219,12 +219,20 @@ document.getElementById("next-step").addEventListener("click", function () {
               let new_poll_choices_desc = document.createElement("div");
               new_poll_choices_desc.className = "poll-choices-instruction";
               document.getElementById("input-poll-choices").appendChild(new_poll_choices_desc);
-              document.getElementById("input-poll-choices").children[i + pos].innerText = "Your choices can have up to 50 characters";
+              if (translator._currentLanguage === "el") {
+                document.getElementById("input-poll-choices").children[i + pos].innerText = "Οι επιλογές σας μπορούν να έχουν μέχρι 50 χαρακτήρες";
+              } else {
+                document.getElementById("input-poll-choices").children[i + pos].innerText = "Your choices can have up to 50 characters";
+              }
             }
             let new_poll_choices_instruction = document.createElement("label");
             new_poll_choices_instruction.className = "poll-choices-instruction";
             document.getElementById("input-poll-choices").appendChild(new_poll_choices_instruction);
-            document.getElementById("input-poll-choices").children[i + pos + 1].innerText = "Choice " + (i + 1);
+            if (translator._currentLanguage === "el") {
+              document.getElementById("input-poll-choices").children[i + pos + 1].innerText = "Επιλογή " + (i + 1);
+            } else {
+              document.getElementById("input-poll-choices").children[i + pos + 1].innerText = "Choice " + (i + 1);
+            }
 
             let new_write_poll_choice = document.createElement("input");
             new_write_poll_choice.className = "write-poll-choice";
@@ -232,7 +240,11 @@ document.getElementById("next-step").addEventListener("click", function () {
             document.getElementById("input-poll-choices").children[i + pos + 2].setAttribute("type", "text");
             document.getElementById("input-poll-choices").children[i + pos + 2].name = "poll-choice";
             document.getElementById("input-poll-choices").children[i + pos + 2].maxLength = 11;
-            document.getElementById("input-poll-choices").children[i + pos + 2].placeholder = "Type Choice " + (i + 1);
+            if (translator._currentLanguage === "el") {
+              document.getElementById("input-poll-choices").children[i + pos + 2].placeholder = "Πληκτρολογήστε Επιλογή " + (i + 1);
+            } else {
+              document.getElementById("input-poll-choices").children[i + pos + 2].placeholder = "Type Choice " + (i + 1);
+            }
             pos++;
           }
           $("#input-poll-choices").fadeIn(300, function () {});
@@ -497,23 +509,55 @@ export function generate_posts(
           document.getElementsByClassName("post-time-detailed")[0].innerText = post_data[i][6];
           if (post_data[0].length > 16) {
             if (post_data[i][2] == 1) {
-              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][17];
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][17];
+              } else {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][17];
+              }
             } else if (post_data[i][2] == 2) {
-              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][18];
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][18];
+              } else {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][18];
+              }
             } else if (post_data[i][2] == 3) {
-              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][19];
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][19];
+              } else {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][19];
+              }
             } else if (post_data[i][2] == 4) {
-              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][20];
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][20];
+              } else {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][20];
+              }
             }
           } else if (post_data[0].length <= 16) {
             if (post_data[i][2] == 1) {
-              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][12];
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][12];
+              } else {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][12];
+              }
             } else if (post_data[i][2] == 2) {
-              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][13];
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][13];
+              } else {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][13];
+              }
             } else if (post_data[i][2] == 3) {
-              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][14];
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][14];
+              } else {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][14];
+              }
             } else if (post_data[i][2] == 4) {
-              document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][15];
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][15];
+              } else {
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][15];
+              }
             }
           }
         } else if (i > 0) {
@@ -526,23 +570,55 @@ export function generate_posts(
           clone[i - 1].querySelectorAll(".post-time-detailed")[0].innerText = post_data[i][6];
           if (post_data[0].length > 16) {
             if (post_data[i][2] == 1) {
-              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][17];
+              if (translator._currentLanguage === "el") {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][17];
+              } else {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][17];
+              }
             } else if (post_data[i][2] == 2) {
-              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][18];
+              if (translator._currentLanguage === "el") {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][18];
+              } else {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][18];
+              }
             } else if (post_data[i][2] == 3) {
-              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][19];
+              if (translator._currentLanguage === "el") {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][19];
+              } else {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][19];
+              }
             } else if (post_data[i][2] == 4) {
-              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][20];
+              if (translator._currentLanguage === "el") {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][20];
+              } else {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][20];
+              }
             }
           } else if (post_data[0].length <= 16) {
             if (post_data[i][2] == 1) {
-              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][12];
+              if (translator._currentLanguage === "el") {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][12];
+              } else {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][12];
+              }
             } else if (post_data[i][2] == 2) {
-              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][13];
+              if (translator._currentLanguage === "el") {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][13];
+              } else {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][13];
+              }
             } else if (post_data[i][2] == 3) {
-              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][14];
+              if (translator._currentLanguage === "el") {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][14];
+              } else {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][14];
+              }
             } else if (post_data[i][2] == 4) {
-              clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][15];
+              if (translator._currentLanguage === "el") {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][15];
+              } else {
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][15];
+              }
             }
           }
           document.getElementById("posts-container").appendChild(clone[i - 1]);
@@ -565,7 +641,11 @@ export function generate_posts(
               new_delete_div.className = "post-delete";
               document.getElementsByClassName("post-options-inside-container")[i].appendChild(new_delete_div);
               new_delete_div.setAttribute("data-dir", "delete");
-              new_delete_div.innerText = "Delete";
+              if (translator._currentLanguage === "el") {
+                new_delete_div.innerText = "Διαγραφή";
+              } else {
+                new_delete_div.innerText = "Delete";
+              }
 
               let new_delete_icon = document.createElement("i");
               new_delete_icon.className = "fa-solid fa-trash-can";
@@ -587,7 +667,11 @@ export function generate_posts(
                 .getElementsByClassName("user-question-answers")
                 [i].insertBefore(new_yes_button, document.getElementsByClassName("show-results")[i]);
               new_yes_button.setAttribute("data-dir", "yes");
-              new_yes_button.innerText = "Yes";
+              if (translator._currentLanguage === "el") {
+                new_yes_button.innerText = "Ναι";
+              } else {
+                new_yes_button.innerText = "Yes";
+              }
 
               let new_no_button = document.createElement("button");
               new_no_button.className = "answer-no";
@@ -595,7 +679,11 @@ export function generate_posts(
                 .getElementsByClassName("user-question-answers")
                 [i].insertBefore(new_no_button, document.getElementsByClassName("show-results")[i]);
               new_no_button.setAttribute("data-dir", "no");
-              new_no_button.innerText = "No";
+              if (translator._currentLanguage === "el") {
+                new_no_button.innerText = "Όχι";
+              } else {
+                new_no_button.innerText = "No";
+              }
               if (post_data[i][8] == 1) {
                 new_yes_button.style.background = "#00ffd0";
                 user_yes_no_vote.push([true, false]);
@@ -613,7 +701,11 @@ export function generate_posts(
                 .getElementsByClassName("user-question-answers")
                 [i].insertBefore(new_vote_button, document.getElementsByClassName("show-results")[i]);
               new_vote_button.setAttribute("data-dir", "vote");
-              new_vote_button.innerText = "Vote";
+              if (translator._currentLanguage === "el") {
+                new_vote_button.innerText = "Ψηφίστε";
+              } else {
+                new_vote_button.innerText = "Vote";
+              }
             }
             if (post_data[i][10] == 1) {
               let new_bookmark = document.createElement("i");
@@ -626,13 +718,23 @@ export function generate_posts(
               document.getElementsByClassName("parent_of_bookmark")[i].appendChild(new_bookmark);
             }
             if (post_data[i][11] !== null && DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") === -1) {
-              document.querySelectorAll(".poll-remaining-time")[i].innerText =
-                "Poll closes " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
+              if (translator._currentLanguage === "el") {
+                document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                  "Η Δημοσκόπηση κλείνει " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
+              } else {
+                document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                  "Poll closes " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
+              }
               document.querySelectorAll(".poll-timer-container")[i].style.display = "flex";
               document.querySelectorAll(".fa-clock")[i].style.color = "#00ffd0";
             } else if (post_data[i][11] !== null && DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1) {
-              document.querySelectorAll(".poll-remaining-time")[i].innerText =
-                "Poll closed " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
+              if (translator._currentLanguage === "el") {
+                document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                  "Η Δημοσκόπηση έκλεισε " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
+              } else {
+                document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                  "Poll closed " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
+              }
               document.querySelectorAll(".poll-timer-container")[i].style.display = "flex";
               document.querySelectorAll(".poll-timer-container")[i].style.color = "#cc0000";
             }
@@ -641,19 +743,31 @@ export function generate_posts(
               new_check.className = "fa-solid fa-thumbs-up";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#00ffd0";
-              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Πιο Πολλά Ναι";
+              } else {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
+              }
             } else if (post_data[i][15] < 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
               new_check.className = "fa-solid fa-thumbs-down";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#cc0000";
-              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Πιο Πολλά Όχι";
+              } else {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
+              }
             } else if (post_data[i][15] == 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
               new_check.className = "fa-solid fa-question";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#b5b5b5";
-              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Ισοπαλία Ναι και Όχι";
+              } else {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
+              }
             }
             let new_canvas = document.createElement("canvas");
             new_canvas.className = "myChart";
@@ -681,7 +795,11 @@ export function generate_posts(
                 .getElementsByClassName("user-question-answers")
                 [i].insertBefore(new_yes_button, document.getElementsByClassName("show-results")[i]);
               new_yes_button.setAttribute("data-dir", "yes");
-              new_yes_button.innerText = "Yes";
+              if (translator._currentLanguage === "el") {
+                new_yes_button.innerText = "Ναι";
+              } else {
+                new_yes_button.innerText = "Yes";
+              }
 
               let new_no_button = document.createElement("button");
               new_no_button.className = "answer-no";
@@ -689,7 +807,11 @@ export function generate_posts(
                 .getElementsByClassName("user-question-answers")
                 [i].insertBefore(new_no_button, document.getElementsByClassName("show-results")[i]);
               new_no_button.setAttribute("data-dir", "no");
-              new_no_button.innerText = "No";
+              if (translator._currentLanguage === "el") {
+                new_no_button.innerText = "Όχι";
+              } else {
+                new_no_button.innerText = "No";
+              }
             } else if (post_data[i][2] == 2 || post_data[i][2] == 3 || post_data[i][2] == 4) {
               user_yes_no_vote.push([false, false]);
               let new_vote_button = document.createElement("button");
@@ -698,7 +820,11 @@ export function generate_posts(
                 .getElementsByClassName("user-question-answers")
                 [i].insertBefore(new_vote_button, document.getElementsByClassName("show-results")[i]);
               new_vote_button.setAttribute("data-dir", "vote");
-              new_vote_button.innerText = "Vote";
+              if (translator._currentLanguage === "el") {
+                new_vote_button.innerText = "Ψηφίστε";
+              } else {
+                new_vote_button.innerText = "Vote";
+              }
             }
             if (post_data[i][7] !== null && DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") === -1) {
               document.querySelectorAll(".poll-remaining-time")[i].innerText =
@@ -716,19 +842,31 @@ export function generate_posts(
               new_check.className = "fa-solid fa-thumbs-up";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#00ffd0";
-              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Πιο Πολλά Ναι";
+              } else {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More Yes Answers";
+              }
             } else if (post_data[i][8] < 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
               new_check.className = "fa-solid fa-thumbs-down";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#cc0000";
-              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Πιο Πολλά Όχι";
+              } else {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "More No Answers";
+              }
             } else if (post_data[i][8] == 0 && post_data[i][2] == 1) {
               let new_check = document.createElement("i");
               new_check.className = "fa-solid fa-question";
               document.getElementsByClassName("parent_of_check_yes_no")[i].appendChild(new_check);
               document.getElementsByClassName("parent_of_check_yes_no")[i].children[0].style.color = "#b5b5b5";
-              document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
+              if (translator._currentLanguage === "el") {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Ισοπαλία Ναι και Όχι";
+              } else {
+                document.getElementsByClassName("parent_of_check_yes_no_details")[i].innerText = "Tie of Yes and No Answers";
+              }
             }
           }
         }
@@ -756,7 +894,11 @@ export function generate_posts(
       }
       if (post_data.length === 0) {
         $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "No posts found";
+        if (translator._currentLanguage === "el") {
+          document.getElementById("notification-text").innerText = "Δε βρέθηκαν αναρτήσεις";
+        } else {
+          document.getElementById("notification-text").innerText = "No posts found";
+        }
       }
     });
 }
@@ -796,14 +938,24 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postIndexVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText = "Η δημοσκόπηση έκλεισε";
+          } else {
+            document.getElementById("notification-text").innerText = "Poll is closed";
+          }
         } else if (
           post_data[postIndexVote][12] !== null &&
           calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexVote][12]), parseFloat(post_data[postIndexVote][13])) >
             parseInt(post_data[postIndexVote][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText =
+              "Δεν επιτρέπεται να ψηφίσετε σε αυτή την ανάρτηση επειδή είστε έξω από την ακτίνα του γεγονότος";
+          } else {
+            document.getElementById("notification-text").innerText =
+              "You aren't allowed to vote in this post because you are outside the event radius";
+          }
         } else {
           document.getElementsByClassName("post-critic")[postIndexVote].style.marginBottom = "1em";
           if (post_data[postIndexVote][2] == "2") {
@@ -1068,7 +1220,11 @@ postContainer.addEventListener(
         }
       } else {
         $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "You have to be logged-in to vote";
+        if (translator._currentLanguage === "el") {
+          document.getElementById("notification-text").innerText = "Πρέπει να είστε συνδεδεμένοι για να ψηφίσετε";
+        } else {
+          document.getElementById("notification-text").innerText = "You have to be logged-in to vote";
+        }
       }
     } else if (btn_show_results) {
       const post_show_results = btn_show_results.closest(".post");
@@ -1394,7 +1550,11 @@ postContainer.addEventListener(
         }).addTo(event_map);
       } else {
         $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "This poll's event location hasn't been set";
+        if (translator._currentLanguage === "el") {
+          document.getElementById("notification-text").innerText = "Η τοποθεσία γεγονότος δεν έχει οριστεί για τη συγκεκριμένη ανάρτηση";
+        } else {
+          document.getElementById("notification-text").innerText = "This poll's event location hasn't been set";
+        }
       }
     } else if (btn_options) {
       const post_options = btn_options.closest(".post");
@@ -1559,14 +1719,24 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postAprovalVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText = "Η δημοσκόπηση έκλεισε";
+          } else {
+            document.getElementById("notification-text").innerText = "Poll is closed";
+          }
         } else if (
           post_data[postAprovalVote][12] !== null &&
           calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postAprovalVote][12]), parseFloat(post_data[postAprovalVote][13])) >
             parseInt(post_data[postAprovalVote][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText =
+              "Δεν επιτρέπεται να ψηφίσετε σε αυτή την ανάρτηση επειδή είστε έξω από την ακτίνα του γεγονότος";
+          } else {
+            document.getElementById("notification-text").innerText =
+              "You aren't allowed to vote in this post because you are outside the event radius";
+          }
         } else {
           if (window.getComputedStyle(btn_approval_vote).color === "rgb(204, 0, 0)") {
             btn_approval_vote.style.border = null;
@@ -1611,9 +1781,16 @@ postContainer.addEventListener(
                 JSON.stringify(["approval_vote", post_data[postIndexApprovalSend][0], post_data[0][16], vote_data, number_of_approval_votes])
               );
               $("#notification-container").fadeIn(300, function () {});
-              document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
-              document.getElementsByClassName("post")[postIndexApprovalSend].getElementsByClassName("total-votes-text")[0].innerText =
-                "Number of Votes: " + number_of_approval_votes;
+              if (translator._currentLanguage === "el") {
+                document.getElementById("notification-text").innerText =
+                  "Η ψήφος είναι αποδεκτή\n\n Μπορείτε να αλλάξετε τη ψήφο σας ψηφίζοντας ξανά";
+                document.getElementsByClassName("post")[postIndexApprovalSend].getElementsByClassName("total-votes-text")[0].innerText =
+                  "Αριθμός Ψήφων: " + number_of_approval_votes;
+              } else {
+                document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
+                document.getElementsByClassName("post")[postIndexApprovalSend].getElementsByClassName("total-votes-text")[0].innerText =
+                  "Number of Votes: " + number_of_approval_votes;
+              }
             }
           });
       } else if (btn_star) {
@@ -1624,14 +1801,24 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postIndexStar][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText = "Η δημοσκόπηση έκλεισε";
+          } else {
+            document.getElementById("notification-text").innerText = "Poll is closed";
+          }
         } else if (
           post_data[postIndexStar][12] !== null &&
           calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexStar][12]), parseFloat(post_data[postIndexStar][13])) >
             parseInt(post_data[postIndexStar][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText =
+              "Δεν επιτρέπεται να ψηφίσετε σε αυτή την ανάρτηση επειδή είστε έξω από την ακτίνα του γεγονότος";
+          } else {
+            document.getElementById("notification-text").innerText =
+              "You aren't allowed to vote in this post because you are outside the event radius";
+          }
         } else {
           const rating_choice = btn_star.closest(".rating-choices").getAttribute("data-value");
 
@@ -1657,7 +1844,11 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postIndexPostStarVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText = "Η δημοσκόπηση έκλεισε";
+          } else {
+            document.getElementById("notification-text").innerText = "Poll is closed";
+          }
         } else if (
           post_data[postIndexPostStarVote][12] !== null &&
           calcCrow(
@@ -1668,7 +1859,13 @@ postContainer.addEventListener(
           ) > parseInt(post_data[postIndexPostStarVote][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText =
+              "Δεν επιτρέπεται να ψηφίσετε σε αυτή την ανάρτηση επειδή είστε έξω από την ακτίνα του γεγονότος";
+          } else {
+            document.getElementById("notification-text").innerText =
+              "You aren't allowed to vote in this post because you are outside the event radius";
+          }
         } else {
           let votes = [];
           for (let i = 21; i < 41; i++) {
@@ -1689,8 +1886,14 @@ postContainer.addEventListener(
                 vote_data.pop();
                 conn.send(JSON.stringify(["rating_vote", post_data[postIndexPostStarVote][0], post_data[0][16], vote_data]));
                 $("#notification-container").fadeIn(300, function () {});
-                document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
-                document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Number of Votes: " + vote_data[60];
+                if (translator._currentLanguage === "el") {
+                  document.getElementById("notification-text").innerText =
+                    "Η ψήφος είναι αποδεκτή\n\n Μπορείτε να αλλάξετε τη ψήφο σας ψηφίζοντας ξανά";
+                  document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Αριθμός Ψήφων: " + vote_data[60];
+                } else {
+                  document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
+                  document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Number of Votes: " + vote_data[60];
+                }
               }
             });
         }
@@ -1703,7 +1906,11 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postIndexRankingVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText = "Η δημοσκόπηση έκλεισε";
+          } else {
+            document.getElementById("notification-text").innerText = "Poll is closed";
+          }
         } else if (
           post_data[postIndexRankingVote][12] !== null &&
           calcCrow(
@@ -1714,7 +1921,13 @@ postContainer.addEventListener(
           ) > parseInt(post_data[postIndexRankingVote][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText =
+              "Δεν επιτρέπεται να ψηφίσετε σε αυτή την ανάρτηση επειδή είστε έξω από την ακτίνα του γεγονότος";
+          } else {
+            document.getElementById("notification-text").innerText =
+              "You aren't allowed to vote in this post because you are outside the event radius";
+          }
         } else {
           let post_element = document.getElementsByClassName("post")[postIndexRankingVote].querySelectorAll(".ranking-vote-container")[0];
           let votes = [];
@@ -1725,7 +1938,11 @@ postContainer.addEventListener(
               if (post_element.getElementsByClassName("ranking-choices")[j].getElementsByClassName("choice-rank")[0].value === "Rank") {
                 send_vote = false;
                 $("#notification-container").fadeIn(300, function () {});
-                document.getElementById("notification-text").innerText = "You must rank all choices";
+                if (translator._currentLanguage === "el") {
+                  document.getElementById("notification-text").innerText = "Πρέπει να κατατάξετε όλες τις επιλογές";
+                } else {
+                  document.getElementById("notification-text").innerText = "You must rank all choices";
+                }
                 break;
               } else {
                 votes.push(post_element.getElementsByClassName("ranking-choices")[j].getElementsByClassName("choice-rank")[0].value);
@@ -1752,8 +1969,14 @@ postContainer.addEventListener(
                     JSON.stringify(["ranking_vote", post_data[postIndexRankingVote][0], post_data[0][16], vote_data, user_votes, total_votes])
                   );
                   $("#notification-container").fadeIn(300, function () {});
-                  document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
-                  document.querySelectorAll(".total-votes-text")[postIndexRankingVote].innerText = "Number of Votes: " + total_votes;
+                  if (translator._currentLanguage === "el") {
+                    document.getElementById("notification-text").innerText =
+                      "Η ψήφος είναι αποδεκτή\n\n Μπορείτε να αλλάξετε τη ψήφο σας ψηφίζοντας ξανά";
+                    document.querySelectorAll(".total-votes-text")[postIndexRankingVote].innerText = "Αριθμός Ψήφων: " + total_votes;
+                  } else {
+                    document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
+                    document.querySelectorAll(".total-votes-text")[postIndexRankingVote].innerText = "Number of Votes: " + total_votes;
+                  }
                 }
               });
           }
@@ -1888,14 +2111,24 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postIndexYes][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText = "Η δημοσκόπηση έκλεισε";
+          } else {
+            document.getElementById("notification-text").innerText = "Poll is closed";
+          }
         } else if (
           post_data[postIndexYes][12] !== null &&
           calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexYes][12]), parseFloat(post_data[postIndexYes][13])) >
             parseInt(post_data[postIndexYes][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText =
+              "Δεν επιτρέπεται να ψηφίσετε σε αυτή την ανάρτηση επειδή είστε έξω από την ακτίνα του γεγονότος";
+          } else {
+            document.getElementById("notification-text").innerText =
+              "You aren't allowed to vote in this post because you are outside the event radius";
+          }
         } else {
           if (user_yes_no_vote[postIndexYes][0] == true && user_yes_no_vote[postIndexYes][1] == false) {
             fetch("process_data.php", {
@@ -1905,8 +2138,13 @@ postContainer.addEventListener(
               .then((res) => res.json())
               .then((response) => {
                 if (response[2].trim() == "Success") {
-                  document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
-                    "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) - 1);
+                  if (translator._currentLanguage === "el") {
+                    document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
+                      "Αριθμός Ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) - 1);
+                  } else {
+                    document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
+                      "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) - 1);
+                  }
                   post_data[postIndexYes][8] = parseInt(response[0]);
                   post_data[postIndexYes][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#007e7e";
@@ -1915,15 +2153,27 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-up";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More Yes Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Πιο Πολλά Ναι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More Yes Answers";
+                      }
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-down";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Πιο Πολλά Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More No Answers";
+                      }
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-question";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Tie of Yes and No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Ισοπαλία Ναι και Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Tie of Yes and No Answers";
+                      }
                     }
                   }
                   conn.send(
@@ -1961,15 +2211,27 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-up";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More Yes Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Πιο Πολλά Ναι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More Yes Answers";
+                      }
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-down";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Πιο Πολλά Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More No Answers";
+                      }
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-question";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Tie of Yes and No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Ισοπαλία Ναι και Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Tie of Yes and No Answers";
+                      }
                     }
                   }
                   conn.send(
@@ -1997,8 +2259,13 @@ postContainer.addEventListener(
               .then((res) => res.json())
               .then((response) => {
                 if (response[2] == "Success") {
-                  document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
-                    "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) + 1);
+                  if (translator._currentLanguage === "el") {
+                    document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
+                      "Αριθμός Ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) + 1);
+                  } else {
+                    document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
+                      "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) + 1);
+                  }
                   post_data[postIndexYes][8] = parseInt(response[0]);
                   post_data[postIndexYes][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexYes].querySelectorAll(".answer-yes")[0].style.background = "#00ffd0";
@@ -2007,15 +2274,27 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-up";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More Yes Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Πιο Πολλά Ναι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More Yes Answers";
+                      }
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-thumbs-down";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Πιο Πολλά Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "More No Answers";
+                      }
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexYes].children[0].className = "fa-solid fa-question";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Tie of Yes and No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Ισοπαλία Ναι και Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexYes].innerText = "Tie of Yes and No Answers";
+                      }
                     }
                   }
                   conn.send(
@@ -2045,14 +2324,24 @@ postContainer.addEventListener(
           DateTime.fromFormat(post_data[postIndexNo][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "Poll is closed";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText = "Η δημοσκόπηση έκλεισε";
+          } else {
+            document.getElementById("notification-text").innerText = "Poll is closed";
+          }
         } else if (
           post_data[postIndexNo][12] !== null &&
           calcCrow(user_coordinates[0], user_coordinates[1], parseFloat(post_data[postIndexNo][12]), parseFloat(post_data[postIndexNo][13])) >
             parseInt(post_data[postIndexNo][14])
         ) {
           $("#notification-container").fadeIn(300, function () {});
-          document.getElementById("notification-text").innerText = "You aren't allowed to vote in this post because you are outside the event radius";
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText =
+              "Δεν επιτρέπεται να ψηφίσετε σε αυτή την ανάρτηση επειδή είστε έξω από την ακτίνα του γεγονότος";
+          } else {
+            document.getElementById("notification-text").innerText =
+              "You aren't allowed to vote in this post because you are outside the event radius";
+          }
         } else {
           if (user_yes_no_vote[postIndexNo][0] == false && user_yes_no_vote[postIndexNo][1] == true) {
             fetch("process_data.php", {
@@ -2062,8 +2351,13 @@ postContainer.addEventListener(
               .then((res) => res.json())
               .then((response) => {
                 if (response[2].trim() == "Success") {
-                  document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
-                    "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) - 1);
+                  if (translator._currentLanguage === "el") {
+                    document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
+                      "Αριθμός Ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) - 1);
+                  } else {
+                    document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
+                      "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) - 1);
+                  }
                   post_data[postIndexNo][8] = parseInt(response[0]);
                   post_data[postIndexNo][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#007e7e";
@@ -2072,15 +2366,27 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-up";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More Yes Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Πιο Πολλά Ναι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More Yes Answers";
+                      }
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-down";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Πιο Πολλά Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More No Answers";
+                      }
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-question";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Tie of Yes and No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Ισοπαλία Ναι και Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Tie of Yes and No Answers";
+                      }
                     }
                   }
                   conn.send(
@@ -2118,15 +2424,27 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-up";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More Yes Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Πιο Πολλά Ναι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More Yes Answers";
+                      }
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-down";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Πιο Πολλά Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More No Answers";
+                      }
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-question";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Tie of Yes and No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Ισοπαλία Ναι και Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Tie of Yes and No Answers";
+                      }
                     }
                   }
                   conn.send(
@@ -2154,8 +2472,13 @@ postContainer.addEventListener(
               .then((res) => res.json())
               .then((response) => {
                 if (response[2].trim() == "Success") {
-                  document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
-                    "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) + 1);
+                  if (translator._currentLanguage === "el") {
+                    document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
+                      "Αριθμός Ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) + 1);
+                  } else {
+                    document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
+                      "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) + 1);
+                  }
                   post_data[postIndexNo][8] = parseInt(response[0]);
                   post_data[postIndexNo][9] = parseInt(response[1]);
                   document.querySelectorAll(".post")[postIndexNo].querySelectorAll(".answer-no")[0].style.background = "#cc0000";
@@ -2164,15 +2487,27 @@ postContainer.addEventListener(
                     if (parseInt(response[0]) - parseInt(response[1]) > 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#00ffd0";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-up";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More Yes Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Πιο Πολλά Ναι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More Yes Answers";
+                      }
                     } else if (parseInt(response[0]) - parseInt(response[1]) < 0) {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#cc0000";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-thumbs-down";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Πιο Πολλά Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "More No Answers";
+                      }
                     } else {
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].style.color = "#b5b5b5";
                       document.getElementsByClassName("parent_of_check_yes_no")[postIndexNo].children[0].className = "fa-solid fa-question";
-                      document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Tie of Yes and No Answers";
+                      if (translator._currentLanguage === "el") {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Ισοπαλία Ναι και Όχι";
+                      } else {
+                        document.getElementsByClassName("parent_of_check_yes_no_details")[postIndexNo].innerText = "Tie of Yes and No Answers";
+                      }
                     }
                   }
                   conn.send(
@@ -2275,13 +2610,25 @@ postContainer.addEventListener(
     } else {
       if (btn_up || btn_down) {
         $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "You have to be logged-in to like or dislike a post";
+        if (translator._currentLanguage === "el") {
+          document.getElementById("notification-text").innerText = "Πρέπει να είστε συνδεδεμένοι για να κάνετε like ή dislike σε μια ανάρτηση";
+        } else {
+          document.getElementById("notification-text").innerText = "You have to be logged-in to like or dislike a post";
+        }
       } else if (btn_yes || btn_no) {
         $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "You have to be logged-in to vote";
+        if (translator._currentLanguage === "el") {
+          document.getElementById("notification-text").innerText = "Πρέπει να είστε συνδεδεμένοι για να ψηφίσετε";
+        } else {
+          document.getElementById("notification-text").innerText = "You have to be logged-in to vote";
+        }
       } else if (btn_bookmark) {
         $("#notification-container").fadeIn(300, function () {});
-        document.getElementById("notification-text").innerText = "You have to be logged-in to bookmark a post";
+        if (translator._currentLanguage === "el") {
+          document.getElementById("notification-text").innerText = "Πρέπει να είστε συνδεδεμένοι για να βάλετε σελιδοδείκτη σε μια ανάρτηση";
+        } else {
+          document.getElementById("notification-text").innerText = "You have to be logged-in to bookmark a post";
+        }
       }
     }
   },
@@ -2490,7 +2837,11 @@ function get_rating_data(post_number) {
           }
         }
       }
-      document.getElementsByClassName("rating-total-votes-text")[post_number].innerText = "Number of Votes: " + response[40];
+      if (translator._currentLanguage === "el") {
+        document.getElementsByClassName("rating-total-votes-text")[post_number].innerText = "Αριθμός Ψήφων: " + response[40];
+      } else {
+        document.getElementsByClassName("rating-total-votes-text")[post_number].innerText = "Number of Votes: " + response[40];
+      }
     });
 }
 
@@ -2641,7 +2992,11 @@ function get_ranking_data(post_number) {
           const col = e.target.cellIndex;
           const rowHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[row].cells[0].textContent;
           const colHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[0].cells[col].textContent;
-          e.target.title = `Row Name: \n${rowHeader}\n\nColumn Name: \n${colHeader}`;
+          if (translator._currentLanguage === "el") {
+            e.target.title = `Όνομα Γραμμής: \n${rowHeader}\n\nΌνομα Στήλης: \n${colHeader}`;
+          } else {
+            e.target.title = `Row Name: \n${rowHeader}\n\nColumn Name: \n${colHeader}`;
+          }
         }
       });
 
@@ -2683,7 +3038,11 @@ function get_ranking_data(post_number) {
           }
         }
       }
-      post_element.getElementsByClassName("ranking-total-votes-text")[0].innerText = "Number of Votes: " + number_of_votes;
+      if (translator._currentLanguage === "el") {
+        post_element.getElementsByClassName("ranking-total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + number_of_votes;
+      } else {
+        post_element.getElementsByClassName("ranking-total-votes-text")[0].innerText = "Number of Votes: " + number_of_votes;
+      }
     });
 }
 
@@ -2715,16 +3074,22 @@ export function make_yes_no_chart(post_number, chart_data) {
   if (myChart[post_number]) {
     myChart[post_number].destroy();
   }
+  let chart_labels = ["Yes", "No"];
+  let yes_no_label = "Yes/No Results";
+  if (translator._currentLanguage === "el") {
+    chart_labels = ["Ναι", "Όχι"];
+    yes_no_label = "Αποτελέσματα Ναι/Όχι";
+  }
   document.querySelectorAll(".total-votes-container")[post_number].style.display = "none";
   document.querySelectorAll(".yes-no-results-container")[post_number].style.display = "flex";
   ctx[post_number] = document.getElementsByClassName("myChart")[post_number].getContext("2d");
   myChart[post_number] = new Chart(ctx[post_number], {
     type: "bar",
     data: {
-      labels: ["Yes", "No"],
+      labels: chart_labels,
       datasets: [
         {
-          label: "Yes/No Results",
+          label: yes_no_label,
           data: chart_data,
           backgroundColor: [],
           borderColor: ["#00ffffbb", "#cc0000"],
@@ -2760,7 +3125,11 @@ export function make_yes_no_chart(post_number, chart_data) {
       },
     },
   });
-  document.getElementsByClassName("yes-no-total-votes-text")[post_number].innerText = "Number of Votes: " + (chart_data[0] + chart_data[1]);
+  if (translator._currentLanguage === "el") {
+    document.getElementsByClassName("yes-no-total-votes-text")[post_number].innerText = "Αριθμός Ψήφων: " + (chart_data[0] + chart_data[1]);
+  } else {
+    document.getElementsByClassName("yes-no-total-votes-text")[post_number].innerText = "Number of Votes: " + (chart_data[0] + chart_data[1]);
+  }
 }
 
 export function make_approval_chart(post_number, choice_names, results, number_of_votes) {
@@ -2849,7 +3218,11 @@ export function make_approval_chart(post_number, choice_names, results, number_o
       },
     },
   });
-  document.getElementsByClassName("approval-total-votes-text")[post_number].innerText = "Number of Votes: " + number_of_votes;
+  if (translator._currentLanguage === "el") {
+    document.getElementsByClassName("approval-total-votes-text")[post_number].innerText = "Αριθμός Ψήφων: " + number_of_votes;
+  } else {
+    document.getElementsByClassName("approval-total-votes-text")[post_number].innerText = "Number of Votes: " + number_of_votes;
+  }
 }
 
 //used to clear all posts data each time the user returns to the main page without reloading the page.

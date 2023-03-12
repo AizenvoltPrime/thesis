@@ -686,6 +686,7 @@ function clear_screen() {
   $("#warning-nothing-selected").fadeOut(300, function () {});
   $("#warning-empty-text-area").fadeOut(300, function () {});
   $("#warning-no-time-limit-choice").fadeOut(300, function () {});
+  $("#warning-no-time-limit").fadeOut(300, function () {});
   $("#warning-no-location-restriction-choice").fadeOut(300, function () {});
   $("#warning-no-location-selected").fadeOut(300, function () {});
   $("#warning-radius-too-small").fadeOut(300, function () {});

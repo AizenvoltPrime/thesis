@@ -1,6 +1,7 @@
 import { generate_posts, reset_poll_data, get_variables } from "./index.js";
 import { clear_bell_counter } from "./update_data.js";
 import { greece_regions, update_region_posts, clear_region_posts } from "../geojson/greece_regions.js";
+import { translator } from "./translate.js";
 
 let preferred_categories = null;
 let radius_filter = null;
@@ -881,8 +882,14 @@ info.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-  this._div.innerHTML =
-    "<h4>Posts Number</h4>" + (props ? "<b>" + props.name + "</b><br />" + props.number_of_posts + " posts" : "Hover over a region");
+  if (translator._currentLanguage === "el") {
+    this._div.innerHTML =
+      "<h4>Αριθμός Αναρτήσεων</h4>" +
+      (props ? "<b>" + props.name + "</b><br />" + props.number_of_posts + " αναρτήσεις" : "Βάλτε το δείκτη του ποντικιού πάνω από μια περιοχή");
+  } else {
+    this._div.innerHTML =
+      "<h4>Posts Number</h4>" + (props ? "<b>" + props.name + "</b><br />" + props.number_of_posts + " posts" : "Hover over a region");
+  }
 };
 
 info.addTo(app_analytics_map);
@@ -1005,7 +1012,11 @@ document.getElementById("post-locations-filter").addEventListener("click", funct
       });
     } else {
       $("#notification-container").fadeIn(300, function () {});
-      document.getElementById("notification-text").innerText = "There are no posts to check their post locations";
+      if (translator._currentLanguage === "el") {
+        document.getElementById("notification-text").innerText = "Δεν υπάρχουν αναρτήσεις ώστε να ελεχθούν οι τοποθεσίες τους";
+      } else {
+        document.getElementById("notification-text").innerText = "There are no posts to check their post locations";
+      }
     }
   }
 });
