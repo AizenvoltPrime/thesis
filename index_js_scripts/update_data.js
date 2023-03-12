@@ -1017,7 +1017,11 @@ addEventListener("DOMContentLoaded", (event) => {
                       for (let k = 0; k < ranking_choice_names.length; k++) {
                         if (k == 0) {
                           let default_ranking_option = document.createElement("option");
-                          default_ranking_option.text = "Rank";
+                          if (translator._currentLanguage === "el") {
+                            default_ranking_option.text = "Κατάταξη";
+                          } else {
+                            default_ranking_option.text = "Rank";
+                          }
                           post_element.getElementsByClassName("choice-rank")[0].add(default_ranking_option, k);
                         }
                         if (user_ranking_array[k] === null) {
@@ -1061,7 +1065,7 @@ addEventListener("DOMContentLoaded", (event) => {
                   });
                   select.addEventListener("change", (event) => {
                     choice_rank.forEach((otherSelect) => {
-                      if (select[select.selectedIndex].text === "Rank") {
+                      if (select[select.selectedIndex].text === "Rank" || select[select.selectedIndex].text === "Κατάταξη") {
                         if (!Array.from(otherSelect.options).some((option) => option.text === oldValue)) {
                           let new_option = document.createElement("option");
                           new_option.text = oldValue;

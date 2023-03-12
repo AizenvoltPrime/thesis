@@ -61,6 +61,11 @@ require_once "new_config.php";
     <a class="nav-element"><i class="fa-solid fa-bookmark fa-1x"></i><span data-i18n="usernav.bookmarks">Bookmarks</span></a>
     <a class="nav-element"><i class="fa-solid fa-user fa-1x" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i><span data-i18n="usernav.change_username">Change Username</span></a>
     <a class="nav-element"><i class="fa-solid fa-lock fa-1x"></i><span data-i18n="usernav.change_password">Change Password</span></a>
+    <a class="nav-element"><i class="fa-solid fa-globe fa-1x"></i><span data-i18n="usernav.language">Language</span></a>
+    <div id="language" style="display:none;">
+      <div id="en">English</div>
+      <div id="el">Ελληνικά</div>
+    </div>
     <a class="nav-element" href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i><span data-i18n="usernav.logout">Logout</span></a>
   </div>
   <!--This div is for the post filters.-->

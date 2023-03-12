@@ -43,6 +43,7 @@ document.getElementById("profile-icon").addEventListener("click", function () {
         document.getElementsByClassName("nav-element")[6].style.display = "none";
         document.getElementsByClassName("nav-element")[7].style.display = "none";
         document.getElementsByClassName("nav-element")[8].style.display = "none";
+        document.getElementsByClassName("nav-element")[9].style.display = "none";
         document.getElementsByClassName("fa-solid fa-info")[0].style.paddingRight = "0.55em";
       } else {
         document.getElementsByClassName("nav-element")[3].style.display = "none";
@@ -58,6 +59,7 @@ document.getElementById("profile-icon").addEventListener("click", function () {
         document.getElementsByClassName("fa-solid fa-arrow-right-from-bracket")[0].style.paddingRight = "0.15em";
         document.getElementsByClassName("fa-solid fa-user fa-1x")[0].style.paddingRight = "0.25em";
         document.getElementsByClassName("fa-solid fa-lock fa-1x")[0].style.paddingRight = "0.25em";
+        document.getElementsByClassName("fa-solid fa-globe fa-1x")[0].style.paddingRight = "0.18em";
       }
     });
   document.getElementById("user-nav").style.width = "18.75em";

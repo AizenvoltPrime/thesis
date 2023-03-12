@@ -109,17 +109,17 @@ document.getElementsByClassName("fa-circle-chevron-right")[1].addEventListener("
 
 generate_posts(false);
 
-//Get user coordinates
-fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
-  .then((response) => response.json())
-  .then((jsonResponse) => {
-    const loc = jsonResponse.loc.split(",");
-    user_coordinates[0] = loc[0];
-    user_coordinates[1] = loc[1];
-    setTimeout(() => {
-      conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
-    }, 1000);
-  });
+// //Get user coordinates
+// fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
+//   .then((response) => response.json())
+//   .then((jsonResponse) => {
+//     const loc = jsonResponse.loc.split(",");
+//     user_coordinates[0] = loc[0];
+//     user_coordinates[1] = loc[1];
+//     setTimeout(() => {
+//       conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
+//     }, 1000);
+//   });
 
 //This is for when the user clicks the "Plus" icon.
 document.getElementById("add-post-icon").addEventListener("click", function () {
@@ -1144,7 +1144,11 @@ postContainer.addEventListener(
                         for (let k = 0; k < ranking_choice_names.length; k++) {
                           if (k == 0) {
                             let default_ranking_option = document.createElement("option");
-                            default_ranking_option.text = "Rank";
+                            if (translator._currentLanguage === "el") {
+                              default_ranking_option.text = "Κατάταξη";
+                            } else {
+                              default_ranking_option.text = "Rank";
+                            }
                             post_element.getElementsByClassName("choice-rank")[0].add(default_ranking_option, k);
                           }
                           if (ranking_choice_results[k] === null) {
@@ -1188,7 +1192,7 @@ postContainer.addEventListener(
                     });
                     select.addEventListener("change", (event) => {
                       choice_rank.forEach((otherSelect) => {
-                        if (select[select.selectedIndex].text === "Rank") {
+                        if (select[select.selectedIndex].text === "Rank" || select[select.selectedIndex].text === "Κατάταξη") {
                           if (!Array.from(otherSelect.options).some((option) => option.text === oldValue)) {
                             let new_option = document.createElement("option");
                             new_option.text = oldValue;
@@ -1935,7 +1939,10 @@ postContainer.addEventListener(
 
           for (let j = 0; j < 20; j++) {
             if (j < post_element.getElementsByClassName("ranking-choices").length) {
-              if (post_element.getElementsByClassName("ranking-choices")[j].getElementsByClassName("choice-rank")[0].value === "Rank") {
+              if (
+                post_element.getElementsByClassName("ranking-choices")[j].getElementsByClassName("choice-rank")[0].value === "Rank" ||
+                post_element.getElementsByClassName("ranking-choices")[j].getElementsByClassName("choice-rank")[0].value === "Κατάταξη"
+              ) {
                 send_vote = false;
                 $("#notification-container").fadeIn(300, function () {});
                 if (translator._currentLanguage === "el") {

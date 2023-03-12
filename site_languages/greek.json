@@ -8,8 +8,9 @@
     "bookmarks": "Σελιδοδείκτες",
     "login": "Σύνδεση",
     "registration": "Εγγραφή",
-    "change_username": "Αλλαγή Ονοματός Χρήστη",
+    "change_username": "Αλλαγή Ονόματος Χρήστη",
     "change_password": "Αλλαγή Κωδικού",
+    "language": "Γλώσσα",
     "logout": "Αποσύνδεση"
   },
   "all-filters": {
