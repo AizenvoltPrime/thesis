@@ -61,8 +61,15 @@ document.getElementById("profile-icon").addEventListener("click", function () {
         document.getElementsByClassName("fa-solid fa-globe fa-1x")[0].style.paddingRight = "0.18em";
       }
     });
-  document.getElementById("user-nav").style.width = "18.75em";
-  document.getElementById("profile-icon").style.visibility = "hidden";
+  $("#language").fadeOut(1, function () {
+    document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
+  });
+  $("#language")
+    .promise()
+    .done(function () {
+      document.getElementById("user-nav").style.width = "18.75em";
+      document.getElementById("profile-icon").style.visibility = "hidden";
+    });
 });
 
 //This is for when the user clicks the right navbar close icon for the navbar to disappear.

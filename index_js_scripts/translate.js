@@ -19,9 +19,13 @@ fetch("./site_languages/english.json")
 export { translator };
 
 document.getElementsByClassName("nav-element")[8].addEventListener("click", function () {
-  document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid #2c3134";
-  $("#language").fadeIn(300, function () {});
-  document.getElementById("language").style.display = "flex";
+  if (window.getComputedStyle(document.getElementById("language")).display !== "none") {
+    document.getElementById("language").style.display = "none";
+    document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
+  } else {
+    document.getElementById("language").style.display = "flex";
+    document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid #2c3134";
+  }
 });
 
 document.getElementById("en").addEventListener("click", function (event) {
