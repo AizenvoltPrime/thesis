@@ -183,7 +183,7 @@ addEventListener("DOMContentLoaded", (event) => {
       ) {
         if (translator._currentLanguage === "el") {
           clone.querySelectorAll(".poll-remaining-time")[0].innerText =
-            "Η Δημοσκόπηση κλείνει " + DateTime.fromFormat(JSON.parse(e.data)[1][11], "yyyy-MM-dd HH:mm:ss").toRelative();
+            "Η δημοσκόπηση κλείνει " + DateTime.fromFormat(JSON.parse(e.data)[1][11], "yyyy-MM-dd HH:mm:ss").toRelative();
         } else {
           clone.querySelectorAll(".poll-remaining-time")[0].innerText =
             "Poll closes " + DateTime.fromFormat(JSON.parse(e.data)[1][11], "yyyy-MM-dd HH:mm:ss").toRelative();

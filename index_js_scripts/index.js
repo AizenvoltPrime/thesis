@@ -358,7 +358,11 @@ document.getElementById("next-step").addEventListener("click", function () {
       $("#warning-no-category-selected").fadeOut(300, function () {});
       $("#post-category-container").fadeOut(300, function () {});
       $("#next-step").fadeOut(300, function () {
-        document.getElementById("next-step").innerText = "Post Poll";
+        if (translator._currentLanguage === "el") {
+          document.getElementById("next-step").innerText = "Ανάρτηση";
+        } else {
+          document.getElementById("next-step").innerText = "Post Poll";
+        }
       });
       $("#next-step")
         .promise()
@@ -397,7 +401,11 @@ document.getElementById("next-step").addEventListener("click", function () {
           $("#warning-empty-text-area").fadeOut(300, function () {});
           $("#poll-question").fadeOut(300, function () {});
           $("#next-step").fadeOut(300, function () {
-            document.getElementById("next-step").innerText = "Next";
+            if (translator._currentLanguage === "el") {
+              document.getElementById("next-step").innerText = "Επόμενο";
+            } else {
+              document.getElementById("next-step").innerText = "Next";
+            }
             $("#add-post-icon").fadeIn(300, function () {});
             $("#app-title-container").fadeIn(300, function () {});
             $("#all-filters").fadeIn(300, function () {});
@@ -755,7 +763,7 @@ export function generate_posts(
             if (post_data[i][11] !== null && DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") === -1) {
               if (translator._currentLanguage === "el") {
                 document.querySelectorAll(".poll-remaining-time")[i].innerText =
-                  "Η Δημοσκόπηση κλείνει " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
+                  "Η δημοσκόπηση κλείνει " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
               } else {
                 document.querySelectorAll(".poll-remaining-time")[i].innerText =
                   "Poll closes " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
@@ -765,7 +773,7 @@ export function generate_posts(
             } else if (post_data[i][11] !== null && DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1) {
               if (translator._currentLanguage === "el") {
                 document.querySelectorAll(".poll-remaining-time")[i].innerText =
-                  "Η Δημοσκόπηση έκλεισε " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
+                  "Η δημοσκόπηση έκλεισε " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
               } else {
                 document.querySelectorAll(".poll-remaining-time")[i].innerText =
                   "Poll closed " + DateTime.fromFormat(post_data[i][11], "yyyy-MM-dd HH:mm:ss").toRelative();
@@ -3346,7 +3354,11 @@ export function reset_poll_data() {
   document.getElementById("categories").value = "0";
   document.getElementById("poll-choices").value = "0";
   document.getElementById("input-poll-choices").innerHTML = "";
-  document.getElementById("next-step").innerText = "Next";
+  if (translator._currentLanguage === "el") {
+    document.getElementById("next-step").innerText = "Επόμενο";
+  } else {
+    document.getElementById("next-step").innerText = "Next";
+  }
 
   min_time = DateTime.now().plus({ minutes: 30 }).toFormat("HH:mm");
   min_day = DateTime.now().plus({ minutes: 30 }).toFormat("yyyy-MM-dd");
