@@ -29,7 +29,7 @@ require_once "../old_config.php";
     <div class="top-row">
         <div id="sidenav-icon"><i class="fa-solid fa-bars fa-2x"></i></div>
         <div id="add-post-icon" style="visibility:hidden;"><i class="fa-solid fa-plus fa-4x"></i></div>
-        <div id="profile-icon"><i class="fa-solid fa-user fa-4x" style="color:#2c3134"></i></div>
+        <div id="profile-icon"><i class="fa-solid fa-user fa-4x" style="color:#979797"></i></div>
     </div>
     <div id="sidenav" class="sidenav">
         <div class="closebtn"><i class="fa-solid fa-times fa-2x"></i></div>

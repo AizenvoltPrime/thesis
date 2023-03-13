@@ -44,7 +44,7 @@ require_once "new_config.php";
   <div class="top-row">
     <button id="sidenav-icon"><i class="fa-solid fa-bars fa-2x"></i></button>
     <button id="add-post-icon"><i class="fa-solid fa-plus fa-4x"></i></button>
-    <button id="profile-icon"><i class="fa-solid fa-user fa-4x" style="color:#2c3134"></i></button>
+    <button id="profile-icon"><i class="fa-solid fa-user fa-4x" style="color:#979797"></i></button>
   </div>
   <!--This div is for the left navbar icons.-->
   <div id="sidenav" class="sidenav">
