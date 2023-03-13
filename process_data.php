@@ -595,6 +595,13 @@ if ($data['request'] == "request_username") {
             );
             array_push($post_data, $tmp);
         }
+        $stmt = $conn->prepare("SELECT language AS user_language FROM user WHERE id=:id");
+        $stmt->execute([":id" => $_SESSION["id"]]);
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($post_data, [$row["user_language"]]);
+            }
+        }
         echo json_encode($post_data);
     } else {
         if (isset($data["filter_hot"]) && $data["filter_hot"] == "hot") {
@@ -1852,4 +1859,10 @@ if ($data['request'] == "request_username") {
         }
     }
     echo json_encode($results);
+} else if ($data['request'] == "language_data" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+    require_once "new_config.php";
+
+    $stmt = $conn->prepare("UPDATE user SET language=:user_language WHERE id=:id");
+    $stmt->execute([":user_language" => $data["language"], ":id" => $_SESSION["id"]]);
+    echo "Success";
 }

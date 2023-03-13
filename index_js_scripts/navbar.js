@@ -42,7 +42,6 @@ document.getElementById("profile-icon").addEventListener("click", function () {
         document.getElementsByClassName("nav-element")[5].style.display = "none";
         document.getElementsByClassName("nav-element")[6].style.display = "none";
         document.getElementsByClassName("nav-element")[7].style.display = "none";
-        document.getElementsByClassName("nav-element")[8].style.display = "none";
         document.getElementsByClassName("nav-element")[9].style.display = "none";
         document.getElementsByClassName("fa-solid fa-info")[0].style.paddingRight = "0.55em";
       } else {

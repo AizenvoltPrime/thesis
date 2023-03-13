@@ -1,3 +1,5 @@
+import { get_variables } from "./index.js";
+
 let translator = new Translator({
   defaultLanguage: "en",
 });
@@ -25,25 +27,67 @@ document.getElementsByClassName("nav-element")[8].addEventListener("click", func
 document.getElementById("en").addEventListener("click", function (event) {
   event.target.style.backgroundColor = "#00ffd0";
   document.getElementById("el").style.backgroundColor = "#007e7e";
-  document.getElementsByClassName("nav-element")[0].click();
-  $("#language").fadeOut(300, function () {});
-  $("#language")
-    .promise()
-    .done(function () {
-      document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
-      translator.translatePageTo("en");
-    });
+  if (get_variables()[2] > 16) {
+    fetch("process_data.php", {
+      method: "POST",
+      body: JSON.stringify({
+        request: "language_data",
+        language: "en",
+      }),
+    })
+      .then((res) => res.text())
+      .then((response) => {
+        document.getElementsByClassName("nav-element")[0].click();
+        $("#language").fadeOut(300, function () {});
+        $("#language")
+          .promise()
+          .done(function () {
+            document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
+            translator.translatePageTo("en");
+          });
+      });
+  } else {
+    document.getElementsByClassName("nav-element")[0].click();
+    $("#language").fadeOut(300, function () {});
+    $("#language")
+      .promise()
+      .done(function () {
+        document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
+        translator.translatePageTo("en");
+      });
+  }
 });
 
 document.getElementById("el").addEventListener("click", function (event) {
   event.target.style.backgroundColor = "#00ffd0";
   document.getElementById("en").style.backgroundColor = "#007e7e";
-  document.getElementsByClassName("nav-element")[0].click();
-  $("#language").fadeOut(300, function () {});
-  $("#language")
-    .promise()
-    .done(function () {
-      document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
-      translator.translatePageTo("el");
-    });
+  if (get_variables()[2] > 16) {
+    fetch("process_data.php", {
+      method: "POST",
+      body: JSON.stringify({
+        request: "language_data",
+        language: "el",
+      }),
+    })
+      .then((res) => res.text())
+      .then((response) => {
+        document.getElementsByClassName("nav-element")[0].click();
+        $("#language").fadeOut(300, function () {});
+        $("#language")
+          .promise()
+          .done(function () {
+            document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
+            translator.translatePageTo("el");
+          });
+      });
+  } else {
+    document.getElementsByClassName("nav-element")[0].click();
+    $("#language").fadeOut(300, function () {});
+    $("#language")
+      .promise()
+      .done(function () {
+        document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
+        translator.translatePageTo("el");
+      });
+  }
 });

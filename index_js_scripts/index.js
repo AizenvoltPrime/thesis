@@ -109,17 +109,17 @@ document.getElementsByClassName("fa-circle-chevron-right")[1].addEventListener("
 
 generate_posts(false);
 
-// //Get user coordinates
-// fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
-//   .then((response) => response.json())
-//   .then((jsonResponse) => {
-//     const loc = jsonResponse.loc.split(",");
-//     user_coordinates[0] = loc[0];
-//     user_coordinates[1] = loc[1];
-//     setTimeout(() => {
-//       conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
-//     }, 1000);
-//   });
+//Get user coordinates
+fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
+  .then((response) => response.json())
+  .then((jsonResponse) => {
+    const loc = jsonResponse.loc.split(",");
+    user_coordinates[0] = loc[0];
+    user_coordinates[1] = loc[1];
+    setTimeout(() => {
+      conn.send(JSON.stringify(["new_online_user", user_coordinates[0], user_coordinates[1]]));
+    }, 1000);
+  });
 
 //This is for when the user clicks the "Plus" icon.
 document.getElementById("add-post-icon").addEventListener("click", function () {
@@ -497,6 +497,21 @@ export function generate_posts(
       user_chevron_vote.length = 0;
       user_yes_no_vote.length = 0;
       post_data = response;
+      if (response[0].length > 16) {
+        if (translator._currentLanguage !== "el" && translator._currentLanguage !== "en" && response[response.length - 1][0] !== null) {
+          translator.translatePageTo(response[response.length - 1][0]);
+          if (response[response.length - 1][0] === "en") {
+            document.getElementById("en").style.backgroundColor = "#00ffd0";
+          } else if (response[response.length - 1][0] === "el") {
+            document.getElementById("el").style.backgroundColor = "#00ffd0";
+          }
+        }
+      } else {
+        if (translator._currentLanguage !== "el" && translator._currentLanguage !== "en") {
+          document.getElementById("en").style.backgroundColor = "#00ffd0";
+        }
+      }
+      post_data.pop();
       let post_time;
       for (let i = 0; i < post_data.length; i++) {
         post_time = DateTime.fromFormat(post_data[i][6], "yyyy-MM-dd HH:mm:ss").toRelative();
