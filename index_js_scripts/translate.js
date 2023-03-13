@@ -48,6 +48,7 @@ document.getElementById("en").addEventListener("click", function (event) {
           .done(function () {
             document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
             translator.translatePageTo("en");
+            localStorage.setItem("language", "en");
           });
       });
   } else {
@@ -58,6 +59,7 @@ document.getElementById("en").addEventListener("click", function (event) {
       .done(function () {
         document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
         translator.translatePageTo("en");
+        localStorage.setItem("language", "en");
       });
   }
 });
@@ -82,6 +84,7 @@ document.getElementById("el").addEventListener("click", function (event) {
           .done(function () {
             document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
             translator.translatePageTo("el");
+            localStorage.setItem("language", "el");
           });
       });
   } else {
@@ -92,6 +95,7 @@ document.getElementById("el").addEventListener("click", function (event) {
       .done(function () {
         document.querySelectorAll(".user-nav a")[5].style.borderBottom = "0.0625em solid black";
         translator.translatePageTo("el");
+        localStorage.setItem("language", "el");
       });
   }
 });

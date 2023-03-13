@@ -221,5 +221,9 @@
   },
   "ranking-vote-results-inside-container": {
     "ranking_results": "Αποτελέσματα Κατάταξης"
+  },
+  "login-form": {
+    "text1": "Δεν έχετε λογαριασμό; ",
+    "text2": "Εγγραφείτε τώρα"
   }
 }

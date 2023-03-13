@@ -498,17 +498,37 @@ export function generate_posts(
       user_yes_no_vote.length = 0;
       post_data = response;
       if (response[0].length > 16) {
-        if (translator._currentLanguage !== "el" && translator._currentLanguage !== "en" && response[response.length - 1][0] !== null) {
+        if (response[response.length - 1][0] !== null) {
           translator.translatePageTo(response[response.length - 1][0]);
           if (response[response.length - 1][0] === "en") {
             document.getElementById("en").style.backgroundColor = "#00ffd0";
+            localStorage.setItem("language", "en");
           } else if (response[response.length - 1][0] === "el") {
             document.getElementById("el").style.backgroundColor = "#00ffd0";
+            localStorage.setItem("language", "el");
+          }
+        } else {
+          if (localStorage.getItem("language") !== "el" && localStorage.getItem("language") !== "en") {
+            document.getElementById("en").style.backgroundColor = "#00ffd0";
+            localStorage.setItem("language", "en");
+          } else if (localStorage.getItem("language") === "el") {
+            document.getElementById("el").style.backgroundColor = "#00ffd0";
+            translator.translatePageTo("el");
+          } else if (localStorage.getItem("language") === "en") {
+            document.getElementById("en").style.backgroundColor = "#00ffd0";
+            translator.translatePageTo("en");
           }
         }
       } else {
-        if (translator._currentLanguage !== "el" && translator._currentLanguage !== "en") {
+        if (localStorage.getItem("language") !== "el" && localStorage.getItem("language") !== "en") {
           document.getElementById("en").style.backgroundColor = "#00ffd0";
+          localStorage.setItem("language", "en");
+        } else if (localStorage.getItem("language") === "el") {
+          document.getElementById("el").style.backgroundColor = "#00ffd0";
+          translator.translatePageTo("el");
+        } else if (localStorage.getItem("language") === "en") {
+          document.getElementById("en").style.backgroundColor = "#00ffd0";
+          translator.translatePageTo("en");
         }
       }
       post_data.pop();

@@ -221,5 +221,9 @@
   },
   "ranking-vote-results-inside-container": {
     "ranking_results": "Ranking Results"
+  },
+  "login-form": {
+    "text1": "Don't have an account? ",
+    "text2": "Sign up now"
   }
 }

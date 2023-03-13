@@ -3,10 +3,18 @@ document.getElementById("sum").addEventListener("click", function () {
   let upass = document.forms["login-form"]["password"].value;
 
   if (uname === "") {
-    document.getElementById("user-help").innerText = "Username field is empty";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("user-help").innerText = "Το όνομα χρήστη δεν έχει συμπληρωθεί";
+    } else {
+      document.getElementById("user-help").innerText = "Username field is empty";
+    }
     document.getElementById("pass-help").innerText = "";
   } else if (upass === "") {
-    document.getElementById("pass-help").innerText = "Password field is empty";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("pass-help").innerText = "Ο κωδικός χρήστη δεν έχει συμπληρωθεί";
+    } else {
+      document.getElementById("pass-help").innerText = "Password field is empty";
+    }
     document.getElementById("user-help").innerText = "";
   } else {
     fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
@@ -25,13 +33,25 @@ document.getElementById("sum").addEventListener("click", function () {
           .then((response) => {
             if (response.trim() === "Wrong Password") {
               document.getElementById("user-help").innerText = "";
-              document.getElementById("pass-help").innerText = "Incorrect Username or Password";
+              if (localStorage.getItem("language") === "el") {
+                document.getElementById("pass-help").innerText = "Λάθος όνομα χρήστη ή κωδικός";
+              } else {
+                document.getElementById("pass-help").innerText = "Incorrect Username or Password";
+              }
             } else if (response.trim() === "Wrong Username") {
               document.getElementById("user-help").innerText = "";
-              document.getElementById("pass-help").innerText = "Incorrect Username or Password";
+              if (localStorage.getItem("language") === "el") {
+                document.getElementById("pass-help").innerText = "Λάθος όνομα χρήστη ή κωδικός";
+              } else {
+                document.getElementById("pass-help").innerText = "Incorrect Username or Password";
+              }
             } else if (response.trim() === "Oops! Something went wrong! Please try again later!") {
               document.getElementById("user-help").innerText = "";
-              document.getElementById("pass-help").innerText = "Oops! Something went wrong! Please try again later!";
+              if (localStorage.getItem("language") === "el") {
+                document.getElementById("pass-help").innerText = "Κάτι πήγε λάθος. Παρακαλώ δοκιμάστε ξανά.";
+              } else {
+                document.getElementById("pass-help").innerText = "Oops. Something went wrong. Please try again later.";
+              }
             } else if (response.trim() === "Success") {
               window.location = "../index.php";
             }
