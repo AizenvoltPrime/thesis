@@ -225,5 +225,10 @@
   "login-form": {
     "text1": "Don't have an account? ",
     "text2": "Sign up now"
+  },
+  "reg-form": {
+    "text1": "Min 6 and max 16 characters",
+    "text2": "Already have an account? ",
+    "text3": "Login now"
   }
 }

@@ -56,14 +56,16 @@ function transalte_page() {
     translator.translatePageTo("el");
     document.querySelector('input[name="username"]').placeholder = "Όνομα Χρήστη";
     document.querySelector('input[name="password"]').placeholder = "Κωδικός";
-    document.querySelector("#sum").value = "Σύνδεση";
+    document.querySelector('input[name="password_confirm"]').placeholder = "Επανάληψη Κωδικού";
+    document.querySelector("#sum").value = "Υποβολή";
     document.getElementById("el").style.backgroundColor = "#00ffd0";
   } else {
     translator.translatePageTo("en");
     localStorage.setItem("language", "en");
     document.querySelector('input[name="username"]').placeholder = "Username";
     document.querySelector('input[name="password"]').placeholder = "Password";
-    document.querySelector("#sum").value = "Login";
+    document.querySelector('input[name="password_confirm"]').placeholder = "Repeat Password";
+    document.querySelector("#sum").value = "Submit";
     document.getElementById("en").style.backgroundColor = "#00ffd0";
   }
 }

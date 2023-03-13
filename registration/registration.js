@@ -5,47 +5,88 @@ document.getElementById("sum").addEventListener("click", function () {
   let uemail = document.forms["registration-form"]["email"].value;
 
   if (uname === "") {
-    document.getElementById("user-help").innerText = "Username field is empty";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("user-help").innerText = "Το όνομα χρήστη δεν έχει συμπληρωθεί";
+    } else {
+      document.getElementById("user-help").innerText = "Username field is empty";
+    }
     document.getElementById("pass-help").innerText = "";
     document.getElementById("passc-help").innerText = "";
     document.getElementById("email-help").innerText = "";
   } else if (upass === "") {
-    document.getElementById("pass-help").innerText = "Password field is empty";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("pass-help").innerText = "Ο κωδικός χρήστη δεν έχει συμπληρωθεί";
+    } else {
+      document.getElementById("pass-help").innerText = "Password field is empty";
+    }
     document.getElementById("user-help").innerText = "";
     document.getElementById("passc-help").innerText = "";
     document.getElementById("email-help").innerText = "";
   } else if (upassc === "") {
-    document.getElementById("passc-help").innerText = "Password Confirmation field is empty";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("passc-help").innerText = "Ο κωδικός επιβεβαίωσης δεν έχει συμπληρωθεί";
+    } else {
+      document.getElementById("passc-help").innerText = "Password Confirmation field is empty";
+    }
     document.getElementById("user-help").innerText = "";
     document.getElementById("pass-help").innerText = "";
     document.getElementById("email-help").innerText = "";
   } else if (uemail === "") {
-    document.getElementById("email-help").innerText = "Email field is empty";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("email-help").innerText = "Το email δεν έχει συμπληρωθεί";
+    } else {
+      document.getElementById("email-help").innerText = "Email field is empty";
+    }
     document.getElementById("user-help").innerText = "";
     document.getElementById("pass-help").innerText = "";
     document.getElementById("passc-help").innerText = "";
   } else if (uname.length < 6 || uname.length > 16) {
-    document.getElementById("user-help").innerText = "Username must be between 6 and 16 characters";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("user-help").innerText = "Το όνομα χρήστη πρέπει να έχει από 6 έως 16 χαρακτήρες";
+    } else {
+      document.getElementById("user-help").innerText = "Username must be between 6 and 16 characters";
+    }
   } else if (uname.indexOf(" ") > 0) {
-    document.getElementById("user-help").innerText = "Username must not have spaces";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("user-help").innerText = "Το όνομα χρήστη δε πρέπει να έχει κενά";
+    } else {
+      document.getElementById("user-help").innerText = "Username must not have spaces";
+    }
     document.getElementById("pass-help").innerText = "";
     document.getElementById("passc-help").innerText = "";
     document.getElementById("email-help").innerText = "";
   } else if (upass !== upassc) {
-    document.getElementById("pass-help").innerText = "Passwords must match";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("pass-help").innerText = "Οι κωδικοί πρέπει να ταιριάζουν";
+    } else {
+      document.getElementById("pass-help").innerText = "Passwords must match";
+    }
     document.getElementById("user-help").innerText = "";
     document.getElementById("passc-help").innerText = "";
     document.getElementById("email-help").innerText = "";
   } else if (upass.length < 8) {
-    document.getElementById("pass-help").innerText = "Password must be at least 8 characters";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("pass-help").innerText = "Ο κωδικός πρέπει να έχει τουλάχιστον 8 χαρακτήρες";
+    } else {
+      document.getElementById("pass-help").innerText = "Password must be at least 8 characters";
+    }
     document.getElementById("user-help").innerText = "";
     document.getElementById("passc-help").innerText = "";
     document.getElementById("email-help").innerText = "";
   } else if (upass.indexOf(" ") > 0) {
-    document.getElementById("pass-help").innerText = "Password must not have spaces";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("pass-help").innerText = "Ο κωδικός δε πρέπει να έχει κενά";
+    } else {
+      document.getElementById("pass-help").innerText = "Password must not have spaces";
+    }
   } else if (!/[A-Z]/g.test(upass) || !/[0-9]/g.test(upass) || !/[.!@#$&*]/g.test(upass)) {
-    document.getElementById("pass-help").innerText =
-      "Password must contain at least 8 character and must also contain, at least one capital letter, a digit and one of these symbols(e.g. .!#$*&@)";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("pass-help").innerText =
+        "Ο κωδικός πρέπει να περιέχει τουλάχιστον 8 χαρακτήρες και πρέπει επίσης να περιέχει τουλάχιστον ένα κεφαλαίο γράμμα, ένα ψηφίο και ένα από τα παρακάτω σύμβολα(π.χ. .!#$*&@)";
+    } else {
+      document.getElementById("pass-help").innerText =
+        "Password must contain at least 8 character and must also contain, at least one capital letter, a digit and one of these symbols(e.g. .!#$*&@)";
+    }
     document.getElementById("user-help").innerText = "";
     document.getElementById("passc-help").innerText = "";
     document.getElementById("email-help").innerText = "";
@@ -58,23 +99,39 @@ document.getElementById("sum").addEventListener("click", function () {
       .then((res) => res.text())
       .then((response) => {
         if (response.trim() === "This username is already taken.") {
-          document.getElementById("user-help").innerText = "This username is already taken";
+          if (localStorage.getItem("language") === "el") {
+            document.getElementById("user-help").innerText = "Το όνομα χρήστη υπάρχει ήδη";
+          } else {
+            document.getElementById("user-help").innerText = "This username is already taken";
+          }
           document.getElementById("pass-help").innerText = "";
           document.getElementById("passc-help").innerText = "";
           document.getElementById("email-help").innerText = "";
         } else if (response.trim() === "This email is already being used.") {
-          document.getElementById("email-help").innerText = "This email is already being used";
+          if (localStorage.getItem("language") === "el") {
+            document.getElementById("email-help").innerText = "Το email χρησιμοποιείται ήδη";
+          } else {
+            document.getElementById("email-help").innerText = "This email is already being used";
+          }
           document.getElementById("user-help").innerText = "";
           document.getElementById("pass-help").innerText = "";
           document.getElementById("passc-help").innerText = "";
         } else if (response.trim() === "Please enter a valid email address") {
-          document.getElementById("email-help").innerText = "Please enter a valid email address";
+          if (localStorage.getItem("language") === "el") {
+            document.getElementById("email-help").innerText = "Παρακαλώ εισάγετε ένα έγκυρο email";
+          } else {
+            document.getElementById("email-help").innerText = "Please enter a valid email address";
+          }
           document.getElementById("user-help").innerText = "";
           document.getElementById("pass-help").innerText = "";
           document.getElementById("passc-help").innerText = "";
         } else if (response.trim() === "Something went wrong! Please try again later!") {
           document.getElementById("user-help").innerText = "";
-          document.getElementById("pass-help").innerText = "Something went wrong! Please try again later!";
+          if (localStorage.getItem("language") === "el") {
+            document.getElementById("pass-help").innerText = "Κάτι πήγε στραβά. Παρακαλώ δοκιμάστε ξανά.";
+          } else {
+            document.getElementById("pass-help").innerText = "Something went wrong. Please try again later.";
+          }
         } else if (response.trim() === "Success") {
           window.location = "../login/login.php";
         }
