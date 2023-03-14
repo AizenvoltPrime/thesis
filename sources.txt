@@ -88,4 +88,3 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 ΕΠΟΜΕΝΑ TASK:
 
 1. Να βάλω πρώτα ερώτηση μετά type και μετά τα υπόλοιπα
-2. Bάζω αυτό το περιορισμό αν είναι όλα τα choices τα ίδια

@@ -261,7 +261,15 @@ document.getElementById("next-step").addEventListener("click", function () {
         $("#warning-no-input-poll-choices").fadeIn(300, function () {});
       }
     }
-    if (pass === true) {
+    if (pass && check_for_duplicates(poll_choices) === true) {
+      $("#warning-no-input-poll-choices").fadeOut(300, function () {});
+      $("#notification-container").fadeIn(300, function () {});
+      if (translator._currentLanguage === "el") {
+        document.getElementById("notification-text").innerText = "Έχετε διπλότυπες επιλογές για τη δημοσκόπηση";
+      } else {
+        document.getElementById("notification-text").innerText = "You have duplicate poll choices";
+      }
+    } else if (pass === true) {
       $("#warning-no-input-poll-choices").fadeOut(300, function () {});
       $("#input-poll-choices").fadeOut(300, function () {});
       $("#next-step").fadeOut(300, function () {});
@@ -416,6 +424,11 @@ document.getElementById("next-step").addEventListener("click", function () {
     }
   }
 });
+
+//Checks for duplicate strings
+function check_for_duplicates(array) {
+  return new Set(array).size !== array.length;
+}
 
 document.getElementById("yes-no").addEventListener("click", function () {
   choice_highlight("yes-no", "rating", "approval", "ranking");
