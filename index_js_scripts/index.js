@@ -976,7 +976,14 @@ postContainer.addEventListener(
       const post_vote = btn_vote.closest(".post");
       const postIndexVote = [...postContainer.children].indexOf(post_vote);
       if (post_data[0].length > 16) {
-        if (
+        if (post_data[postIndexVote][1] === post_data[postIndexVote][16]) {
+          $("#notification-container").fadeIn(300, function () {});
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText = "Δεν επιτρέπεται να ψηφίσετε στη δικιά σας δημοσκόπηση";
+          } else {
+            document.getElementById("notification-text").innerText = "You aren't allowed to vote in your own poll";
+          }
+        } else if (
           post_data[postIndexVote][11] !== null &&
           DateTime.fromFormat(post_data[postIndexVote][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
@@ -2156,7 +2163,14 @@ postContainer.addEventListener(
       } else if (btn_yes) {
         const post_yes = btn_yes.closest(".post");
         const postIndexYes = [...postContainer.children].indexOf(post_yes);
-        if (
+        if (post_data[postIndexYes][1] === post_data[postIndexYes][16]) {
+          $("#notification-container").fadeIn(300, function () {});
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText = "Δεν επιτρέπεται να ψηφίσετε στη δικιά σας δημοσκόπηση";
+          } else {
+            document.getElementById("notification-text").innerText = "You aren't allowed to vote in your own poll";
+          }
+        } else if (
           post_data[postIndexYes][11] !== null &&
           DateTime.fromFormat(post_data[postIndexYes][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
@@ -2369,7 +2383,14 @@ postContainer.addEventListener(
       } else if (btn_no) {
         const post_no = btn_no.closest(".post");
         const postIndexNo = [...postContainer.children].indexOf(post_no);
-        if (
+        if (post_data[postIndexNo][1] === post_data[postIndexNo][16]) {
+          $("#notification-container").fadeIn(300, function () {});
+          if (translator._currentLanguage === "el") {
+            document.getElementById("notification-text").innerText = "Δεν επιτρέπεται να ψηφίσετε στη δικιά σας δημοσκόπηση";
+          } else {
+            document.getElementById("notification-text").innerText = "You aren't allowed to vote in your own poll";
+          }
+        } else if (
           post_data[postIndexNo][11] !== null &&
           DateTime.fromFormat(post_data[postIndexNo][11], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1
         ) {
