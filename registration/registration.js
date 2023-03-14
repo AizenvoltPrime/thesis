@@ -133,10 +133,21 @@ document.getElementById("sum").addEventListener("click", function () {
             document.getElementById("pass-help").innerText = "Something went wrong. Please try again later.";
           }
         } else if (response.trim() === "Success") {
-          window.location = "../login/login.php";
+          $("#reg-form").fadeOut(300, function () {
+            $("#notification-container").fadeIn(300, function () {});
+            if (localStorage.getItem("language") === "el") {
+              document.getElementById("notification-text").innerText = "H εγγραφή ολοκληρώθηκε με επιτυχία";
+            } else {
+              document.getElementById("notification-text").innerText = "Registration was completed successfully";
+            }
+          });
         }
       });
   }
+});
+
+document.getElementById("notification-button").addEventListener("click", function () {
+  window.location = "../login/login.php";
 });
 
 (function () {

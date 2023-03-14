@@ -19,6 +19,7 @@ require_once "../old_config.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.7" />
     <link rel="stylesheet" type="text/css" href="../style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <script src="https://unpkg.com/@andreasremdt/simple-translator@latest/dist/umd/translator.min.js"></script>
     <script type="module" src="registration.js"></script>
@@ -42,6 +43,12 @@ require_once "../old_config.php";
         <div id="language" style="display:none;">
             <div id="en">English</div>
             <div id="el">Ελληνικά</div>
+        </div>
+    </div>
+    <div id="notification-container">
+        <div id="notification">
+            <div id="notification-text"></div>
+            <button id="notification-button" type="button">OK</button>
         </div>
     </div>
     <form id="reg-form" name="registration-form" class="reg">
