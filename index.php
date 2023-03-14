@@ -48,14 +48,14 @@ require_once "new_config.php";
   </div>
   <!--This div is for the left navbar icons.-->
   <div id="sidenav" class="sidenav">
-    <button class="closebtn"><i class="fa-solid fa-times fa-2x"></i></button>
+    <button class="closebtn"><i class="fa-solid fa-times"></i></button>
     <a class="nav-element"><i class="fa-solid fa-house"></i><span data-i18n="sidenav.home">Home</span></a>
     <a class="nav-element"><i class="fa-solid fa-chart-simple"></i><span data-i18n="sidenav.analytics">Analytics</span></a>
     <a class="nav-element"><i class="fa-solid fa-info"></i><span data-i18n="sidenav.about">About</span></a>
   </div>
   <!--This div is for the right navbar icons.-->
   <div id="user-nav" class="user-nav">
-    <button class="closeuserbtn"><i class="fa-solid fa-times fa-2x"></i></button>
+    <button class="closeuserbtn"><i class="fa-solid fa-times"></i></button>
     <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i><span data-i18n="usernav.login">Login</span></a>
     <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i><span data-i18n="usernav.registration">Registration</span></a>
     <a class="nav-element"><i class="fa-solid fa-bookmark fa-1x"></i><span data-i18n="usernav.bookmarks">Bookmarks</span></a>

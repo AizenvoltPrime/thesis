@@ -254,6 +254,10 @@ input {
   -webkit-text-fill-color: transparent;
 }
 
+.fa-times {
+  font-size: 1.5em;
+}
+
 .fa-bars,
 .fa-plus {
   color: #979797;
@@ -1370,7 +1374,7 @@ a:active {
   text-align: center;
   background: #1a1a1b;
   border-radius: 0.3em;
-  max-width: 11em;
+  max-width: 14em;
   background: #2c3134;
   overflow-x: auto;
 }

@@ -35,11 +35,11 @@ require_once "../old_config.php";
         <div id="profile-icon"><i class="fa-solid fa-user fa-4x" style="color:#979797"></i></div>
     </div>
     <div id="sidenav" class="sidenav">
-        <div class="closebtn"><i class="fa-solid fa-times fa-2x"></i></div>
+        <div class="closebtn"><i class="fa-solid fa-times"></i></div>
         <a class="nav-element" href="../index.php"><i class="fa-solid fa-house"></i><span data-i18n="sidenav.home">Home</span></a>
     </div>
     <div id="user-nav" class="user-nav">
-        <div class="closeuserbtn"><i class="fa-solid fa-times fa-2x"></i></div>
+        <div class="closeuserbtn"><i class="fa-solid fa-times"></i></div>
         <a class="nav-element" href="../registration/registration.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i><span data-i18n="usernav.registration">Registration</span></a>
         <a class="nav-element"><i class="fa-solid fa-globe fa-1x"></i><span data-i18n="usernav.language">Language</span></a>
         <div id="language" style="display:none;">
