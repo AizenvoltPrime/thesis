@@ -5,7 +5,7 @@ import { translator } from "./translate.js";
 let user_choice = "none"; //poll choice
 let specific_user_posts = null; //this is for showing posts of a specified user
 let question_choice = "none"; //yes/no response choices
-let template_status = "0000001"; //used to navigate through poll templates
+let template_status = "0"; //used to navigate through poll templates
 let user_chevron_vote = []; //like/dislike vote
 let user_yes_no_vote = []; //yes/no vote
 let node = []; //used for cloning posts template
@@ -17,6 +17,7 @@ let time_limit; //stores the time when the poll will close
 let poll_choices = []; //stores poll choices
 let post_category; //stores post category
 let poll_choices_number; //number of poll choices
+let question_text; //poll question text
 let bookmarks_active = false; //helps decide whether to use filters on all posts or on bookmakred posts only
 let user_coordinates = []; //stores user coordinates
 let event_coordinates = []; //stores coordinates of the event when location restricted voting is used
@@ -153,8 +154,8 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
             .done(function () {
               $(".post").not(":first").remove();
               reset_poll_data();
-              document.getElementById("poll-selection").style.display = "flex";
-              document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
+              document.getElementById("poll-question").style.display = "flex";
+              document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
               document.getElementById("next-step").style.display = "block";
               document.getElementById("next-step").style.animation = "fade_in_show 0.5s";
             });
@@ -167,8 +168,8 @@ document.getElementById("add-post-icon").addEventListener("click", function () {
             .promise()
             .done(function () {
               reset_poll_data();
-              document.getElementById("poll-selection").style.display = "flex";
-              document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
+              document.getElementById("poll-question").style.display = "flex";
+              document.getElementById("poll-question").style.animation = "fade_in_show 0.5s";
               document.getElementById("next-step").style.display = "block";
               document.getElementById("next-step").style.animation = "fade_in_show 0.5s";
             });
@@ -182,7 +183,24 @@ document.getElementById("next-step").addEventListener("click", function () {
   time_limit = document.forms["time-choice"]["time-limit-choice"].value;
   post_category = document.getElementById("categories").value;
   poll_choices_number = document.getElementById("poll-choices").value;
-  if (template_status === "0000001") {
+  if (template_status === "0") {
+    question_text = document.forms["poll-question"]["question-text"].value;
+    if ($("#question").val().trim().length < 15) {
+      $("#warning-empty-text-area").fadeIn(300, function () {});
+    } else if ($("#question").val().trim().length >= 1) {
+      $("#warning-empty-text-area").fadeOut(300, function () {});
+      $("#poll-question").fadeOut(300, function () {});
+      $("#next-step").fadeOut(300, function () {});
+      $("#next-step")
+        .promise()
+        .done(function () {
+          document.getElementById("poll-selection").style.display = "flex";
+          document.getElementById("poll-selection").style.animation = "fade_in_show 0.5s";
+          $("#next-step").fadeIn(300, function () {});
+          template_status = "1";
+        });
+    }
+  } else if (template_status === "1") {
     if (user_choice === "none") {
       $("#warning-nothing-selected").fadeIn(300, function () {});
     } else if (user_choice !== "none") {
@@ -199,7 +217,7 @@ document.getElementById("next-step").addEventListener("click", function () {
           } else {
             $("#poll-template-time-choice").fadeIn(300, function () {});
             $("#next-step").fadeIn(300, function () {});
-            template_status = "0000010";
+            template_status = "2";
           }
         });
     }
@@ -278,10 +296,10 @@ document.getElementById("next-step").addEventListener("click", function () {
         .done(function () {
           $("#poll-template-time-choice").fadeIn(300, function () {});
           $("#next-step").fadeIn(300, function () {});
-          template_status = "0000010";
+          template_status = "2";
         });
     }
-  } else if (template_status === "0000010") {
+  } else if (template_status === "2") {
     if (question_choice !== "yes-time-limit" && question_choice !== "no-time-limit") {
       $("#warning-no-time-limit-choice").fadeIn(300, function () {});
     } else if (question_choice === "yes-time-limit") {
@@ -293,7 +311,7 @@ document.getElementById("next-step").addEventListener("click", function () {
       });
       choice_dehighlight("yes-time-limit");
       question_choice = "none";
-      template_status = "0000100";
+      template_status = "3";
     } else if (question_choice === "no-time-limit") {
       $("#poll-template-time-choice").fadeOut(300, function () {});
       $("#warning-no-time-limit-choice").fadeOut(300, function () {});
@@ -305,10 +323,10 @@ document.getElementById("next-step").addEventListener("click", function () {
           $("#next-step").fadeIn(300, function () {});
           choice_dehighlight("no-time-limit");
           question_choice = "none";
-          template_status = "0001000";
+          template_status = "4";
         });
     }
-  } else if (template_status === "0000100") {
+  } else if (template_status === "3") {
     if (time_limit === "") {
       $("#warning-no-time-limit").fadeIn(300, function () {});
     } else if (time_limit !== "") {
@@ -317,10 +335,10 @@ document.getElementById("next-step").addEventListener("click", function () {
       $("#next-step").fadeOut(300, function () {
         $("#poll-template-location-restriction").fadeIn(300, function () {});
         $("#next-step").fadeIn(300, function () {});
-        template_status = "0001000";
+        template_status = "4";
       });
     }
-  } else if (template_status === "0001000") {
+  } else if (template_status === "4") {
     if (question_choice !== "yes-location-restriction" && question_choice !== "no-location-restriction") {
       $("#warning-no-location-restriction-choice").fadeIn(300, function () {});
     } else if (question_choice === "yes-location-restriction") {
@@ -335,18 +353,23 @@ document.getElementById("next-step").addEventListener("click", function () {
         $("#radius-number").fadeIn(300, function () {});
       });
       choice_dehighlight("yes-location-restriction");
-      template_status = "0010000";
+      template_status = "5";
     } else if (question_choice === "no-location-restriction") {
       $("#poll-template-location-restriction").fadeOut(300, function () {});
       $("#warning-no-location-restriction-choice").fadeOut(300, function () {});
       $("#next-step").fadeOut(300, function () {
+        if (translator._currentLanguage === "el") {
+          document.getElementById("next-step").innerText = "Ανάρτηση";
+        } else {
+          document.getElementById("next-step").innerText = "Post Poll";
+        }
         $("#post-category-container").fadeIn(300, function () {});
         $("#next-step").fadeIn(300, function () {});
         choice_dehighlight("no-location-restriction");
-        template_status = "0100000";
+        template_status = "6";
       });
     }
-  } else if (template_status === "0010000") {
+  } else if (template_status === "5") {
     if (event_coordinates.length < 2) {
       $("#warning-no-location-selected").fadeIn(300, function () {});
     } else {
@@ -354,37 +377,20 @@ document.getElementById("next-step").addEventListener("click", function () {
       $("#warning-radius-too-small").fadeOut(300, function () {});
       $("#location-choice").fadeOut(300, function () {});
       $("#next-step").fadeOut(300, function () {
-        $("#post-category-container").fadeIn(300, function () {});
-        $("#next-step").fadeIn(300, function () {});
-        template_status = "0100000";
-      });
-    }
-  } else if (template_status === "0100000") {
-    if (post_category === "0") {
-      $("#warning-no-category-selected").fadeIn(300, function () {});
-    } else {
-      $("#warning-no-category-selected").fadeOut(300, function () {});
-      $("#post-category-container").fadeOut(300, function () {});
-      $("#next-step").fadeOut(300, function () {
         if (translator._currentLanguage === "el") {
           document.getElementById("next-step").innerText = "Ανάρτηση";
         } else {
           document.getElementById("next-step").innerText = "Post Poll";
         }
+        $("#post-category-container").fadeIn(300, function () {});
+        $("#next-step").fadeIn(300, function () {});
+        template_status = "6";
       });
-      $("#next-step")
-        .promise()
-        .done(function () {
-          $("#next-step").fadeIn(300, function () {});
-          $("#poll-question").fadeIn(300, function () {});
-          template_status = "1000000";
-        });
     }
-  } else if (template_status === "1000000") {
-    let question_text = document.forms["poll-question"]["question-text"].value;
-    if ($("#question").val().trim().length < 15) {
-      $("#warning-empty-text-area").fadeIn(300, function () {});
-    } else if (user_choice !== "none" && $("#question").val().trim().length >= 1) {
+  } else if (template_status === "6") {
+    if (post_category === "0") {
+      $("#warning-no-category-selected").fadeIn(300, function () {});
+    } else {
       document.getElementById("next-step").disabled = true;
       if (time_limit !== "") {
         time_limit = time_limit + ":00";
@@ -406,8 +412,8 @@ document.getElementById("next-step").addEventListener("click", function () {
         .then((res) => res.json())
         .then((response) => {
           conn.send(JSON.stringify(["new_post_added", response]));
-          $("#warning-empty-text-area").fadeOut(300, function () {});
-          $("#poll-question").fadeOut(300, function () {});
+          $("#warning-no-category-selected").fadeOut(300, function () {});
+          $("#post-category-container").fadeOut(300, function () {});
           $("#next-step").fadeOut(300, function () {
             if (translator._currentLanguage === "el") {
               document.getElementById("next-step").innerText = "Επόμενο";
@@ -3420,7 +3426,7 @@ export function reset_poll_data() {
     ],
   });
 
-  template_status = "0000001";
+  template_status = "0";
   event_coordinates.length = 0;
   if (event_marker !== null) {
     event_location_map.removeLayer(event_marker);
