@@ -74,13 +74,13 @@
   "poll-selection": {
     "first_question": "Choose one of the following poll types",
     "yes_no": "Yes/No",
-    "yes_no_details": "Create polls where users answer Yes/No",
+    "yes_no_details": "Create polls where visitors answer Yes/No",
     "rating": "Rating",
-    "rating_details": "Create polls where users rate answers with a star rating",
+    "rating_details": "Create polls where visitors rate answers with a star rating",
     "approval": "Approval",
-    "approval_details": "Create polls where users only select answers that they approve",
+    "approval_details": "Create polls where visitors only select answers that they approve",
     "ranking": "Ranking",
-    "ranking_details": "Create polls where users rank answers based on their preference"
+    "ranking_details": "Create polls where visitors rank answers based on their preference"
   },
   "warning-nothing-selected": {
     "text": "You must choose a poll type"
@@ -138,7 +138,7 @@
     "text": "You must select a category"
   },
   "poll-question": {
-    "question-instruction": "Please type your question and keep in mind that after submission, edit is not allowed"
+    "question-instruction": "Type your question - after submission you can delete it but not edit it"
   },
   "warning-empty-text-area": {
     "text": "Text area needs to have at least 15 characters and at most 150 characters"

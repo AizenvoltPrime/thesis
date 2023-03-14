@@ -1366,11 +1366,11 @@ a:active {
 #categories,
 #poll-choices {
   color: #f3f3f3;
-  font-size: 2.51em;
+  font-size: 1.5em;
   text-align: center;
   background: #1a1a1b;
   border-radius: 0.3em;
-  max-width: 7.5em;
+  max-width: 11em;
   background: #2c3134;
   overflow-x: auto;
 }

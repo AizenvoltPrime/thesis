@@ -188,13 +188,13 @@ require_once "new_config.php";
       <div id="first-question" data-i18n="poll-selection.first_question">Choose one of the following poll types</div>
     </div>
     <button id="yes-no" data-i18n="poll-selection.yes_no">Yes/No</button>
-    <div class="yes_no_details" data-i18n="poll-selection.yes_no_details">Create polls where users answer Yes/No</div>
+    <div class="yes_no_details" data-i18n="poll-selection.yes_no_details">Create polls where visitors answer Yes/No</div>
     <button id="rating" data-i18n="poll-selection.rating">Rating</button>
-    <div class="rating_details" data-i18n="poll-selection.rating_details">Create polls where users rate answers with a star rating</div>
+    <div class="rating_details" data-i18n="poll-selection.rating_details">Create polls where visitors rate answers with a star rating</div>
     <button id="approval" data-i18n="poll-selection.approval">Approval</button>
-    <div class="approval_details" data-i18n="poll-selection.approval_details">Create polls where users only select answers that they approve</div>
+    <div class="approval_details" data-i18n="poll-selection.approval_details">Create polls where visitors only select answers that they approve</div>
     <button id="ranking" data-i18n="poll-selection.ranking">Ranking</button>
-    <div class="ranking_details" data-i18n="poll-selection.ranking_details">Create polls where users rank answers based on their preference</div>
+    <div class="ranking_details" data-i18n="poll-selection.ranking_details">Create polls where visitors rank answers based on their preference</div>
   </div>
   <div id="warning-nothing-selected" data-i18n="warning-nothing-selected.text">You must choose a poll type</div>
   <!--This div is for users to decide how many choiced their poll will have.-->
@@ -287,7 +287,7 @@ require_once "new_config.php";
   <div id="warning-no-category-selected" style="display:none;" data-i18n="warning-no-category-selected.text">You must select a category</div>
   <!--This form is for users to type the poll question.-->
   <form id="poll-question" style="display:none;">
-    <div id="question-instruction" data-i18n="poll-question.question-instruction">Please type your question and keep in mind that after submission, edit is not allowed</div>
+    <div id="question-instruction" data-i18n="poll-question.question-instruction">Type your question - after submission you can delete it but not edit it</div>
     <textarea id="question" type="text" name="question-text" maxlength="150"></textarea>
   </form>
   <!--This button is used to navigate inside poll creation template.-->
