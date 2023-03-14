@@ -889,13 +889,23 @@ export function generate_posts(
               }
             }
             if (post_data[i][7] !== null && DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") === -1) {
-              document.querySelectorAll(".poll-remaining-time")[i].innerText =
-                "Poll closes " + DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative();
+              if (translator._currentLanguage === "el") {
+                document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                  "Η δημοσκόπηση κλείνει " + DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative();
+              } else {
+                document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                  "Poll closes " + DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative();
+              }
               document.querySelectorAll(".poll-timer-container")[i].style.display = "flex";
               document.querySelectorAll(".fa-clock")[i].style.color = "#00ffd0";
             } else if (post_data[i][7] !== null && DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative().search("ago") !== -1) {
-              document.querySelectorAll(".poll-remaining-time")[i].innerText =
-                "Poll closed " + DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative();
+              if (translator._currentLanguage === "el") {
+                document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                  "Η δημοσκόπηση έκλεισε " + DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative();
+              } else {
+                document.querySelectorAll(".poll-remaining-time")[i].innerText =
+                  "Poll closed " + DateTime.fromFormat(post_data[i][7], "yyyy-MM-dd HH:mm:ss").toRelative();
+              }
               document.querySelectorAll(".poll-timer-container")[i].style.display = "flex";
               document.querySelectorAll(".poll-timer-container")[i].style.color = "#cc0000";
             }
