@@ -544,7 +544,7 @@ export function generate_posts(
             document.getElementById("el").style.backgroundColor = "#00ffd0";
             localStorage.setItem("language", "el");
 
-            document.querySelector('input[name="user-filter-choice"]').placeholder = "Πληκτρολογήστε Όνομα Χρήστη";
+            document.querySelector('input[name="user-filter-choice"]').placeholder = "Όνομα Χρήστη";
             document.querySelector('input[name="username"]').placeholder = "Νέο Όνομα Χρήστη";
             document.querySelector('input[name="password"]').placeholder = "Κωδικός";
             document.querySelector("#username-change").value = "Υποβολή";
@@ -572,7 +572,7 @@ export function generate_posts(
             document.getElementById("el").style.backgroundColor = "#00ffd0";
             translator.translatePageTo("el");
 
-            document.querySelector('input[name="user-filter-choice"]').placeholder = "Πληκτρολογήστε Όνομα Χρήστη";
+            document.querySelector('input[name="user-filter-choice"]').placeholder = "Όνομα Χρήστη";
             document.querySelector('input[name="username"]').placeholder = "Νέο Όνομα Χρήστη";
             document.querySelector('input[name="password"]').placeholder = "Κωδικός";
             document.querySelector("#username-change").value = "Υποβολή";
@@ -600,12 +600,18 @@ export function generate_posts(
         if (localStorage.getItem("language") !== "el" && localStorage.getItem("language") !== "en") {
           document.getElementById("en").style.backgroundColor = "#00ffd0";
           localStorage.setItem("language", "en");
+
+          document.querySelector('input[name="user-filter-choice"]').placeholder = "Type Username";
         } else if (localStorage.getItem("language") === "el") {
           document.getElementById("el").style.backgroundColor = "#00ffd0";
           translator.translatePageTo("el");
+
+          document.querySelector('input[name="user-filter-choice"]').placeholder = "Όνομα Χρήστη";
         } else if (localStorage.getItem("language") === "en") {
           document.getElementById("en").style.backgroundColor = "#00ffd0";
           translator.translatePageTo("en");
+
+          document.querySelector('input[name="user-filter-choice"]').placeholder = "Type Username";
         }
       }
       post_data.pop();
