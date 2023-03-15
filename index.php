@@ -326,7 +326,7 @@ require_once "new_config.php";
     </div>
     <span id="passc-help"></span>
     <div class="input-icons">
-      <input type="password" name="repeat-new-password" class="logged-form-control" placeholder="Repeat Password">
+      <input type="password" name="repeat-new-password" class="logged-form-control" placeholder="Repeat New Password">
       <i class="fa-solid fa-lock fa-2x"></i>
     </div>
     <input id="password-change" type="button" value="Submit">

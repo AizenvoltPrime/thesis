@@ -311,17 +311,33 @@ document.getElementById("username-change").addEventListener("click", function ()
   let upass = document.forms["username-change-form"]["password"].value;
 
   if (new_username === "") {
-    document.getElementById("user-help").innerText = "Username must be filled";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("user-help").innerText = "Το όνομα χρήστη δεν έχει συμπληρωθεί";
+    } else {
+      document.getElementById("user-help").innerText = "Username field is empty";
+    }
     document.getElementById("pass-help").innerText = "";
   } else if (new_username.length < 6 || new_username.length > 16) {
-    document.getElementById("user-help").innerText = "Username must be between 6 and 16 characters";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("user-help").innerText = "Το όνομα χρήστη πρέπει να έχει από 6 έως 16 χαρακτήρες";
+    } else {
+      document.getElementById("user-help").innerText = "Username must be between 6 and 16 characters";
+    }
     document.getElementById("pass-help").innerText = "";
   } else if (new_username.indexOf(" ") > 0) {
-    document.getElementById("user-help").innerText = "Username must not have spaces";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("user-help").innerText = "Το όνομα χρήστη δε πρέπει να έχει κενά";
+    } else {
+      document.getElementById("user-help").innerText = "Username must not have spaces";
+    }
     document.getElementById("pass-help").innerText = "";
   } else if (upass === "") {
     document.getElementById("user-help").innerText = "";
-    document.getElementById("pass-help").innerText = "Password must be filled";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("pass-help").innerText = "Ο κωδικός χρήστη δεν έχει συμπληρωθεί";
+    } else {
+      document.getElementById("pass-help").innerText = "Password field is empty";
+    }
   } else {
     document.getElementById("user-help").innerText = "";
     document.getElementById("pass-help").innerText = "";
@@ -332,11 +348,19 @@ document.getElementById("username-change").addEventListener("click", function ()
       .then((res) => res.text())
       .then((response) => {
         if (response.trim() == "Username Unavailable!") {
-          document.getElementById("user-help").innerText = "Username Unavailable";
+          if (localStorage.getItem("language") === "el") {
+            document.getElementById("user-help").innerText = "Το όνομα χρήστη δεν είναι διαθέσιμο";
+          } else {
+            document.getElementById("user-help").innerText = "Username Unavailable";
+          }
           document.getElementById("pass-help").innerText = "";
         } else if (response.trim() == "Incorrect Password!") {
           document.getElementById("user-help").innerText = "";
-          document.getElementById("pass-help").innerText = "Incorrect Password";
+          if (localStorage.getItem("language") === "el") {
+            document.getElementById("pass-help").innerText = "Ο κωδικός είναι λάθος";
+          } else {
+            document.getElementById("pass-help").innerText = "Incorrect Password";
+          }
         } else if (response.trim() == "Success") {
           document.getElementById("user-help").innerText = "";
           document.getElementById("pass-help").innerText = "";
@@ -420,21 +444,38 @@ document.getElementById("password-change").addEventListener("click", function ()
   let conf_pass = document.forms["password-change-form"]["repeat-new-password"].value;
 
   if (new_pass === "" || conf_pass === "" || current_password === "") {
-    document.getElementById("password-help").innerText = "One of the password fields is empty";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("password-help").innerText = "Ένα από τα πεδία κωδικών δεν έχει συμπληρωθεί";
+    } else {
+      document.getElementById("password-help").innerText = "One of the password fields is empty";
+    }
     document.getElementById("passc-help").innerText = "";
   } else if (new_pass !== conf_pass) {
     document.getElementById("password-help").innerText = "";
-    document.getElementById("passc-help").innerText = "Passwords must match";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("passc-help").innerText = "Οι κωδικοί πρέπει να ταιριάζουν";
+    } else {
+      document.getElementById("passc-help").innerText = "Passwords must match";
+    }
   } else if (new_pass.length < 8) {
     document.getElementById("password-help").innerText = "";
-    document.getElementById("passc-help").innerText = "Password must be at least 8 characters";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("passc-help").innerText = "Ο κωδικός πρέπει να έχει τουλάχιστον 8 χαρακτήρες";
+    } else {
+      document.getElementById("passc-help").innerText = "Password must be at least 8 characters";
+    }
   } else if (new_pass.indexOf(" ") > 0) {
     document.getElementById("password-help").innerText = "";
     document.getElementById("passc-help").innerText = "Password must not have spaces";
   } else if (!/[A-Z]/g.test(new_pass) || !/[0-9]/g.test(new_pass) || !/[.!@#$&*]/g.test(new_pass)) {
     document.getElementById("password-help").innerText = "";
-    document.getElementById("passc-help").innerText =
-      "Password must contain at least 8 character and must also contain, at least one capital letter, a digit and one of these symbols (e.g. .!#$*&@)";
+    if (localStorage.getItem("language") === "el") {
+      document.getElementById("passc-help").innerText =
+        "Ο κωδικός πρέπει να περιέχει τουλάχιστον 8 χαρακτήρες και πρέπει επίσης να περιέχει τουλάχιστον ένα κεφαλαίο γράμμα, ένα ψηφίο και ένα από τα παρακάτω σύμβολα(π.χ. .!#$*&@)";
+    } else {
+      document.getElementById("passc-help").innerText =
+        "Password must contain at least 8 character and must also contain, at least one capital letter, a digit and one of these symbols (e.g. .!#$*&@)";
+    }
   } else {
     fetch("process_data.php", {
       method: "POST",
@@ -447,7 +488,11 @@ document.getElementById("password-change").addEventListener("click", function ()
       .then((res) => res.text())
       .then((response) => {
         if (response.trim() == "Incorrect Password!") {
-          document.getElementById("password-help").innerText = "Incorrect Password";
+          if (localStorage.getItem("language") === "el") {
+            document.getElementById("password-help").innerText = "Λάθος Κωδικός";
+          } else {
+            document.getElementById("password-help").innerText = "Incorrect Password";
+          }
           document.getElementById("passc-help").innerText = "";
         } else if (response.trim() == "Success") {
           document.getElementById("password-help").innerText = "";

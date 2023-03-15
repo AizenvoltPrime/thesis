@@ -361,6 +361,10 @@ input.logged-form-control {
   text-align: center;
 }
 
+.logged-form-control::-webkit-input-placeholder {
+  font-size: 0.7em;
+}
+
 #username-change-form,
 #password-change-form {
   display: flex;
@@ -384,8 +388,9 @@ input.logged-form-control {
 #sum,
 #username-change,
 #password-change {
-  height: 3em;
-  width: 8em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  width: 6em;
   font-size: 1.5em;
   margin-top: 0.75em;
   background-image: linear-gradient(to right, #000, #c00);
@@ -394,6 +399,14 @@ input.logged-form-control {
   border-radius: 0.5em;
   font-weight: 900;
   cursor: pointer;
+}
+
+#username-change,
+#password-change {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  width: 5em;
+  font-size: 1.2em;
 }
 
 #sum.animated,
