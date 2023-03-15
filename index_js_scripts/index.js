@@ -539,6 +539,7 @@ export function generate_posts(
             document.querySelector('input[name="current-password"]').placeholder = "Current Password";
             document.querySelector('input[name="new-password"]').placeholder = "New Password";
             document.querySelector('input[name="repeat-new-password"]').placeholder = "Repeat New Password";
+            document.querySelector("#password-change").value = "Submit";
           } else if (response[response.length - 1][0] === "el") {
             document.getElementById("el").style.backgroundColor = "#00ffd0";
             localStorage.setItem("language", "el");
@@ -551,6 +552,7 @@ export function generate_posts(
             document.querySelector('input[name="current-password"]').placeholder = "Τωρινός Κωδικός";
             document.querySelector('input[name="new-password"]').placeholder = "Νέος Κωδικός";
             document.querySelector('input[name="repeat-new-password"]').placeholder = "Επαναλάβετε Νέο Κωδικό";
+            document.querySelector("#password-change").value = "Υποβολή";
           }
         } else {
           if (localStorage.getItem("language") !== "el" && localStorage.getItem("language") !== "en") {
@@ -565,6 +567,7 @@ export function generate_posts(
             document.querySelector('input[name="current-password"]').placeholder = "Current Password";
             document.querySelector('input[name="new-password"]').placeholder = "New Password";
             document.querySelector('input[name="repeat-new-password"]').placeholder = "Repeat New Password";
+            document.querySelector("#password-change").value = "Submit";
           } else if (localStorage.getItem("language") === "el") {
             document.getElementById("el").style.backgroundColor = "#00ffd0";
             translator.translatePageTo("el");
@@ -577,6 +580,7 @@ export function generate_posts(
             document.querySelector('input[name="current-password"]').placeholder = "Τωρινός Κωδικός";
             document.querySelector('input[name="new-password"]').placeholder = "Νέος Κωδικός";
             document.querySelector('input[name="repeat-new-password"]').placeholder = "Επαναλάβετε Νέο Κωδικό";
+            document.querySelector("#password-change").value = "Υποβολή";
           } else if (localStorage.getItem("language") === "en") {
             document.getElementById("en").style.backgroundColor = "#00ffd0";
             translator.translatePageTo("en");
@@ -589,6 +593,7 @@ export function generate_posts(
             document.querySelector('input[name="current-password"]').placeholder = "Current Password";
             document.querySelector('input[name="new-password"]').placeholder = "New Password";
             document.querySelector('input[name="repeat-new-password"]').placeholder = "Repeat New Password";
+            document.querySelector("#password-change").value = "Submit";
           }
         }
       } else {
