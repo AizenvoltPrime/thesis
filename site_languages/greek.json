@@ -16,9 +16,9 @@
   "all-filters": {
     "hot": "Δημοφιλή",
     "recent": "Πρόσφατα",
-    "preferred_categories": "Προτιμώμενες Κατηγορίες",
+    "preferred_categories": "Προτιμώμενες κατηγορίες",
     "filter": "Φίλτρα",
-    "post_locations": "Τοποθεσίες Αναρτήσεων",
+    "post_locations": "Τοποθεσίες αναρτήσεων",
     "search": "Αναζήτηση"
   },
   "category-box": {

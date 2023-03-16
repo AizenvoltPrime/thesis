@@ -16,9 +16,9 @@
   "all-filters": {
     "hot": "Hot",
     "recent": "Recent",
-    "preferred_categories": "Preferred Categories",
+    "preferred_categories": "Preferred categories",
     "filter": "Filter",
-    "post_locations": "Post Locations",
+    "post_locations": "Post locations",
     "search": "Search"
   },
   "category-box": {

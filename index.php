@@ -59,8 +59,8 @@ require_once "new_config.php";
     <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user" style="color:#850000"></i><span data-i18n="usernav.login">Login</span></a>
     <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user" style="color:#850000"></i><span data-i18n="usernav.registration">Registration</span></a>
     <a class="nav-element"><i class="fa-solid fa-bookmark fa-1x" style="color:#850000"></i><span data-i18n="usernav.bookmarks">Bookmarks</span></a>
-    <a class="nav-element"><i class="fa-solid fa-user fa-1x" style="color:#850000"></i><span data-i18n="usernav.change_username">Change Username</span></a>
-    <a class="nav-element"><i class="fa-solid fa-lock fa-1x"></i><span data-i18n="usernav.change_password">Change Password</span></a>
+    <a class="nav-element"><i class="fa-solid fa-user fa-1x" style="color:#850000"></i><span data-i18n="usernav.change_username">Change username</span></a>
+    <a class="nav-element"><i class="fa-solid fa-lock fa-1x"></i><span data-i18n="usernav.change_password">Change password</span></a>
     <a class="nav-element"><i class="fa-solid fa-globe fa-1x"></i><span data-i18n="usernav.language">Language</span></a>
     <div id="language" style="display:none;">
       <div id="en">English</div>
@@ -76,9 +76,9 @@ require_once "new_config.php";
   <div id="all-filters">
     <button id="hot"><i class="fa-solid fa-fire-flame-curved"></i><span data-i18n="all-filters.hot">Hot</span></button>
     <button id="recent"><i class="fa-solid fa-sun"></i><span data-i18n="all-filters.recent">Recent</button>
-    <button id="preferred-categories"><i class="fa-solid fa-table-list"></i><span data-i18n="all-filters.preferred_categories">Preferred Categories</span></button>
+    <button id="preferred-categories"><i class="fa-solid fa-table-list"></i><span data-i18n="all-filters.preferred_categories">Preferred categories</span></button>
     <button id="filter"><i class="fa-solid fa-filter"></i><span data-i18n="all-filters.filter">Filter</button>
-    <button id="post-locations-filter"><i class="fa-sharp fa-solid fa-map-location-dot"></i><span data-i18n="all-filters.post_locations">Post Locations</span></button>
+    <button id="post-locations-filter"><i class="fa-sharp fa-solid fa-map-location-dot"></i><span data-i18n="all-filters.post_locations">Post locations</span></button>
     <button id="search"><i class="fa-solid fa-magnifying-glass"></i><span data-i18n="all-filters.search">Search</span></button>
   </div>
   <!--This div is for the search filter.-->

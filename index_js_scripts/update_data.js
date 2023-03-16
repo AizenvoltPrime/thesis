@@ -115,7 +115,7 @@ addEventListener("DOMContentLoaded", (event) => {
       clone.querySelectorAll(".score")[0].innerText = JSON.parse(e.data)[1][5];
       clone.querySelectorAll(".post-time")[0].innerText = post_time_relative;
       clone.querySelectorAll(".post-time-detailed")[0].innerText = post_time_detailed;
-      clone.querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: 0";
+      clone.querySelectorAll(".total-votes-text")[0].innerText = "Number of votes: 0";
       document.getElementById("posts-container").prepend(clone);
 
       if (JSON.parse(e.data)[1][1] === get_variables()[3][0][16]) {
@@ -322,7 +322,7 @@ addEventListener("DOMContentLoaded", (event) => {
         for (let i = 0; i < get_variables()[3].length; i++) {
           if (get_variables()[3][i][0] === JSON.parse(e.data)[3]) {
             document.querySelectorAll(".total-votes-text")[i].innerText =
-              "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[i].textContent.match(/\d+/)) - 1);
+              "Number of votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[i].textContent.match(/\d+/)) - 1);
             let new_value_yes = JSON.parse(e.data)[5];
             let new_value_no = JSON.parse(e.data)[6];
             if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
@@ -403,7 +403,7 @@ addEventListener("DOMContentLoaded", (event) => {
         for (let i = 0; i < get_variables()[3].length; i++) {
           if (get_variables()[3][i][0] === JSON.parse(e.data)[3]) {
             document.querySelectorAll(".total-votes-text")[i].innerText =
-              "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[i].textContent.match(/\d+/)) + 1);
+              "Number of votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[i].textContent.match(/\d+/)) + 1);
             let new_value_yes = JSON.parse(e.data)[5];
             let new_value_no = JSON.parse(e.data)[6];
             if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
@@ -444,7 +444,7 @@ addEventListener("DOMContentLoaded", (event) => {
         for (let i = 0; i < get_variables()[3].length; i++) {
           if (get_variables()[3][i][0] === JSON.parse(e.data)[3]) {
             document.querySelectorAll(".total-votes-text")[i].innerText =
-              "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[i].textContent.match(/\d+/)) - 1);
+              "Number of votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[i].textContent.match(/\d+/)) - 1);
             let new_value_yes = JSON.parse(e.data)[5];
             let new_value_no = JSON.parse(e.data)[6];
             if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
@@ -525,7 +525,7 @@ addEventListener("DOMContentLoaded", (event) => {
         for (let i = 0; i < get_variables()[3].length; i++) {
           if (get_variables()[3][i][0] === JSON.parse(e.data)[3]) {
             document.querySelectorAll(".total-votes-text")[i].innerText =
-              "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[i].textContent.match(/\d+/)) + 1);
+              "Number of votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[i].textContent.match(/\d+/)) + 1);
             let new_value_yes = JSON.parse(e.data)[5];
             let new_value_no = JSON.parse(e.data)[6];
             if (window.getComputedStyle(document.getElementsByClassName("myChart")[i]).display === "block") {
@@ -746,13 +746,13 @@ addEventListener("DOMContentLoaded", (event) => {
           }
           let post_element = document.getElementsByClassName("post")[i].getElementsByClassName("rating-vote-results-inside-container")[0];
           if (translator._currentLanguage === "el") {
-            post_element.getElementsByClassName("rating-total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + JSON.parse(e.data)[3][60];
+            post_element.getElementsByClassName("rating-total-votes-text")[0].innerText = "Αριθμός ψήφων: " + JSON.parse(e.data)[3][60];
             document.getElementsByClassName("post")[i].querySelectorAll(".total-votes-text")[0].innerText =
-              "Αριθμός Ψήφων: " + JSON.parse(e.data)[3][60];
+              "Αριθμός ψήφων: " + JSON.parse(e.data)[3][60];
           } else {
-            post_element.getElementsByClassName("rating-total-votes-text")[0].innerText = "Number of Votes: " + JSON.parse(e.data)[3][60];
+            post_element.getElementsByClassName("rating-total-votes-text")[0].innerText = "Number of votes: " + JSON.parse(e.data)[3][60];
             document.getElementsByClassName("post")[i].querySelectorAll(".total-votes-text")[0].innerText =
-              "Number of Votes: " + JSON.parse(e.data)[3][60];
+              "Number of votes: " + JSON.parse(e.data)[3][60];
           }
         }
       }
@@ -819,13 +819,13 @@ addEventListener("DOMContentLoaded", (event) => {
           }
           if (translator._currentLanguage === "el") {
             document.getElementsByClassName("post")[i].getElementsByClassName("approval-total-votes-text")[0].innerText =
-              "Αριθμός Ψήφων: " + number_of_votes;
-            document.getElementsByClassName("post")[i].getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + number_of_votes;
+              "Αριθμός ψήφων: " + number_of_votes;
+            document.getElementsByClassName("post")[i].getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός ψήφων: " + number_of_votes;
           } else {
             document.getElementsByClassName("post")[i].getElementsByClassName("approval-total-votes-text")[0].innerText =
-              "Number of Votes: " + number_of_votes;
+              "Number of votes: " + number_of_votes;
             document.getElementsByClassName("post")[i].getElementsByClassName("total-votes-text")[0].innerText =
-              "Number of Votes: " + number_of_votes;
+              "Number of votes: " + number_of_votes;
           }
         }
       }
@@ -1096,13 +1096,13 @@ addEventListener("DOMContentLoaded", (event) => {
           }
           if (translator._currentLanguage === "el") {
             document.getElementsByClassName("post")[i].getElementsByClassName("ranking-total-votes-text")[0].innerText =
-              "Αριθμός Ψήφων: " + number_of_votes;
-            document.getElementsByClassName("post")[i].getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + number_of_votes;
+              "Αριθμός ψήφων: " + number_of_votes;
+            document.getElementsByClassName("post")[i].getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός ψήφων: " + number_of_votes;
           } else {
             document.getElementsByClassName("post")[i].getElementsByClassName("ranking-total-votes-text")[0].innerText =
-              "Number of Votes: " + number_of_votes;
+              "Number of votes: " + number_of_votes;
             document.getElementsByClassName("post")[i].getElementsByClassName("total-votes-text")[0].innerText =
-              "Number of Votes: " + number_of_votes;
+              "Number of votes: " + number_of_votes;
           }
         }
       }

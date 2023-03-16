@@ -259,9 +259,9 @@ document.getElementById("next-step").addEventListener("click", function () {
             document.getElementById("input-poll-choices").children[i + pos + 2].name = "poll-choice";
             document.getElementById("input-poll-choices").children[i + pos + 2].maxLength = 11;
             if (translator._currentLanguage === "el") {
-              document.getElementById("input-poll-choices").children[i + pos + 2].placeholder = "Πληκτρολογήστε Επιλογή " + (i + 1);
+              document.getElementById("input-poll-choices").children[i + pos + 2].placeholder = "Πληκτρολογήστε επιλογή " + (i + 1);
             } else {
-              document.getElementById("input-poll-choices").children[i + pos + 2].placeholder = "Type Choice " + (i + 1);
+              document.getElementById("input-poll-choices").children[i + pos + 2].placeholder = "Type choice " + (i + 1);
             }
             pos++;
           }
@@ -628,53 +628,53 @@ export function generate_posts(
           if (post_data[0].length > 16) {
             if (post_data[i][2] == 1) {
               if (translator._currentLanguage === "el") {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][17];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][17];
               } else {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][17];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of votes: " + post_data[i][17];
               }
             } else if (post_data[i][2] == 2) {
               if (translator._currentLanguage === "el") {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][18];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][18];
               } else {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][18];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of votes: " + post_data[i][18];
               }
             } else if (post_data[i][2] == 3) {
               if (translator._currentLanguage === "el") {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][19];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][19];
               } else {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][19];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of votes: " + post_data[i][19];
               }
             } else if (post_data[i][2] == 4) {
               if (translator._currentLanguage === "el") {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][20];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][20];
               } else {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][20];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of votes: " + post_data[i][20];
               }
             }
           } else if (post_data[0].length <= 16) {
             if (post_data[i][2] == 1) {
               if (translator._currentLanguage === "el") {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][12];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][12];
               } else {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][12];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of votes: " + post_data[i][12];
               }
             } else if (post_data[i][2] == 2) {
               if (translator._currentLanguage === "el") {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][13];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][13];
               } else {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][13];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of votes: " + post_data[i][13];
               }
             } else if (post_data[i][2] == 3) {
               if (translator._currentLanguage === "el") {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][14];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][14];
               } else {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][14];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of votes: " + post_data[i][14];
               }
             } else if (post_data[i][2] == 4) {
               if (translator._currentLanguage === "el") {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][15];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][15];
               } else {
-                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][15];
+                document.getElementsByClassName("total-votes-text")[0].innerText = "Number of votes: " + post_data[i][15];
               }
             }
           }
@@ -689,53 +689,53 @@ export function generate_posts(
           if (post_data[0].length > 16) {
             if (post_data[i][2] == 1) {
               if (translator._currentLanguage === "el") {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][17];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][17];
               } else {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][17];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of votes: " + post_data[i][17];
               }
             } else if (post_data[i][2] == 2) {
               if (translator._currentLanguage === "el") {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][18];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][18];
               } else {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][18];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of votes: " + post_data[i][18];
               }
             } else if (post_data[i][2] == 3) {
               if (translator._currentLanguage === "el") {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][19];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][19];
               } else {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][19];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of votes: " + post_data[i][19];
               }
             } else if (post_data[i][2] == 4) {
               if (translator._currentLanguage === "el") {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][20];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][20];
               } else {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][20];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of votes: " + post_data[i][20];
               }
             }
           } else if (post_data[0].length <= 16) {
             if (post_data[i][2] == 1) {
               if (translator._currentLanguage === "el") {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][12];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][12];
               } else {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][12];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of votes: " + post_data[i][12];
               }
             } else if (post_data[i][2] == 2) {
               if (translator._currentLanguage === "el") {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][13];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][13];
               } else {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][13];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of votes: " + post_data[i][13];
               }
             } else if (post_data[i][2] == 3) {
               if (translator._currentLanguage === "el") {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][14];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][14];
               } else {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][14];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of votes: " + post_data[i][14];
               }
             } else if (post_data[i][2] == 4) {
               if (translator._currentLanguage === "el") {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + post_data[i][15];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Αριθμός ψήφων: " + post_data[i][15];
               } else {
-                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of Votes: " + post_data[i][15];
+                clone[i - 1].querySelectorAll(".total-votes-text")[0].innerText = "Number of votes: " + post_data[i][15];
               }
             }
           }
@@ -1924,11 +1924,11 @@ postContainer.addEventListener(
                 document.getElementById("notification-text").innerText =
                   "Η ψήφος είναι αποδεκτή\n\n Μπορείτε να αλλάξετε τη ψήφο σας ψηφίζοντας ξανά";
                 document.getElementsByClassName("post")[postIndexApprovalSend].getElementsByClassName("total-votes-text")[0].innerText =
-                  "Αριθμός Ψήφων: " + number_of_approval_votes;
+                  "Αριθμός ψήφων: " + number_of_approval_votes;
               } else {
                 document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
                 document.getElementsByClassName("post")[postIndexApprovalSend].getElementsByClassName("total-votes-text")[0].innerText =
-                  "Number of Votes: " + number_of_approval_votes;
+                  "Number of votes: " + number_of_approval_votes;
               }
             }
           });
@@ -2028,10 +2028,10 @@ postContainer.addEventListener(
                 if (translator._currentLanguage === "el") {
                   document.getElementById("notification-text").innerText =
                     "Η ψήφος είναι αποδεκτή\n\n Μπορείτε να αλλάξετε τη ψήφο σας ψηφίζοντας ξανά";
-                  document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Αριθμός Ψήφων: " + vote_data[60];
+                  document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Αριθμός ψήφων: " + vote_data[60];
                 } else {
                   document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
-                  document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Number of Votes: " + vote_data[60];
+                  document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Number of votes: " + vote_data[60];
                 }
               }
             });
@@ -2114,10 +2114,10 @@ postContainer.addEventListener(
                   if (translator._currentLanguage === "el") {
                     document.getElementById("notification-text").innerText =
                       "Η ψήφος είναι αποδεκτή\n\n Μπορείτε να αλλάξετε τη ψήφο σας ψηφίζοντας ξανά";
-                    document.querySelectorAll(".total-votes-text")[postIndexRankingVote].innerText = "Αριθμός Ψήφων: " + total_votes;
+                    document.querySelectorAll(".total-votes-text")[postIndexRankingVote].innerText = "Αριθμός ψήφων: " + total_votes;
                   } else {
                     document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
-                    document.querySelectorAll(".total-votes-text")[postIndexRankingVote].innerText = "Number of Votes: " + total_votes;
+                    document.querySelectorAll(".total-votes-text")[postIndexRankingVote].innerText = "Number of votes: " + total_votes;
                   }
                 }
               });
@@ -2289,10 +2289,10 @@ postContainer.addEventListener(
                 if (response[2].trim() == "Success") {
                   if (translator._currentLanguage === "el") {
                     document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
-                      "Αριθμός Ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) - 1);
+                      "Αριθμός ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) - 1);
                   } else {
                     document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
-                      "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) - 1);
+                      "Number of votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) - 1);
                   }
                   post_data[postIndexYes][8] = parseInt(response[0]);
                   post_data[postIndexYes][9] = parseInt(response[1]);
@@ -2410,10 +2410,10 @@ postContainer.addEventListener(
                 if (response[2] == "Success") {
                   if (translator._currentLanguage === "el") {
                     document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
-                      "Αριθμός Ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) + 1);
+                      "Αριθμός ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) + 1);
                   } else {
                     document.querySelectorAll(".total-votes-text")[postIndexYes].innerText =
-                      "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) + 1);
+                      "Number of votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexYes].textContent.match(/\d+/)) + 1);
                   }
                   post_data[postIndexYes][8] = parseInt(response[0]);
                   post_data[postIndexYes][9] = parseInt(response[1]);
@@ -2509,10 +2509,10 @@ postContainer.addEventListener(
                 if (response[2].trim() == "Success") {
                   if (translator._currentLanguage === "el") {
                     document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
-                      "Αριθμός Ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) - 1);
+                      "Αριθμός ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) - 1);
                   } else {
                     document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
-                      "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) - 1);
+                      "Number of votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) - 1);
                   }
                   post_data[postIndexNo][8] = parseInt(response[0]);
                   post_data[postIndexNo][9] = parseInt(response[1]);
@@ -2630,10 +2630,10 @@ postContainer.addEventListener(
                 if (response[2].trim() == "Success") {
                   if (translator._currentLanguage === "el") {
                     document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
-                      "Αριθμός Ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) + 1);
+                      "Αριθμός ψήφων: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) + 1);
                   } else {
                     document.querySelectorAll(".total-votes-text")[postIndexNo].innerText =
-                      "Number of Votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) + 1);
+                      "Number of votes: " + (parseInt(document.querySelectorAll(".total-votes-text")[postIndexNo].textContent.match(/\d+/)) + 1);
                   }
                   post_data[postIndexNo][8] = parseInt(response[0]);
                   post_data[postIndexNo][9] = parseInt(response[1]);
@@ -2994,9 +2994,9 @@ function get_rating_data(post_number) {
         }
       }
       if (translator._currentLanguage === "el") {
-        document.getElementsByClassName("rating-total-votes-text")[post_number].innerText = "Αριθμός Ψήφων: " + response[40];
+        document.getElementsByClassName("rating-total-votes-text")[post_number].innerText = "Αριθμός ψήφων: " + response[40];
       } else {
-        document.getElementsByClassName("rating-total-votes-text")[post_number].innerText = "Number of Votes: " + response[40];
+        document.getElementsByClassName("rating-total-votes-text")[post_number].innerText = "Number of votes: " + response[40];
       }
     });
 }
@@ -3195,9 +3195,9 @@ function get_ranking_data(post_number) {
         }
       }
       if (translator._currentLanguage === "el") {
-        post_element.getElementsByClassName("ranking-total-votes-text")[0].innerText = "Αριθμός Ψήφων: " + number_of_votes;
+        post_element.getElementsByClassName("ranking-total-votes-text")[0].innerText = "Αριθμός ψήφων: " + number_of_votes;
       } else {
-        post_element.getElementsByClassName("ranking-total-votes-text")[0].innerText = "Number of Votes: " + number_of_votes;
+        post_element.getElementsByClassName("ranking-total-votes-text")[0].innerText = "Number of votes: " + number_of_votes;
       }
     });
 }
@@ -3282,9 +3282,9 @@ export function make_yes_no_chart(post_number, chart_data) {
     },
   });
   if (translator._currentLanguage === "el") {
-    document.getElementsByClassName("yes-no-total-votes-text")[post_number].innerText = "Αριθμός Ψήφων: " + (chart_data[0] + chart_data[1]);
+    document.getElementsByClassName("yes-no-total-votes-text")[post_number].innerText = "Αριθμός ψήφων: " + (chart_data[0] + chart_data[1]);
   } else {
-    document.getElementsByClassName("yes-no-total-votes-text")[post_number].innerText = "Number of Votes: " + (chart_data[0] + chart_data[1]);
+    document.getElementsByClassName("yes-no-total-votes-text")[post_number].innerText = "Number of votes: " + (chart_data[0] + chart_data[1]);
   }
 }
 
@@ -3375,9 +3375,9 @@ export function make_approval_chart(post_number, choice_names, results, number_o
     },
   });
   if (translator._currentLanguage === "el") {
-    document.getElementsByClassName("approval-total-votes-text")[post_number].innerText = "Αριθμός Ψήφων: " + number_of_votes;
+    document.getElementsByClassName("approval-total-votes-text")[post_number].innerText = "Αριθμός ψήφων: " + number_of_votes;
   } else {
-    document.getElementsByClassName("approval-total-votes-text")[post_number].innerText = "Number of Votes: " + number_of_votes;
+    document.getElementsByClassName("approval-total-votes-text")[post_number].innerText = "Number of votes: " + number_of_votes;
   }
 }
 
