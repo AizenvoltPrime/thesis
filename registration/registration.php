@@ -38,7 +38,7 @@ require_once "../old_config.php";
     </div>
     <div id="user-nav" class="user-nav">
         <div class="closeuserbtn"><i class="fa-solid fa-times"></i></div>
-        <a class="nav-element" href="../login/login.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i><span data-i18n="usernav.login">Login</span></a>
+        <a class="nav-element" href="../login/login.php"><i class="fa-solid fa-user" style="color:#850000"></i><span data-i18n="usernav.login">Login</span></a>
         <a class="nav-element"><i class="fa-solid fa-globe fa-1x"></i><span data-i18n="usernav.language">Language</span></a>
         <div id="language" style="display:none;">
             <div id="en">English</div>
@@ -57,7 +57,7 @@ require_once "../old_config.php";
         </div>
         <div class="input-icons">
             <input type="text" class="form-control" name="username" placeholder="Username">
-            <i class="fa-solid fa-user fa-2x" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+            <i class="fa-solid fa-user fa-2x" style="color:#850000"></i>
         </div>
         <small style="font-size:1.2em; color:#f3f3f3;"><span data-i18n="reg-form.text1">Min 6 and max 16 characters</span></small>
         <span id="user-help"></span>
@@ -80,7 +80,7 @@ require_once "../old_config.php";
         <div>
             <input type="button" class="btn btn-primary" id="sum" value="Submit">
         </div>
-        <p style="font-weight: bold; font-size:1.2em; color:#f3f3f3;"><span data-i18n="reg-form.text2">Already have an account? </span><a class="Sign-up" href="../login/login.php"><span data-i18n="reg-form.text3">Login now</span></a></p>
+        <p style="font-size:1.2em; color:#f3f3f3;"><span data-i18n="reg-form.text2">Already have an account? </span><a class="Sign-up" href="../login/login.php"><span data-i18n="reg-form.text3">Login now</span></a></p>
     </form>
 </body>
 

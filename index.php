@@ -298,12 +298,12 @@ require_once "new_config.php";
     <div>
       <i class="fa-solid fa-circle-user fa-10x"></i>
     </div>
-    <div class="input-icons">
+    <div class="logged-input-icons">
       <input type="text" name="username" class="logged-form-control" placeholder="New Username">
-      <i class="fa-solid fa-user fa-2x" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+      <i class="fa-solid fa-user fa-2x" style="color:#850000"></i>
     </div>
     <span id="user-help"></span>
-    <div class="input-icons">
+    <div class="logged-input-icons">
       <input type="password" name="password" class="logged-form-control" placeholder="Password">
       <i class="fa-solid fa-lock fa-2x"></i>
     </div>
@@ -315,17 +315,17 @@ require_once "new_config.php";
     <div>
       <i class="fa-solid fa-circle-user fa-10x"></i>
     </div>
-    <div class="input-icons">
+    <div class="logged-input-icons">
       <input type="password" name="current-password" class="logged-form-control" placeholder="Current Password">
       <i class="fa-solid fa-lock fa-2x"></i>
     </div>
     <span id="password-help"></span>
-    <div class="input-icons">
+    <div class="logged-input-icons">
       <input type="password" name="new-password" class="logged-form-control" placeholder="New Password">
       <i class="fa-solid fa-lock fa-2x"></i>
     </div>
     <span id="passc-help"></span>
-    <div class="input-icons">
+    <div class="logged-input-icons">
       <input type="password" name="repeat-new-password" class="logged-form-control" placeholder="Repeat New Password">
       <i class="fa-solid fa-lock fa-2x"></i>
     </div>

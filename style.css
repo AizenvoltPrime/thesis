@@ -260,13 +260,20 @@ input {
   color: #979797;
 }
 
-.input-icons {
+.input-icons,
+.logged-input-icons {
   position: relative;
 }
 
 .input-icons i {
   position: absolute;
   top: 0.8em;
+  left: 0.125em;
+}
+
+.logged-input-icons i {
+  position: absolute;
+  top: 0.5em;
   left: 0.125em;
 }
 
@@ -339,14 +346,13 @@ input {
 }
 
 .logged-form-control {
-  height: 2.5em;
+  height: 1.5em;
   padding-top: 1.15em;
   border: none;
-  border-bottom: 0.1em solid #850000;
+  border-bottom: 0.11em solid #850000;
   background-color: #1a1a1b;
-  font-weight: 900;
   width: 13.1em;
-  font-size: 1.2em;
+  font-size: 1.3em;
   color: #f3f3f3;
 }
 
@@ -376,7 +382,7 @@ input.logged-form-control {
   border-radius: 1em;
   background-color: #1a1a1b;
   color: black;
-  box-shadow: 0em 0em 0.5em 0.3125em #cc0000;
+  border: 0.01em solid #850000;
 }
 
 #sum,
