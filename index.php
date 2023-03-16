@@ -56,10 +56,10 @@ require_once "new_config.php";
   <!--This div is for the right navbar icons.-->
   <div id="user-nav" class="user-nav">
     <button class="closeuserbtn"><i class="fa-solid fa-times"></i></button>
-    <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i><span data-i18n="usernav.login">Login</span></a>
-    <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i><span data-i18n="usernav.registration">Registration</span></a>
-    <a class="nav-element"><i class="fa-solid fa-bookmark fa-1x"></i><span data-i18n="usernav.bookmarks">Bookmarks</span></a>
-    <a class="nav-element"><i class="fa-solid fa-user fa-1x" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i><span data-i18n="usernav.change_username">Change Username</span></a>
+    <a class="nav-element" href="login/login.php"><i class="fa-solid fa-user" style="color:#850000"></i><span data-i18n="usernav.login">Login</span></a>
+    <a class="nav-element" href="registration/registration.php"><i class="fa-solid fa-user" style="color:#850000"></i><span data-i18n="usernav.registration">Registration</span></a>
+    <a class="nav-element"><i class="fa-solid fa-bookmark fa-1x" style="color:#850000"></i><span data-i18n="usernav.bookmarks">Bookmarks</span></a>
+    <a class="nav-element"><i class="fa-solid fa-user fa-1x" style="color:#850000"></i><span data-i18n="usernav.change_username">Change Username</span></a>
     <a class="nav-element"><i class="fa-solid fa-lock fa-1x"></i><span data-i18n="usernav.change_password">Change Password</span></a>
     <a class="nav-element"><i class="fa-solid fa-globe fa-1x"></i><span data-i18n="usernav.language">Language</span></a>
     <div id="language" style="display:none;">

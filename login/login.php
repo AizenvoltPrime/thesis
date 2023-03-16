@@ -40,7 +40,7 @@ require_once "../old_config.php";
     </div>
     <div id="user-nav" class="user-nav">
         <div class="closeuserbtn"><i class="fa-solid fa-times"></i></div>
-        <a class="nav-element" href="../registration/registration.php"><i class="fa-solid fa-user" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i><span data-i18n="usernav.registration">Registration</span></a>
+        <a class="nav-element" href="../registration/registration.php"><i class="fa-solid fa-user" style="color:#850000"></i><span data-i18n="usernav.registration">Registration</span></a>
         <a class="nav-element"><i class="fa-solid fa-globe fa-1x"></i><span data-i18n="usernav.language">Language</span></a>
         <div id="language" style="display:none;">
             <div id="en">English</div>
@@ -53,7 +53,7 @@ require_once "../old_config.php";
         </div>
         <div class="input-icons">
             <input type="text" name="username" class="form-control" placeholder="Username">
-            <i class="fa-solid fa-user fa-2x" style="background: -webkit-linear-gradient(200deg, #cc0000, #000); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+            <i class="fa-solid fa-user fa-2x" style="color:#850000"></i>
         </div>
         <span id="user-help"></span>
         <div class="input-icons">
@@ -65,7 +65,7 @@ require_once "../old_config.php";
             <input id="sum" type="button" value="Login">
         </div>
         <div>
-            <p style="font-weight: bold; font-size:1.2em; color:#f3f3f3;"><span data-i18n="login-form.text1">Don't have an account? </span><a class="Sign-up" href="../registration/registration.php"><span data-i18n="login-form.text2">Sign up now</span></a></p>
+            <p style="font-size:1.2em; color:#f3f3f3;"><span data-i18n="login-form.text1">Don't have an account? </span><a class="Sign-up" href="../registration/registration.php"><span data-i18n="login-form.text2">Sign up now</span></a></p>
         </div>
     </form>
 </body>
