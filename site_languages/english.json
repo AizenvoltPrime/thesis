@@ -8,8 +8,8 @@
     "bookmarks": "Bookmarks",
     "login": "Login",
     "registration": "Registration",
-    "change_username": "Change Username",
-    "change_password": "Change Password",
+    "change_username": "Change username",
+    "change_password": "Change password",
     "language": "Language",
     "logout": "Logout"
   },
