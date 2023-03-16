@@ -212,7 +212,7 @@ input {
   padding: 0.4em;
   border-radius: 1em;
   color: #f3f3f3;
-  font-size: 1.6em;
+  font-size: 1.5em;
   font-weight: bold;
   cursor: pointer;
 }
@@ -867,7 +867,7 @@ a:active {
   background-color: #1a1a1b;
   justify-content: space-between;
   height: fit-content;
-  font-size: 1.3em;
+  font-size: 1.2em;
   font-weight: bold;
   border-radius: 1em;
   padding: 0.65em 1em 1em 1em;
@@ -1961,7 +1961,7 @@ input:checked + .slider:before {
 
 .results-poll-name {
   color: #f3f3f3;
-  font-size: 1.3em;
+  font-size: 1.1em;
   border-radius: 1em;
   background: #1a1a1b;
   padding: 0.4em;
