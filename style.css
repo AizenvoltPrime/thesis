@@ -1149,7 +1149,7 @@ a:active {
   display: flex;
   background: #2c3134;
   color: #000;
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-weight: bold;
   text-align: center;
   gap: 0.5em;
@@ -1206,7 +1206,7 @@ a:active {
   background: #1a1a1b;
   flex-direction: column;
   color: #f3f3f3;
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-weight: bold;
   gap: 0.5em;
   flex-wrap: wrap;
