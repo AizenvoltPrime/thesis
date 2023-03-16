@@ -334,11 +334,11 @@ require_once "new_config.php";
   <!--This div is for administrators only.-->
   <div id="analytics-container" style="display:none;">
     <div id="all-analytics">
-      <button id="map-analytics"><i class="fa-solid fa-map"></i><span data-i18n="all-analytics.map-analytics">Live User Locations</span></button>
-      <button id="chart-analytics"><i class="fa-solid fa-chart-column"></i><span data-i18n="all-analytics.chart-analytics">Posts per Day/Hour</span></button>
-      <button id="general-info"><i class="fa-solid fa-circle-info"></i><span data-i18n="all-analytics.general-info">General Info</span></button>
-      <button id="posts-per-poll-type"><i class="fa-solid fa-chart-pie"></i><span data-i18n="all-analytics.posts-per-poll-type">Number of Posts per Poll Type</span></button>
-      <button id="posts-per-category"><i class="fa-solid fa-chart-pie"></i><span data-i18n="all-analytics.posts-per-category">Number of Posts per Category</span></button>
+      <button id="map-analytics"><i class="fa-solid fa-map"></i><span data-i18n="all-analytics.map-analytics">Live user locations</span></button>
+      <button id="chart-analytics"><i class="fa-solid fa-chart-column"></i><span data-i18n="all-analytics.chart-analytics">Posts per day/hour</span></button>
+      <button id="general-info"><i class="fa-solid fa-circle-info"></i><span data-i18n="all-analytics.general-info">General info</span></button>
+      <button id="posts-per-poll-type"><i class="fa-solid fa-chart-pie"></i><span data-i18n="all-analytics.posts-per-poll-type">Number of posts per poll type</span></button>
+      <button id="posts-per-category"><i class="fa-solid fa-chart-pie"></i><span data-i18n="all-analytics.posts-per-category">Number of posts per category</span></button>
     </div>
     <div id="admin-analytics-map"></div>
   </div>
@@ -346,7 +346,7 @@ require_once "new_config.php";
   <div id="admin-analytics-chart-filters-container" style="display:none;">
     <div id="admin-analytics-chart-filters-inside-container">
       <form id="admin-chart-time-filter-container">
-        <label class="filter-instruction" data-i18n="admin-chart-time-filter-container.filter-instruction">Time Filter</label>
+        <label class="filter-instruction" data-i18n="admin-chart-time-filter-container.filter-instruction">Time filter</label>
         <input id="admin-time-filter-selector" type="datetime-local" name="admin-time-filter-choice" placeholder=""></input>
         <div id="admin-warning-time-filter-choice" style="display:none;"></div>
       </form>
@@ -363,15 +363,15 @@ require_once "new_config.php";
       <table id="general-info-table">
         <tbody>
           <tr data-value="1">
-            <th data-i18n="general-info-table.registered_users">Registered Users</th>
+            <th data-i18n="general-info-table.registered_users">Registered users</th>
             <td></td>
           </tr>
           <tr data-value="2">
-            <th data-i18n="general-info-table.number_of_posts">Number of Posts</th>
+            <th data-i18n="general-info-table.number_of_posts">Number of posts</th>
             <td></td>
           </tr>
           <tr data-value="3">
-            <th data-i18n="general-info-table.number_of_active_posts">Number of Active Posts</th>
+            <th data-i18n="general-info-table.number_of_active_posts">Number of active posts</th>
             <td></td>
           </tr>
         </tbody>
@@ -381,8 +381,8 @@ require_once "new_config.php";
   <!--This div is for posts per poll type charts.-->
   <div id="total-active-posts-outside-container" style="display:none;">
     <div id="total-active-posts-inside-container-buttons">
-      <button id="total-posts-button" data-i18n="total-active-posts-outside-container.total-posts-button">Show Total</button>
-      <button id="active-posts-button" data-i18n="total-active-posts-outside-container.active-posts-button">Show Active</button>
+      <button id="total-posts-button" data-i18n="total-active-posts-outside-container.total-posts-button">Show total</button>
+      <button id="active-posts-button" data-i18n="total-active-posts-outside-container.active-posts-button">Show active</button>
     </div>
     <div id="total-active-posts-inside-container-charts" style="display:none;">
       <canvas id="total-posts" style="display:none;"></canvas>
@@ -392,8 +392,8 @@ require_once "new_config.php";
   <!--This div is for posts per category charts.-->
   <div id="total-active-posts-per-category-outside-container" style="display:none;">
     <div id="total-active-posts-per-category-inside-container-buttons">
-      <button id="total-posts-per-category-button" data-i18n="total-active-posts-per-category-outside-container.total-posts-per-category-button">Show Total</button>
-      <button id="active-posts-per-category-button" data-i18n="total-active-posts-per-category-outside-container.active-posts-per-category-button">Show Active</button>
+      <button id="total-posts-per-category-button" data-i18n="total-active-posts-per-category-outside-container.total-posts-per-category-button">Show total</button>
+      <button id="active-posts-per-category-button" data-i18n="total-active-posts-per-category-outside-container.active-posts-per-category-button">Show active</button>
     </div>
     <div id="total-active-posts-per-category-inside-container-charts" style="display:none;">
       <canvas id="total-posts-per-category" style="display:none;"></canvas>

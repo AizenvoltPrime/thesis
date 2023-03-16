@@ -147,20 +147,20 @@
     "text": "Επόμενο"
   },
   "all-analytics": {
-    "map-analytics": "Ζωντανές Τοποθεσίες Χρηστών",
-    "chart-analytics": "Αναρτήσεις ανά Μέρα/Ώρα",
-    "general-info": "Γενικές Πληροφορίες",
-    "posts-per-poll-type": "Αριθμός Αναρτήσεων ανά Είδος Δημοσκόπησης",
-    "posts-per-category": "Αριθμός Αναρτήσεων ανά Κατηγορία"
+    "map-analytics": "Ζωντανές τοποθεσίες χρηστών",
+    "chart-analytics": "Αναρτήσεις ανά μέρα/ώρα",
+    "general-info": "Γενικές πληροφορίες",
+    "posts-per-poll-type": "Αριθμός αναρτήσεων ανά είδος δημοσκόπησης",
+    "posts-per-category": "Αριθμός αναρτήσεων ανά κατηγορία"
   },
   "admin-chart-time-filter-container": {
-    "filter-instruction": "Φίλτρο Χρόνου",
+    "filter-instruction": "Φίλτρο χρόνου",
     "filter": "Φίλτρο"
   },
   "general-info-table": {
-    "registered_users": "Εγγεγραμμένοι Χρήστες",
-    "number_of_posts": "Αριθμός Αναρτήσεων",
-    "number_of_active_posts": "Αριθμός από Ενεργές Αναρτήσεις"
+    "registered_users": "Εγγεγραμμένοι χρήστες",
+    "number_of_posts": "Αριθμός αναρτήσεων",
+    "number_of_active_posts": "Αριθμός από ενεργές αναρτήσεις"
   },
   "total-active-posts-outside-container": {
     "total-posts-button": "Συνολικές",

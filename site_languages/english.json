@@ -147,28 +147,28 @@
     "text": "Next"
   },
   "all-analytics": {
-    "map-analytics": "Live User Locations",
-    "chart-analytics": "Posts per Day/Hour",
-    "general-info": "General Info",
-    "posts-per-poll-type": "Number of Posts per Poll Type",
-    "posts-per-category": "Number of Posts per Category"
+    "map-analytics": "Live user locations",
+    "chart-analytics": "Posts per day/hour",
+    "general-info": "General info",
+    "posts-per-poll-type": "Number of posts per poll type",
+    "posts-per-category": "Number of posts per category"
   },
   "admin-chart-time-filter-container": {
-    "filter-instruction": "Time Filter",
+    "filter-instruction": "Time filter",
     "filter": "Filter"
   },
   "general-info-table": {
-    "registered_users": "Registered Users",
-    "number_of_posts": "Number of Posts",
-    "number_of_active_posts": "Number of Active Posts"
+    "registered_users": "Registered users",
+    "number_of_posts": "Number of posts",
+    "number_of_active_posts": "Number of active posts"
   },
   "total-active-posts-outside-container": {
-    "total-posts-button": "Show Total",
-    "active-posts-button": "Show Active"
+    "total-posts-button": "Show total",
+    "active-posts-button": "Show active"
   },
   "total-active-posts-per-category-outside-container": {
-    "total-posts-per-category-button": "Show Total",
-    "active-posts-per-category-button": "Show Active"
+    "total-posts-per-category-button": "Show total",
+    "active-posts-per-category-button": "Show active"
   },
   "event-map-container": {
     "event-map-container-header": "Click here to drag"
