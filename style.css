@@ -1184,7 +1184,7 @@ a:active {
   background-color: #00ffd0;
   border-radius: 1em;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1em;
   color: #000000;
   padding: 0.4em 0.9em;
 }
@@ -1715,7 +1715,7 @@ input:checked + .slider:before {
 }
 
 .choice-name {
-  font-size: 1.3em;
+  font-size: 1.2em;
   width: 100%;
   color: #f3f3f3;
   text-align: center;
@@ -1724,7 +1724,7 @@ input:checked + .slider:before {
 }
 
 .approval-choice {
-  font-size: 1.3em;
+  font-size: 1em;
   color: #f3f3f3;
   text-align: center;
   font-weight: bold;
@@ -1789,6 +1789,10 @@ input:checked + .slider:before {
   background: #2c3134;
 }
 
+#general-info-table-inside-container {
+  max-width: 24em;
+}
+
 .approval-vote-results-inside-container {
   align-self: center;
   display: flex;
@@ -1821,7 +1825,7 @@ input:checked + .slider:before {
 }
 
 #general-info-table {
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 .ranking-results-table td,
