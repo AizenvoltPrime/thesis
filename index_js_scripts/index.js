@@ -596,6 +596,7 @@ export function generate_posts(
             document.querySelector("#password-change").value = "Submit";
           }
         }
+        post_data.pop();
       } else {
         if (localStorage.getItem("language") !== "el" && localStorage.getItem("language") !== "en") {
           document.getElementById("en").style.backgroundColor = "#00ffd0";
@@ -614,7 +615,6 @@ export function generate_posts(
           document.querySelector('input[name="user-filter-choice"]').placeholder = "Type Username";
         }
       }
-      post_data.pop();
       let post_time;
       for (let i = 0; i < post_data.length; i++) {
         post_time = DateTime.fromFormat(post_data[i][6], "yyyy-MM-dd HH:mm:ss").toRelative();
