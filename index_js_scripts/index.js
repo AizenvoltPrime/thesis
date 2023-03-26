@@ -596,7 +596,6 @@ export function generate_posts(
             document.querySelector("#password-change").value = "Submit";
           }
         }
-        post_data.pop();
       } else {
         if (localStorage.getItem("language") !== "el" && localStorage.getItem("language") !== "en") {
           document.getElementById("en").style.backgroundColor = "#00ffd0";
@@ -614,6 +613,9 @@ export function generate_posts(
 
           document.querySelector('input[name="user-filter-choice"]').placeholder = "Type Username";
         }
+      }
+      if (response[0].length > 16 || bookmark_filter === true) {
+        post_data.pop();
       }
       let post_time;
       for (let i = 0; i < post_data.length; i++) {
