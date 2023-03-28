@@ -2011,7 +2011,11 @@ postContainer.addEventListener(
           let votes = [];
           for (let i = 21; i < 41; i++) {
             if (post_data[postIndexPostStarVote][i] !== null) {
-              votes.push(post_data[postIndexPostStarVote][i + 20]);
+              if (post_data[postIndexPostStarVote][i + 20] !== null) {
+                votes.push(post_data[postIndexPostStarVote][i + 20]);
+              } else {
+                votes.push(0);
+              }
             } else {
               votes.push(null);
             }
