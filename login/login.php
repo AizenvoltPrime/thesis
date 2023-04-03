@@ -28,7 +28,7 @@ require_once "../old_config.php";
     <script type="module" src="login_translate.js"></script>
 </head>
 
-<body style="overflow:hidden;">
+<body>
     <div class="top-row">
         <div id="sidenav-icon"><i class="fa-solid fa-bars fa-2x"></i></div>
         <div id="add-post-icon" style="visibility:hidden;"><i class="fa-solid fa-plus fa-4x"></i></div>
