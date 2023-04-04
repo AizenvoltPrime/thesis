@@ -1,3 +1,4 @@
+let request_send = false;
 document.getElementById("sum").addEventListener("click", function () {
   let uname = document.forms["login-form"]["username"].value;
   let upass = document.forms["login-form"]["password"].value;
@@ -16,7 +17,8 @@ document.getElementById("sum").addEventListener("click", function () {
       document.getElementById("pass-help").innerText = "Password field is empty";
     }
     document.getElementById("user-help").innerText = "";
-  } else {
+  } else if (request_send === false) {
+    request_send = true;
     fetch("https://ipinfo.io/json?token=ffc97ce1d646e9")
       .then((response) => response.json())
       .then((jsonResponse) => {
@@ -32,6 +34,7 @@ document.getElementById("sum").addEventListener("click", function () {
           .then((res) => res.text())
           .then((response) => {
             if (response.trim() === "Wrong Password") {
+              request_send = false;
               document.getElementById("user-help").innerText = "";
               if (localStorage.getItem("language") === "el") {
                 document.getElementById("pass-help").innerText = "Λάθος όνομα χρήστη ή κωδικός";
@@ -39,6 +42,7 @@ document.getElementById("sum").addEventListener("click", function () {
                 document.getElementById("pass-help").innerText = "Incorrect Username or Password";
               }
             } else if (response.trim() === "Wrong Username") {
+              request_send = false;
               document.getElementById("user-help").innerText = "";
               if (localStorage.getItem("language") === "el") {
                 document.getElementById("pass-help").innerText = "Λάθος όνομα χρήστη ή κωδικός";
@@ -46,6 +50,7 @@ document.getElementById("sum").addEventListener("click", function () {
                 document.getElementById("pass-help").innerText = "Incorrect Username or Password";
               }
             } else if (response.trim() === "Oops! Something went wrong! Please try again later!") {
+              request_send = false;
               document.getElementById("user-help").innerText = "";
               if (localStorage.getItem("language") === "el") {
                 document.getElementById("pass-help").innerText = "Κάτι πήγε λάθος. Παρακαλώ δοκιμάστε ξανά.";
