@@ -3154,9 +3154,9 @@ function get_ranking_data(post_number) {
           const rowHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[row].cells[0].textContent;
           const colHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[0].cells[col].textContent;
           if (translator._currentLanguage === "el") {
-            e.target.title = `Όνομα Γραμμής: \n${rowHeader}\n\nΌνομα Στήλης: \n${colHeader}`;
+            e.target.title = `Όνομα Γραμμής: \n${rowHeader}\n\nΌνομα Στήλης: \n${colHeader} \n\n πράσινο: η γραμμή κερδίζει \n\n κόκκινο: η στήλη κερδίζει \n\n κίτρινο: ισοπαλία`;
           } else {
-            e.target.title = `Row Name: \n${rowHeader}\n\nColumn Name: \n${colHeader}`;
+            e.target.title = `Row Name: \n${rowHeader}\n\nColumn Name: \n${colHeader} \n\n green: row wins \n\n red: column wins \n\n yellow: tie`;
           }
         }
       });
@@ -3699,6 +3699,7 @@ td:hover {
 }
 
 td[title]:hover::after {
+    text-align:left;
     content: attr(title);
     white-space: pre;
     position: absolute;
@@ -3707,7 +3708,7 @@ td[title]:hover::after {
     z-index: 1;
     background-color: #2c3134;
     color:#f3f3f3;
-    font-size:0.4em;
+    font-size:0.53em;
     border: 1px solid #858585;
     padding: 0.4em;
     border-radius: 1em;
