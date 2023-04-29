@@ -291,7 +291,7 @@ require_once "new_config.php";
     <textarea id="question" type="text" name="question-text" maxlength="350"></textarea>
   </form>
   <!--This button is used to navigate inside poll creation template.-->
-  <div id="warning-empty-text-area" data-i18n="warning-empty-text-area.text">Text area needs to have at least 15 characters and at most 150 characters</div>
+  <div id="warning-empty-text-area" data-i18n="warning-empty-text-area.text">Text area needs to have at least 15 characters</div>
   <button id="next-step" type="button" data-i18n="next-step.text">Next</button>
   <!--This form is for users to change their username.-->
   <form id="username-change-form" style="display:none;" name="username-change-form">

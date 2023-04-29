@@ -141,7 +141,7 @@
     "question-instruction": "Type your question - after submission you can delete it but not edit it"
   },
   "warning-empty-text-area": {
-    "text": "Text area needs to have at least 15 characters and at most 150 characters"
+    "text": "Text area needs to have at least 15 characters"
   },
   "next-step": {
     "text": "Next"
