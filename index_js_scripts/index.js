@@ -3154,16 +3154,22 @@ function get_ranking_data(post_number) {
           const rowHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[row].cells[0].textContent;
           const colHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[0].cells[col].textContent;
           if (translator._currentLanguage === "el") {
-            e.target.title = `Όνομα Γραμμής: \n${rowHeader}\n\nΌνομα Στήλης: \n${colHeader} \n\n πράσινο: η γραμμή κερδίζει \n\n κόκκινο: η στήλη κερδίζει \n\n κίτρινο: ισοπαλία`;
+            e.target.setAttribute(
+              "data-title",
+              `Όνομα Γραμμής: \n${rowHeader}\n\nΌνομα Στήλης: \n${colHeader} \n\n πράσινο: η γραμμή κερδίζει \n\n κόκκινο: η στήλη κερδίζει \n\n κίτρινο: ισοπαλία`
+            );
           } else {
-            e.target.title = `Row Name: \n${rowHeader}\n\nColumn Name: \n${colHeader} \n\n green: row wins \n\n red: column wins \n\n yellow: tie`;
+            e.target.setAttribute(
+              "data-title",
+              `Row Name: \n${rowHeader}\n\nColumn Name: \n${colHeader} \n\n green: row wins \n\n red: column wins \n\n yellow: tie`
+            );
           }
         }
       });
 
       post_element.getElementsByClassName("ranking-results-table")[0].addEventListener("mouseout", function (e) {
         if (e.target.tagName === "TD") {
-          e.target.title = "";
+          e.target.removeAttribute("data-title");
           e.target.style.borderColor = "";
           e.target.style.border = null;
         }
@@ -3686,33 +3692,3 @@ export function th_size() {
 window.onresize = function () {
   th_size();
 };
-
-const style = document.createElement("style");
-style.textContent = `
-td {
-    position: relative;
-}
-
-td:hover {
-    border-color: black;
-    border: 0.2em solid black;
-}
-
-td[title]:hover::after {
-    text-align:left;
-    content: attr(title);
-    white-space: pre;
-    position: absolute;
-    top: 100%;
-    left:-6em;
-    z-index: 1;
-    background-color: #2c3134;
-    color:#f3f3f3;
-    font-size:0.53em;
-    border: 1px solid #858585;
-    padding: 0.4em;
-    border-radius: 1em;
-    max-width: calc(100vw - 1.2em);
-}
-`;
-document.head.appendChild(style);

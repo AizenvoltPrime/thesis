@@ -2195,3 +2195,29 @@ input:checked + .slider:before {
   font-size: 1em;
   padding: 0.4em;
 }
+
+td {
+  position: relative;
+}
+
+td:hover {
+  border-color: black;
+  border: 0.2em solid black;
+}
+
+td[data-title]:hover::after {
+  text-align: left;
+  content: attr(data-title);
+  white-space: pre;
+  position: absolute;
+  top: 100%;
+  left: -15em;
+  z-index: 1;
+  background-color: #2c3134;
+  color: #f3f3f3;
+  font-size: 0.53em;
+  border: 1px solid #858585;
+  padding: 0.4em;
+  border-radius: 1em;
+  max-width: calc(100vw - 1.2em);
+}
