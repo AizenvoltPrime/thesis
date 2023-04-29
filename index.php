@@ -201,24 +201,25 @@ require_once "new_config.php";
     <div id="poll-choices-number-instruction" data-i18n="poll-choices-number-container.poll_choices_number_instruction">Select number of poll choices</div>
     <select id="poll-choices">
       <option value="0" data-i18n="poll-choices-number-container.poll-choices">Poll Choices</option>
-      <option value="1">3</option>
-      <option value="2">4</option>
-      <option value="3">5</option>
-      <option value="4">6</option>
-      <option value="5">7</option>
-      <option value="6">8</option>
-      <option value="7">9</option>
-      <option value="8">10</option>
-      <option value="9">11</option>
-      <option value="10">12</option>
-      <option value="11">13</option>
-      <option value="12">14</option>
-      <option value="13">15</option>
-      <option value="14">16</option>
-      <option value="15">17</option>
-      <option value="16">18</option>
-      <option value="17">19</option>
-      <option value="18">20</option>
+      <option value="1">2</option>
+      <option value="2">3</option>
+      <option value="3">4</option>
+      <option value="4">5</option>
+      <option value="5">6</option>
+      <option value="6">7</option>
+      <option value="7">8</option>
+      <option value="8">9</option>
+      <option value="9">10</option>
+      <option value="10">11</option>
+      <option value="11">12</option>
+      <option value="12">13</option>
+      <option value="13">14</option>
+      <option value="14">15</option>
+      <option value="15">16</option>
+      <option value="16">17</option>
+      <option value="17">18</option>
+      <option value="18">19</option>
+      <option value="19">20</option>
     </select>
   </div>
   <div id="warning-no-poll-choice-number-selected" style="display:none;" data-i18n="warning-no-poll-choice-number-selected.text">You must select a number</div>
@@ -562,7 +563,6 @@ require_once "new_config.php";
         <div class="approval-choices-container">
           <div data-dir="approval-vote" class="approval-choice" value="1"></div>
           <div data-dir="approval-vote" class="approval-choice" value="2"></div>
-          <div data-dir="approval-vote" class="approval-choice" value="3"></div>
         </div>
         <button data-dir="approval-vote-send" class="send-approval-button" data-i18n="approval-vote-container.send_vote">Send Vote</button>
       </div>

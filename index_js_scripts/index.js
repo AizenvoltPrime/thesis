@@ -232,7 +232,7 @@ document.getElementById("next-step").addEventListener("click", function () {
         .promise()
         .done(function () {
           let pos = 0;
-          for (let i = 0; i < parseInt(poll_choices_number) + 2; i++) {
+          for (let i = 0; i < parseInt(poll_choices_number) + 1; i++) {
             if (i === 0) {
               let new_poll_choices_desc = document.createElement("div");
               new_poll_choices_desc.className = "poll-choices-instruction";
@@ -257,7 +257,7 @@ document.getElementById("next-step").addEventListener("click", function () {
             document.getElementById("input-poll-choices").appendChild(new_write_poll_choice);
             document.getElementById("input-poll-choices").children[i + pos + 2].setAttribute("type", "text");
             document.getElementById("input-poll-choices").children[i + pos + 2].name = "poll-choice";
-            document.getElementById("input-poll-choices").children[i + pos + 2].maxLength = 11;
+            document.getElementById("input-poll-choices").children[i + pos + 2].maxLength = 50;
             if (translator._currentLanguage === "el") {
               document.getElementById("input-poll-choices").children[i + pos + 2].placeholder = "Πληκτρολογήστε επιλογή " + (i + 1);
             } else {
@@ -1200,20 +1200,20 @@ postContainer.addEventListener(
                   }
                   post_data[postIndexVote] = post_data[postIndexVote].concat(response);
                   post_element.querySelectorAll(".approval-choice").forEach((child) => {
-                    if (child.getAttribute("value") !== "1" && child.getAttribute("value") !== "2" && child.getAttribute("value") !== "3") {
+                    if (child.getAttribute("value") !== "1" && child.getAttribute("value") !== "2") {
                       child.remove();
                     }
                   });
                   for (let j = 0; j < 20; j++) {
                     if (response[j] !== null) {
-                      if (j > 2) {
+                      if (j > 1) {
                         let clone_approval_choices = post_element.getElementsByClassName("approval-choice")[0];
                         let clone = clone_approval_choices.cloneNode(true);
                         clone.setAttribute("value", j + 1);
                         post_element.getElementsByClassName("approval-choices-container")[0].appendChild(clone);
                         post_element.querySelectorAll(".approval-choices-container")[0].getElementsByClassName("approval-choice")[j].innerText =
                           response[j];
-                      } else if (j <= 2) {
+                      } else if (j <= 1) {
                         post_element.querySelectorAll(".approval-choices-container")[0].getElementsByClassName("approval-choice")[j].innerText =
                           response[j];
                       }
@@ -1605,11 +1605,11 @@ postContainer.addEventListener(
 
                 pairwise_weights.push({
                   pair: [candidateJ + candidateK],
-                  weight: (countJ - countK) / ranking_choice_names_ranks.length,
+                  weight: (countJ - countK) / (ranking_choice_names_ranks.length - 1),
                 });
                 pairwise_weights.push({
                   pair: [candidateK + candidateJ],
-                  weight: -(countJ - countK) / ranking_choice_names_ranks.length,
+                  weight: -(countJ - countK) / (ranking_choice_names_ranks.length - 1),
                 });
               }
             }
@@ -3078,7 +3078,6 @@ function get_ranking_data(post_number) {
         }
         ranking_choice_names_ranks[j].sort((a, b) => a.rank - b.rank);
       }
-
       for (let j = 0; j < ranking_choice_names.length; j++) {
         sim_dod.push(0);
         true_dod.push({ name: ranking_choice_names[j], score: 0 });
@@ -3116,11 +3115,11 @@ function get_ranking_data(post_number) {
 
           pairwise_weights.push({
             pair: [candidateJ + candidateK],
-            weight: (countJ - countK) / ranking_choice_names_ranks.length,
+            weight: (countJ - countK) / (ranking_choice_names_ranks.length - 1),
           });
           pairwise_weights.push({
             pair: [candidateK + candidateJ],
-            weight: -(countJ - countK) / ranking_choice_names_ranks.length,
+            weight: -(countJ - countK) / (ranking_choice_names_ranks.length - 1),
           });
         }
       }
@@ -3414,7 +3413,7 @@ export function reset_poll_data() {
     main_class.style.display = "none";
   });
   document.querySelectorAll(".approval-choice").forEach((main_class) => {
-    if (main_class.getAttribute("value") !== "1" && main_class.getAttribute("value") !== "2" && main_class.getAttribute("value") !== "3") {
+    if (main_class.getAttribute("value") !== "1" && main_class.getAttribute("value") !== "2") {
       main_class.remove();
     } else {
       main_class.style.border = null;

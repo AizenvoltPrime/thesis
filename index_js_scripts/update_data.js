@@ -74,7 +74,7 @@ addEventListener("DOMContentLoaded", (event) => {
         main_class.style.display = "none";
       });
       clone.querySelectorAll(".approval-choice").forEach((main_class) => {
-        if (main_class.getAttribute("value") !== "1" && main_class.getAttribute("value") !== "2" && main_class.getAttribute("value") !== "3") {
+        if (main_class.getAttribute("value") !== "1" && main_class.getAttribute("value") !== "2") {
           main_class.remove();
         } else {
           main_class.style.border = null;
@@ -904,11 +904,11 @@ addEventListener("DOMContentLoaded", (event) => {
 
                 pairwise_weights.push({
                   pair: [candidateJ + candidateK],
-                  weight: (countJ - countK) / ranking_choice_names_ranks.length,
+                  weight: (countJ - countK) / (ranking_choice_names_ranks.length - 1),
                 });
                 pairwise_weights.push({
                   pair: [candidateK + candidateJ],
-                  weight: -(countJ - countK) / ranking_choice_names_ranks.length,
+                  weight: -(countJ - countK) / (ranking_choice_names_ranks.length - 1),
                 });
               }
             }
