@@ -288,7 +288,7 @@ require_once "new_config.php";
   <!--This form is for users to type the poll question.-->
   <form id="poll-question" style="display:none;">
     <div id="question-instruction" data-i18n="poll-question.question-instruction">Type your question - after submission you can delete it but not edit it</div>
-    <textarea id="question" type="text" name="question-text" maxlength="150"></textarea>
+    <textarea id="question" type="text" name="question-text" maxlength="350"></textarea>
   </form>
   <!--This button is used to navigate inside poll creation template.-->
   <div id="warning-empty-text-area" data-i18n="warning-empty-text-area.text">Text area needs to have at least 15 characters and at most 150 characters</div>
