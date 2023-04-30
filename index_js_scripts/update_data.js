@@ -881,7 +881,7 @@ addEventListener("DOMContentLoaded", (event) => {
                 }
               }
               true_dod[j].score =
-                ranking_choice_names.length * sim_dod[j] + ranking_choice_names.length * (Math.log(ranking_choice_names.length) + 1);
+                ranking_choice_names.length * sim_dod[j] + ranking_choice_names.length * (Math.log(ranking_choice_names.length) / Math.log(10) + 1);
             }
             true_dod.sort((a, b) => a.score - b.score);
             for (let j = 0; j < ranking_choice_names.length; j++) {
