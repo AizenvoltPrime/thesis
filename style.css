@@ -2211,7 +2211,7 @@ td[data-title]:hover::after {
   white-space: pre;
   position: absolute;
   top: 100%;
-  left: -15em;
+  left: -13.5em;
   z-index: 1;
   background-color: #2c3134;
   color: #f3f3f3;

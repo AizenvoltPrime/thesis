@@ -3164,6 +3164,25 @@ function get_ranking_data(post_number) {
               `Row Name: \n${rowHeader}\n\nColumn Name: \n${colHeader} \n\n green: row wins \n\n red: column wins \n\n yellow: tie`
             );
           }
+          let left_value;
+          if (col <= ranking_choice_names.length / 2) {
+            left_value = "-0.5em";
+          } else {
+            if (ranking_choice_names.length < 10) {
+              left_value = "-8em";
+            } else {
+              left_value = "-13.5em";
+            }
+          }
+          let css = "td[data-title]:hover::after { left:" + left_value + "; }"; // Change the value of left as desired
+          let hover_style = document.createElement("style");
+          hover_style.id = "hover-style"; // Add an id to the style element
+          if (hover_style.styleSheet) {
+            hover_style.styleSheet.cssText = css;
+          } else {
+            hover_style.appendChild(document.createTextNode(css));
+          }
+          document.getElementsByTagName("head")[0].appendChild(hover_style);
         }
       });
 
@@ -3172,6 +3191,10 @@ function get_ranking_data(post_number) {
           e.target.removeAttribute("data-title");
           e.target.style.borderColor = "";
           e.target.style.border = null;
+          let hover_style = document.getElementById("hover-style"); // Select the style element using its id
+          if (hover_style) {
+            hover_style.parentNode.removeChild(hover_style); // Remove the style element
+          }
         }
       });
 
