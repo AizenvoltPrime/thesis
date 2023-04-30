@@ -943,16 +943,22 @@ addEventListener("DOMContentLoaded", (event) => {
                 const rowHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[row].cells[0].textContent;
                 const colHeader = post_element.getElementsByClassName("ranking-results-table")[0].rows[0].cells[col].textContent;
                 if (translator._currentLanguage === "el") {
-                  e.target.title = `Όνομα Γραμμής: \n${rowHeader}\n\nΌνομα Στήλης: \n${colHeader}`;
+                  e.target.setAttribute(
+                    "data-title",
+                    `Όνομα Γραμμής: \n${rowHeader}\n\nΌνομα Στήλης: \n${colHeader} \n\n πράσινο: η γραμμή κερδίζει \n\n κόκκινο: η στήλη κερδίζει \n\n κίτρινο: ισοπαλία`
+                  );
                 } else {
-                  e.target.title = `Row Name: \n${rowHeader}\n\nColumn Name: \n${colHeader}`;
+                  e.target.setAttribute(
+                    "data-title",
+                    `Row Name: \n${rowHeader}\n\nColumn Name: \n${colHeader} \n\n green: row wins \n\n red: column wins \n\n yellow: tie`
+                  );
                 }
               }
             });
 
             post_element.getElementsByClassName("ranking-results-table")[0].addEventListener("mouseout", function (e) {
               if (e.target.tagName === "TD") {
-                e.target.title = "";
+                e.target.removeAttribute("data-title");
                 e.target.style.borderColor = "";
                 e.target.style.border = null;
               }
