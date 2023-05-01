@@ -730,6 +730,10 @@ a:active {
   border: 0.01em solid #363636;
 }
 
+#radius-number {
+  width: 12em;
+}
+
 #yes-time-limit,
 #no-time-limit,
 #yes-location-restriction,
