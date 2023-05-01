@@ -262,7 +262,7 @@ require_once "new_config.php";
     <div class="template-instructions-container">
       <label id="event-radius" data-i18n="location-choice.event-radius">Only users inside this radius will be allowed to vote (Default Radius is 5000 meters)</label>
     </div>
-    <div id=" radius-container">
+    <div id="radius-container">
       <input id="radius-number" type="text" name="radius" placeholder="Set Radius in Meters">
       <i class="fa-solid fa-circle-chevron-right fa-3x"></i>
     </div>
