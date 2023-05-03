@@ -69,7 +69,7 @@ require_once "new_config.php";
   </div>
   <!--This div is for the post filters.-->
   <div id="app-title-container">
-    <div id="app-title-text">Check it Yourself</div>
+    <div id="app-title-text">Check It Yourself</div>
   </div>
   <!--This div is for the post filters.-->
   <div id="all-filters">
