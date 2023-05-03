@@ -84,5 +84,3 @@ SELECT posts.post_loc_lat AS post_latitude, posts.post_loc_long AS post_longitud
 
 
 "wss://crowdsource.gamerwelfare.com"
-
-ΕΠΟΜΕΝΑ TASK:

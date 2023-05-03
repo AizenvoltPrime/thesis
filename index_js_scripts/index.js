@@ -1533,7 +1533,7 @@ postContainer.addEventListener(
           .then((response) => {
             let approval_choice_names = [];
             let approval_choice_results = [];
-            for (let i = 0; i < response.length; i++) {
+            for (let i = 0; i < response.length - 1; i++) {
               if (i < 20 && response[i + 20] !== null) {
                 if (response[i] === null) {
                   approval_choice_results.push("No Votes");
