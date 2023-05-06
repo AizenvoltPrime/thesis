@@ -1533,16 +1533,34 @@ postContainer.addEventListener(
           .then((response) => {
             let approval_choice_names = [];
             let approval_choice_results = [];
+            let zipped = [];
             for (let i = 0; i < response.length - 1; i++) {
               if (i < 20 && response[i + 20] !== null) {
                 if (response[i] === null) {
-                  approval_choice_results.push("No Votes");
+                  approval_choice_results.push(0);
                 } else {
                   approval_choice_results.push(response[i]);
                 }
               } else if (i >= 20 && response[i] !== null) {
                 approval_choice_names.push(response[i]);
               }
+            }
+            for (let i = 0; i < approval_choice_names.length; i++) {
+              zipped.push({
+                array1elem: approval_choice_names[i],
+                array2elem: approval_choice_results[i],
+              });
+            }
+
+            zipped.sort(function (a, b) {
+              return b.array2elem - a.array2elem;
+            });
+
+            approval_choice_names = [];
+            approval_choice_results = [];
+            for (let i = 0; i < zipped.length; i++) {
+              approval_choice_names.push(zipped[i].array1elem);
+              approval_choice_results.push(zipped[i].array2elem);
             }
             const wb = XLSX.utils.book_new();
             let cell = [["Poll Text: " + post_data[postDownloadIndex][4]], approval_choice_names, approval_choice_results];
