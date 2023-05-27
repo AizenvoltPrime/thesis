@@ -54,9 +54,9 @@ document.getElementById("el").addEventListener("click", function (event) {
 function transalte_page() {
   if (localStorage.getItem("language") === "el") {
     translator.translatePageTo("el");
-    document.querySelector('input[name="username"]').placeholder = "Όνομα Χρήστη";
+    document.querySelector('input[name="username"]').placeholder = "Όνομα χρήστη";
     document.querySelector('input[name="password"]').placeholder = "Κωδικός";
-    document.querySelector('input[name="password_confirm"]').placeholder = "Επανάληψη Κωδικού";
+    document.querySelector('input[name="password_confirm"]').placeholder = "Επανάληψη κωδικού";
     document.querySelector("#sum").value = "Υποβολή";
     document.getElementById("el").style.backgroundColor = "#00ffd0";
   } else {

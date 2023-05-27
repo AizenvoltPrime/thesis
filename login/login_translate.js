@@ -54,7 +54,7 @@ document.getElementById("el").addEventListener("click", function (event) {
 function transalte_page() {
   if (localStorage.getItem("language") === "el") {
     translator.translatePageTo("el");
-    document.querySelector('input[name="username"]').placeholder = "Όνομα Χρήστη";
+    document.querySelector('input[name="username"]').placeholder = "Όνομα χρήστη";
     document.querySelector('input[name="password"]').placeholder = "Κωδικός";
     document.querySelector("#sum").value = "Σύνδεση";
     document.getElementById("el").style.backgroundColor = "#00ffd0";

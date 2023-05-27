@@ -546,14 +546,14 @@ export function generate_posts(
             document.getElementById("el").style.backgroundColor = "#00ffd0";
             localStorage.setItem("language", "el");
 
-            document.querySelector('input[name="user-filter-choice"]').placeholder = "Όνομα Χρήστη";
-            document.querySelector('input[name="username"]').placeholder = "Νέο Όνομα Χρήστη";
+            document.querySelector('input[name="user-filter-choice"]').placeholder = "Όνομα χρήστη";
+            document.querySelector('input[name="username"]').placeholder = "Νέο όνομα χρήστη";
             document.querySelector('input[name="password"]').placeholder = "Κωδικός";
             document.querySelector("#username-change").value = "Υποβολή";
 
-            document.querySelector('input[name="current-password"]').placeholder = "Τωρινός Κωδικός";
-            document.querySelector('input[name="new-password"]').placeholder = "Νέος Κωδικός";
-            document.querySelector('input[name="repeat-new-password"]').placeholder = "Επαναλάβετε Νέο Κωδικό";
+            document.querySelector('input[name="current-password"]').placeholder = "Τωρινός κωδικός";
+            document.querySelector('input[name="new-password"]').placeholder = "Νέος κωδικός";
+            document.querySelector('input[name="repeat-new-password"]').placeholder = "Επαναλάβετε νέο κωδικό";
             document.querySelector("#password-change").value = "Υποβολή";
 
             document.querySelector('input[name="radius"]').placeholder = "Ορισμός ακτίνας σε μέτρα";
@@ -578,14 +578,14 @@ export function generate_posts(
             document.getElementById("el").style.backgroundColor = "#00ffd0";
             translator.translatePageTo("el");
 
-            document.querySelector('input[name="user-filter-choice"]').placeholder = "Όνομα Χρήστη";
-            document.querySelector('input[name="username"]').placeholder = "Νέο Όνομα Χρήστη";
+            document.querySelector('input[name="user-filter-choice"]').placeholder = "Όνομα χρήστη";
+            document.querySelector('input[name="username"]').placeholder = "Νέο όνομα χρήστη";
             document.querySelector('input[name="password"]').placeholder = "Κωδικός";
             document.querySelector("#username-change").value = "Υποβολή";
 
-            document.querySelector('input[name="current-password"]').placeholder = "Τωρινός Κωδικός";
-            document.querySelector('input[name="new-password"]').placeholder = "Νέος Κωδικός";
-            document.querySelector('input[name="repeat-new-password"]').placeholder = "Επαναλάβετε Νέο Κωδικό";
+            document.querySelector('input[name="current-password"]').placeholder = "Τωρινός κωδικός";
+            document.querySelector('input[name="new-password"]').placeholder = "Νέος κωδικός";
+            document.querySelector('input[name="repeat-new-password"]').placeholder = "Επαναλάβετε νέο κωδικό";
             document.querySelector("#password-change").value = "Υποβολή";
 
             document.querySelector('input[name="radius"]').placeholder = "Ορισμός ακτίνας σε μέτρα";
@@ -616,7 +616,7 @@ export function generate_posts(
           document.getElementById("el").style.backgroundColor = "#00ffd0";
           translator.translatePageTo("el");
 
-          document.querySelector('input[name="user-filter-choice"]').placeholder = "Όνομα Χρήστη";
+          document.querySelector('input[name="user-filter-choice"]').placeholder = "Όνομα χρήστη";
         } else if (localStorage.getItem("language") === "en") {
           document.getElementById("en").style.backgroundColor = "#00ffd0";
           translator.translatePageTo("en");
