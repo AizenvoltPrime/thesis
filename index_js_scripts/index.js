@@ -2044,27 +2044,43 @@ postContainer.addEventListener(
               votes.push(null);
             }
           }
-          fetch("process_data.php", {
-            method: "POST",
-            body: JSON.stringify({ request: "rating_vote", votes: votes, post_id: post_data[postIndexPostStarVote][0] }),
-          })
-            .then((res) => res.json())
-            .then((response) => {
-              if (response[61].trim() == "Success") {
-                let vote_data = response;
-                vote_data.pop();
-                conn.send(JSON.stringify(["rating_vote", post_data[postIndexPostStarVote][0], post_data[0][16], vote_data]));
-                $("#notification-container").fadeIn(300, function () {});
-                if (translator._currentLanguage === "el") {
-                  document.getElementById("notification-text").innerText =
-                    "Η ψήφος είναι αποδεκτή\n\n Μπορείτε να αλλάξετε τη ψήφο σας ψηφίζοντας ξανά";
-                  document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Αριθμός ψήφων: " + vote_data[60];
-                } else {
-                  document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
-                  document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Number of votes: " + vote_data[60];
+          let allow_vote = false;
+          for (let i = 0; i < votes.length; i++) {
+            if (votes[i] !== null) {
+              allow_vote = true;
+              break;
+            }
+          }
+          if (allow_vote) {
+            fetch("process_data.php", {
+              method: "POST",
+              body: JSON.stringify({ request: "rating_vote", votes: votes, post_id: post_data[postIndexPostStarVote][0] }),
+            })
+              .then((res) => res.json())
+              .then((response) => {
+                if (response[61].trim() == "Success") {
+                  let vote_data = response;
+                  vote_data.pop();
+                  conn.send(JSON.stringify(["rating_vote", post_data[postIndexPostStarVote][0], post_data[0][16], vote_data]));
+                  $("#notification-container").fadeIn(300, function () {});
+                  if (translator._currentLanguage === "el") {
+                    document.getElementById("notification-text").innerText =
+                      "Η ψήφος είναι αποδεκτή\n\n Μπορείτε να αλλάξετε τη ψήφο σας ψηφίζοντας ξανά";
+                    document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Αριθμός ψήφων: " + vote_data[60];
+                  } else {
+                    document.getElementById("notification-text").innerText = "Vote Accepted\n\n You can change your vote by voting again";
+                    document.querySelectorAll(".total-votes-text")[postIndexPostStarVote].innerText = "Number of votes: " + vote_data[60];
+                  }
                 }
-              }
-            });
+              });
+          } else {
+            $("#notification-container").fadeIn(300, function () {});
+            if (translator._currentLanguage === "el") {
+              document.getElementById("notification-text").innerText = "Πρέπει να αξιολογήσετε τουλάχιστον μία επιλογή";
+            } else {
+              document.getElementById("notification-text").innerText = "You have to rate at least one choice";
+            }
+          }
         }
       } else if (btn_ranking_send) {
         const post_ranking_vote = btn_ranking_send.closest(".post");
