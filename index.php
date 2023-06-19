@@ -9,7 +9,7 @@ require_once "new_config.php";
 <html lang="en">
 
 <head>
-  <title>Check it Yourself</title>
+  <title>Check It Yourself</title>
   <link rel="icon" type="image/x-icon" href="images/logo.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
