@@ -159,8 +159,8 @@
   },
   "general-info-table": {
     "registered_users": "Εγγεγραμμένοι χρήστες",
-    "number_of_posts": "Αριθμός αναρτήσεων",
-    "number_of_active_posts": "Αριθμός από ενεργές αναρτήσεις"
+    "number_of_posts": "Αριθμός συνολικών αναρτήσεων",
+    "number_of_active_posts": "Αριθμός ενεργών αναρτήσεων"
   },
   "total-active-posts-outside-container": {
     "total-posts-button": "Συνολικές",
