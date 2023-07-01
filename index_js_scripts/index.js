@@ -3723,8 +3723,23 @@ document.getElementById("delete-no").addEventListener("click", function () {
 });
 
 document.getElementById("dropdown-button").addEventListener("click", function () {
-  document.getElementById("short-app-description").style.display = "none";
-  document.getElementById("detailed-app-description").style.display = "block";
+  if (window.getComputedStyle(document.getElementById("short-app-description")).display !== "none") {
+    if (translator._currentLanguage === "el") {
+      document.getElementById("dropdown-description-text").innerText = "Για μια σύντομη περιγραφή κάντε κλικ";
+    } else {
+      document.getElementById("dropdown-description-text").innerText = "For a short description click";
+    }
+    document.getElementById("short-app-description").style.display = "none";
+    document.getElementById("detailed-app-description").style.display = "block";
+  } else {
+    if (translator._currentLanguage === "el") {
+      document.getElementById("dropdown-description-text").innerText = "Για μια αναλυτική περιγραφή κάντε κλικ";
+    } else {
+      document.getElementById("dropdown-description-text").innerText = "For a detailed description click";
+    }
+    document.getElementById("detailed-app-description").style.display = "none";
+    document.getElementById("short-app-description").style.display = "block";
+  }
 });
 
 export function th_size() {

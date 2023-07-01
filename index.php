@@ -418,10 +418,6 @@ require_once "new_config.php";
           and visualized so that users are provided with quantitative and qualitative information.
         </p>
         <address style="text-align:center;"><span data-i18n="short-app-description.p2">To contact us you can use the following email:</span><a href="mailto:astefan@ceid.upatras.gr" style="color:#cc0000"> astefan@ceid.upatras.gr</a></address>
-        <div id="dropdown-description">
-          <div data-i18n="dropdown-description.p1">For a detailed description click</div>
-          <button id="dropdown-button" data-i18n="dropdown-description.p2">here</button>
-        </div>
       </div>
       <div id="detailed-app-description" style="display:none;">
         <p data-i18n="detailed-app-description.p1">"Check It Yourself": an online crowdsourcing-based application for checking news validity exploiting Social Choice Theory and InfoVis.
@@ -463,6 +459,10 @@ require_once "new_config.php";
         </p>
 
         <address style="text-align:center;"><span data-i18n="detailed-app-description.p8">To contact us you can use the following email:</span><a href="mailto:astefan@ceid.upatras.gr" style="color:#cc0000;"> astefan@ceid.upatras.gr</a></address>
+      </div>
+      <div id="dropdown-description">
+        <div id="dropdown-description-text" data-i18n="dropdown-description.p1">For a detailed description click</div>
+        <button id="dropdown-button" data-i18n="dropdown-description.p2">here</button>
       </div>
     </div>
   </div>
